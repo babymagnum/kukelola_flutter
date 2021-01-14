@@ -1,9 +1,14 @@
+import 'package:flutter/animation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import 'package:kukelola_flutter/core/theme/theme_color.dart';
+import 'package:kukelola_flutter/core/theme/theme_text_style.dart';
 import 'package:kukelola_flutter/view/base_view.dart';
 import 'package:kukelola_flutter/view/onboarding_view/onboarding_controller.dart';
+import 'package:kukelola_flutter/view/onboarding_view/widget/onboarding1.dart';
+import 'package:kukelola_flutter/view/onboarding_view/widget/onboarding2.dart';
+import 'package:kukelola_flutter/view/onboarding_view/widget/onboarding3.dart';
 import 'package:kukelola_flutter/view/onboarding_view/widget/page_indicator.dart';
 
 class OnboardingView extends StatefulWidget {
@@ -14,21 +19,29 @@ class OnboardingView extends StatefulWidget {
 class _OnboardingViewState extends State<OnboardingView> {
 
   var _onboardingCt = Get.put(OnboardingController());
+  var _pageCt = PageController(initialPage: 0);
 
   List<Widget> pageIndicators() {
     List<Widget> listWidget = List();
 
     for(int i=0; i<_onboardingCt.listOnboarding.length; i++) {
       listWidget.add(
-        Obx(() => PageIndicator(
-          isSelected: _onboardingCt.onboardingSelectedPage.value == i,
-          isFirst: i == 0,
-          isLast: i == _onboardingCt.listOnboarding.length -1,
-        ))
+          Obx(() => PageIndicator(
+            isSelected: _onboardingCt.onboardingSelectedPage.value == i,
+            isFirst: i == 0,
+            isLast: i == _onboardingCt.listOnboarding.length -1,
+          ))
       );
     }
 
     return listWidget;
+  }
+
+  @override
+  void dispose() {
+    _pageCt.dispose();
+
+    super.dispose();
   }
 
   @override
@@ -37,44 +50,42 @@ class _OnboardingViewState extends State<OnboardingView> {
       body: Column(
         children: [
           Expanded(
-            child: Stack(
+            child: PageView(
+              controller: _pageCt,
+              onPageChanged: (index) => _onboardingCt.setOnboardingSelectedPage(index),
               children: [
-                Container(
-                  width: Get.width, height: Get.height,
-                ),
-                Stack(
-                  children: [
-                    Positioned(
-                      left: 0, right: 0, top: 44.h,
-                      child: SvgPicture.asset('assets/images/onboarding_clock.svg', width: 106.w, height: 106.w,),
-                    ),
-                    Positioned(
-                      left: 0, right: 0, top: 81.h,
-                      child: Row(
-                        children: [
-                          SvgPicture.asset('assets/images/onboarding_leaf_left.svg'),
-                          Spacer(),
-                          SvgPicture.asset('assets/images/onboarding_leaf_right.svg')
-                        ],
-                      ),
-                    )
-                  ],
-                )
+                Onboarding1(item: _onboardingCt.listOnboarding[0],),
+                Onboarding2(item: _onboardingCt.listOnboarding[1],),
+                Onboarding3(item: _onboardingCt.listOnboarding[2],)
               ],
             ),
           ),
-          Row(
-            children: [
-              Text('Next'),
-              Expanded(
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: pageIndicators(),
+          Padding(
+            padding: EdgeInsets.symmetric(horizontal: 24.w),
+            child: Obx(() => Row(
+              children: [
+                Opacity(
+                  opacity: _onboardingCt.onboardingSelectedPage.value == 2 ? 0 : 1,
+                  child: GestureDetector(
+                    child: Text('Next', style: ThemeTextStyle.biryaniBold.apply(color: ThemeColor.secondary, fontSizeDelta: 16.ssp),),
+                    onTap: () {
+                      if (_onboardingCt.onboardingSelectedPage.value == 2) return;
+
+                      _pageCt.animateToPage(_onboardingCt.onboardingSelectedPage.value + 1, duration: Duration(milliseconds: 300), curve: Curves.easeIn);
+                    },
+                  ),
                 ),
-              ),
-              Text('Skip')
-            ],
-          )
+                Expanded(
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: pageIndicators(),
+                  ),
+                ),
+                Text('Skip', style: ThemeTextStyle.biryaniBold.apply(color: ThemeColor.secondary, fontSizeDelta: 16.ssp),),
+              ],
+            )),
+          ),
+          SizedBox(height: 28.h,)
         ],
       ),
     );
