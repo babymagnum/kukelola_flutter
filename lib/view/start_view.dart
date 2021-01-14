@@ -3,6 +3,7 @@ import 'package:kukelola_flutter/core/helper/constant.dart';
 import 'package:flutter/material.dart';
 import 'package:kukelola_flutter/view/home/home_view.dart';
 import 'package:kukelola_flutter/view/login/login_view.dart';
+import 'package:kukelola_flutter/view/onboarding_view/onboarding_view.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class StartView extends StatefulWidget {
@@ -19,8 +20,9 @@ class _StartViewState extends State<StartView> {
     Future.delayed(Duration(milliseconds: 500), () {
       SharedPreferences.getInstance().then((preference) {
         final isLogin = preference?.getBool(Constant.IS_LOGIN) ?? false;
+        final isOnboarding = preference?.getBool(Constant.IS_ONBOARDING) ?? false;
 
-        Navigator.push(context, MaterialPageRoute(builder: (_) => !isLogin ? HomeView() : LoginView()));
+        Navigator.push(context, MaterialPageRoute(builder: (_) => !isOnboarding ? OnboardingView() : !isLogin ? LoginView() : HomeView()));
       });
     });
   }

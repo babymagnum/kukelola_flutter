@@ -27,7 +27,6 @@ dependencies:
   flutter_staggered_grid_view:
   cached_network_image:
   url_launcher:
-  file_picker: ^2.1.5+1
   division:
   firebase_core:
   firebase_messaging:
@@ -52,7 +51,7 @@ dev_dependencies:
 flutter_icons:
   android: "launcher_icon"
   ios: true
-  image_path: "assets/images/logo_plis.png"
+  image_path: "assets/images/kukelola_logo.png"
 
 flutter:
 
@@ -62,48 +61,22 @@ flutter:
     - assets/images/
 
   fonts:
-    - family: Poppins
+    - family: Biryani
       fonts:
-        - asset: assets/fonts/Poppins-Black.ttf
+        - asset: assets/fonts/Biryani-Heavy.otf
           weight: 900
-        - asset: assets/fonts/Poppins-ExtraBold.ttf
+        - asset: assets/fonts/Biryani-ExtraBold.otf
           weight: 800
-        - asset: assets/fonts/Poppins-Bold.ttf
+        - asset: assets/fonts/Biryani-Bold.otf
           weight: 700
-        - asset: assets/fonts/Poppins-SemiBold.ttf
+        - asset: assets/fonts/Biryani-SemiBold.otf
           weight: 600
-        - asset: assets/fonts/Poppins-Medium.ttf
-          weight: 500
-        - asset: assets/fonts/Poppins-Regular.ttf
+        - asset: assets/fonts/Biryani-Regular.otf
           weight: 400
-        - asset: assets/fonts/Poppins-Light.ttf
+        - asset: assets/fonts/Biryani-Light.otf
           weight: 300
-        - asset: assets/fonts/Poppins-ExtraLight.ttf
+        - asset: assets/fonts/Biryani-UltraLight.otf
           weight: 200
-        - asset: assets/fonts/Poppins-Thin.ttf
-          weight: 100
-    - family: OpenSans
-      fonts:
-        - asset: assets/fonts/OpenSans-ExtraBold.ttf
-          weight: 800
-        - asset: assets/fonts/OpenSans-Bold.ttf
-          weight: 700
-        - asset: assets/fonts/OpenSans-Semibold.ttf
-          weight: 500
-        - asset: assets/fonts/OpenSans-Regular.ttf
-          weight: 400
-        - asset: assets/fonts/OpenSans-Light.ttf
-          weight: 300
-    - family: Ubuntu
-      fonts:
-        - asset: assets/fonts/Ubuntu-B.ttf
-          weight: 700
-        - asset: assets/fonts/Ubuntu-M.ttf
-          weight: 500
-        - asset: assets/fonts/Ubuntu-R.ttf
-          weight: 400
-        - asset: assets/fonts/Ubuntu-L.ttf
-          weight: 300
     - family: Roboto
       fonts:
         - asset: assets/fonts/Roboto-Bold.ttf

@@ -21,7 +21,7 @@ class NoConnection extends StatelessWidget {
       decoration: BoxDecoration(
         color: Colors.black
       ),
-      child: Center(child: Text('No connection', textAlign: TextAlign.center, style: ThemeTextStyle.openSansBold.apply(color: Colors.white, fontSizeDelta: 12.ssp),)),
+      child: Center(child: Text('No connection', textAlign: TextAlign.center, style: ThemeTextStyle.biryaniBold.apply(color: Colors.white, fontSizeDelta: 12.ssp),)),
     );
   }
 }

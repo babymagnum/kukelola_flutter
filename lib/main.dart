@@ -56,10 +56,10 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     // this code to make apps to only allows portrait mode //
-    SystemChrome.setPreferredOrientations([DeviceOrientation.landscapeRight]);
+    SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
 
     return GetMaterialApp(
-      title: 'Satu Pos',
+      title: 'KuKelola',
       navigatorKey: globalNavigatorKey,
       home: StartView(),
       debugShowCheckedModeBanner: false,

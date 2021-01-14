@@ -47,7 +47,7 @@ android {
 
     buildTypes {
         release {
-            resValue "string", "app_name", "Satu Pos"
+            resValue "string", "app_name", "KuKelola"
             signingConfig signingConfigs.release
             minifyEnabled true
             debuggable false
@@ -55,7 +55,7 @@ android {
         }
         debug {
             applicationIdSuffix = '.debug'
-            resValue "string", "app_name", "Satu Pos Dev"
+            resValue "string", "app_name", "KuKelola Dev"
         }
     }
 }
