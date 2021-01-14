@@ -5,11 +5,12 @@ import 'package:get/get.dart';
 import 'package:kukelola_flutter/core/theme/theme_color.dart';
 import 'package:kukelola_flutter/core/theme/theme_text_style.dart';
 import 'package:kukelola_flutter/view/base_view.dart';
-import 'package:kukelola_flutter/view/onboarding_view/onboarding_controller.dart';
-import 'package:kukelola_flutter/view/onboarding_view/widget/onboarding1.dart';
-import 'package:kukelola_flutter/view/onboarding_view/widget/onboarding2.dart';
-import 'package:kukelola_flutter/view/onboarding_view/widget/onboarding3.dart';
-import 'package:kukelola_flutter/view/onboarding_view/widget/page_indicator.dart';
+import 'package:kukelola_flutter/view/login/login_view.dart';
+import 'package:kukelola_flutter/view/onboarding/onboarding_controller.dart';
+import 'package:kukelola_flutter/view/onboarding/widget/onboarding1.dart';
+import 'package:kukelola_flutter/view/onboarding/widget/onboarding2.dart';
+import 'package:kukelola_flutter/view/onboarding/widget/onboarding3.dart';
+import 'package:kukelola_flutter/view/onboarding/widget/page_indicator.dart';
 
 class OnboardingView extends StatefulWidget {
   @override
@@ -71,7 +72,7 @@ class _OnboardingViewState extends State<OnboardingView> {
                     onTap: () {
                       if (_onboardingCt.onboardingSelectedPage.value == 2) return;
 
-                      _pageCt.animateToPage(_onboardingCt.onboardingSelectedPage.value + 1, duration: Duration(milliseconds: 300), curve: Curves.easeIn);
+                      _pageCt.animateToPage(_onboardingCt.onboardingSelectedPage.value + 1, duration: Duration(milliseconds: 400), curve: Curves.easeIn);
                     },
                   ),
                 ),
@@ -81,7 +82,17 @@ class _OnboardingViewState extends State<OnboardingView> {
                     children: pageIndicators(),
                   ),
                 ),
-                Text('Skip', style: ThemeTextStyle.biryaniBold.apply(color: ThemeColor.secondary, fontSizeDelta: 16.ssp),),
+                Opacity(
+                  opacity: _onboardingCt.onboardingSelectedPage.value == 2 ? 0 : 1,
+                  child: GestureDetector(
+                    onTap: () {
+                      if (_onboardingCt.onboardingSelectedPage.value == 2) return;
+
+                      Get.off(LoginView());
+                    },
+                    child: Text('Skip', style: ThemeTextStyle.biryaniBold.apply(color: ThemeColor.secondary, fontSizeDelta: 16.ssp),),
+                  ),
+                ),
               ],
             )),
           ),

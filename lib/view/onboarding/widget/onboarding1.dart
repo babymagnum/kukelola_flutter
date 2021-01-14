@@ -48,7 +48,10 @@ class Onboarding1 extends StatelessWidget {
                         ],
                       ),
                     ),
-                    Text(item.title, style: ThemeTextStyle.biryaniBold.apply(fontSizeDelta: 26.ssp),),
+                    Align(
+                      alignment: Alignment.centerLeft,
+                      child: Text(item.title, style: ThemeTextStyle.biryaniBold.apply(fontSizeDelta: 26.ssp),),
+                    ),
                     SizedBox(height: 10.h,),
                     Text(item.description, style: ThemeTextStyle.biryaniRegular.apply(fontSizeDelta: 16.ssp),),
                     SizedBox(height: 85.h,)

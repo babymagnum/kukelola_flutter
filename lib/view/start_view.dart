@@ -1,10 +1,12 @@
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
 import 'package:kukelola_flutter/core/helper/constant.dart';
 import 'package:flutter/material.dart';
 import 'package:kukelola_flutter/view/home/home_view.dart';
 import 'package:kukelola_flutter/view/login/login_view.dart';
-import 'package:kukelola_flutter/view/onboarding_view/onboarding_view.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+
+import 'onboarding/onboarding_view.dart';
 
 class StartView extends StatefulWidget {
   @override
@@ -22,7 +24,7 @@ class _StartViewState extends State<StartView> {
         final isLogin = preference?.getBool(Constant.IS_LOGIN) ?? false;
         final isOnboarding = preference?.getBool(Constant.IS_ONBOARDING) ?? false;
 
-        Navigator.push(context, MaterialPageRoute(builder: (_) => !isOnboarding ? OnboardingView() : !isLogin ? LoginView() : HomeView()));
+        Get.off(!isOnboarding ? OnboardingView() : !isLogin ? LoginView() : HomeView());
       });
     });
   }
@@ -31,6 +33,10 @@ class _StartViewState extends State<StartView> {
   Widget build(BuildContext context) {
     ScreenUtil.init(BoxConstraints.tight(Size(360, 640)), allowFontScaling: true);
 
-    return Scaffold();
+    return Scaffold(
+      body: Container(
+        width: Get.width, height: Get.height, color: Color(0xFFFAFAFA),
+      ),
+    );
   }
 }
