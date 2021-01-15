@@ -2,6 +2,7 @@ import 'package:flutter/animation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:kukelola_flutter/core/helper/constant.dart';
 import 'package:kukelola_flutter/core/theme/theme_color.dart';
 import 'package:kukelola_flutter/core/theme/theme_text_style.dart';
 import 'package:kukelola_flutter/view/base_view.dart';
@@ -11,6 +12,7 @@ import 'package:kukelola_flutter/view/onboarding/widget/onboarding1.dart';
 import 'package:kukelola_flutter/view/onboarding/widget/onboarding2.dart';
 import 'package:kukelola_flutter/view/onboarding/widget/onboarding3.dart';
 import 'package:kukelola_flutter/view/onboarding/widget/page_indicator.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class OnboardingView extends StatefulWidget {
   @override
@@ -85,8 +87,11 @@ class _OnboardingViewState extends State<OnboardingView> {
                 Opacity(
                   opacity: _onboardingCt.onboardingSelectedPage.value == 2 ? 0 : 1,
                   child: GestureDetector(
-                    onTap: () {
+                    onTap: () async {
                       if (_onboardingCt.onboardingSelectedPage.value == 2) return;
+
+                      final preference = await SharedPreferences.getInstance();
+                      await preference.setBool(Constant.IS_ONBOARDING, true);
 
                       Get.off(LoginView());
                     },

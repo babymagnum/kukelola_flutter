@@ -2,13 +2,16 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:kukelola_flutter/core/helper/constant.dart';
 import 'package:kukelola_flutter/core/theme/theme_color.dart';
 import 'package:kukelola_flutter/core/theme/theme_text_style.dart';
 import 'package:kukelola_flutter/core/widgets/button_back.dart';
 import 'package:kukelola_flutter/core/widgets/button_loading.dart';
 import 'package:kukelola_flutter/view/base_view.dart';
+import 'package:kukelola_flutter/view/home/home_view.dart';
 import 'package:kukelola_flutter/view/verification_code/verification_code_controller.dart';
 import 'package:kukelola_flutter/view/verification_code/widget/input_verification_code.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class VerificationCodeView extends StatefulWidget {
 
@@ -67,7 +70,7 @@ class _VerificationCodeViewState extends State<VerificationCodeView> {
                   child: Obx(() => Column(
                     children: [
                       SizedBox(height: 40.h),
-                      ButtonBack(label: 'Verification Code',),
+                      ButtonBack(label: 'Verification Code', onBack: () => Get.back(),),
                       SizedBox(height: 48.h,),
                       Text("Check your email inbox, we've sent you verification code. Please input the code below",
                         style: ThemeTextStyle.biryaniRegular.apply(fontSizeDelta: 12.ssp), textAlign: TextAlign.center,
@@ -158,6 +161,11 @@ class _VerificationCodeViewState extends State<VerificationCodeView> {
                         loading: _verificationCodeCt.loadingVerify.value,
                         onTap: () async {
                           await _verificationCodeCt.verifyOtp();
+
+                          final preference = await SharedPreferences.getInstance();
+                          await preference.setBool(Constant.IS_LOGIN, true);
+
+                          Get.offAll(HomeView());
                         },
                         verticalPadding: 18.h,
                       ),

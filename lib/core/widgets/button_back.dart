@@ -10,17 +10,17 @@ import 'package:kukelola_flutter/core/theme/theme_text_style.dart';
 
 class ButtonBack extends StatelessWidget {
 
-  ButtonBack({@required this.label, this.login = false});
+  ButtonBack({@required this.label, @required this.onBack});
 
   final String label;
-  final bool login;
+  final Function onBack;
 
   @override
   Widget build(BuildContext context) {
     return Row(
       children: [
         Parent(
-          gesture: Gestures()..onTap(() => login ? exit(0) : Get.back()),
+          gesture: Gestures()..onTap(onBack),
           style: ParentStyle()..borderRadius(all: 4)..background.color(ThemeColor.secondary)..width(32.w)..height(32.w),
           child: Center(
             child: SvgPicture.asset('assets/images/arrow_left.svg'),

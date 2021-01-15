@@ -2,11 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import 'package:kukelola_flutter/core/helper/constant.dart';
 import 'package:kukelola_flutter/core/model/static_model.dart';
 import 'package:kukelola_flutter/core/theme/theme_color.dart';
 import 'package:kukelola_flutter/core/theme/theme_text_style.dart';
 import 'package:kukelola_flutter/core/widgets/button_loading.dart';
 import 'package:kukelola_flutter/view/login/login_view.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class Onboarding3 extends StatelessWidget {
 
@@ -40,7 +42,12 @@ class Onboarding3 extends StatelessWidget {
             disable: false,
             title: 'Sign In',
             loading: false,
-            onTap: () => Get.off(LoginView()),
+            onTap: () async {
+              final preference = await SharedPreferences.getInstance();
+              await preference.setBool(Constant.IS_ONBOARDING, true);
+
+              Get.off(LoginView());
+            },
             verticalPadding: 18.h,
           ),
           SizedBox(height: 85.h,)

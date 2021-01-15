@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -39,7 +41,7 @@ class _LoginViewState extends State<LoginView> {
                   child: Obx(() => Column(
                       children: [
                         SizedBox(height: 40.h),
-                        ButtonBack(label: 'Sign In', login: true,),
+                        ButtonBack(label: 'Sign In', onBack: () => exit(0),),
                         SizedBox(height: 28.h,),
                         SvgPicture.asset('assets/images/login.svg', width: Get.width * 0.6, height: Get.width * 0.6,),
                         SizedBox(height: 24.h,),
