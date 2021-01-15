@@ -43,7 +43,7 @@ class _HomeViewState extends State<HomeView>  with AutomaticKeepAliveClientMixin
             ),
             Expanded(
               child: Container(
-                width: Get.width, height: Get.height, color: Color(0xFFFAFAFA),
+                width: Get.width, height: Get.height, color: Color(0xFFF9F7F7),
               ),
             ),
           ],

@@ -23,3 +23,14 @@ class HomeMenuItem {
   Color color;
   int count;
 }
+
+class NotificationItem {
+  NotificationItem(this.color, this.image, this.description, this.title, this.time, this.unread);
+
+  String time;
+  String title;
+  String description;
+  String color;
+  String image;
+  bool unread;
+}
