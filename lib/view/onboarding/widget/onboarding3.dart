@@ -42,6 +42,7 @@ class Onboarding3 extends StatelessWidget {
             disable: false,
             title: 'Sign In',
             loading: false,
+            textStyle: ThemeTextStyle.biryaniBold.apply(color: Colors.white, fontSizeDelta: 14.ssp),
             onTap: () async {
               final preference = await SharedPreferences.getInstance();
               await preference.setBool(Constant.IS_ONBOARDING, true);

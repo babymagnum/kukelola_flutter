@@ -2,19 +2,45 @@ import 'package:division/division.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:get/get.dart';
 import 'package:kukelola_flutter/core/model/static_model.dart';
 import 'package:kukelola_flutter/core/theme/theme_text_style.dart';
+import 'package:kukelola_flutter/view/leave_request/leave_request_view.dart';
 
 class ListHomeMenuItem extends StatelessWidget {
-  ListHomeMenuItem({@required this.item});
+  ListHomeMenuItem({@required this.item, @required this.index});
 
   final HomeMenuItem item;
+  final int index;
+
+  _onClick() {
+    if (index == 0) {
+
+    } else if (index == 1) {
+
+    } else if (index == 2) {
+
+    } else if (index == 3) {
+      Get.to(LeaveRequestView());
+    } else if (index == 4) {
+
+    } else if (index == 5) {
+
+    } else if (index == 6) {
+
+    } else if (index == 7) {
+
+    } else {
+
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
     return Parent(
+      gesture: Gestures()..onTap(_onClick),
       style: ParentStyle()..background.color(Colors.white)..borderRadius(all: 12)
-        ..padding(horizontal: 14.w),
+        ..padding(horizontal: 14.w)..ripple(true),
       child: Column(
         children: [
           SizedBox(height: 12.h,),

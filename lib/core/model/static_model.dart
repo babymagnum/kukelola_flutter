@@ -1,5 +1,19 @@
 import 'package:flutter/cupertino.dart';
 
+class LeaveTypeItem {
+  LeaveTypeItem(this.label);
+  
+  String label;
+}
+
+class ProfileMenuItem {
+  ProfileMenuItem(this.image, this.label, this.logout);
+
+  String image;
+  String label;
+  bool logout;
+}
+
 class OnboardingItem {
   OnboardingItem(this.title, this.image, this.description);
 

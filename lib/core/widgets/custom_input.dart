@@ -7,10 +7,11 @@ import 'package:kukelola_flutter/core/theme/theme_text_style.dart';
 
 class CustomInput extends StatelessWidget {
 
-  CustomInput({Key key, this.controller, @required this.labelText, @required this.textInputAction, @required this.focusNode,
-    @required this.hintText, @required this.inputType, this.isObsecure = null, @required this.onEditingComplete,
-    this.onChanged, this.onObsecureClick, this.showAdd = false, this.onAddClick,
-    @required this.onTap, this.isDropdown = null, this.enable = true, this.hide = false}): super(key: key);
+  CustomInput({Key key, this.controller, @required this.labelText, @required this.textInputAction,
+    @required this.focusNode, @required this.hintText, @required this.inputType,
+    this.isObsecure = null, @required this.onEditingComplete,
+    this.onChanged, this.onObsecureClick, @required this.onTap, this.enable = true,
+    this.filled = false, this.maxLines = 1}): super(key: key);
 
   final TextEditingController controller;
   final FocusNode focusNode;
@@ -22,12 +23,10 @@ class CustomInput extends StatelessWidget {
   final String labelText;
   final Function(String value) onChanged;
   final Function onObsecureClick;
-  final Function onAddClick;
   final Function onTap;
-  final bool isDropdown;
   final bool enable;
-  final bool showAdd;
-  final bool hide;
+  final bool filled;
+  final int maxLines;
 
   @override
   Widget build(BuildContext context) {
@@ -42,7 +41,7 @@ class CustomInput extends StatelessWidget {
           focusNode: focusNode,
           onEditingComplete: onEditingComplete,
           keyboardType: inputType,
-          maxLines: 1,
+          maxLines: maxLines,
           enabled: enable,
           textInputAction: textInputAction,
           style: ThemeTextStyle.biryaniRegular.apply(fontSizeDelta: 16.ssp),
@@ -53,11 +52,11 @@ class CustomInput extends StatelessWidget {
             hintText: labelText,
             labelText: hintText,
             labelStyle: ThemeTextStyle.biryaniBold.apply(fontSizeDelta: 12.ssp, color: focusNode.hasFocus ? ThemeColor.primary : Color(0xFFC4C4C4)),
-            filled: !hide,
+            filled: filled,
             fillColor: Color(0xFFE8E8E8),
             focusColor: ThemeColor.primary,
-            hintStyle: ThemeTextStyle.biryaniBold.apply(fontSizeDelta: 16.ssp, color: Color(0xFFC4C4C4)),
-            focusedBorder: hide ? UnderlineInputBorder(
+            hintStyle: ThemeTextStyle.biryaniRegular.apply(fontSizeDelta: 16.ssp, color: Color(0xFFC4C4C4)),
+            focusedBorder: !filled ? UnderlineInputBorder(
                 borderSide: BorderSide(width: 1, color: focusNode.hasFocus ? ThemeColor.primary : Color(0xFFC4C4C4))
             ) : UnderlineInputBorder(
               borderSide: BorderSide(
@@ -66,7 +65,7 @@ class CustomInput extends StatelessWidget {
               ),
               borderRadius: BorderRadius.only(topLeft: Radius.circular(8), topRight: Radius.circular(8)),
             ),
-            disabledBorder: hide ? UnderlineInputBorder(
+            disabledBorder: !filled ? UnderlineInputBorder(
                 borderSide: BorderSide(width: 1, color: focusNode.hasFocus ? ThemeColor.primary : Color(0xFFC4C4C4))
             ) : UnderlineInputBorder(
               borderSide: BorderSide(
@@ -75,8 +74,8 @@ class CustomInput extends StatelessWidget {
               ),
               borderRadius: BorderRadius.only(topLeft: Radius.circular(8), topRight: Radius.circular(8)),
             ),
-            contentPadding: hide ? EdgeInsets.only(top: 25.h, bottom: 0) : EdgeInsets.symmetric(horizontal: 10.w, vertical: 10.h),
-            enabledBorder: hide ? UnderlineInputBorder(
+            contentPadding: !filled ? EdgeInsets.only(top: 25.h, bottom: 0) : EdgeInsets.symmetric(horizontal: 10.w, vertical: 10.h),
+            enabledBorder: !filled ? UnderlineInputBorder(
                 borderSide: BorderSide(width: 1, color: focusNode.hasFocus ? ThemeColor.primary : Color(0xFFC4C4C4))
             ) : UnderlineInputBorder(
               borderSide: BorderSide(
@@ -93,14 +92,6 @@ class CustomInput extends StatelessWidget {
           GestureDetector(
             onTap: onObsecureClick,
             child: SvgPicture.asset(isObsecure ? 'assets/images/invisible.svg' : 'assets/images/visibility.svg', width: 18.w, height: 18.w, color: Color(0xFFC4C4C4)),
-          ) :
-          isDropdown != null ?
-          Padding(
-            padding: EdgeInsets.only(top: controller != null && controller.text.trim() != '' ? 13.h : 0),
-            child: GestureDetector(
-              onTap: enable ? onTap : null,
-              child: Icon(Icons.arrow_drop_down, size: 24.w,),
-            ),
           ) :
           Container(),
         )

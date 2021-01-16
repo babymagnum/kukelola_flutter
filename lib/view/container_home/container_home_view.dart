@@ -1,6 +1,5 @@
 import 'package:division/division.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:kukelola_flutter/core/model/static_model.dart';
 import 'package:kukelola_flutter/view/base_view.dart';
@@ -51,7 +50,8 @@ class _ContainerHomeViewState extends State<ContainerHomeView> {
             ),
           ),
           Parent(
-            style: ParentStyle()..width(Get.width)..background.color(Colors.white),
+            style: ParentStyle()..width(Get.width)..background.color(Colors.white)
+              ..boxShadow(color: Colors.black.withOpacity(0.05), blur: 6, spread: 0, offset: Offset(0, -2)),
             child: Row(
               children: [
                 ContainerHomeMenu(index: 0, item: ContainerHomeItem('Home', 'assets/images/fa-solid_home.svg'), onClick: () => _changePage(0),),

@@ -29,13 +29,15 @@ class _NotificationViewState extends State<NotificationView> with AutomaticKeepA
   Widget build(BuildContext context) {
     return Obx(() => Column(
         children: [
-          SizedBox(height: context.mediaQueryPadding.top + 40.h,),
+          SizedBox(height: context.mediaQueryPadding.top + 24.h,),
           Padding(
             padding: EdgeInsets.symmetric(horizontal: 24.w),
             child: Row(
               children: [
-                ButtonBack(label: 'Notification', onBack: () {}),
-                Spacer(),
+                Expanded(
+                  child: ButtonBack(label: 'Notification', onBack: () {}),
+                ),
+                SizedBox(width: 10.w,),
                 AccountImage(url: 'asdobs', size: Size(28.w, 28.w), boxFit: BoxFit.fill)
               ],
             ),

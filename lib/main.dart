@@ -2,6 +2,7 @@ import 'dart:async';
 import 'package:connectivity/connectivity.dart';
 import 'package:get/get.dart';
 import 'package:kukelola_flutter/core/controller/common_controller.dart';
+import 'package:kukelola_flutter/core/helper/LocalesString.dart';
 import 'package:kukelola_flutter/core/helper/constant.dart';
 import 'package:kukelola_flutter/view/start_view.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
@@ -28,6 +29,7 @@ class _MyAppState extends State<MyApp> {
 
   StreamSubscription _connection;
   CommonController _commonController = Get.put(CommonController());
+  var _commonCt = Get.put(CommonController());
 
   @override
   void dispose() {
@@ -62,6 +64,13 @@ class _MyAppState extends State<MyApp> {
       title: 'KuKelola',
       navigatorKey: globalNavigatorKey,
       home: StartView(),
+      supportedLocales: [
+        Locale(Constant.INDONESIAN),
+        Locale(Constant.ENGLISH),
+      ],
+      translations: LocalesString(),
+      locale: Locale(_commonCt.language.value),
+      fallbackLocale: Locale(Constant.INDONESIAN),
       debugShowCheckedModeBanner: false,
     );
   }

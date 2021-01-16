@@ -1,10 +1,7 @@
-import 'dart:io';
-
 import 'package:division/division.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:get/get.dart';
 import 'package:kukelola_flutter/core/theme/theme_color.dart';
 import 'package:kukelola_flutter/core/theme/theme_text_style.dart';
 
@@ -27,7 +24,12 @@ class ButtonBack extends StatelessWidget {
           ),
         ),
         SizedBox(width: 16.w,),
-        Text(label, style: ThemeTextStyle.biryaniBold.apply(fontSizeDelta: 16.ssp),)
+        Expanded(
+          child: Padding(
+            padding: EdgeInsets.only(top: 3.h),
+            child: Text(label, style: ThemeTextStyle.biryaniBold.apply(fontSizeDelta: 16.ssp), overflow: TextOverflow.ellipsis, maxLines: 1,),
+          ),
+        )
       ],
     );
   }

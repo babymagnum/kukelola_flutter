@@ -57,7 +57,6 @@ class _LoginViewState extends State<LoginView> {
                             setState(() {});
                           },
                           onTap: () => setState(() => _emailFocus.requestFocus()),
-                          hide: true,
                         ),
                         CustomInput(
                           isObsecure: _loginCt.obsecure.value,
@@ -69,7 +68,6 @@ class _LoginViewState extends State<LoginView> {
                           inputType: TextInputType.name,
                           onEditingComplete: () => FocusScope.of(context).requestFocus(FocusNode()),
                           onTap: () => setState(() => _passwordFocus.requestFocus()),
-                          hide: true,
                         ),
                         SizedBox(height: 40.h,),
                         ButtonLoading(
@@ -79,6 +77,7 @@ class _LoginViewState extends State<LoginView> {
                           loading: false,
                           onTap: () => Get.to(VerificationCodeView()),
                           verticalPadding: 18.h,
+                          textStyle: ThemeTextStyle.biryaniBold.apply(color: Colors.white, fontSizeDelta: 14.ssp),
                         )
                       ],
                     ),

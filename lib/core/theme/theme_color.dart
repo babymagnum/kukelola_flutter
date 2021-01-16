@@ -10,6 +10,7 @@ class ThemeColor {
 
   /// Text colors
   static const grey = Colors.grey;
+  static const textGrey7b = Color(0xFF6E737B);
   static const lightGrey1 = Color(0xFFCACCCF);
   static const lightGrey2 = Color(0xFFEFEFEF);
   static const lightGrey3 = Color(0xFFF2F2F2);

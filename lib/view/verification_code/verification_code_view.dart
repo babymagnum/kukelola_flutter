@@ -155,6 +155,7 @@ class _VerificationCodeViewState extends State<VerificationCodeView> {
                       ) :
                       Container(),
                       ButtonLoading(
+                        textStyle: ThemeTextStyle.biryaniBold.apply(color: Colors.white, fontSizeDelta: 14.ssp),
                         backgroundColor: ThemeColor.primary,
                         disable: _hasEmpty() || _verificationCodeCt.loadingVerify.value,
                         title: 'Verify',

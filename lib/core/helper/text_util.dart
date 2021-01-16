@@ -1,38 +1,23 @@
-import 'dart:convert';
+import 'dart:math';
+import 'package:get/get.dart';
 import 'package:intl/intl.dart';
+import 'package:kukelola_flutter/core/controller/common_controller.dart';
 
-abstract class TextUtil {
+class TextUtil {
   static bool validateName(String text) {
-    return text
-        .contains(new RegExp(r"^[a-zA-Z]+(([',. -][a-zA-Z ])?[a-zA-Z]*)*$"));
+    return text.contains(RegExp(r"^[a-zA-Z]+(([',. -][a-zA-Z ])?[a-zA-Z]*)*$"));
   }
 
   static bool validateNumber(String text) {
-    Pattern pattern = r'^[0-9]+$';
-    RegExp regex = new RegExp(pattern);
+    Pattern pattern = r'^\D?(\d{3})\D?\D?(\d{3})\D?(\d{4})$';
+    RegExp regex = RegExp(pattern);
     return regex.hasMatch(text);
   }
 
   static bool validateEmail(String text) {
-    Pattern pattern =
-        r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$';
-    RegExp regex = new RegExp(pattern);
+    Pattern pattern = r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$';
+    RegExp regex = RegExp(pattern);
     return regex.hasMatch(text);
-  }
-
-  static bool isImageFromInternet(String text) {
-    Pattern pattern = 'http|https|www';
-    RegExp regex = new RegExp(pattern);
-    return regex.hasMatch(text);
-  }
-
-  static bool validatePassword(String text) {
-    return text.toString().length >= 6;
-  }
-
-  static String convertMapToString(Map<dynamic, dynamic> data) {
-    JsonEncoder encoder = new JsonEncoder.withIndent('  ');
-    return encoder.convert(data);
   }
 
   static String capitalize(String value) {
@@ -41,23 +26,95 @@ abstract class TextUtil {
         : value[0].toUpperCase();
   }
 
-  static String toRupiah(int value, bool noRp) {
-    return "${noRp ? '' : 'Rp '}${value.toString().replaceAllMapped(new RegExp(r'(\d{1,3})(?=(\d{3})+(?!\d))'), (Match m) => '${m[1]}.')}";
+  static String toRupiah(String symbol, int value, bool noRp) {
+    return '${noRp ? '' : 'Rp '}${value.toString().replaceAllMapped(RegExp(r'(\d{1,3})(?=(\d{3})+(?!\d))'), (Match m) => '${m[1]}${symbol == null ? '.' : symbol}')}';
+  }
+
+  static String standartDateFormat(String dateString, String pattern) {
+    if (dateString == '') return '-';
+
+    final _commonCt = Get.put(CommonController());
+    DateFormat originFormat = DateFormat("yyyy-MM-dd'T'HH:mm:ss", _commonCt.language.value);
+    DateFormat finalFormat = DateFormat(pattern, _commonCt.language.value);
+    DateTime dateTime = originFormat.parse(dateString);
+    return finalFormat.format(dateTime);
+  }
+
+  static String stringToStandartDateFormat(String dateString, String pattern) {
+    final _commonCt = Get.put(CommonController());
+    DateFormat originFormat = DateFormat(pattern, _commonCt.language.value);
+    DateFormat finalFormat = DateFormat("yyyy-MM-dd'T'HH:mm:ss", _commonCt.language.value);
+    DateTime dateTime = originFormat.parse(dateString);
+    return finalFormat.format(dateTime);
+  }
+
+  static int standartDateFormatToMillis(String dateString) {
+    final _commonCt = Get.put(CommonController());
+    DateFormat originFormat = DateFormat("yyyy-MM-dd'T'HH:mm:ss", _commonCt.language.value);
+    return originFormat.parse(dateString).millisecondsSinceEpoch;
+  }
+
+  static DateTime convertStringToDateTime(String date, String pattern) {
+    final _commonCt = Get.put(CommonController());
+    DateFormat dateFormat = DateFormat(pattern, _commonCt.language.value);
+    return dateFormat.parse(date);
+  }
+
+  static DateTime convertToAnotherDateTime(DateTime date, String pattern) {
+    final stringDate = dateTimeToString(date, pattern);
+    return convertStringToDateTime(stringDate, pattern);
   }
 
   static String convertDateStringToAnotherFormat(String dateString, String pattern, String originPattern) {
-    DateFormat originFormat = DateFormat(originPattern);
-    DateFormat finalFormat = DateFormat(pattern);
+    final _commonCt = Get.put(CommonController());
+    DateFormat originFormat = DateFormat(originPattern, _commonCt.language.value);
+    DateFormat finalFormat = DateFormat(pattern, _commonCt.language.value);
     DateTime dateTime = originFormat.parse(dateString);
     return finalFormat.format(dateTime);
   }
 
   static String getCurrentDate(String pattern) {
-    return DateFormat(pattern).format(DateTime.now());
+    final _commonCt = Get.put(CommonController());
+    return DateFormat(pattern, _commonCt.language.value).format(DateTime.now());
+  }
+
+  static String getCurrentStandartDate() {
+    final _commonCt = Get.put(CommonController());
+    return DateFormat("yyyy-MM-dd'T'HH:mm:ss", _commonCt.language.value).format(DateTime.now());
   }
 
   static String millisToStringDate(int millis, String pattern) {
+    final _commonCt = Get.put(CommonController());
     var date = DateTime.fromMillisecondsSinceEpoch(millis);
-    return DateFormat(pattern).format(date);
+    return DateFormat(pattern, _commonCt.language.value).format(date);
+  }
+
+  static String dateTimeToString(DateTime dateTime, String pattern) {
+    final _commonCt = Get.put(CommonController());
+    final DateFormat formatter = DateFormat(pattern, _commonCt.language.value);
+    return formatter.format(dateTime);
+  }
+
+  static String shortenedNumber(String text) {
+    if (text.length <= 6) {
+      // ribuan
+    } else if (text.length <= 9) {
+      // jutaan
+    } else if (text.length <= 12) {
+      // milyaran
+    } else if (text.length <= 15) {
+      // trilyunan
+    }
+  }
+
+  static int randomInt(int min, int max) => min + Random().nextInt(max - min);
+
+  /*
+  * to remove all char between two char is write that 2 char and place .*? in midle of those 2 char
+  */
+  static String removeAllHtmlTags(String htmlText) {
+    RegExp exp = RegExp(r"<.*?>|&.*?;", multiLine: true, caseSensitive: false);
+
+    return htmlText.replaceAll(exp, '');
   }
 }
