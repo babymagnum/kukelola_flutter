@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:kukelola_flutter/core/controller/common_controller.dart';
 import 'package:kukelola_flutter/core/helper/constant.dart';
 import 'package:flutter/material.dart';
+import 'package:kukelola_flutter/main.dart';
 import 'package:kukelola_flutter/view/container_home/container_home_view.dart';
 import 'package:kukelola_flutter/view/home/home_view.dart';
 import 'package:kukelola_flutter/view/login/login_view.dart';
@@ -17,14 +18,12 @@ class StartView extends StatefulWidget {
 
 class _StartViewState extends State<StartView> {
 
-  var _commonCt = Get.put(CommonController());
-
   @override
   void initState() {
     super.initState();
 
     Future.delayed(Duration(milliseconds: 300), () async {
-      _commonCt.loadLanguage(context);
+      commonController.loadLanguage(context);
       final preference = await SharedPreferences.getInstance();
       final isLogin = preference?.getBool(Constant.IS_LOGIN) ?? false;
       final isOnboarding = preference?.getBool(Constant.IS_ONBOARDING) ?? false;

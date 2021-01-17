@@ -48,8 +48,8 @@ class _LoginViewState extends State<LoginView> {
                         CustomInput(
                           textInputAction: TextInputAction.next,
                           focusNode: _emailFocus,
-                          hintText: 'EMAIL',
-                          labelText: 'email',
+                          hintText: 'type email...',
+                          labelText: 'EMAIL',
                           inputType: TextInputType.emailAddress,
                           onEditingComplete: () {
                             _passwordFocus.requestFocus();
@@ -58,13 +58,14 @@ class _LoginViewState extends State<LoginView> {
                           },
                           onTap: () => setState(() => _emailFocus.requestFocus()),
                         ),
+                        SizedBox(height: 24.h,),
                         CustomInput(
                           isObsecure: _loginCt.obsecure.value,
                           onObsecureClick: () => _loginCt.setObsecure(!_loginCt.obsecure.value),
                           textInputAction: TextInputAction.done,
                           focusNode: _passwordFocus,
-                          hintText: 'PASSWORD',
-                          labelText: 'password',
+                          hintText: 'type password...',
+                          labelText: 'PASSWORD',
                           inputType: TextInputType.name,
                           onEditingComplete: () => FocusScope.of(context).requestFocus(FocusNode()),
                           onTap: () => setState(() => _passwordFocus.requestFocus()),
@@ -76,7 +77,7 @@ class _LoginViewState extends State<LoginView> {
                           title: 'Sign In',
                           loading: false,
                           onTap: () => Get.to(VerificationCodeView()),
-                          verticalPadding: 18.h,
+                          verticalPadding: 14.h,
                           textStyle: ThemeTextStyle.biryaniBold.apply(color: Colors.white, fontSizeDelta: 14.ssp),
                         )
                       ],

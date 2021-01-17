@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:kukelola_flutter/core/controller/common_controller.dart';
 import 'package:kukelola_flutter/core/widgets/no_connection.dart';
+import 'package:kukelola_flutter/main.dart';
 
 class BaseView extends StatefulWidget {
 
@@ -17,8 +18,6 @@ class BaseView extends StatefulWidget {
 
 class _BaseViewState extends State<BaseView> {
 
-  var _commonController = Get.put(CommonController());
-
   @override
   Widget build(BuildContext context) {
 
@@ -32,7 +31,7 @@ class _BaseViewState extends State<BaseView> {
           Column(
             children: [
               Expanded(child: widget.body),
-              Obx(() => NoConnection(height: _commonController.notConnected.value ? 30.h : 0,)),
+              Obx(() => NoConnection(height: commonController.notConnected.value ? 30.h : 0,)),
             ],
           ),
         ],

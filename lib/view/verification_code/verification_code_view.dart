@@ -8,6 +8,7 @@ import 'package:kukelola_flutter/core/theme/theme_text_style.dart';
 import 'package:kukelola_flutter/core/widgets/button_back.dart';
 import 'package:kukelola_flutter/core/widgets/button_loading.dart';
 import 'package:kukelola_flutter/view/base_view.dart';
+import 'package:kukelola_flutter/view/container_home/container_home_view.dart';
 import 'package:kukelola_flutter/view/home/home_view.dart';
 import 'package:kukelola_flutter/view/verification_code/verification_code_controller.dart';
 import 'package:kukelola_flutter/view/verification_code/widget/input_verification_code.dart';
@@ -166,9 +167,9 @@ class _VerificationCodeViewState extends State<VerificationCodeView> {
                           final preference = await SharedPreferences.getInstance();
                           await preference.setBool(Constant.IS_LOGIN, true);
 
-                          Get.offAll(HomeView());
+                          Get.offAll(ContainerHomeView());
                         },
-                        verticalPadding: 18.h,
+                        verticalPadding: 14.h,
                       ),
                       SizedBox(height: 24.h,)
                     ],

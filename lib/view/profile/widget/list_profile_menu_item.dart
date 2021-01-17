@@ -3,10 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
-import 'package:kukelola_flutter/core/controller/common_controller.dart';
 import 'package:kukelola_flutter/core/helper/constant.dart';
 import 'package:kukelola_flutter/core/model/static_model.dart';
 import 'package:kukelola_flutter/core/theme/theme_text_style.dart';
+import 'package:kukelola_flutter/main.dart';
 import 'package:kukelola_flutter/view/change_password/change_password_view.dart';
 
 class ListProfileMenuItem extends StatelessWidget {
@@ -17,11 +17,9 @@ class ListProfileMenuItem extends StatelessWidget {
   final int index;
   final BuildContext context;
 
-  var _commonCt = Get.put(CommonController());
-
   _onClick() {
     if (index == 0) {
-      _commonCt.setLanguage(context, _commonCt.language.value == Constant.INDONESIAN ? Constant.ENGLISH : Constant.INDONESIAN);
+      commonController.setLanguage(context, commonController.language.value == Constant.INDONESIAN ? Constant.ENGLISH : Constant.INDONESIAN);
     } else if (index == 1) {
 
     } else if (index == 2) {

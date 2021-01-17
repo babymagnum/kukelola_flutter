@@ -45,7 +45,7 @@ class _ProfileViewState extends State<ProfileView> with AutomaticKeepAliveClient
                   SizedBox(height: 14.h,),
                   Text('Newt Salamander', style: ThemeTextStyle.biryaniRegular.apply(fontSizeDelta: 20.ssp),),
                   SizedBox(height: 2.h,),
-                  Text('Field Officer', style: ThemeTextStyle.biryaniSemiBold.apply(fontSizeDelta: 12.ssp),),
+                  Text('hello'.tr, style: ThemeTextStyle.biryaniSemiBold.apply(fontSizeDelta: 12.ssp),),
                   SizedBox(height: 2.h,),
                   Text('PT. App KuKulola ID', style: ThemeTextStyle.biryaniSemiBold.apply(fontSizeDelta: 11.ssp),),
                   SizedBox(height: 18.h,),

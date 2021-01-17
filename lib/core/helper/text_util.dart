@@ -1,7 +1,6 @@
 import 'dart:math';
-import 'package:get/get.dart';
 import 'package:intl/intl.dart';
-import 'package:kukelola_flutter/core/controller/common_controller.dart';
+import 'package:kukelola_flutter/main.dart';
 
 class TextUtil {
   static bool validateName(String text) {
@@ -33,30 +32,26 @@ class TextUtil {
   static String standartDateFormat(String dateString, String pattern) {
     if (dateString == '') return '-';
 
-    final _commonCt = Get.put(CommonController());
-    DateFormat originFormat = DateFormat("yyyy-MM-dd'T'HH:mm:ss", _commonCt.language.value);
-    DateFormat finalFormat = DateFormat(pattern, _commonCt.language.value);
+    DateFormat originFormat = DateFormat("yyyy-MM-dd'T'HH:mm:ss", commonController.language.value);
+    DateFormat finalFormat = DateFormat(pattern, commonController.language.value);
     DateTime dateTime = originFormat.parse(dateString);
     return finalFormat.format(dateTime);
   }
 
   static String stringToStandartDateFormat(String dateString, String pattern) {
-    final _commonCt = Get.put(CommonController());
-    DateFormat originFormat = DateFormat(pattern, _commonCt.language.value);
-    DateFormat finalFormat = DateFormat("yyyy-MM-dd'T'HH:mm:ss", _commonCt.language.value);
+    DateFormat originFormat = DateFormat(pattern, commonController.language.value);
+    DateFormat finalFormat = DateFormat("yyyy-MM-dd'T'HH:mm:ss", commonController.language.value);
     DateTime dateTime = originFormat.parse(dateString);
     return finalFormat.format(dateTime);
   }
 
   static int standartDateFormatToMillis(String dateString) {
-    final _commonCt = Get.put(CommonController());
-    DateFormat originFormat = DateFormat("yyyy-MM-dd'T'HH:mm:ss", _commonCt.language.value);
+    DateFormat originFormat = DateFormat("yyyy-MM-dd'T'HH:mm:ss", commonController.language.value);
     return originFormat.parse(dateString).millisecondsSinceEpoch;
   }
 
   static DateTime convertStringToDateTime(String date, String pattern) {
-    final _commonCt = Get.put(CommonController());
-    DateFormat dateFormat = DateFormat(pattern, _commonCt.language.value);
+    DateFormat dateFormat = DateFormat(pattern, commonController.language.value);
     return dateFormat.parse(date);
   }
 
@@ -66,32 +61,27 @@ class TextUtil {
   }
 
   static String convertDateStringToAnotherFormat(String dateString, String pattern, String originPattern) {
-    final _commonCt = Get.put(CommonController());
-    DateFormat originFormat = DateFormat(originPattern, _commonCt.language.value);
-    DateFormat finalFormat = DateFormat(pattern, _commonCt.language.value);
+    DateFormat originFormat = DateFormat(originPattern, commonController.language.value);
+    DateFormat finalFormat = DateFormat(pattern, commonController.language.value);
     DateTime dateTime = originFormat.parse(dateString);
     return finalFormat.format(dateTime);
   }
 
   static String getCurrentDate(String pattern) {
-    final _commonCt = Get.put(CommonController());
-    return DateFormat(pattern, _commonCt.language.value).format(DateTime.now());
+    return DateFormat(pattern, commonController.language.value).format(DateTime.now());
   }
 
   static String getCurrentStandartDate() {
-    final _commonCt = Get.put(CommonController());
-    return DateFormat("yyyy-MM-dd'T'HH:mm:ss", _commonCt.language.value).format(DateTime.now());
+    return DateFormat("yyyy-MM-dd'T'HH:mm:ss", commonController.language.value).format(DateTime.now());
   }
 
   static String millisToStringDate(int millis, String pattern) {
-    final _commonCt = Get.put(CommonController());
     var date = DateTime.fromMillisecondsSinceEpoch(millis);
-    return DateFormat(pattern, _commonCt.language.value).format(date);
+    return DateFormat(pattern, commonController.language.value).format(date);
   }
 
   static String dateTimeToString(DateTime dateTime, String pattern) {
-    final _commonCt = Get.put(CommonController());
-    final DateFormat formatter = DateFormat(pattern, _commonCt.language.value);
+    final DateFormat formatter = DateFormat(pattern, commonController.language.value);
     return formatter.format(dateTime);
   }
 

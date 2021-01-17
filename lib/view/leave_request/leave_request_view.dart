@@ -1,10 +1,12 @@
+import 'dart:io';
 import 'package:division/division.dart';
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
-import 'package:kukelola_flutter/core/controller/common_controller.dart';
 import 'package:kukelola_flutter/core/helper/constant.dart';
 import 'package:kukelola_flutter/core/helper/text_util.dart';
 import 'package:kukelola_flutter/core/theme/theme_color.dart';
@@ -13,9 +15,10 @@ import 'package:kukelola_flutter/core/widgets/button_back.dart';
 import 'package:kukelola_flutter/core/widgets/button_loading.dart';
 import 'package:kukelola_flutter/core/widgets/custom_date_picker.dart';
 import 'package:kukelola_flutter/core/widgets/custom_input.dart';
-import 'package:kukelola_flutter/core/widgets/custom_input_dropdown.dart';
+import 'package:kukelola_flutter/core/widgets/input_attachment.dart';
 import 'package:kukelola_flutter/core/widgets/input_tap.dart';
 import 'package:kukelola_flutter/core/widgets/list_standart_dropdown_item.dart';
+import 'package:kukelola_flutter/main.dart';
 import 'package:kukelola_flutter/view/base_view.dart';
 import 'package:kukelola_flutter/view/leave_request/leave_request_controller.dart';
 
@@ -26,12 +29,10 @@ class LeaveRequestView extends StatefulWidget {
 
 class _LeaveRequestViewState extends State<LeaveRequestView> {
 
-  var _leaveRequestCt = Get.put(LeaveRequestController());
-  var _commonCt = Get.put(CommonController());
   var _typeKey = GlobalKey();
-  var _leaveTypeCt = TextEditingController(), _startDateCt = TextEditingController(), _endDateCt = TextEditingController(),
-      _reasonCt = TextEditingController();
+  var _reasonCt = TextEditingController();
   var _reasonFocus = FocusNode();
+  var _leaveRequestCt = Get.put(LeaveRequestController());
 
   _showDatePicker(BuildContext context, String selectedDate, Function (String date) onPick) {
 
@@ -53,11 +54,25 @@ class _LeaveRequestViewState extends State<LeaveRequestView> {
                 currentTime: TextUtil.convertStringToDateTime(selectedDate, 'dd/MM/yyyy'),
                 minTime: DateTime.now(),
                 maxTime: DateTime(DateTime.now().year + 20, 12, 31),
-                locale: _commonCt.language.value == Constant.INDONESIAN ? LocaleType.id : LocaleType.en
+                locale: commonController.language.value == Constant.INDONESIAN ? LocaleType.id : LocaleType.en
             ),
           );
         }
     );
+  }
+
+  _pickFile() async {
+    _leaveRequestCt.setLoadingPickFile(true);
+    FilePickerResult result = await FilePicker.platform.pickFiles(type: FileType.custom,
+      allowedExtensions: ['jpg', 'pdf', 'doc', 'png', 'jpeg', 'JPG'],);
+    _leaveRequestCt.setLoadingPickFile(false);
+
+    if(result != null) {
+      File file = File(result.files.single.path);
+      _leaveRequestCt.setFilePath(file.path);
+    } else {
+      Fluttertoast.showToast(msg: 'Canceled the picker.', backgroundColor: Colors.black.withOpacity(0.6));
+    }
   }
 
   _showDropdownType(BuildContext context) {
@@ -75,7 +90,7 @@ class _LeaveRequestViewState extends State<LeaveRequestView> {
           Container(width: Get.width, height: Get.height,),
           Positioned(
             left: 24.w, right: 24.w,
-            top: position.dy > Get.height - 150.h ? Get.height / 2 : position.dy + context.mediaQueryPadding.top + 15.h,
+            top: position.dy > Get.height - 150.h ? Get.height / 2 : position.dy + context.mediaQueryPadding.top,
             child: Column(
               children: [
                 Parent(
@@ -87,7 +102,7 @@ class _LeaveRequestViewState extends State<LeaveRequestView> {
                     itemBuilder: (_, index) => ListStandartDropdownItem(
                       content: _leaveRequestCt.listLeaveType[index].label,
                       onClick: () {
-                        setState(() => _leaveTypeCt.text = _leaveRequestCt.listLeaveType[index].label);
+                        _leaveRequestCt.setLeaveType(_leaveRequestCt.listLeaveType[index].label);
                         Navigator.pop(context);
                       },
                     ),
@@ -103,20 +118,11 @@ class _LeaveRequestViewState extends State<LeaveRequestView> {
   }
 
   @override
-  void dispose() {
-    _leaveTypeCt.dispose();
-
-    super.dispose();
-  }
-
-  @override
   void initState() {
     super.initState();
 
     Future.delayed(Duration.zero, () {
       _leaveRequestCt.populateLeaveType();
-      _startDateCt.text = _leaveRequestCt.startDate.value;
-      _endDateCt.text = _leaveRequestCt.endDate.value;
     });
   }
 
@@ -157,52 +163,63 @@ class _LeaveRequestViewState extends State<LeaveRequestView> {
               child: SingleChildScrollView(
                 child: Padding(
                   padding: EdgeInsets.symmetric(horizontal: 24.w),
-                  child: Column(
-                    children: [
-                      SizedBox(height: 16.h,),
-                      CustomInputDropdown(
-                        key: _typeKey,
-                        labelText: 'Pick leave type.',
-                        hintText: 'TYPE',
-                        onTap: () => _showDropdownType(context),
-                        controller: _leaveTypeCt,
-                        rightIcon: 'assets/images/fa-solid_caret-down.svg',
-                      ),
-                      SizedBox(height: 16.h,),
-                      InputTap(
-                        labelText: 'START DATE',
-                        hintText: '',
-                        onTap: () => _showDatePicker(context, _leaveRequestCt.startDate.value, (date) {
-                          _leaveRequestCt.setStartDate(date);
-                        }),
-                        rightIcon: '',
-                        leftSize: Size(14.w, 16.h),
-                        value: _leaveRequestCt.startDate.value,
-                        leftIcon: 'assets/images/fa-solid_calendar-day.svg',
-                      ),
-                      SizedBox(height: 16.h,),
-                      InputTap(
-                        labelText: 'END DATE',
-                        hintText: '',
-                        onTap: () => _showDatePicker(context, _leaveRequestCt.endDate.value, (date) {
-                          _leaveRequestCt.setEndDate(date);
-                        }),
-                        rightIcon: '',
-                        leftSize: Size(14.w, 16.h),
-                        value: _leaveRequestCt.endDate.value,
-                        leftIcon: 'assets/images/fa-solid_calendar-day.svg',
-                      ),
-                      CustomInput(
-                        textInputAction: null,
-                        focusNode: _reasonFocus,
-                        labelText: 'Type reason...',
-                        hintText: 'REASON',
-                        inputType: TextInputType.multiline,
-                        onEditingComplete: () {},
-                        maxLines: null,
-                        onTap: () => setState(() => _reasonFocus.requestFocus()),
-                      )
-                    ],
+                  child: Obx(() => Column(
+                      children: [
+                        SizedBox(height: 32.h,),
+                        InputTap(
+                          key: _typeKey,
+                          labelText: 'TYPE',
+                          hintText: 'pick leave type...',
+                          onTap: () => _showDropdownType(context),
+                          rightIcon: 'assets/images/fa-solid_caret-down.svg',
+                          rightSize: Size(10.w, 16.h),
+                          value: _leaveRequestCt.leaveType.value,
+                        ),
+                        SizedBox(height: 24.h,),
+                        InputTap(
+                          labelText: 'START DATE',
+                          hintText: '',
+                          onTap: () => _showDatePicker(context, _leaveRequestCt.startDate.value, (date) {
+                            _leaveRequestCt.setStartDate(date);
+                          }),
+                          rightIcon: '',
+                          leftSize: Size(14.w, 16.h),
+                          value: _leaveRequestCt.startDate.value,
+                          leftIcon: 'assets/images/fa-solid_calendar-day.svg',
+                        ),
+                        SizedBox(height: 24.h,),
+                        InputTap(
+                          labelText: 'END DATE',
+                          hintText: '',
+                          onTap: () => _showDatePicker(context, _leaveRequestCt.endDate.value, (date) {
+                            _leaveRequestCt.setEndDate(date);
+                          }),
+                          rightIcon: '',
+                          leftSize: Size(14.w, 16.h),
+                          value: _leaveRequestCt.endDate.value,
+                          leftIcon: 'assets/images/fa-solid_calendar-day.svg',
+                        ),
+                        SizedBox(height: 24.h,),
+                        CustomInput(
+                          textInputAction: null,
+                          focusNode: _reasonFocus,
+                          labelText: 'REASON',
+                          hintText: 'type reason...',
+                          inputType: TextInputType.multiline,
+                          onEditingComplete: () {},
+                          maxLines: null,
+                          onTap: () => setState(() => _reasonFocus.requestFocus()),
+                        ),
+                        SizedBox(height: 24.h,),
+                        InputAttachment(
+                          labelText: 'ATTACHMENT (OPTIONAL)',
+                          hintText: 'selected file...',
+                          onTap: () => _pickFile(),
+                          loading: _leaveRequestCt.loadingPickFile.value,
+                          value: _leaveRequestCt.filePath.value.path == '' ? '' : '${_leaveRequestCt.filePath.value.path} (${(_leaveRequestCt.filePath.value.lengthSync() / 1024).round()} KB)',
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               ),

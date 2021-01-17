@@ -9,12 +9,14 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
+final globalNavigatorKey = GlobalKey<NavigatorState>();
+final firebaseMessaging = FirebaseMessaging();
+/// PLACE GLOBAL CONTROLLER HERE IF YOU WANT THE CONTROLLER PERSIST ///
+final commonController = Get.put(CommonController());
+
 void main() {
   runApp(MyApp());
 }
-
-final globalNavigatorKey = GlobalKey<NavigatorState>();
-final FirebaseMessaging firebaseMessaging = FirebaseMessaging();
 
 class MyApp extends StatefulWidget {
 
@@ -28,8 +30,6 @@ class MyApp extends StatefulWidget {
 class _MyAppState extends State<MyApp> {
 
   StreamSubscription _connection;
-  CommonController _commonController = Get.put(CommonController());
-  var _commonCt = Get.put(CommonController());
 
   @override
   void dispose() {
@@ -46,11 +46,11 @@ class _MyAppState extends State<MyApp> {
         .onConnectivityChanged
         .listen((ConnectivityResult result) {
       if (result == ConnectivityResult.mobile) {
-        _commonController.setNotConnected(false);
+        commonController.setNotConnected(false);
       } else if (result == ConnectivityResult.wifi) {
-        _commonController.setNotConnected(false);
+        commonController.setNotConnected(false);
       } else {
-        _commonController.setNotConnected(true);
+        commonController.setNotConnected(true);
       }
     });
   }
@@ -64,12 +64,8 @@ class _MyAppState extends State<MyApp> {
       title: 'KuKelola',
       navigatorKey: globalNavigatorKey,
       home: StartView(),
-      supportedLocales: [
-        Locale(Constant.INDONESIAN),
-        Locale(Constant.ENGLISH),
-      ],
       translations: LocalesString(),
-      locale: Locale(_commonCt.language.value),
+      locale: Locale(commonController.language.value),
       fallbackLocale: Locale(Constant.INDONESIAN),
       debugShowCheckedModeBanner: false,
     );
