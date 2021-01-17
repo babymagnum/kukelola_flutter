@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:kukelola_flutter/core/controller/common_controller.dart';
 import 'package:kukelola_flutter/core/widgets/no_connection.dart';
 import 'package:kukelola_flutter/main.dart';
 

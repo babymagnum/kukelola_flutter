@@ -13,15 +13,13 @@
 
 # Basic packages used
 
-1. mobx for state management
+1. getx for state management, route management, dependency injection
 2. get_it for dependency injection
-3. http & dio for http request, http package use for optionally call request that doesnt support serialize with dio
-4. flutter_html for support html tag (load http tag string)
-5. flutter_masked_text for masked the textfield
-6. shimmer for create shimmer loading like facebook
-7. connectivity for check the device connection
-8. shared_preferences for save local data
-9. etc
+3. dio for http request, http package use for optionally call request that doesnt support serialize with dio
+4. shimmer for create shimmer loading like facebook
+5. connectivity for check the device connection
+6. shared_preferences for save local data
+7. etc
 
 # Networking schema
 
@@ -31,9 +29,3 @@
 4. Create method in `user_service.dart` for example you can look doLogin method, in there we pass `success.dart` class to the generics class to, which mean we want the result of the http request to that class model.
 5. Call `user_service.dart` class anywhere you want to do http request, in the example we call it in `base_stores.dart`, because we use mobx for state management wen can place the http transaction in the stores class so it can be modular.
 
-# Add new model(http response model) or stores(mobx class for event and state management)
-
-1. Create model class, look example of `success.dart`
-2. Create stores class, look example of `base_stores.dart`
-3. run in terminal `flutter pub run build_runner watch --delete-conflicting-outputs`
-4. .g.dart file will generated automatically after proccess in terminal done

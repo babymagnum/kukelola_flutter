@@ -31,6 +31,16 @@ class _MyAppState extends State<MyApp> {
 
   StreamSubscription _connection;
 
+  _connectivityResult(ConnectivityResult result) {
+    if (result == ConnectivityResult.mobile) {
+      commonController.setNotConnected(false);
+    } else if (result == ConnectivityResult.wifi) {
+      commonController.setNotConnected(false);
+    } else {
+      commonController.setNotConnected(true);
+    }
+  }
+
   @override
   void dispose() {
     _connection?.cancel();
@@ -42,17 +52,10 @@ class _MyAppState extends State<MyApp> {
   void initState() {
     super.initState();
 
-    _connection = Connectivity()
-        .onConnectivityChanged
-        .listen((ConnectivityResult result) {
-      if (result == ConnectivityResult.mobile) {
-        commonController.setNotConnected(false);
-      } else if (result == ConnectivityResult.wifi) {
-        commonController.setNotConnected(false);
-      } else {
-        commonController.setNotConnected(true);
-      }
-    });
+    Connectivity().checkConnectivity().then((result) => _connectivityResult(result));
+
+    _connection = Connectivity().onConnectivityChanged
+        .listen((ConnectivityResult result) => _connectivityResult(result));
   }
 
   @override
