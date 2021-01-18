@@ -5,6 +5,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:kukelola_flutter/core/model/static_model.dart';
 import 'package:kukelola_flutter/core/theme/theme_text_style.dart';
+import 'package:kukelola_flutter/view/attendance_request/attendance_request_view.dart';
 import 'package:kukelola_flutter/view/leave_request/leave_request_view.dart';
 
 class ListHomeMenuItem extends StatelessWidget {
@@ -17,7 +18,7 @@ class ListHomeMenuItem extends StatelessWidget {
     if (index == 0) {
 
     } else if (index == 1) {
-
+      Get.to(AttendanceRequestView());
     } else if (index == 2) {
 
     } else if (index == 3) {

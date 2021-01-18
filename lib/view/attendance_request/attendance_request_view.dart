@@ -20,20 +20,20 @@ import 'package:kukelola_flutter/core/widgets/input_attachment.dart';
 import 'package:kukelola_flutter/core/widgets/input_tap.dart';
 import 'package:kukelola_flutter/core/widgets/list_standart_dropdown_item.dart';
 import 'package:kukelola_flutter/main.dart';
+import 'package:kukelola_flutter/view/attendance_request/attendance_request_controller.dart';
 import 'package:kukelola_flutter/view/base_view.dart';
 import 'package:kukelola_flutter/view/leave_request/leave_request_controller.dart';
 
-class LeaveRequestView extends StatefulWidget {
+class AttendanceRequestView extends StatefulWidget {
   @override
-  _LeaveRequestViewState createState() => _LeaveRequestViewState();
+  AttendanceRequestViewState createState() => AttendanceRequestViewState();
 }
 
-class _LeaveRequestViewState extends State<LeaveRequestView> {
+class AttendanceRequestViewState extends State<AttendanceRequestView> {
 
-  var _typeKey = GlobalKey(), _specialLeaveKey = GlobalKey();
   var _reasonCt = TextEditingController();
   var _reasonFocus = FocusNode();
-  var _leaveRequestCt = Get.put(LeaveRequestController());
+  var _attendanceRequestCt = Get.put(AttendanceRequestController());
 
   _showDatePicker(BuildContext context, String selectedDate, Function (String date) onPick) {
 
@@ -47,7 +47,6 @@ class _LeaveRequestViewState extends State<LeaveRequestView> {
           return DateTimePickerComponent(
             onPick: () {
               onPick(temporaryDate);
-              print('selected date $temporaryDate');
               Navigator.pop(context);
             },
             onChanged: (DateTime date) => temporaryDate = TextUtil.dateTimeToString(date, 'dd/MM/yyyy'),
@@ -62,60 +61,44 @@ class _LeaveRequestViewState extends State<LeaveRequestView> {
     );
   }
 
-  _pickFile() async {
-    _leaveRequestCt.setLoadingPickFile(true);
-    FilePickerResult result = await FilePicker.platform.pickFiles(type: FileType.custom,
-      allowedExtensions: ['jpg', 'pdf', 'doc', 'png', 'jpeg', 'JPG'],);
-    _leaveRequestCt.setLoadingPickFile(false);
-
-    if(result != null) {
-      File file = File(result.files.single.path);
-      _leaveRequestCt.setFilePath(file.path);
-    } else {
-      Fluttertoast.showToast(msg: 'Canceled the picker.', backgroundColor: Colors.black.withOpacity(0.6));
-    }
-  }
-
-  _showDropdownType(BuildContext context, GlobalKey key, List<LeaveTypeItem> list, Function(LeaveTypeItem item) onSelect) {
+  _showTimePicker(BuildContext context, String selectedTime, Function (String time) onPick) {
 
     FocusScope.of(context).requestFocus(FocusNode());
 
-    final RenderBox renderBoxRed = key.currentContext.findRenderObject();
-    final position = renderBoxRed.localToGlobal(Offset.zero);
+    var temporaryDate = '';
 
-    showDialog(
-      context: context,
-      barrierColor: Colors.transparent,
-      child: Stack(
-        children: [
-          Container(width: Get.width, height: Get.height,),
-          Positioned(
-            left: 24.w, right: 24.w,
-            top: position.dy > Get.height - 150.h ? Get.height / 2 : position.dy + context.mediaQueryPadding.top,
-            child: Column(
-              children: [
-                Parent(
-                  style: ParentStyle()..width(Get.width)..maxHeight(150.h)..borderRadius(bottomLeft: 6, bottomRight: 6)
-                    ..background.color(Colors.white)..boxShadow(color: Colors.black.withOpacity(0.05), blur: 6, spread: 0, offset: Offset(0, 2)),
-                  child: ListView.separated(
-                    shrinkWrap: true,
-                    itemCount: list.length,
-                    itemBuilder: (_, index) => ListStandartDropdownItem(
-                      content: list[index].label,
-                      onClick: () {
-                        onSelect(list[index]);
-                        Navigator.pop(context);
-                      },
-                    ),
-                    separatorBuilder: (_, __) => Divider(color: Colors.transparent, height: 5.h,),
-                  ),
-                ),
-              ],
+    showModalBottomSheet(
+        context: context,
+        builder: (BuildContext context) {
+          return DateTimePickerComponent(
+            onPick: () {
+              print('tempo time $temporaryDate');
+              onPick(temporaryDate);
+              Navigator.pop(context);
+            },
+            onChanged: (DateTime date) => temporaryDate = TextUtil.dateTimeToString(date, 'HH:mm'),
+            pickerModel: CustomTimePicker(
+              currentTime: TextUtil.convertStringToDateTime(selectedTime, 'HH:mm'),
+              locale: commonController.language.value == Constant.INDONESIAN ? LocaleType.id : LocaleType.en,
+              showSecondsColumn: false
             ),
-          )
-        ],
-      ),
+          );
+        }
     );
+  }
+
+  _pickFile() async {
+    _attendanceRequestCt.setLoadingPickFile(true);
+    FilePickerResult result = await FilePicker.platform.pickFiles(type: FileType.custom,
+      allowedExtensions: ['jpg', 'pdf', 'doc', 'png', 'jpeg', 'JPG'],);
+    _attendanceRequestCt.setLoadingPickFile(false);
+
+    if(result != null) {
+      File file = File(result.files.single.path);
+      _attendanceRequestCt.setFilePath(file.path);
+    } else {
+      Fluttertoast.showToast(msg: 'Canceled the picker.', backgroundColor: Colors.black.withOpacity(0.6));
+    }
   }
 
   @override
@@ -130,17 +113,17 @@ class _LeaveRequestViewState extends State<LeaveRequestView> {
               children: [
                 Expanded(
                   child: ButtonBack(
-                    label: 'Leave Request',
+                    label: 'Attendance Request',
                     onBack: () => Get.back(),
                   ),
                 ),
                 SizedBox(width: 10.w,),
                 ButtonLoading(
                   backgroundColor: ThemeColor.primary,
-                  disable: _leaveRequestCt.loadingSubmit.value,
+                  disable: _attendanceRequestCt.loadingSubmit.value,
                   title: 'Submit',
-                  loading: _leaveRequestCt.loadingSubmit.value,
-                  onTap: () => _leaveRequestCt.submitLeaveRequest(),
+                  loading: _attendanceRequestCt.loadingSubmit.value,
+                  onTap: () => _attendanceRequestCt.submitLeaveRequest(),
                   verticalPadding: 6.h,
                   horizontalPadding: 15.w,
                   loadingSize: 12.w,
@@ -159,53 +142,47 @@ class _LeaveRequestViewState extends State<LeaveRequestView> {
                       children: [
                         SizedBox(height: 32.h,),
                         InputTap(
-                          key: _typeKey,
-                          labelText: 'TYPE',
-                          hintText: 'choose leave type...',
-                          onTap: () => _showDropdownType(context, _typeKey, _leaveRequestCt.listLeaveType, (leaveType) => _leaveRequestCt.setLeaveType(leaveType)),
-                          rightIcon: 'assets/images/fa-solid_caret-down.svg',
-                          rightSize: Size(10.w, 16.h),
-                          value: _leaveRequestCt?.leaveType?.label ?? '',
-                        ),
-                        AnimatedContainer(
-                          duration: Duration(milliseconds: 200),
-                          height: _leaveRequestCt.showSpecialLeave.value ? commonController.inputTapHeight.value + 24.h : 0,
-                          child: Padding(
-                            padding: EdgeInsets.only(top: 24.h),
-                            child: InputTap(
-                              key: _specialLeaveKey,
-                              labelText: 'SPECIAL LEAVE',
-                              hintText: 'choose special leave...',
-                              onTap: () => _showDropdownType(context, _specialLeaveKey, _leaveRequestCt.listSpecialLeave, (leaveType) => _leaveRequestCt.setSpecialLeaveType(leaveType)),
-                              rightIcon: 'assets/images/fa-solid_caret-down.svg',
-                              rightSize: Size(10.w, 16.h),
-                              value: _leaveRequestCt?.specialLeaveType?.label ?? '',
-                            ),
-                          ),
-                        ),
-                        SizedBox(height: 24.h,),
-                        InputTap(
                           labelText: 'START DATE',
                           hintText: '',
-                          onTap: () => _showDatePicker(context, _leaveRequestCt.startDate.value, (date) {
-                            _leaveRequestCt.setStartDate(date);
+                          onTap: () => _showDatePicker(context, _attendanceRequestCt.startDate.value, (date) {
+                            _attendanceRequestCt.setStartDate(date);
                           }),
                           rightIcon: '',
                           leftSize: Size(14.w, 16.h),
-                          value: _leaveRequestCt.startDate.value,
+                          value: _attendanceRequestCt.startDate.value,
                           leftIcon: 'assets/images/fa-solid_calendar-day.svg',
                         ),
                         SizedBox(height: 24.h,),
                         InputTap(
                           labelText: 'END DATE',
                           hintText: '',
-                          onTap: () => _showDatePicker(context, _leaveRequestCt.endDate.value, (date) {
-                            _leaveRequestCt.setEndDate(date);
+                          onTap: () => _showDatePicker(context, _attendanceRequestCt.endDate.value, (date) {
+                            _attendanceRequestCt.setEndDate(date);
                           }),
                           rightIcon: '',
                           leftSize: Size(14.w, 16.h),
-                          value: _leaveRequestCt.endDate.value,
+                          value: _attendanceRequestCt.endDate.value,
                           leftIcon: 'assets/images/fa-solid_calendar-day.svg',
+                        ),
+                        SizedBox(height: 24.h,),
+                        InputTap(
+                          labelText: 'HOUR (START)',
+                          hintText: '',
+                          onTap: () => _showTimePicker(context, _attendanceRequestCt.startHour.value, (time) => _attendanceRequestCt.setStartHour(time)),
+                          rightIcon: '',
+                          leftSize: Size(14.w, 16.h),
+                          value: _attendanceRequestCt.startHour.value,
+                          leftIcon: 'assets/images/fa-solid_clock.svg',
+                        ),
+                        SizedBox(height: 24.h,),
+                        InputTap(
+                          labelText: 'HOUR (END)',
+                          hintText: '',
+                          onTap: () => _showTimePicker(context, _attendanceRequestCt.endHour.value, (time) => _attendanceRequestCt.setEndHour(time)),
+                          rightIcon: '',
+                          leftSize: Size(14.w, 16.h),
+                          value: _attendanceRequestCt.endHour.value,
+                          leftIcon: 'assets/images/fa-solid_clock.svg',
                         ),
                         SizedBox(height: 24.h,),
                         CustomInput(
@@ -223,8 +200,8 @@ class _LeaveRequestViewState extends State<LeaveRequestView> {
                           labelText: 'ATTACHMENT (OPTIONAL)',
                           hintText: 'selected file...',
                           onTap: () => _pickFile(),
-                          loading: _leaveRequestCt.loadingPickFile.value,
-                          value: _leaveRequestCt.filePath.value.path == '' ? '' : '${_leaveRequestCt.filePath.value.path} (${(_leaveRequestCt.filePath.value.lengthSync() / 1024).round()} KB)',
+                          loading: _attendanceRequestCt.loadingPickFile.value,
+                          value: _attendanceRequestCt.filePath.value.path == '' ? '' : '${_attendanceRequestCt.filePath.value.path} (${(_attendanceRequestCt.filePath.value.lengthSync() / 1024).round()} KB)',
                         ),
                       ],
                     ),

@@ -6,6 +6,125 @@ import 'package:kukelola_flutter/core/theme/theme_color.dart';
 import 'package:kukelola_flutter/core/theme/theme_text_style.dart';
 import 'package:kukelola_flutter/core/widgets/button_loading.dart';
 
+class CustomTimePicker extends CommonPickerModel {
+  final bool showSecondsColumn;
+
+  int _currentLeftIndex;
+  int _currentMiddleIndex;
+  int _currentRightIndex;
+
+  CustomTimePicker({DateTime currentTime, LocaleType locale, this.showSecondsColumn: true})
+      : super(locale: locale) {
+    this.currentTime = currentTime ?? DateTime.now();
+
+    _currentLeftIndex = this.currentTime.hour;
+    _currentMiddleIndex = this.currentTime.minute;
+    _currentRightIndex = this.currentTime.second;
+  }
+
+  String digits(int value, int length) {
+    return '$value'.padLeft(length, "0");
+  }
+
+  @override
+  int currentLeftIndex() {
+    super.currentLeftIndex();
+
+    return _currentLeftIndex;
+  }
+
+  @override
+  int currentMiddleIndex() {
+    super.currentMiddleIndex();
+
+    return _currentMiddleIndex;
+  }
+
+  @override
+  int currentRightIndex() {
+    super.currentRightIndex();
+
+    return _currentRightIndex;
+  }
+
+  @override
+  void setLeftIndex(int index) {
+    // TODO: implement setLeftIndex
+    super.setLeftIndex(index);
+
+    currentTime = DateTime(currentTime.year, currentTime.month, currentTime.day, index, currentTime.minute, currentTime.second);
+  }
+
+  @override
+  void setMiddleIndex(int index) {
+    // TODO: implement setMiddleIndex
+    super.setMiddleIndex(index);
+
+    currentTime = DateTime(currentTime.year, currentTime.month, currentTime.day, currentTime.hour, index, currentTime.second);
+  }
+
+  @override
+  void setRightIndex(int index) {
+    // TODO: implement setRightIndex
+    super.setRightIndex(index);
+
+    currentTime = DateTime(currentTime.year, currentTime.month, currentTime.day, currentTime.hour, currentTime.minute, index);
+  }
+
+  @override
+  String leftStringAtIndex(int index) {
+    if (index >= 0 && index < 24) {
+      return digits(index, 2);
+    } else {
+      return null;
+    }
+  }
+
+  @override
+  String middleStringAtIndex(int index) {
+    if (index >= 0 && index < 60) {
+      return digits(index, 2);
+    } else {
+      return null;
+    }
+  }
+
+  @override
+  String rightStringAtIndex(int index) {
+    if (index >= 0 && index < 60) {
+      return digits(index, 2);
+    } else {
+      return null;
+    }
+  }
+
+  @override
+  String leftDivider() {
+    return ":";
+  }
+
+  @override
+  String rightDivider() {
+    if (showSecondsColumn)
+      return ":";
+    else
+      return "";
+  }
+
+  @override
+  List<int> layoutProportions() {
+    if (showSecondsColumn)
+      return [1, 1, 1];
+    else
+      return [1, 1, 0];
+  }
+
+  @override
+  DateTime finalTime() {
+    return currentTime;
+  }
+}
+
 class CustomDatePicker extends CommonPickerModel {
   DateTime maxTime;
   DateTime minTime;
@@ -284,8 +403,8 @@ class CustomDatePicker extends CommonPickerModel {
   }
 }
 
-class DatePickerComponent extends StatefulWidget {
-  DatePickerComponent({Key key, this.onChanged, this.pickerModel, this.onPick});
+class DateTimePickerComponent extends StatefulWidget {
+  DateTimePickerComponent({Key key, this.onChanged, this.pickerModel, this.onPick});
 
   final DateChangedCallback onChanged;
   final BasePickerModel pickerModel;
@@ -293,11 +412,11 @@ class DatePickerComponent extends StatefulWidget {
 
   @override
   State<StatefulWidget> createState() {
-    return DatePickerState();
+    return DateTimePickerState();
   }
 }
 
-class DatePickerState extends State<DatePickerComponent> {
+class DateTimePickerState extends State<DateTimePickerComponent> {
   FixedExtentScrollController leftScrollCtrl, middleScrollCtrl, rightScrollCtrl;
 
   @override

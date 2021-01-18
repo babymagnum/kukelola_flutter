@@ -3,7 +3,6 @@ import 'package:get/get.dart';
 import 'package:kukelola_flutter/core/helper/constant.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:intl/date_symbol_data_local.dart';
-import 'package:intl/intl.dart';
 
 class CommonController extends GetxController {
 
@@ -11,10 +10,14 @@ class CommonController extends GetxController {
   var logout = false.obs;
   var closeApps = false.obs;
   var language = Constant.INDONESIAN.obs;
+  var inputTapHeight = (0.0).obs;
 
   setLogout(value) => logout.value = value;
   setCloseapps(value) => closeApps.value = value;
   setNotConnected(value) => notConnected.value = value;
+  setInputTapHeight(double value) {
+    if (inputTapHeight.value == 0) inputTapHeight.value = value;
+  }
 
   setLanguage(BuildContext context, String value) async {
     final preference = await SharedPreferences.getInstance();
