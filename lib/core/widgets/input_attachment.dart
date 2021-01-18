@@ -22,7 +22,6 @@ class InputAttachment extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Parent(
-      gesture: Gestures()..onTap(onTap),
       style: ParentStyle()..ripple(true),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,

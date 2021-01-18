@@ -1,5 +1,12 @@
 import 'package:flutter/cupertino.dart';
 
+class ReimbursmentDetailItem {
+  ReimbursmentDetailItem(this.description, this.price);
+
+  String description;
+  int price;
+}
+
 class LeaveTypeItem {
   LeaveTypeItem(this.label);
   

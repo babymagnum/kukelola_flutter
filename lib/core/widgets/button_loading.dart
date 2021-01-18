@@ -23,7 +23,7 @@ class ButtonLoading extends StatelessWidget {
   Widget build(BuildContext context) {
     return Parent(
       gesture: Gestures()..onTap(disable ? null : onTap),
-      style: ParentStyle()..background.color(disable ? ThemeColor.grey : backgroundColor)..borderRadius(all: 6)..ripple(true)
+      style: ParentStyle()..background.color(disable ? Color(0xFFC4C4C4) : backgroundColor)..borderRadius(all: 6)..ripple(true)
         ..padding(horizontal: horizontalPadding.w, vertical: verticalPadding.h),
       child: Center(
         child: loading ?

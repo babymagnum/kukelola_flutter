@@ -10,6 +10,6 @@ class EmptyText extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Text(text, style: ThemeTextStyle.robotoRegular.apply(color: Color(0xFF6E737B).withOpacity(0.47), fontSizeDelta: textSize));
+    return Text(text, style: ThemeTextStyle.biryaniRegular.apply(color: Color(0xFFC4C4C4), fontSizeDelta: textSize));
   }
 }
