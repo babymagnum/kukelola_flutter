@@ -7,7 +7,8 @@ class ButtonLoading extends StatelessWidget {
 
   ButtonLoading({Key key, @required this.backgroundColor, @required this.disable,
     @required this.title, @required this.loading, @required this.onTap, @required this.textStyle,
-    this.verticalPadding = 5, this.horizontalPadding = 10, this.loadingSize = 17}): super(key: key);
+    this.verticalPadding = 5, this.horizontalPadding = 10, this.loadingSize = 17,
+    this.borderRadius = 6}): super(key: key);
 
   final String title;
   final bool loading;
@@ -18,12 +19,13 @@ class ButtonLoading extends StatelessWidget {
   final double horizontalPadding;
   final double loadingSize;
   final TextStyle textStyle;
+  final double borderRadius;
 
   @override
   Widget build(BuildContext context) {
     return Parent(
       gesture: Gestures()..onTap(disable ? null : onTap),
-      style: ParentStyle()..background.color(disable ? Color(0xFFC4C4C4) : backgroundColor)..borderRadius(all: 6)..ripple(true)
+      style: ParentStyle()..background.color(disable ? Color(0xFFC4C4C4) : backgroundColor)..borderRadius(all: borderRadius)..ripple(true)
         ..padding(horizontal: horizontalPadding.w, vertical: verticalPadding.h),
       child: Center(
         child: loading ?

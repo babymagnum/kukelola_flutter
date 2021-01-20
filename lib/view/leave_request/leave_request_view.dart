@@ -60,21 +60,6 @@ class _LeaveRequestViewState extends State<LeaveRequestView> {
     );
   }
 
-  _pickFile() async {
-    _leaveRequestCt.setLoadingPickFile(true);
-    FilePickerResult result = await FilePicker.platform.pickFiles(type: FileType.custom,
-      allowedExtensions: ['jpg', 'pdf', 'doc', 'png', 'jpeg', 'JPG'],);
-    _leaveRequestCt.setLoadingPickFile(false);
-
-    if(result != null) {
-      File file = File(result.files.single.path);
-      _leaveRequestCt.form.value.attachment = File(file.path);
-      _leaveRequestCt.updateForm(_leaveRequestCt.form.value);
-    } else {
-      Fluttertoast.showToast(msg: 'Canceled the picker.', backgroundColor: Colors.black.withOpacity(0.6));
-    }
-  }
-
   _showDropdownType(BuildContext context, GlobalKey key, List<LeaveTypeItem> list, Function(LeaveTypeItem item) onSelect) {
 
     FocusScope.of(context).requestFocus(FocusNode());
@@ -115,6 +100,21 @@ class _LeaveRequestViewState extends State<LeaveRequestView> {
         ],
       ),
     );
+  }
+
+  _pickFile() async {
+    _leaveRequestCt.setLoadingPickFile(true);
+    FilePickerResult result = await FilePicker.platform.pickFiles(type: FileType.custom,
+      allowedExtensions: ['jpg', 'pdf', 'doc', 'png', 'jpeg', 'JPG'],);
+    _leaveRequestCt.setLoadingPickFile(false);
+
+    if(result != null) {
+      File file = File(result.files.single.path);
+      _leaveRequestCt.form.value.attachment = File(file.path);
+      _leaveRequestCt.updateForm(_leaveRequestCt.form.value);
+    } else {
+      Fluttertoast.showToast(msg: 'Canceled the picker.', backgroundColor: Colors.black.withOpacity(0.6));
+    }
   }
 
   @override

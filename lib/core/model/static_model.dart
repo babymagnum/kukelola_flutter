@@ -2,6 +2,15 @@ import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:kukelola_flutter/core/helper/text_util.dart';
 
+class AddEducationForms {
+  String degree = '';
+  String startYear = TextUtil.getCurrentDate('yyyy');
+  String endYear = TextUtil.getCurrentDate('yyyy');
+  String institution = '';
+  String major = '';
+  String score = '';
+}
+
 class EducationDataItem {
   EducationDataItem(this.title, this.jurusan, this.tahun, this.tempat);
 
@@ -9,6 +18,7 @@ class EducationDataItem {
   String tahun;
   String tempat;
   String jurusan;
+  bool loading = false;
 }
 
 class PersonalDataForm {

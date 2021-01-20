@@ -1,3 +1,4 @@
+import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'package:get/get.dart';
 import 'package:kukelola_flutter/core/model/static_model.dart';
 
@@ -17,14 +18,13 @@ class EducationDataController extends GetxController {
 
     list.forEach((element) => listEducation.add(element));
   }
-  removeData(int index) => listEducation.removeAt(index);
-  addData(EducationDataItem item) => listEducation.add(item);
-
-  @override
-  void onInit() {
-    super.onInit();
-
-    populateData();
+  removeData(int index) async {
+    var data = listEducation[index];
+    data.loading = true;
+    listEducation[index] = data;
+    await Future.delayed(Duration(seconds: 1), () {});
+    listEducation.removeAt(index);
   }
+  addData(EducationDataItem item) => listEducation.add(item);
 
 }
