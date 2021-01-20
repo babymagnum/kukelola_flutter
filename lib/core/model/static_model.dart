@@ -1,4 +1,42 @@
+import 'dart:io';
 import 'package:flutter/cupertino.dart';
+import 'package:kukelola_flutter/core/helper/text_util.dart';
+
+class EducationDataItem {
+  EducationDataItem(this.title, this.jurusan, this.tahun, this.tempat);
+
+  String title;
+  String tahun;
+  String tempat;
+  String jurusan;
+}
+
+class PersonalDataForm {
+  String firstName = 'Arief';
+  String middleName = '';
+  String lastName = 'Zainuri';
+  String cityOfBirth = 'Sleman';
+  String dateOfBirth = '08/05/1996';
+  String email = 'flaminglassoo1996@gmail.com';
+  String phone = '085792810600';
+  String identificationNumber = '3471120805960001';
+  String gender = 'Male';
+  String religion = 'Others';
+  String maritalStatus = 'Married';
+  String address = '';
+}
+
+class LeaveRequestForm {
+  String type = '';
+  String startDate = TextUtil.getCurrentDate('dd/MM/yyyy');
+  String endDate = TextUtil.getCurrentDate('dd/MM/yyyy');
+  String reason = '';
+  File attachment = File('');
+  LeaveTypeItem leaveType = LeaveTypeItem('');
+  LeaveTypeItem specialLeaveType = LeaveTypeItem('');
+
+  bool showSpecialType() => leaveType.label == 'Special Leave';
+}
 
 class ReimbursmentDetailItem {
   ReimbursmentDetailItem(this.description, this.price);
@@ -10,7 +48,7 @@ class ReimbursmentDetailItem {
 class LeaveTypeItem {
   LeaveTypeItem(this.label);
   
-  String label;
+  String label = '';
 }
 
 class ProfileMenuItem {

@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:kukelola_flutter/core/controller/common_controller.dart';
 import 'package:kukelola_flutter/core/helper/LocalesString.dart';
 import 'package:kukelola_flutter/core/helper/constant.dart';
+import 'package:kukelola_flutter/view/leave_request/leave_request_controller.dart';
 import 'package:kukelola_flutter/view/start_view.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';

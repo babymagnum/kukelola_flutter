@@ -8,6 +8,8 @@ import 'package:kukelola_flutter/core/model/static_model.dart';
 import 'package:kukelola_flutter/core/theme/theme_text_style.dart';
 import 'package:kukelola_flutter/main.dart';
 import 'package:kukelola_flutter/view/change_password/change_password_view.dart';
+import 'package:kukelola_flutter/view/education_data/education_data_view.dart';
+import 'package:kukelola_flutter/view/personal_data/personal_data_view.dart';
 
 class ListProfileMenuItem extends StatelessWidget {
 
@@ -19,11 +21,12 @@ class ListProfileMenuItem extends StatelessWidget {
 
   _onClick() {
     if (index == 0) {
-      commonController.setLanguage(context, commonController.language.value == Constant.INDONESIAN ? Constant.ENGLISH : Constant.INDONESIAN);
+      // commonController.setLanguage(context, commonController.language.value == Constant.INDONESIAN ? Constant.ENGLISH : Constant.INDONESIAN);
+      Get.to(PersonalDataView());
     } else if (index == 1) {
-
+      Get.to(EducationDataView());
     } else if (index == 2) {
-
+      
     } else if (index == 3) {
 
     } else if (index == 4) {

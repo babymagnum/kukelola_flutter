@@ -31,7 +31,6 @@ class LeaveRequestView extends StatefulWidget {
 class _LeaveRequestViewState extends State<LeaveRequestView> {
 
   var _typeKey = GlobalKey(), _specialLeaveKey = GlobalKey();
-  var _reasonCt = TextEditingController();
   var _reasonFocus = FocusNode();
   var _leaveRequestCt = Get.put(LeaveRequestController());
 
@@ -47,7 +46,6 @@ class _LeaveRequestViewState extends State<LeaveRequestView> {
           return DateTimePickerComponent(
             onPick: () {
               onPick(temporaryDate);
-              print('selected date $temporaryDate');
               Navigator.pop(context);
             },
             onChanged: (DateTime date) => temporaryDate = TextUtil.dateTimeToString(date, 'dd/MM/yyyy'),
@@ -70,7 +68,8 @@ class _LeaveRequestViewState extends State<LeaveRequestView> {
 
     if(result != null) {
       File file = File(result.files.single.path);
-      _leaveRequestCt.setFilePath(file.path);
+      _leaveRequestCt.form.value.attachment = File(file.path);
+      _leaveRequestCt.updateForm(_leaveRequestCt.form.value);
     } else {
       Fluttertoast.showToast(msg: 'Canceled the picker.', backgroundColor: Colors.black.withOpacity(0.6));
     }
@@ -162,24 +161,30 @@ class _LeaveRequestViewState extends State<LeaveRequestView> {
                           key: _typeKey,
                           labelText: 'TYPE',
                           hintText: 'choose leave type...',
-                          onTap: () => _showDropdownType(context, _typeKey, _leaveRequestCt.listLeaveType, (leaveType) => _leaveRequestCt.setLeaveType(leaveType)),
+                          onTap: () => _showDropdownType(context, _typeKey, _leaveRequestCt.listLeaveType, (leaveType) {
+                            _leaveRequestCt.form.value.leaveType.label = leaveType.label;
+                            _leaveRequestCt.updateForm(_leaveRequestCt.form.value);
+                          }),
                           rightIcon: 'assets/images/fa-solid_caret-down.svg',
                           rightSize: Size(10.w, 16.h),
-                          value: _leaveRequestCt?.leaveType?.label ?? '',
+                          value: _leaveRequestCt.form.value.leaveType.label,
                         ),
                         AnimatedContainer(
                           duration: Duration(milliseconds: 200),
-                          height: _leaveRequestCt.showSpecialLeave.value ? commonController.inputTapHeight.value + 24.h : 0,
+                          height: _leaveRequestCt.form.value.showSpecialType() ? commonController.inputTapHeight.value + 24.h : 0.0,
                           child: Padding(
                             padding: EdgeInsets.only(top: 24.h),
                             child: InputTap(
                               key: _specialLeaveKey,
                               labelText: 'SPECIAL LEAVE',
                               hintText: 'choose special leave...',
-                              onTap: () => _showDropdownType(context, _specialLeaveKey, _leaveRequestCt.listSpecialLeave, (leaveType) => _leaveRequestCt.setSpecialLeaveType(leaveType)),
+                              onTap: () => _showDropdownType(context, _specialLeaveKey, _leaveRequestCt.listSpecialLeave, (leaveType) {
+                                _leaveRequestCt.form.value.specialLeaveType.label = leaveType.label;
+                                _leaveRequestCt.updateForm(_leaveRequestCt.form.value);
+                              }),
                               rightIcon: 'assets/images/fa-solid_caret-down.svg',
                               rightSize: Size(10.w, 16.h),
-                              value: _leaveRequestCt?.specialLeaveType?.label ?? '',
+                              value: _leaveRequestCt.form.value.specialLeaveType.label,
                             ),
                           ),
                         ),
@@ -187,24 +192,26 @@ class _LeaveRequestViewState extends State<LeaveRequestView> {
                         InputTap(
                           labelText: 'START DATE',
                           hintText: '',
-                          onTap: () => _showDatePicker(context, _leaveRequestCt.startDate.value, (date) {
-                            _leaveRequestCt.setStartDate(date);
+                          onTap: () => _showDatePicker(context, _leaveRequestCt.form.value.startDate, (date) {
+                            _leaveRequestCt.form.value.startDate = date;
+                            _leaveRequestCt.updateForm(_leaveRequestCt.form.value);
                           }),
                           rightIcon: '',
                           leftSize: Size(14.w, 16.h),
-                          value: _leaveRequestCt.startDate.value,
+                          value: _leaveRequestCt.form.value.startDate,
                           leftIcon: 'assets/images/fa-solid_calendar-day.svg',
                         ),
                         SizedBox(height: 24.h,),
                         InputTap(
                           labelText: 'END DATE',
                           hintText: '',
-                          onTap: () => _showDatePicker(context, _leaveRequestCt.endDate.value, (date) {
-                            _leaveRequestCt.setEndDate(date);
+                          onTap: () => _showDatePicker(context, _leaveRequestCt.form.value.endDate, (date) {
+                            _leaveRequestCt.form.value.endDate = date;
+                            _leaveRequestCt.updateForm(_leaveRequestCt.form.value);
                           }),
                           rightIcon: '',
                           leftSize: Size(14.w, 16.h),
-                          value: _leaveRequestCt.endDate.value,
+                          value: _leaveRequestCt.form.value.endDate,
                           leftIcon: 'assets/images/fa-solid_calendar-day.svg',
                         ),
                         SizedBox(height: 24.h,),
@@ -216,6 +223,10 @@ class _LeaveRequestViewState extends State<LeaveRequestView> {
                           inputType: TextInputType.multiline,
                           onEditingComplete: () {},
                           maxLines: null,
+                          onChanged: (text) {
+                            _leaveRequestCt.form.value.reason = text.trim();
+                            _leaveRequestCt.updateForm(_leaveRequestCt.form.value);
+                          },
                           onTap: () => setState(() => _reasonFocus.requestFocus()),
                         ),
                         SizedBox(height: 24.h,),
@@ -224,7 +235,7 @@ class _LeaveRequestViewState extends State<LeaveRequestView> {
                           hintText: 'selected file...',
                           onTap: () => _pickFile(),
                           loading: _leaveRequestCt.loadingPickFile.value,
-                          value: _leaveRequestCt.filePath.value.path == '' ? '' : '${_leaveRequestCt.filePath.value.path} (${(_leaveRequestCt.filePath.value.lengthSync() / 1024).round()} KB)',
+                          value: _leaveRequestCt.form.value.attachment.path == '' ? '' : '${_leaveRequestCt.form.value.attachment.path} (${(_leaveRequestCt.form.value.attachment.lengthSync() / 1024).round()} KB)',
                         ),
                       ],
                     ),
