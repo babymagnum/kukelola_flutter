@@ -2,6 +2,15 @@ import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:kukelola_flutter/core/helper/text_util.dart';
 
+class WorkingExperienceItem {
+  String lastPosition = '';
+  String company = '';
+  String location = '';
+  String endYear = '';
+  String duration = '';
+  bool loading = false;
+}
+
 class FamiliesItem {
   String name = '';
   String relation = '';
