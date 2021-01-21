@@ -16,6 +16,7 @@ import 'package:kukelola_flutter/core/widgets/input_tap.dart';
 import 'package:kukelola_flutter/core/widgets/list_standart_dropdown_item.dart';
 import 'package:kukelola_flutter/view/add_education/add_education_controller.dart';
 import 'package:kukelola_flutter/view/base_view.dart';
+import 'package:kukelola_flutter/view/education_data/education_data_controller.dart';
 
 import '../../main.dart';
 
@@ -28,6 +29,7 @@ class _AddEducationViewState extends State<AddEducationView> {
 
   var _addEducationCt = Get.put(AddEducationController());
   var _degreeKey = GlobalKey();
+  var _intitutionFocus = FocusNode(), _majorFocus = FocusNode(), _scoreFocus = FocusNode();
 
   _showDatePicker(BuildContext context, String selectedDate, Function (String date) onPick) {
 
@@ -46,7 +48,6 @@ class _AddEducationViewState extends State<AddEducationView> {
             onChanged: (DateTime date) => temporaryDate = TextUtil.dateTimeToString(date, 'yyyy'),
             pickerModel: CustomDatePicker(
                 currentTime: TextUtil.convertStringToDateTime(selectedDate, 'yyyy'),
-                minTime: DateTime.now(),
                 maxTime: DateTime(DateTime.now().year + 20, 12, 31),
                 locale: commonController.language.value == Constant.INDONESIAN ? LocaleType.id : LocaleType.en
             ),
@@ -97,6 +98,11 @@ class _AddEducationViewState extends State<AddEducationView> {
     );
   }
 
+  bool _disable() {
+    var form = _addEducationCt.form.value;
+    return form.degree == '' || form.endYear == '' || form.startYear == '' || form.institution == '' || form.major == '' || form.score == '';
+  }
+
   @override
   Widget build(BuildContext context) {
     return BaseView(
@@ -116,10 +122,13 @@ class _AddEducationViewState extends State<AddEducationView> {
                 SizedBox(width: 10.w,),
                 ButtonLoading(
                   backgroundColor: ThemeColor.primary,
-                  disable: _addEducationCt.loadingSubmit.value,
+                  disable: _addEducationCt.loadingSubmit.value || _disable(),
                   title: 'Submit',
                   loading: _addEducationCt.loadingSubmit.value,
-                  onTap: () => _addEducationCt.submitEducation(),
+                  onTap: () async {
+                    await _addEducationCt.submitEducation();
+                    Get.back();
+                  },
                   verticalPadding: 6.h,
                   horizontalPadding: 15.w,
                   loadingSize: 12.w,
@@ -138,9 +147,13 @@ class _AddEducationViewState extends State<AddEducationView> {
                       children: [
                         SizedBox(height: 32.h,),
                         InputTap(
+                          key: _degreeKey,
                           labelText: 'DEGREE',
                           hintText: 'tap to fill degree',
-                          onTap: () => _showDatePicker(context, _addEducationCt.form.value.degree, (date) => null),
+                          onTap: () => _showDropdownType(context, _degreeKey, _addEducationCt.listDegree, (item) {
+                            _addEducationCt.form.value.degree = item;
+                            _addEducationCt.updateForm(_addEducationCt.form.value);
+                          }),
                           value: _addEducationCt.form.value.degree,
                           rightIcon: 'assets/images/fa-solid_caret-down.svg',
                           rightSize: Size(10.w, 16.h),
@@ -168,19 +181,51 @@ class _AddEducationViewState extends State<AddEducationView> {
                           }),
                           rightIcon: '',
                           leftSize: Size(14.w, 16.h),
-                          value: _addEducationCt.form.value.startYear,
+                          value: _addEducationCt.form.value.endYear,
                           leftIcon: 'assets/images/fa-solid_calendar-day.svg',
                         ),
                         SizedBox(height: 24.h,),
                         CustomInput(
                           textInputAction: TextInputAction.next,
-                          focusNode: null,
-                          hintText: null,
-                          inputType: null,
-                          onEditingComplete: null,
-                          onTap: null,
-                          labelText: null,
-                        )
+                          focusNode: _intitutionFocus,
+                          hintText: '',
+                          onChanged: (text) {
+                            _addEducationCt.form.value.institution = text;
+                            _addEducationCt.updateForm(_addEducationCt.form.value);
+                          },
+                          inputType: TextInputType.name,
+                          onEditingComplete: () => setState(() => _majorFocus.requestFocus()),
+                          onTap: () => setState(() => _intitutionFocus.requestFocus()),
+                          labelText: 'INSTITUTION',
+                        ),
+                        SizedBox(height: 24.h,),
+                        CustomInput(
+                          textInputAction: TextInputAction.next,
+                          focusNode: _majorFocus,
+                          hintText: '',
+                          onChanged: (text) {
+                            _addEducationCt.form.value.major = text;
+                            _addEducationCt.updateForm(_addEducationCt.form.value);
+                          },
+                          inputType: TextInputType.name,
+                          onEditingComplete: () => setState(() => _scoreFocus.requestFocus()),
+                          onTap: () => setState(() => _majorFocus.requestFocus()),
+                          labelText: 'MAJOR',
+                        ),SizedBox(height: 24.h,),
+                        CustomInput(
+                          textInputAction: TextInputAction.done,
+                          focusNode: _scoreFocus,
+                          hintText: '',
+                          onChanged: (text) {
+                            _addEducationCt.form.value.score = text;
+                            _addEducationCt.updateForm(_addEducationCt.form.value);
+                          },
+                          inputType: TextInputType.number,
+                          onEditingComplete: () => FocusScope.of(context).requestFocus(FocusNode()),
+                          onTap: () => setState(() => _scoreFocus.requestFocus()),
+                          labelText: 'SCORE',
+                        ),
+                        SizedBox(height: 24.h,)
                       ],
                     ),
                 ),

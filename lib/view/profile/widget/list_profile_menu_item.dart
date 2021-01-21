@@ -9,6 +9,7 @@ import 'package:kukelola_flutter/core/theme/theme_text_style.dart';
 import 'package:kukelola_flutter/main.dart';
 import 'package:kukelola_flutter/view/change_password/change_password_view.dart';
 import 'package:kukelola_flutter/view/education_data/education_data_view.dart';
+import 'package:kukelola_flutter/view/families/families_view.dart';
 import 'package:kukelola_flutter/view/personal_data/personal_data_view.dart';
 
 class ListProfileMenuItem extends StatelessWidget {
@@ -26,7 +27,7 @@ class ListProfileMenuItem extends StatelessWidget {
     } else if (index == 1) {
       Get.to(EducationDataView());
     } else if (index == 2) {
-      
+      Get.to(FamiliesView());
     } else if (index == 3) {
 
     } else if (index == 4) {

@@ -2,22 +2,23 @@ import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:kukelola_flutter/core/helper/text_util.dart';
 
-class AddEducationForms {
+class FamiliesItem {
+  String name = '';
+  String relation = '';
+  String id = '';
+  String occupation = '';
+  String dateOfBirth = '';
+  String phone = '';
+  bool loading = false;
+}
+
+class EducationDataItem {
   String degree = '';
   String startYear = TextUtil.getCurrentDate('yyyy');
   String endYear = TextUtil.getCurrentDate('yyyy');
   String institution = '';
   String major = '';
   String score = '';
-}
-
-class EducationDataItem {
-  EducationDataItem(this.title, this.jurusan, this.tahun, this.tempat);
-
-  String title;
-  String tahun;
-  String tempat;
-  String jurusan;
   bool loading = false;
 }
 

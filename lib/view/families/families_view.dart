@@ -6,20 +6,20 @@ import 'package:get/get.dart';
 import 'package:kukelola_flutter/core/theme/theme_color.dart';
 import 'package:kukelola_flutter/core/widgets/button_back.dart';
 import 'package:kukelola_flutter/core/widgets/empty_text.dart';
-import 'package:kukelola_flutter/view/add_education/add_education_view.dart';
+import 'package:kukelola_flutter/view/add_family/add_family_view.dart';
 import 'package:kukelola_flutter/view/base_view.dart';
-import 'package:kukelola_flutter/view/education_data/education_data_controller.dart';
-import 'package:kukelola_flutter/view/education_data/widget/list_education_data_item.dart';
+import 'package:kukelola_flutter/view/families/families_controller.dart';
+import 'package:kukelola_flutter/view/families/widget/list_families_item.dart';
 
-class EducationDataView extends StatelessWidget {
+class FamiliesView extends StatelessWidget {
 
-  var _educationDataCt = Get.put(EducationDataController());
+  var _familiesCt = Get.put(FamiliesController());
 
   @override
   Widget build(BuildContext context) {
 
     Future.delayed(Duration.zero, () {
-      _educationDataCt.populateData();
+      _familiesCt.populateData();
     });
 
     return BaseView(
@@ -35,7 +35,7 @@ class EducationDataView extends StatelessWidget {
                   children: [
                     Expanded(
                       child: ButtonBack(
-                        label: 'Education Data',
+                        label: 'Families',
                         onBack: () => Get.back(),
                       ),
                     ),
@@ -43,7 +43,7 @@ class EducationDataView extends StatelessWidget {
                 ),
               ),
               Expanded(
-                child: Obx(() => _educationDataCt.loadingEducation.value?
+                child: Obx(() => _familiesCt.loadingFamilies.value?
                 Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
@@ -53,18 +53,18 @@ class EducationDataView extends StatelessWidget {
                     )
                   ],
                 ) :
-                _educationDataCt.listEducation.length == 0 ?
+                _familiesCt.listFamilies.length == 0 ?
                 Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    EmptyText(text: 'Empty education', textSize: 16.ssp)
+                    EmptyText(text: 'Empty family', textSize: 16.ssp)
                   ],
                 ) :
                 ListView.separated(
-                  itemCount: _educationDataCt.listEducation.length,
+                  itemCount: _familiesCt.listFamilies.length,
                   shrinkWrap: true,
                   padding: EdgeInsets.symmetric(horizontal: 24.w, vertical: 24.h),
-                  itemBuilder: (_, index) => ListEducationDataItem(item: _educationDataCt.listEducation[index], index: index,),
+                  itemBuilder: (_, index) => ListFamiliesItem(item: _familiesCt.listFamilies[index], index: index,),
                   separatorBuilder: (BuildContext context, int index) => Divider(height: 16.h, color: Colors.transparent,),
                 )
                 ),
@@ -74,7 +74,7 @@ class EducationDataView extends StatelessWidget {
           Positioned(
             bottom: 24.w, right: 24.w,
             child: Parent(
-              gesture: Gestures()..onTap(() => Get.to(AddEducationView())),
+              gesture: Gestures()..onTap(() => Get.to(AddFamilyView())),
               style: ParentStyle()..borderRadius(all: 1000)..background.color(ThemeColor.primary)
                 ..height(56.w)..width(56.w)..ripple(true),
               child: Center(

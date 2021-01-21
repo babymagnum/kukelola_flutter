@@ -6,15 +6,16 @@ import 'package:kukelola_flutter/core/model/static_model.dart';
 import 'package:kukelola_flutter/core/theme/theme_text_style.dart';
 import 'package:kukelola_flutter/core/widgets/button_loading.dart';
 import 'package:kukelola_flutter/view/education_data/education_data_controller.dart';
+import 'package:kukelola_flutter/view/families/families_controller.dart';
 
-class ListEducationDataItem extends StatelessWidget {
+class ListFamiliesItem extends StatelessWidget {
   
-  ListEducationDataItem({@required this.item, @required this.index});
+  ListFamiliesItem({@required this.item, @required this.index});
   
-  final EducationDataItem item;
+  final FamiliesItem item;
   final int index;
 
-  var _educationDataCt = Get.find<EducationDataController>();
+  var _familiesCt = Get.find<FamiliesController>();
   
   @override
   Widget build(BuildContext context) {
@@ -23,8 +24,8 @@ class ListEducationDataItem extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(item.degree, style: ThemeTextStyle.biryaniBold.apply(color: Color(0xFF158AC9), fontSizeDelta: 14.ssp),),
-          Text('${item.startYear} - ${item.endYear}', style: ThemeTextStyle.biryaniRegular.apply(color: Color(0xFF6D6D6D), fontSizeDelta: 10.ssp),),
+          Text(item.name, style: ThemeTextStyle.biryaniBold.apply(color: Color(0xFF158AC9), fontSizeDelta: 14.ssp),),
+          Text('${item.relation} - ${item.occupation}', style: ThemeTextStyle.biryaniRegular.apply(color: Color(0xFF6D6D6D), fontSizeDelta: 10.ssp),),
           SizedBox(height: 24.h,),
           Row(
             children: [
@@ -32,8 +33,8 @@ class ListEducationDataItem extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(item.institution, style: ThemeTextStyle.biryaniRegular.apply(color: Color(0xFF6D6D6D), fontSizeDelta: 10.ssp),),
-                    Text(item.major, style: ThemeTextStyle.biryaniRegular.apply(color: Color(0xFF6D6D6D), fontSizeDelta: 10.ssp),),
+                    Text(item.id, style: ThemeTextStyle.biryaniRegular.apply(color: Color(0xFF6D6D6D), fontSizeDelta: 10.ssp),),
+                    Text(item.phone, style: ThemeTextStyle.biryaniRegular.apply(color: Color(0xFF6D6D6D), fontSizeDelta: 10.ssp),),
                   ],
                 ),
               ),
@@ -43,7 +44,7 @@ class ListEducationDataItem extends StatelessWidget {
                 disable: item.loading,
                 title: 'Delete',
                 loading: item.loading,
-                onTap: () => _educationDataCt.removeData(index),
+                onTap: () => _familiesCt.removeData(index),
                 textStyle: ThemeTextStyle.biryaniSemiBold.apply(color: Colors.white, fontSizeDelta: 10.ssp),
                 verticalPadding: 7.h,
                 horizontalPadding: 17.w,
