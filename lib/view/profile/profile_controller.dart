@@ -7,12 +7,12 @@ class ProfileController extends GetxController {
   
   populateProfileMenu(BuildContext context) {
     var list = [
-      ProfileMenuItem('assets/images/fa-solid_user-circle.svg', 'Personal Data', false),
-      ProfileMenuItem('assets/images/fa-solid_graduation-cap.svg', 'Education Data', false),
-      ProfileMenuItem('assets/images/fa-solid_house-user.svg', 'Family Data', false),
-      ProfileMenuItem('assets/images/fa-solid_suitcase.svg', 'Working Experience', false),
-      ProfileMenuItem('assets/images/fa_lock_blue.svg', 'Change Password', false),
-      ProfileMenuItem('assets/images/fa-solid_sign-out-alt.svg', 'Logout', true),
+      ProfileMenuItem('assets/images/profile_personal_data 1.png', 'Personal Data', false),
+      ProfileMenuItem('assets/images/profile_education_data 2.png', 'Education Data', false),
+      ProfileMenuItem('assets/images/profile_family_data 1.png', 'Family Data', false),
+      ProfileMenuItem('assets/images/profile_working_exp 1.png', 'Working Experience', false),
+      ProfileMenuItem('assets/images/profile_change_pass 1.png', 'Change Password', false),
+      ProfileMenuItem('assets/images/fa-solid_sign-out-alt.png', 'Logout', true),
     ];
 
     list.forEach((element) => listProfileMenu.add(element));

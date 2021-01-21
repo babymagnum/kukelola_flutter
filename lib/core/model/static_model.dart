@@ -102,21 +102,19 @@ class ContainerHomeItem {
 }
 
 class HomeMenuItem {
-  HomeMenuItem(this.label, this.image, this.color, this.count);
+  HomeMenuItem(this.label, this.image, this.count);
 
   String image;
   String label;
-  Color color;
   int count;
 }
 
 class NotificationItem {
-  NotificationItem(this.color, this.image, this.description, this.title, this.time, this.unread);
+  NotificationItem(this.image, this.description, this.title, this.time, this.unread);
 
   String time;
   String title;
   String description;
-  String color;
   String image;
   bool unread;
 }

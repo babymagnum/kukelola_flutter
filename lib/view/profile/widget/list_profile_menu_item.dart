@@ -45,13 +45,10 @@ class ListProfileMenuItem extends StatelessWidget {
       style: ParentStyle()..ripple(true),
       child: Row(
         children: [
-          Expanded(
-            flex: 1,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                Flexible(child: SvgPicture.asset(item.image, width: 16.w, height: 16.w, color: item.logout ? Color(0xFFF85C58) : Color(0xFF018CCA),)),
-              ],
+          Parent(
+            style: ParentStyle()..background.color(item.logout ? Colors.transparent : Color(0xFF158AC9))..borderRadius(all: 1000)..width(28.w)..height(28.w),
+            child: Center(
+              child: Image.asset(item.image, width: 18.w, height: 18.w, color: item.logout ? Color(0xFFF85C58) : null,),
             ),
           ),
           SizedBox(width: 20.w,),

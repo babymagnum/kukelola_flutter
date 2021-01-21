@@ -52,9 +52,9 @@ class ListHomeMenuItem extends StatelessWidget {
               Align(
                 alignment: Alignment.center,
                 child: Parent(
-                  style: ParentStyle()..background.color(item.color)..width(48.w)..height(48.w)..borderRadius(all: 1000),
+                  style: ParentStyle()..background.color(Color(0xFF158AC9))..width(48.w)..height(48.w)..borderRadius(all: 1000),
                   child: Center(
-                    child: SvgPicture.asset(item.image, width: 20.w, height: 20.w,),
+                    child: Image.asset(item.image, width: 28.w, height: 28.w, fit: BoxFit.contain,),
                   ),
                 ),
               ),

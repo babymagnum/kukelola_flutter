@@ -21,9 +21,9 @@ class ListNotificationItem extends StatelessWidget {
       child: Row(
         children: [
           Parent(
-            style: ParentStyle()..background.color(Color(int.parse(item.color)))..width(40.w)..height(40.w)..borderRadius(all: 1000),
+            style: ParentStyle()..background.color(Color(0xFF158AC9))..width(48.w)..height(48.w)..borderRadius(all: 1000),
             child: Center(
-              child: SvgPicture.asset(item.image, width: 16.w, height: 16.w,),
+              child: Image.asset(item.image, width: 28.w, height: 28.w, fit: BoxFit.contain,),
             ),
           ),
           SizedBox(width: 14.w,),

@@ -12,9 +12,9 @@ class NotificationController extends GetxController {
     loadingNotifikasi.value = false;
     
     var list = [
-      NotificationItem('0xFFA4F858', 'assets/images/fa-solid_hand-holding-usd.svg', 'Your reimbursement request is approved by manager.', 'Reimbursement Request', '04/12/2020 15:35', true),
-      NotificationItem('0xFF58A4F8', 'assets/images/fa-solid_plane.svg', 'Your leave request is approved by manager.', 'Leave Request', '04/12/2020 10:35', false),
-      NotificationItem('0xFFAC58F8', 'assets/images/fa-solid_ambulance.svg', 'Your reimbursement request is approved by manager.', 'Reimbursement Request', '04/12/2020 15:35', true),
+      NotificationItem('assets/images/reimbursement 1.png', 'Your reimbursement request is approved by manager.', 'Reimbursement Request', '04/12/2020 15:35', true),
+      NotificationItem('assets/images/leave_request 1.png', 'Your leave request is approved by manager.', 'Leave Request', '04/12/2020 10:35', false),
+      NotificationItem('assets/images/notif_sickleave_req 1.png', 'Your sick leave request is approved by manager.', 'Sick Leave', '04/12/2020 15:35', true),
     ];
 
     list.forEach((element) => listNotifikasi.add(element));
