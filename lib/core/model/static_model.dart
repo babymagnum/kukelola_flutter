@@ -2,6 +2,13 @@ import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:kukelola_flutter/core/helper/text_util.dart';
 
+class SummaryMenuItems {
+  SummaryMenuItems(this.image, this.label);
+
+  String image;
+  String label;
+}
+
 class WorkingExperienceItem {
   String lastPosition = '';
   String company = '';
