@@ -55,6 +55,12 @@ class TextUtil {
     return dateFormat.parse(date);
   }
 
+  static int differenceDate(String date1, String date2, String pattern) {
+    final dateTime1 = convertStringToDateTime(date1, pattern);
+    final dateTime2 = convertStringToDateTime(date2, pattern);
+    return dateTime1.difference(dateTime2).inDays;
+  }
+
   static DateTime convertToAnotherDateTime(DateTime date, String pattern) {
     final stringDate = dateTimeToString(date, pattern);
     return convertStringToDateTime(stringDate, pattern);

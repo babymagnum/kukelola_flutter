@@ -63,7 +63,7 @@ class ListHomeMenuItem extends StatelessWidget {
                 right: 0, top: 0,
                 child: Parent(
                   style: ParentStyle()..background.color(Color(0xFFF85C58))..borderRadius(all: 1000)..padding(horizontal: 5, vertical: 1)
-                    ..border(all: 2, color: Colors.white),
+                    ..border(all: 2, color: Color(0xFFDEDEDE)),
                   child: Center(
                     child: Padding(
                       padding: EdgeInsets.only(top: 1.h),
