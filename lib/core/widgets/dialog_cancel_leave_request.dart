@@ -2,19 +2,15 @@ import 'package:division/division.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:kukelola_flutter/core/theme/theme_color.dart';
 import 'package:kukelola_flutter/core/theme/theme_text_style.dart';
 import 'package:kukelola_flutter/core/widgets/button_loading.dart';
 import 'package:kukelola_flutter/core/widgets/button_loading_bordered.dart';
-import 'package:kukelola_flutter/view/leave_summary/leave_summary_controller.dart';
 
 class DialogCancelLeaveRequest extends StatelessWidget {
 
-  DialogCancelLeaveRequest({@required this.index});
+  DialogCancelLeaveRequest({@required this.action2Click});
 
-  final int index;
-
-  var _leaveSummaryCt = Get.find<LeaveSummaryController>();
+  final Function action2Click;
 
   @override
   Widget build(BuildContext context) {
@@ -52,7 +48,7 @@ class DialogCancelLeaveRequest extends StatelessWidget {
                         title: 'Yes, Cancel',
                         loading: false,
                         onTap: () {
-                          _leaveSummaryCt.cancelLeave(index);
+                          action2Click();
                           Get.back();
                         },
                         borderRadius: 6,

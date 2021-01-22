@@ -1,7 +1,10 @@
 import 'package:get/get.dart';
 import 'package:kukelola_flutter/core/model/static_model.dart';
+import 'package:kukelola_flutter/view/leave_summary/leave_summary_controller.dart';
 
 class LeaveRequestController extends GetxController {
+  var _leaveSummaryCt = Get.put(LeaveSummaryController());
+
   var listLeaveType = List<LeaveTypeItem>().obs;
   var listSpecialLeave = List<LeaveTypeItem>().obs;
   var loadingSubmit = false.obs;
@@ -40,5 +43,6 @@ class LeaveRequestController extends GetxController {
     loadingSubmit.value = true;
     await Future.delayed(Duration(seconds: 1), () {});
     loadingSubmit.value = false;
+    _leaveSummaryCt.addLeave(form.value);
   }
 }

@@ -12,22 +12,26 @@ import 'package:kukelola_flutter/core/widgets/button_back.dart';
 import 'package:kukelola_flutter/core/widgets/button_loading.dart';
 import 'package:kukelola_flutter/core/widgets/summary_detail_status.dart';
 import 'package:kukelola_flutter/view/base_view.dart';
+import 'package:kukelola_flutter/view/leave_summary_detail/leave_summary_detail_controller.dart';
 
 class LeaveSummaryDetailView extends StatelessWidget {
 
-  LeaveSummaryDetailView({@required this.item});
+  LeaveSummaryDetailView({@required this.index, @required this.item});
 
   final LeaveRequestForm item;
+  final int index;
+
+  var _leaveSummaryDetailCt = Get.put(LeaveSummaryDetailController());
 
   bool _isSpecialLeave() => item.leaveType.label == 'Special Leave';
 
-  Widget _content(String title, String content) {
+  Widget _content(String title, String content, bool isAttachment) {
     return Expanded(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(title, style: ThemeTextStyle.biryaniBold.apply(color: Color(0xFFC4C4C4), fontSizeDelta: 10.ssp),),
-          Text(content, style: ThemeTextStyle.biryaniRegular.apply(fontSizeDelta: 14.ssp),),
+          Text(content, style: ThemeTextStyle.biryaniRegular.apply(fontSizeDelta: 14.ssp, color: isAttachment ? Color(0xFF158AC9) : Color(0xFF181921), decoration: isAttachment ? TextDecoration.underline : null),),
         ],
       ),
     );
@@ -82,42 +86,46 @@ class LeaveSummaryDetailView extends StatelessWidget {
               child: SingleChildScrollView(
                 child: Padding(
                   padding: EdgeInsets.symmetric(horizontal: 24.w),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      SizedBox(height: 24.h,),
-                      Row(
-                        children: [
-                          _content(_isSpecialLeave() ? 'SPECIAL LEAVE' : 'LEAVE TYPE', _isSpecialLeave() ? item.specialLeaveType.label : item.leaveType),
-                          SizedBox(width: 10.w,),
-                          _content('TOTAL DAYS', '${TextUtil.differenceDate(item.endDate, item.startDate, 'dd/MM/yyyy')}')
-                        ],
-                      ),
-                      SizedBox(height: 24.h,),
-                      Row(
-                        children: [
-                          _content('DESCRIPTION', item.reason)
-                        ],
-                      ),
-                      SizedBox(height: 24.h,),
-                      Row(
-                        children: [
-                          _content('APPROVAL DATE', '-'),
-                          SizedBox(width: 10.w,),
-                          _content('ATTACHMENT', item.attachment.path)
-                        ],
-                      ),
-                      SizedBox(height: 24.h,),
-                      ButtonLoading(
-                        backgroundColor: ThemeColor.primary,
-                        disable: false,
-                        title: 'Cancel',
-                        loading: false,
-                        onTap: () {},
-                        verticalPadding: 14.h,
-                        textStyle: ThemeTextStyle.biryaniBold.apply(color: Colors.white, fontSizeDelta: 14.ssp),
-                      )
-                    ],
+                  child: Obx(() => Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        SizedBox(height: 24.h,),
+                        Row(
+                          children: [
+                            _content(_isSpecialLeave() ? 'SPECIAL LEAVE' : 'LEAVE TYPE', _isSpecialLeave() ? item.specialLeaveType.label : item.leaveType.label, false),
+                            SizedBox(width: 10.w,),
+                            _content('TOTAL DAYS', '${TextUtil.differenceDate(item.endDate, item.startDate, 'dd/MM/yyyy')}', false)
+                          ],
+                        ),
+                        SizedBox(height: 24.h,),
+                        Row(
+                          children: [
+                            _content('DESCRIPTION', item.reason, false)
+                          ],
+                        ),
+                        SizedBox(height: 24.h,),
+                        Row(
+                          children: [
+                            _content('APPROVAL DATE', '-', false),
+                            SizedBox(width: 10.w,),
+                            _content('ATTACHMENT', item.attachment.path, true)
+                          ],
+                        ),
+                        SizedBox(height: item.status == 'PENDING' ? 24.h : 0,),
+                        item.status == 'PENDING' ?
+                        ButtonLoading(
+                          backgroundColor: ThemeColor.primary,
+                          disable: _leaveSummaryDetailCt.loadingCancel.value,
+                          title: 'Cancel',
+                          loading: _leaveSummaryDetailCt.loadingCancel.value,
+                          onTap: () => _leaveSummaryDetailCt.cancelLeave(index),
+                          verticalPadding: 14.h,
+                          textStyle: ThemeTextStyle.biryaniBold.apply(color: Colors.white, fontSizeDelta: 14.ssp),
+                        ) :
+                        Container(),
+                        SizedBox(height: 24.h,)
+                      ],
+                    ),
                   ),
                 ),
               ),

@@ -6,6 +6,7 @@ import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
+import 'package:keyboard_visibility/keyboard_visibility.dart';
 import 'package:kukelola_flutter/core/helper/constant.dart';
 import 'package:kukelola_flutter/core/helper/text_util.dart';
 import 'package:kukelola_flutter/core/theme/theme_color.dart';
@@ -17,7 +18,6 @@ import 'package:kukelola_flutter/core/widgets/custom_input.dart';
 import 'package:kukelola_flutter/core/widgets/input_attachment.dart';
 import 'package:kukelola_flutter/core/widgets/input_tap.dart';
 import 'package:kukelola_flutter/main.dart';
-import 'package:kukelola_flutter/view/attendance_request/attendance_request_controller.dart';
 import 'package:kukelola_flutter/view/base_view.dart';
 import 'package:kukelola_flutter/view/overtime_request/overtime_request_controller.dart';
 
@@ -28,9 +28,10 @@ class OvertimeRequestView extends StatefulWidget {
 
 class OvertimeRequestViewState extends State<OvertimeRequestView> {
 
-  var _reasonCt = TextEditingController();
   var _reasonFocus = FocusNode();
   var _overtimeRequestCt = Get.put(OvertimeRequestController());
+  var _keyboardVisibilitySubscriberId = 0;
+  var _keyboardVisibility = KeyboardVisibilityNotification();
 
   _showDatePicker(BuildContext context, String selectedDate, Function (String date) onPick) {
 
@@ -91,12 +92,34 @@ class OvertimeRequestViewState extends State<OvertimeRequestView> {
 
     if(result != null) {
       File file = File(result.files.single.path);
-      _overtimeRequestCt.setFilePath(file.path);
+      _overtimeRequestCt.form.value.attachment = file;
+      _overtimeRequestCt.updateForm(_overtimeRequestCt.form.value);
     } else {
       Fluttertoast.showToast(msg: 'Canceled the picker.', backgroundColor: Colors.black.withOpacity(0.6));
     }
   }
 
+  bool _disable() {
+    var data = _overtimeRequestCt.form.value;
+    return data.attachment.path == '' || data.reason == '' || data.overtimeDate == '' || data.startHour == '' || data.endHour == '';
+  }
+
+  @override
+  void initState() {
+    super.initState();
+
+    _keyboardVisibilitySubscriberId = _keyboardVisibility.addNewListener(
+      onHide: () => FocusScope.of(context).requestFocus(FocusNode())
+    );
+  }
+
+  @override
+  void dispose() {
+    _keyboardVisibility.removeListener(_keyboardVisibilitySubscriberId);
+
+    super.dispose();
+  }
+  
   @override
   Widget build(BuildContext context) {
     return BaseView(
@@ -116,7 +139,7 @@ class OvertimeRequestViewState extends State<OvertimeRequestView> {
                 SizedBox(width: 10.w,),
                 ButtonLoading(
                   backgroundColor: ThemeColor.primary,
-                  disable: _overtimeRequestCt.loadingSubmit.value,
+                  disable: _overtimeRequestCt.loadingSubmit.value || _disable(),
                   title: 'Submit',
                   loading: _overtimeRequestCt.loadingSubmit.value,
                   onTap: () => _overtimeRequestCt.submitLeaveRequest(),
@@ -140,32 +163,39 @@ class OvertimeRequestViewState extends State<OvertimeRequestView> {
                         InputTap(
                           labelText: 'OVERTIME DATE',
                           hintText: '',
-                          onTap: () => _showDatePicker(context, _overtimeRequestCt.overtimeDate.value, (date) {
-                            _overtimeRequestCt.setOvertimeDate(date);
+                          onTap: () => _showDatePicker(context, _overtimeRequestCt.form.value.overtimeDate, (date) {
+                            _overtimeRequestCt.form.value.overtimeDate = date;
+                            _overtimeRequestCt.updateForm(_overtimeRequestCt.form.value);
                           }),
                           rightIcon: '',
                           leftSize: Size(14.w, 16.h),
-                          value: _overtimeRequestCt.overtimeDate.value,
+                          value: _overtimeRequestCt.form.value.overtimeDate,
                           leftIcon: 'assets/images/fa-solid_calendar-day.svg',
                         ),
                         SizedBox(height: 24.h,),
                         InputTap(
                           labelText: 'HOUR (START)',
                           hintText: '',
-                          onTap: () => _showTimePicker(context, _overtimeRequestCt.startHour.value, (time) => _overtimeRequestCt.setStartHour(time)),
+                          onTap: () => _showTimePicker(context, _overtimeRequestCt.form.value.startHour, (time) {
+                            _overtimeRequestCt.form.value.startHour = time;
+                            _overtimeRequestCt.updateForm(_overtimeRequestCt.form.value);
+                          }),
                           rightIcon: '',
                           leftSize: Size(14.w, 16.h),
-                          value: _overtimeRequestCt.startHour.value,
+                          value: _overtimeRequestCt.form.value.startHour,
                           leftIcon: 'assets/images/fa-solid_clock.svg',
                         ),
                         SizedBox(height: 24.h,),
                         InputTap(
                           labelText: 'HOUR (END)',
                           hintText: '',
-                          onTap: () => _showTimePicker(context, _overtimeRequestCt.endHour.value, (time) => _overtimeRequestCt.setEndHour(time)),
+                          onTap: () => _showTimePicker(context, _overtimeRequestCt.form.value.endHour, (time) {
+                            _overtimeRequestCt.form.value.endHour = time;
+                            _overtimeRequestCt.updateForm(_overtimeRequestCt.form.value);
+                          }),
                           rightIcon: '',
                           leftSize: Size(14.w, 16.h),
-                          value: _overtimeRequestCt.endHour.value,
+                          value: _overtimeRequestCt.form.value.endHour,
                           leftIcon: 'assets/images/fa-solid_clock.svg',
                         ),
                         SizedBox(height: 24.h,),
@@ -177,6 +207,10 @@ class OvertimeRequestViewState extends State<OvertimeRequestView> {
                           inputType: TextInputType.multiline,
                           onEditingComplete: () {},
                           maxLines: null,
+                          onChanged: (text) {
+                            _overtimeRequestCt.form.value.reason = text.trim();
+                            _overtimeRequestCt.updateForm(_overtimeRequestCt.form.value);
+                          },
                           onTap: () => setState(() => _reasonFocus.requestFocus()),
                         ),
                         SizedBox(height: 24.h,),
@@ -185,7 +219,7 @@ class OvertimeRequestViewState extends State<OvertimeRequestView> {
                           hintText: 'selected file...',
                           onTap: () => _pickFile(),
                           loading: _overtimeRequestCt.loadingPickFile.value,
-                          value: _overtimeRequestCt.filePath.value.path == '' ? '' : '${_overtimeRequestCt.filePath.value.path} (${(_overtimeRequestCt.filePath.value.lengthSync() / 1024).round()} KB)',
+                          value: _overtimeRequestCt.form.value.attachment.path == '' ? '' : '${_overtimeRequestCt.form.value.attachment.path} (${(_overtimeRequestCt.form.value.attachment.lengthSync() / 1024).round()} KB)',
                         ),
                       ],
                     ),

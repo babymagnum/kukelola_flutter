@@ -8,15 +8,16 @@ import 'package:kukelola_flutter/core/widgets/button_loading.dart';
 import 'package:kukelola_flutter/view/leave_summary/leave_summary_controller.dart';
 import 'package:kukelola_flutter/core/widgets/dialog_cancel_leave_request.dart';
 import 'package:kukelola_flutter/view/leave_summary_detail/leave_summary_detail_view.dart';
+import 'package:kukelola_flutter/view/overtime_summary/overtime_summary_controller.dart';
 
-class ListLeaveSummaryItem extends StatelessWidget {
+class ListOvertimeSummaryItem extends StatelessWidget {
 
-  ListLeaveSummaryItem({@required this.item, @required this.index});
+  ListOvertimeSummaryItem({@required this.item, @required this.index});
 
-  final LeaveRequestForm item;
+  final OvertimeRequestFormObject item;
   final int index;
 
-  var _leaveSummaryCt = Get.put(LeaveSummaryController());
+  var _overtimeSummaryCt = Get.find<OvertimeSummaryController>();
 
   Color _statusColor() {
     if (item.status == 'PENDING') return Color(0xFFC3C3C3);
@@ -28,7 +29,7 @@ class ListLeaveSummaryItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Parent(
-      gesture: Gestures()..onTap(() => Get.to(LeaveSummaryDetailView(item: item, index: index,))),
+      gesture: Gestures()..onTap(() {}),
       style: ParentStyle()..background.color(Color(0xFFE9EAEA))..borderRadius(all: 8)..padding(horizontal: 16, vertical: 18),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -40,8 +41,8 @@ class ListLeaveSummaryItem extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(item.leaveType.label, style: ThemeTextStyle.biryaniBold.apply(color: Color(0xFF158AC9), fontSizeDelta: 14.ssp),),
-                    Text('${item.startDate} - ${item.endDate}', style: ThemeTextStyle.biryaniRegular.apply(color: Color(0xFF6D6D6D), fontSizeDelta: 10.ssp),),
+                    Text('Overtime', style: ThemeTextStyle.biryaniBold.apply(color: Color(0xFF158AC9), fontSizeDelta: 14.ssp),),
+                    Text('${item.overtimeDate} ${item.startHour} - ${item.endHour}', style: ThemeTextStyle.biryaniRegular.apply(color: Color(0xFF6D6D6D), fontSizeDelta: 10.ssp),),
                   ],
                 ),
               ),
@@ -56,7 +57,7 @@ class ListLeaveSummaryItem extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text('Newt Salamander', style: ThemeTextStyle.biryaniRegular.apply(color: Color(0xFF6D6D6D), fontSizeDelta: 10.ssp),),
+                    Text('Newt Salamander / Field Officer', style: ThemeTextStyle.biryaniRegular.apply(color: Color(0xFF6D6D6D), fontSizeDelta: 10.ssp),),
                     Text('K00937', style: ThemeTextStyle.biryaniRegular.apply(color: Color(0xFF6D6D6D), fontSizeDelta: 10.ssp),),
                   ],
                 ),
@@ -68,7 +69,7 @@ class ListLeaveSummaryItem extends StatelessWidget {
                 disable: item.loading,
                 title: 'Cancel',
                 loading: item.loading,
-                onTap: () => Get.dialog(DialogCancelLeaveRequest(action2Click: () => _leaveSummaryCt.cancelLeave(index))),
+                onTap: () => Get.dialog(DialogCancelLeaveRequest(action2Click: () => _overtimeSummaryCt.cancelLeave(index),)),
                 textStyle: ThemeTextStyle.biryaniSemiBold.apply(color: Colors.white, fontSizeDelta: 10.ssp),
                 verticalPadding: 7.h,
                 horizontalPadding: 17.w,

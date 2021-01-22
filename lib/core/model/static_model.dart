@@ -53,6 +53,16 @@ class PersonalDataForm {
   String address = '';
 }
 
+class OvertimeRequestFormObject {
+  String overtimeDate = TextUtil.getCurrentDate('dd/MM/yyyy');
+  String startHour = TextUtil.getCurrentDate('HH:mm');
+  String endHour = TextUtil.getCurrentDate('HH:mm');
+  String reason = '';
+  String status = '';
+  File attachment = File('');
+  bool loading = false;
+}
+
 class LeaveRequestForm {
   String type = '';
   String startDate = TextUtil.getCurrentDate('dd/MM/yyyy');

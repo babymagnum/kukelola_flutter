@@ -7,6 +7,7 @@ import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
+import 'package:keyboard_visibility/keyboard_visibility.dart';
 import 'package:kukelola_flutter/core/helper/constant.dart';
 import 'package:kukelola_flutter/core/helper/text_util.dart';
 import 'package:kukelola_flutter/core/model/static_model.dart';
@@ -22,6 +23,7 @@ import 'package:kukelola_flutter/core/widgets/list_standart_dropdown_item.dart';
 import 'package:kukelola_flutter/main.dart';
 import 'package:kukelola_flutter/view/base_view.dart';
 import 'package:kukelola_flutter/view/leave_request/leave_request_controller.dart';
+import 'package:kukelola_flutter/view/leave_summary/leave_summary_view.dart';
 
 class LeaveRequestView extends StatefulWidget {
   @override
@@ -33,6 +35,8 @@ class _LeaveRequestViewState extends State<LeaveRequestView> {
   var _typeKey = GlobalKey(), _specialLeaveKey = GlobalKey();
   var _reasonFocus = FocusNode();
   var _leaveRequestCt = Get.put(LeaveRequestController());
+  var _keyboardVisibilitySubscriberId = 0;
+  var _keyboardVisibility = KeyboardVisibilityNotification();
 
   _showDatePicker(BuildContext context, String selectedDate, Function (String date) onPick) {
 
@@ -112,9 +116,26 @@ class _LeaveRequestViewState extends State<LeaveRequestView> {
       File file = File(result.files.single.path);
       _leaveRequestCt.form.value.attachment = File(file.path);
       _leaveRequestCt.updateForm(_leaveRequestCt.form.value);
+      setState(() {});
     } else {
       Fluttertoast.showToast(msg: 'Canceled the picker.', backgroundColor: Colors.black.withOpacity(0.6));
     }
+  }
+
+  @override
+  void initState() {
+    super.initState();
+
+    _keyboardVisibilitySubscriberId = _keyboardVisibility.addNewListener(
+        onHide: () => FocusScope.of(context).requestFocus(FocusNode())
+    );
+  }
+
+  @override
+  void dispose() {
+    _keyboardVisibility.removeListener(_keyboardVisibilitySubscriberId);
+
+    super.dispose();
   }
 
   @override
@@ -136,10 +157,16 @@ class _LeaveRequestViewState extends State<LeaveRequestView> {
                 SizedBox(width: 10.w,),
                 ButtonLoading(
                   backgroundColor: ThemeColor.primary,
-                  disable: _leaveRequestCt.loadingSubmit.value,
+                  disable: _leaveRequestCt.loadingSubmit.value || _leaveRequestCt.form.value.leaveType.label == ''
+                      || (_leaveRequestCt.form.value.leaveType.label == 'Special Leave' ? _leaveRequestCt.form.value.specialLeaveType.label == '' : _leaveRequestCt.form.value.leaveType.label == '') ||
+                      _leaveRequestCt.form.value.startDate == '' || _leaveRequestCt.form.value.endDate == '' ||
+                      _leaveRequestCt.form.value.reason == '' || _leaveRequestCt.form.value.attachment.path == '',
                   title: 'Submit',
                   loading: _leaveRequestCt.loadingSubmit.value,
-                  onTap: () => _leaveRequestCt.submitLeaveRequest(),
+                  onTap: () async {
+                    await _leaveRequestCt.submitLeaveRequest();
+                    Get.to(LeaveSummaryView());
+                  },
                   verticalPadding: 6.h,
                   horizontalPadding: 15.w,
                   loadingSize: 12.w,
@@ -226,6 +253,7 @@ class _LeaveRequestViewState extends State<LeaveRequestView> {
                           onChanged: (text) {
                             _leaveRequestCt.form.value.reason = text.trim();
                             _leaveRequestCt.updateForm(_leaveRequestCt.form.value);
+                            setState(() {});
                           },
                           onTap: () => setState(() => _reasonFocus.requestFocus()),
                         ),
