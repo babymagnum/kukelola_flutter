@@ -59,8 +59,10 @@ class LeaveRequestForm {
   String endDate = TextUtil.getCurrentDate('dd/MM/yyyy');
   String reason = '';
   File attachment = File('');
+  String status = '';
   LeaveTypeItem leaveType = LeaveTypeItem('');
   LeaveTypeItem specialLeaveType = LeaveTypeItem('');
+  bool loading = false;
 
   bool showSpecialType() => leaveType.label == 'Special Leave';
 }

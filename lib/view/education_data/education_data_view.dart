@@ -44,29 +44,29 @@ class EducationDataView extends StatelessWidget {
               ),
               Expanded(
                 child: Obx(() => _educationDataCt.loadingEducation.value?
-                Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    SizedBox(
-                      child: CircularProgressIndicator(valueColor: AlwaysStoppedAnimation<Color>(ThemeColor.primary),),
-                      width: 16.w, height: 16.w,
-                    )
-                  ],
-                ) :
-                _educationDataCt.listEducation.length == 0 ?
-                Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    EmptyText(text: 'Empty education', textSize: 16.ssp)
-                  ],
-                ) :
-                ListView.separated(
-                  itemCount: _educationDataCt.listEducation.length,
-                  shrinkWrap: true,
-                  padding: EdgeInsets.symmetric(horizontal: 24.w, vertical: 24.h),
-                  itemBuilder: (_, index) => ListEducationDataItem(item: _educationDataCt.listEducation[index], index: index,),
-                  separatorBuilder: (BuildContext context, int index) => Divider(height: 16.h, color: Colors.transparent,),
-                )
+                  Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      SizedBox(
+                        child: CircularProgressIndicator(valueColor: AlwaysStoppedAnimation<Color>(ThemeColor.primary),),
+                        width: 16.w, height: 16.w,
+                      )
+                    ],
+                  ) :
+                  _educationDataCt.listEducation.length == 0 ?
+                  Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      EmptyText(text: 'Empty education', textSize: 16.ssp)
+                    ],
+                  ) :
+                  ListView.separated(
+                    itemCount: _educationDataCt.listEducation.length,
+                    shrinkWrap: true,
+                    padding: EdgeInsets.symmetric(horizontal: 24.w, vertical: 24.h),
+                    itemBuilder: (_, index) => ListEducationDataItem(item: _educationDataCt.listEducation[index], index: index,),
+                    separatorBuilder: (BuildContext context, int index) => Divider(height: 16.h, color: Colors.transparent,),
+                  )
                 ),
               )
             ],

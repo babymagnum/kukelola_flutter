@@ -6,7 +6,20 @@ import 'package:kukelola_flutter/core/theme/theme_text_style.dart';
 class CommonFunction {
 
   static standartSnackbar(String content) {
-    Get.snackbar(null, null, titleText: null, borderRadius: 8, maxWidth: Get.width, messageText: Text(content, style: ThemeTextStyle.robotoMedium.apply(fontSizeDelta: 16.ssp, color: Colors.white),), barBlur: 0, snackPosition: SnackPosition.BOTTOM, backgroundColor: Colors.black45, margin: EdgeInsets.only(left: Get.width * 0.07, right: Get.width * 0.5, bottom: 20.h));
+    Get.snackbar(null, null, titleText: null, borderRadius: 0, maxWidth: Get.width,
+        messageText: Row(
+          children: [
+            Expanded(
+              child: Text(content, style: ThemeTextStyle.biryaniBold.apply(fontSizeDelta: 12.ssp, color: Colors.white),),
+            ),
+            GestureDetector(
+              onTap: () => Get.back(),
+              child: Text('CLOSE', style: ThemeTextStyle.biryaniHeavy.apply(color: Colors.white, fontSizeDelta: 12.ssp),),
+            )
+          ],
+        ),
+        barBlur: 0, snackPosition: SnackPosition.BOTTOM,
+        backgroundColor: Colors.black45, margin: EdgeInsets.symmetric(vertical: 0, horizontal: 0));
   }
 
 }

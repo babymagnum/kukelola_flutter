@@ -67,7 +67,7 @@ class _HomeViewState extends State<HomeView>  with AutomaticKeepAliveClientMixin
                     Text('PT. App KuKulola ID', style: ThemeTextStyle.biryaniSemiBold.apply(fontSizeDelta: 11.ssp, color: Color(0xFF404040)),),
                     SizedBox(height: 18.h,),
                     Parent(
-                      style: ParentStyle()..background.color(Color(0xFFF3F3F3))..borderRadius(all: 16)..width(Get.width)..margin(horizontal: 32.w),
+                      style: ParentStyle()..background.color(Color(0xFFF1F1F1))..borderRadius(all: 16)..width(Get.width)..margin(horizontal: 32.w),
                       child: StaggeredGridView.countBuilder(
                         padding: EdgeInsets.only(top: 16.h, left: 16.w, right: 16.w),
                         shrinkWrap: true,

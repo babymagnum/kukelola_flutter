@@ -1,7 +1,6 @@
 import 'package:division/division.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:kukelola_flutter/core/model/static_model.dart';
 import 'package:kukelola_flutter/core/theme/theme_text_style.dart';
@@ -42,8 +41,8 @@ class ListHomeMenuItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return Parent(
       gesture: Gestures()..onTap(_onClick),
-      style: ParentStyle()..background.color(Colors.white)..borderRadius(all: 12)
-        ..padding(horizontal: 14.w)..ripple(true),
+      style: ParentStyle()..background.color(Color(0xFFDEDEDE))..borderRadius(all: 12)
+        ..padding(horizontal: 14.w)..ripple(true)..boxShadow(color: Colors.black.withOpacity(0.05), offset: Offset(0, 6), blur: 30, spread: 0),
       child: Column(
         children: [
           SizedBox(height: 12.h,),
@@ -63,7 +62,7 @@ class ListHomeMenuItem extends StatelessWidget {
               Positioned(
                 right: 0, top: 0,
                 child: Parent(
-                  style: ParentStyle()..background.color(Color(0xFF018CCA))..borderRadius(all: 1000)..padding(horizontal: 5, vertical: 1)
+                  style: ParentStyle()..background.color(Color(0xFFF85C58))..borderRadius(all: 1000)..padding(horizontal: 5, vertical: 1)
                     ..border(all: 2, color: Colors.white),
                   child: Center(
                     child: Padding(

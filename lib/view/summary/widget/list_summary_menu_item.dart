@@ -1,8 +1,10 @@
 import 'package:division/division.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
 import 'package:kukelola_flutter/core/model/static_model.dart';
 import 'package:kukelola_flutter/core/theme/theme_text_style.dart';
+import 'package:kukelola_flutter/view/leave_summary/leave_summary_view.dart';
 
 class ListSummaryMenuItem extends StatelessWidget {
 
@@ -11,9 +13,22 @@ class ListSummaryMenuItem extends StatelessWidget {
   final SummaryMenuItems item;
   final int index;
 
+  getTo() {
+    if (index == 0) {
+
+    } else if (index == 1) {
+      Get.to(LeaveSummaryView());
+    } else if (index == 2) {
+
+    } else {
+
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Parent(
+      gesture: Gestures()..onTap(getTo),
       style: ParentStyle()..background.color(Colors.white)
         ..boxShadow(color: Colors.black.withOpacity(0.05), offset: Offset(0, 6), blur: 30, spread: 0)
         ..borderRadius(all: 12)..padding(horizontal: 30.w),
