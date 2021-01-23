@@ -7,16 +7,18 @@ import 'package:kukelola_flutter/core/widgets/empty_text.dart';
 import 'package:kukelola_flutter/view/base_view.dart';
 import 'package:kukelola_flutter/view/overtime_summary/overtime_summary_controller.dart';
 import 'package:kukelola_flutter/view/overtime_summary/widget/list_overtime_summary_item.dart';
+import 'package:kukelola_flutter/view/reimbursment_summary/reimbursment_summary_controller.dart';
+import 'package:kukelola_flutter/view/reimbursment_summary/widget/list_reimbursment_summary_item.dart';
 
-class OvertimeSummaryView extends StatelessWidget {
+class ReimbursmentSummaryView extends StatelessWidget {
 
-  var _overtimeSummaryCt = Get.put(OvertimeSummaryController());
+  var _reimbursmentSummaryCt = Get.put(ReimbursmentSummaryController());
 
   @override
   Widget build(BuildContext context) {
 
     Future.delayed(Duration.zero, () {
-      _overtimeSummaryCt.populateData();
+      _reimbursmentSummaryCt.populateData();
     });
 
     return BaseView(
@@ -29,7 +31,7 @@ class OvertimeSummaryView extends StatelessWidget {
               children: [
                 Expanded(
                   child: ButtonBack(
-                    label: 'Overtime Summary',
+                    label: 'Reimbursment Summary',
                     onBack: () => Get.back(),
                   ),
                 ),
@@ -37,7 +39,7 @@ class OvertimeSummaryView extends StatelessWidget {
             ),
           ),
           Expanded(
-            child: Obx(() => _overtimeSummaryCt.loadingSummary.value?
+            child: Obx(() => _reimbursmentSummaryCt.loadingSummary.value?
               Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
@@ -47,18 +49,18 @@ class OvertimeSummaryView extends StatelessWidget {
                   )
                 ],
               ) :
-              _overtimeSummaryCt.listSummary.length == 0 ?
+              _reimbursmentSummaryCt.listSummary.length == 0 ?
               Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  EmptyText(text: 'Empty overtime summary', textSize: 16.ssp)
+                  EmptyText(text: 'Empty reimbursment summary', textSize: 16.ssp)
                 ],
               ) :
               ListView.separated(
-                itemCount: _overtimeSummaryCt.listSummary.length,
+                itemCount: _reimbursmentSummaryCt.listSummary.length,
                 shrinkWrap: true,
                 padding: EdgeInsets.symmetric(horizontal: 24.w, vertical: 24.h),
-                itemBuilder: (_, index) => ListOvertimeSummaryItem(item: _overtimeSummaryCt.listSummary[index], index: index,),
+                itemBuilder: (_, index) => ListReimbursmentSummaryItem(item: _reimbursmentSummaryCt.listSummary[index], index: index,),
                 separatorBuilder: (BuildContext context, int index) => Divider(height: 16.h, color: Colors.transparent,),
               )
             ),

@@ -1,15 +1,13 @@
-import 'dart:io';
 import 'package:get/get.dart';
 import 'package:kukelola_flutter/core/model/static_model.dart';
 
 class ReimbursmentRequestController extends GetxController {
   var loadingSubmit = false.obs;
-  var attachment = File('').obs;
-  var listReimbursment = List<ReimbursmentDetailItem>().obs;
   var loadingAttachment = false.obs;
+  var form = ReimbursmentRequestForm().obs;
 
   setLoadingAttachment(value) => loadingAttachment.value = value;
-  setAttchment(String value) => attachment.value = File(value);
+  updateForm(ReimbursmentRequestForm value) => form.value = value;
 
   submitReimbursment() async {
     loadingSubmit.value = true;
@@ -18,17 +16,17 @@ class ReimbursmentRequestController extends GetxController {
   }
 
   addReimbursmentDetail(ReimbursmentDetailItem item) {
-    listReimbursment.add(item);
-    update();
+    form.value.listDetails.add(item);
+    updateForm(form.value);
   }
 
   removeReimbursmentDetail(int index) {
-    listReimbursment.removeAt(index);
-    update();
+    form.value.listDetails.removeAt(index);
+    updateForm(form.value);
   }
 
   updateReimbursmentDetail(int index, ReimbursmentDetailItem item) {
-    listReimbursment[index] = item;
-    update();
+    form.value.listDetails[index] = item;
+    updateForm(form.value);
   }
 }

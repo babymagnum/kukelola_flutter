@@ -10,15 +10,17 @@ import 'package:kukelola_flutter/core/widgets/dialog_cancel_leave_request.dart';
 import 'package:kukelola_flutter/view/leave_summary_detail/leave_summary_detail_view.dart';
 import 'package:kukelola_flutter/view/overtime_summary/overtime_summary_controller.dart';
 import 'package:kukelola_flutter/view/overtime_summary_detail/overtime_summary_detail_view.dart';
+import 'package:kukelola_flutter/view/reimbursment_summary/reimbursment_summary_controller.dart';
+import 'package:kukelola_flutter/view/reimbursment_summary_detail/reimbursment_summary_detail_view.dart';
 
-class ListOvertimeSummaryItem extends StatelessWidget {
+class ListReimbursmentSummaryItem extends StatelessWidget {
 
-  ListOvertimeSummaryItem({@required this.item, @required this.index});
+  ListReimbursmentSummaryItem({@required this.item, @required this.index});
 
-  final OvertimeRequestFormObject item;
+  final ReimbursmentRequestForm item;
   final int index;
 
-  var _overtimeSummaryCt = Get.find<OvertimeSummaryController>();
+  var _reimsbursmentSummaryCt = Get.find<ReimbursmentSummaryController>();
 
   Color _statusColor() {
     if (item.status == 'PENDING') return Color(0xFFC3C3C3);
@@ -30,7 +32,7 @@ class ListOvertimeSummaryItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Parent(
-      gesture: Gestures()..onTap(() => Get.to(OvertimeSummaryDetailView(index: index, item: item))),
+      gesture: Gestures()..onTap(() => Get.to(ReimbursmentSummaryDetailView(index: index, item: item))),
       style: ParentStyle()..background.color(Color(0xFFE9EAEA))..borderRadius(all: 8)..padding(horizontal: 16, vertical: 18),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -42,8 +44,8 @@ class ListOvertimeSummaryItem extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text('Overtime', style: ThemeTextStyle.biryaniBold.apply(color: Color(0xFF158AC9), fontSizeDelta: 14.ssp),),
-                    Text('${item.overtimeDate} ${item.startHour} - ${item.endHour}', style: ThemeTextStyle.biryaniRegular.apply(color: Color(0xFF6D6D6D), fontSizeDelta: 10.ssp),),
+                    Text('Reimbursment', style: ThemeTextStyle.biryaniBold.apply(color: Color(0xFF158AC9), fontSizeDelta: 14.ssp),),
+                    Text('11/01/2021 19:00', style: ThemeTextStyle.biryaniRegular.apply(color: Color(0xFF6D6D6D), fontSizeDelta: 10.ssp),),
                   ],
                 ),
               ),
@@ -70,7 +72,7 @@ class ListOvertimeSummaryItem extends StatelessWidget {
                 disable: item.loading,
                 title: 'Cancel',
                 loading: item.loading,
-                onTap: () => Get.dialog(DialogCancelLeaveRequest(action2Click: () => _overtimeSummaryCt.cancelLeave(index),)),
+                onTap: () => Get.dialog(DialogCancelLeaveRequest(action2Click: () => _reimsbursmentSummaryCt.cancelLeave(index),)),
                 textStyle: ThemeTextStyle.biryaniSemiBold.apply(color: Colors.white, fontSizeDelta: 10.ssp),
                 verticalPadding: 7.h,
                 horizontalPadding: 17.w,

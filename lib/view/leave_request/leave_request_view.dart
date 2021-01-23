@@ -122,6 +122,12 @@ class _LeaveRequestViewState extends State<LeaveRequestView> {
     }
   }
 
+  bool _disable() {
+    var form = _leaveRequestCt.form.value;
+    return form.leaveType.label == '' || (form.leaveType.label == 'Special Leave' ? form.specialLeaveType.label == '' : form.leaveType.label == '') ||
+        form.startDate == '' || form.endDate == '' || form.reason == '' || form.attachment.path == '';
+  }
+
   @override
   void initState() {
     super.initState();
@@ -157,10 +163,7 @@ class _LeaveRequestViewState extends State<LeaveRequestView> {
                 SizedBox(width: 10.w,),
                 ButtonLoading(
                   backgroundColor: ThemeColor.primary,
-                  disable: _leaveRequestCt.loadingSubmit.value || _leaveRequestCt.form.value.leaveType.label == ''
-                      || (_leaveRequestCt.form.value.leaveType.label == 'Special Leave' ? _leaveRequestCt.form.value.specialLeaveType.label == '' : _leaveRequestCt.form.value.leaveType.label == '') ||
-                      _leaveRequestCt.form.value.startDate == '' || _leaveRequestCt.form.value.endDate == '' ||
-                      _leaveRequestCt.form.value.reason == '' || _leaveRequestCt.form.value.attachment.path == '',
+                  disable: _leaveRequestCt.loadingSubmit.value || _disable(),
                   title: 'Submit',
                   loading: _leaveRequestCt.loadingSubmit.value,
                   onTap: () async {

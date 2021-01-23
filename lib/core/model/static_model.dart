@@ -53,6 +53,14 @@ class PersonalDataForm {
   String address = '';
 }
 
+class ReimbursmentRequestForm {
+  String reason = '';
+  File attachment = File('');
+  List<ReimbursmentDetailItem> listDetails = [];
+  String status = '';
+  bool loading = false;
+}
+
 class OvertimeRequestFormObject {
   String overtimeDate = TextUtil.getCurrentDate('dd/MM/yyyy');
   String startHour = TextUtil.getCurrentDate('HH:mm');

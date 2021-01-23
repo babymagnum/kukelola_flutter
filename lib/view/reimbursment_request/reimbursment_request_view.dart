@@ -1,5 +1,4 @@
 import 'dart:io';
-
 import 'package:division/division.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/cupertino.dart';
@@ -44,15 +43,21 @@ class _ReimbursmentRequestViewState extends State<ReimbursmentRequestView> {
 
     if(result != null) {
       File file = File(result.files.single.path);
-      _reimbursmentRequestCt.setAttchment(file.path);
+      _reimbursmentRequestCt.form.value.attachment = file;
+      _reimbursmentRequestCt.updateForm(_reimbursmentRequestCt.form.value);
+      setState(() {});
     } else {
       Fluttertoast.showToast(msg: 'Canceled the picker.', backgroundColor: Colors.black.withOpacity(0.6));
     }
   }
 
+  bool _disable() {
+    var form = _reimbursmentRequestCt.form.value;
+    return form.reason == '' || form.listDetails.length == 0 || form.attachment.path == '';
+  }
+
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
 
     _keyboardVisibilityId = KeyboardVisibilityNotification().addNewListener(
@@ -87,7 +92,7 @@ class _ReimbursmentRequestViewState extends State<ReimbursmentRequestView> {
                 SizedBox(width: 10.w,),
                 ButtonLoading(
                   backgroundColor: ThemeColor.primary,
-                  disable: _reimbursmentRequestCt.loadingSubmit.value,
+                  disable: _reimbursmentRequestCt.loadingSubmit.value || _disable(),
                   title: 'Submit',
                   loading: _reimbursmentRequestCt.loadingSubmit.value,
                   onTap: () => _reimbursmentRequestCt.submitReimbursment(),
@@ -116,6 +121,11 @@ class _ReimbursmentRequestViewState extends State<ReimbursmentRequestView> {
                           maxLines: null,
                           inputType: TextInputType.multiline,
                           onEditingComplete: () {},
+                          onChanged: (text) {
+                            _reimbursmentRequestCt.form.value.reason = text;
+                            _reimbursmentRequestCt.updateForm(_reimbursmentRequestCt.form.value);
+                            setState(() {});
+                          },
                           onTap: () => setState(() => _descriptionFocus.requestFocus()),
                           labelText: 'DESCRIPTION',
                         ),
@@ -140,7 +150,7 @@ class _ReimbursmentRequestViewState extends State<ReimbursmentRequestView> {
                         ),
                         SizedBox(height: 8.h,),
                         Parent(style: ParentStyle()..background.color(Color(0xFFC4C4C4))..height(1)..width(Get.width),),
-                        _reimbursmentRequestCt.listReimbursment.length == 0 ?
+                        _reimbursmentRequestCt.form.value.listDetails.length == 0 ?
                         Padding(
                           padding: EdgeInsets.only(top: 16.h),
                           child: EmptyText(text: 'Reimbursment Detail is empty, tap the button to add.', textSize: 14.ssp),
@@ -149,9 +159,9 @@ class _ReimbursmentRequestViewState extends State<ReimbursmentRequestView> {
                           padding: EdgeInsets.only(top: 16.h),
                           shrinkWrap: true,
                           physics: NeverScrollableScrollPhysics(),
-                          itemBuilder: (_, index) => ListReimbursmentDetailItem(item: _reimbursmentRequestCt.listReimbursment[index], index: index,),
+                          itemBuilder: (_, index) => ListReimbursmentDetailItem(item: _reimbursmentRequestCt.form.value.listDetails[index], index: index,),
                           separatorBuilder: (_, __) => Divider(height: 10.h, color: Colors.transparent,),
-                          itemCount: _reimbursmentRequestCt.listReimbursment.length,
+                          itemCount: _reimbursmentRequestCt.form.value.listDetails.length,
                         ),
                         SizedBox(height: 24.h,),
                         InputAttachment(
@@ -159,7 +169,7 @@ class _ReimbursmentRequestViewState extends State<ReimbursmentRequestView> {
                           hintText: 'choose file...',
                           onTap: () => _pickFile(),
                           loading: _reimbursmentRequestCt.loadingAttachment.value,
-                          value: _reimbursmentRequestCt.attachment.value.path == '' ? '' : '${_reimbursmentRequestCt.attachment.value.path} (${(_reimbursmentRequestCt.attachment.value.lengthSync() / 1024).round()} KB)',
+                          value: _reimbursmentRequestCt.form.value.attachment.path == '' ? '' : '${_reimbursmentRequestCt.form.value.attachment.path} (${(_reimbursmentRequestCt.form.value.attachment.lengthSync() / 1024).round()} KB)',
                         )
                       ],
                     ),
