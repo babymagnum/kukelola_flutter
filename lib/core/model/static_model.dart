@@ -53,6 +53,15 @@ class PersonalDataForm {
   String address = '';
 }
 
+class CalendarItem {
+  CalendarItem(this.title, this.date, this.dateStatus, this.description);
+
+  String title;
+  String date;
+  String dateStatus;
+  String description;
+}
+
 class AttendanceRequestForm {
   String startDate = TextUtil.getCurrentDate('dd/MM/yyyy');
   String endDate = TextUtil.getCurrentDate('dd/MM/yyyy');

@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import 'package:kukelola_flutter/core/model/static_model.dart';
 import 'package:kukelola_flutter/core/theme/theme_text_style.dart';
 import 'package:kukelola_flutter/view/attendance_request/attendance_request_view.dart';
+import 'package:kukelola_flutter/view/calendar/calendar_view.dart';
 import 'package:kukelola_flutter/view/leave_request/leave_request_view.dart';
 import 'package:kukelola_flutter/view/overtime_request/overtime_request_view.dart';
 import 'package:kukelola_flutter/view/reimbursment_request/reimbursment_request_view.dart';
@@ -33,7 +34,7 @@ class ListHomeMenuItem extends StatelessWidget {
     } else if (index == 7) {
 
     } else {
-
+      Get.to(CalendarView());
     }
   }
 
