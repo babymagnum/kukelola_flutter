@@ -1,5 +1,4 @@
 import 'dart:io';
-import 'package:division/division.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -9,7 +8,6 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:kukelola_flutter/core/helper/constant.dart';
 import 'package:kukelola_flutter/core/helper/text_util.dart';
-import 'package:kukelola_flutter/core/model/static_model.dart';
 import 'package:kukelola_flutter/core/theme/theme_color.dart';
 import 'package:kukelola_flutter/core/theme/theme_text_style.dart';
 import 'package:kukelola_flutter/core/widgets/button_back.dart';
@@ -18,11 +16,9 @@ import 'package:kukelola_flutter/core/widgets/custom_date_picker.dart';
 import 'package:kukelola_flutter/core/widgets/custom_input.dart';
 import 'package:kukelola_flutter/core/widgets/input_attachment.dart';
 import 'package:kukelola_flutter/core/widgets/input_tap.dart';
-import 'package:kukelola_flutter/core/widgets/list_standart_dropdown_item.dart';
 import 'package:kukelola_flutter/main.dart';
 import 'package:kukelola_flutter/view/attendance_request/attendance_request_controller.dart';
 import 'package:kukelola_flutter/view/base_view.dart';
-import 'package:kukelola_flutter/view/leave_request/leave_request_controller.dart';
 
 class AttendanceRequestView extends StatefulWidget {
   @override
@@ -31,7 +27,6 @@ class AttendanceRequestView extends StatefulWidget {
 
 class AttendanceRequestViewState extends State<AttendanceRequestView> {
 
-  var _reasonCt = TextEditingController();
   var _reasonFocus = FocusNode();
   var _attendanceRequestCt = Get.put(AttendanceRequestController());
 
@@ -95,7 +90,8 @@ class AttendanceRequestViewState extends State<AttendanceRequestView> {
 
     if(result != null) {
       File file = File(result.files.single.path);
-      _attendanceRequestCt.setFilePath(file.path);
+      _attendanceRequestCt.form.value.attachment = file;
+      _attendanceRequestCt.updateForm(_attendanceRequestCt.form.value);
     } else {
       Fluttertoast.showToast(msg: 'Canceled the picker.', backgroundColor: Colors.black.withOpacity(0.6));
     }
@@ -144,44 +140,52 @@ class AttendanceRequestViewState extends State<AttendanceRequestView> {
                         InputTap(
                           labelText: 'START DATE',
                           hintText: '',
-                          onTap: () => _showDatePicker(context, _attendanceRequestCt.startDate.value, (date) {
-                            _attendanceRequestCt.setStartDate(date);
+                          onTap: () => _showDatePicker(context, _attendanceRequestCt.form.value.startDate, (date) {
+                            _attendanceRequestCt.form.value.startDate = date;
+                            _attendanceRequestCt.updateForm(_attendanceRequestCt.form.value);
                           }),
                           rightIcon: '',
                           leftSize: Size(14.w, 16.h),
-                          value: _attendanceRequestCt.startDate.value,
+                          value: _attendanceRequestCt.form.value.startDate,
                           leftIcon: 'assets/images/fa-solid_calendar-day.svg',
                         ),
                         SizedBox(height: 24.h,),
                         InputTap(
                           labelText: 'END DATE',
                           hintText: '',
-                          onTap: () => _showDatePicker(context, _attendanceRequestCt.endDate.value, (date) {
-                            _attendanceRequestCt.setEndDate(date);
+                          onTap: () => _showDatePicker(context, _attendanceRequestCt.form.value.endDate, (date) {
+                            _attendanceRequestCt.form.value.endDate = date;
+                            _attendanceRequestCt.updateForm(_attendanceRequestCt.form.value);
                           }),
                           rightIcon: '',
                           leftSize: Size(14.w, 16.h),
-                          value: _attendanceRequestCt.endDate.value,
+                          value: _attendanceRequestCt.form.value.endDate,
                           leftIcon: 'assets/images/fa-solid_calendar-day.svg',
                         ),
                         SizedBox(height: 24.h,),
                         InputTap(
                           labelText: 'HOUR (START)',
                           hintText: '',
-                          onTap: () => _showTimePicker(context, _attendanceRequestCt.startHour.value, (time) => _attendanceRequestCt.setStartHour(time)),
+                          onTap: () => _showTimePicker(context, _attendanceRequestCt.form.value.startHour, (time) {
+                            _attendanceRequestCt.form.value.startHour = time;
+                            _attendanceRequestCt.updateForm(_attendanceRequestCt.form.value);
+                          }),
                           rightIcon: '',
                           leftSize: Size(14.w, 16.h),
-                          value: _attendanceRequestCt.startHour.value,
+                          value: _attendanceRequestCt.form.value.startHour,
                           leftIcon: 'assets/images/fa-solid_clock.svg',
                         ),
                         SizedBox(height: 24.h,),
                         InputTap(
                           labelText: 'HOUR (END)',
                           hintText: '',
-                          onTap: () => _showTimePicker(context, _attendanceRequestCt.endHour.value, (time) => _attendanceRequestCt.setEndHour(time)),
+                          onTap: () => _showTimePicker(context, _attendanceRequestCt.form.value.endHour, (time) {
+                            _attendanceRequestCt.form.value.endHour = time;
+                            _attendanceRequestCt.updateForm(_attendanceRequestCt.form.value);
+                          }),
                           rightIcon: '',
                           leftSize: Size(14.w, 16.h),
-                          value: _attendanceRequestCt.endHour.value,
+                          value: _attendanceRequestCt.form.value.endHour,
                           leftIcon: 'assets/images/fa-solid_clock.svg',
                         ),
                         SizedBox(height: 24.h,),
@@ -189,6 +193,10 @@ class AttendanceRequestViewState extends State<AttendanceRequestView> {
                           textInputAction: null,
                           focusNode: _reasonFocus,
                           labelText: 'REASON',
+                          onChanged: (text) {
+                            _attendanceRequestCt.form.value.reason = text.trim();
+                            _attendanceRequestCt.updateForm(_attendanceRequestCt.form.value);
+                          },
                           hintText: 'type reason...',
                           inputType: TextInputType.multiline,
                           onEditingComplete: () {},
@@ -201,7 +209,7 @@ class AttendanceRequestViewState extends State<AttendanceRequestView> {
                           hintText: 'selected file...',
                           onTap: () => _pickFile(),
                           loading: _attendanceRequestCt.loadingPickFile.value,
-                          value: _attendanceRequestCt.filePath.value.path == '' ? '' : '${_attendanceRequestCt.filePath.value.path} (${(_attendanceRequestCt.filePath.value.lengthSync() / 1024).round()} KB)',
+                          value: _attendanceRequestCt.form.value.attachment.path == '' ? '' : '${_attendanceRequestCt.form.value.attachment.path} (${(_attendanceRequestCt.form.value.attachment.lengthSync() / 1024).round()} KB)',
                         ),
                       ],
                     ),

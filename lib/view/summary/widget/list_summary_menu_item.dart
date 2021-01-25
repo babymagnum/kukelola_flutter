@@ -4,6 +4,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:kukelola_flutter/core/model/static_model.dart';
 import 'package:kukelola_flutter/core/theme/theme_text_style.dart';
+import 'package:kukelola_flutter/view/attendance_summary/attendance_summary_view.dart';
 import 'package:kukelola_flutter/view/leave_summary/leave_summary_view.dart';
 import 'package:kukelola_flutter/view/overtime_summary/overtime_summary_view.dart';
 import 'package:kukelola_flutter/view/reimbursment_summary/reimbursment_summary_view.dart';
@@ -17,7 +18,7 @@ class ListSummaryMenuItem extends StatelessWidget {
 
   getTo() {
     if (index == 0) {
-
+      Get.to(AttendanceSummaryView());
     } else if (index == 1) {
       Get.to(LeaveSummaryView());
     } else if (index == 2) {

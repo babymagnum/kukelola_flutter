@@ -7,10 +7,11 @@ import 'package:kukelola_flutter/core/theme/theme_text_style.dart';
 
 class ButtonBack extends StatelessWidget {
 
-  ButtonBack({@required this.label, @required this.onBack});
+  ButtonBack({this.whiteColor = false, @required this.label, @required this.onBack});
 
   final String label;
   final Function onBack;
+  final bool whiteColor;
 
   @override
   Widget build(BuildContext context) {
@@ -27,7 +28,7 @@ class ButtonBack extends StatelessWidget {
         Expanded(
           child: Padding(
             padding: EdgeInsets.only(top: 3.h),
-            child: Text(label, style: ThemeTextStyle.biryaniBold.apply(fontSizeDelta: 16.ssp), overflow: TextOverflow.ellipsis, maxLines: 1,),
+            child: Text(label, style: ThemeTextStyle.biryaniBold.apply(fontSizeDelta: 16.ssp, color: whiteColor ? Colors.white : Color(0xFF181921)), overflow: TextOverflow.ellipsis, maxLines: 1,),
           ),
         )
       ],

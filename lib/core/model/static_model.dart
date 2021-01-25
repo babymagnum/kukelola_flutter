@@ -53,6 +53,16 @@ class PersonalDataForm {
   String address = '';
 }
 
+class AttendanceRequestForm {
+  String startDate = TextUtil.getCurrentDate('dd/MM/yyyy');
+  String endDate = TextUtil.getCurrentDate('dd/MM/yyyy');
+  String startHour = TextUtil.getCurrentDate('HH:mm');
+  String endHour = TextUtil.getCurrentDate('HH:mm');
+  String reason = '';
+  File attachment = File('');
+  String status = '';
+}
+
 class ReimbursmentRequestForm {
   String reason = '';
   File attachment = File('');
