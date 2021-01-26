@@ -30,7 +30,7 @@ class _LoginViewState extends State<LoginView> {
       body: Column(
         children: [
           Container(
-            color: Colors.black, height: MediaQuery.of(context).padding.top,
+            color: GetPlatform.isAndroid ? Colors.black : Colors.transparent, height: MediaQuery.of(context).padding.top,
             width: Get.width,
           ),
           Expanded(
@@ -40,7 +40,7 @@ class _LoginViewState extends State<LoginView> {
                   padding: EdgeInsets.symmetric(horizontal: 24.w),
                   child: Obx(() => Column(
                       children: [
-                        SizedBox(height: 40.h),
+                        SizedBox(height: 24.h),
                         ButtonBack(label: 'Sign In', onBack: () => exit(0),),
                         SizedBox(height: 28.h,),
                         SvgPicture.asset('assets/images/login.svg', width: Get.width * 0.6, height: Get.width * 0.6,),

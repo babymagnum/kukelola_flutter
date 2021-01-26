@@ -60,7 +60,7 @@ class _VerificationCodeViewState extends State<VerificationCodeView> {
       body: Column(
         children: [
           Container(
-            color: Colors.black, height: MediaQuery.of(context).padding.top,
+            color: GetPlatform.isAndroid ? Colors.black : Colors.transparent, height: MediaQuery.of(context).padding.top,
             width: size.width,
           ),
           Expanded(
@@ -70,7 +70,7 @@ class _VerificationCodeViewState extends State<VerificationCodeView> {
                   padding: EdgeInsets.symmetric(horizontal: 24.w),
                   child: Obx(() => Column(
                     children: [
-                      SizedBox(height: 40.h),
+                      SizedBox(height: 24.h),
                       ButtonBack(label: 'Verification Code', onBack: () => Get.back(),),
                       SizedBox(height: 48.h,),
                       Text("Check your email inbox, we've sent you verification code. Please input the code below",
