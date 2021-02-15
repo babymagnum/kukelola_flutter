@@ -169,7 +169,7 @@ class _VerificationCodeViewState extends State<VerificationCodeView> {
 
                           Get.offAll(ContainerHomeView());
                         },
-                        verticalPadding: 14.h,
+                        verticalPadding: 13.h,
                       ),
                       SizedBox(height: 24.h,)
                     ],

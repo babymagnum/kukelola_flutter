@@ -48,8 +48,8 @@ class InputAttachment extends StatelessWidget {
                 title: 'Choose File...',
                 loading: loading,
                 onTap: onTap,
-                verticalPadding: 7.h,
-                horizontalPadding: 12.w,
+                verticalPadding: 6.h,
+                horizontalPadding: 10.w,
                 loadingSize: 10.w,
                 textStyle: ThemeTextStyle.biryaniSemiBold.apply(fontSizeDelta: 10.ssp, color: Colors.white),
               )

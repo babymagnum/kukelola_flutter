@@ -1,13 +1,14 @@
+import 'dart:async';
 import 'dart:io';
 import 'package:division/division.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
+import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
-import 'package:keyboard_visibility/keyboard_visibility.dart';
 import 'package:kukelola_flutter/core/helper/constant.dart';
 import 'package:kukelola_flutter/core/helper/text_util.dart';
 import 'package:kukelola_flutter/core/model/static_model.dart';
@@ -35,8 +36,7 @@ class _LeaveRequestViewState extends State<LeaveRequestView> {
   var _typeKey = GlobalKey(), _specialLeaveKey = GlobalKey();
   var _reasonFocus = FocusNode();
   var _leaveRequestCt = Get.put(LeaveRequestController());
-  var _keyboardVisibilitySubscriberId = 0;
-  var _keyboardVisibility = KeyboardVisibilityNotification();
+  StreamSubscription _keyboardStream;
 
   _showDatePicker(BuildContext context, String selectedDate, Function (String date) onPick) {
 
@@ -132,14 +132,14 @@ class _LeaveRequestViewState extends State<LeaveRequestView> {
   void initState() {
     super.initState();
 
-    _keyboardVisibilitySubscriberId = _keyboardVisibility.addNewListener(
-        onHide: () => FocusScope.of(context).requestFocus(FocusNode())
-    );
+    _keyboardStream = KeyboardVisibilityController().onChange.listen((bool visible) {
+      if (!visible) FocusScope.of(context).requestFocus(FocusNode());
+    });
   }
 
   @override
   void dispose() {
-    _keyboardVisibility.removeListener(_keyboardVisibilitySubscriberId);
+    _keyboardStream?.cancel();
 
     super.dispose();
   }

@@ -549,6 +549,7 @@ class DateTimePickerState extends State<DateTimePickerComponent> {
                 disable: false,
                 title: 'Pick',
                 loading: false,
+                verticalPadding: 10.h,
                 onTap: widget.onPick,
                 textStyle: ThemeTextStyle.biryaniBold.apply(color: Colors.white, fontSizeDelta: 16.ssp),
               ),

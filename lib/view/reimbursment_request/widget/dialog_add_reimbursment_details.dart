@@ -1,10 +1,12 @@
+import 'dart:async';
+
 import 'package:division/division.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
 import 'package:flutter_masked_text/flutter_masked_text.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
-import 'package:keyboard_visibility/keyboard_visibility.dart';
 import 'package:kukelola_flutter/core/model/static_model.dart';
 import 'package:kukelola_flutter/core/theme/theme_color.dart';
 import 'package:kukelola_flutter/core/theme/theme_text_style.dart';
@@ -27,16 +29,15 @@ class _DialogAddReimbursmentDetailsState extends State<DialogAddReimbursmentDeta
   var _reimbursmentRequestCt = Get.put(ReimbursmentRequestController());
   var _descriptionFocus = FocusNode(), _costFocus = FocusNode();
   var _descriptionCt = TextEditingController(), _costCt = MoneyMaskedTextController(initialValue: 0, decimalSeparator: '', thousandSeparator: '.', precision: 0, leftSymbol: 'Rp ');
-  var _keyboardVisibilityId = 0;
-  var _keyboardVisibilityNotification = KeyboardVisibilityNotification();
+  StreamSubscription _keyboardStream;
 
   @override
   void initState() {
     super.initState();
 
-    _keyboardVisibilityId = _keyboardVisibilityNotification.addNewListener(
-        onHide: () => setState(() => FocusScope.of(context).requestFocus(FocusNode()))
-    );
+    _keyboardStream = KeyboardVisibilityController().onChange.listen((bool visible) {
+      if (!visible) FocusScope.of(context).requestFocus(FocusNode());
+    });
 
     if (widget.item != null) {
       _descriptionCt.text = widget.item.description;
@@ -46,7 +47,7 @@ class _DialogAddReimbursmentDetailsState extends State<DialogAddReimbursmentDeta
 
   @override
   void dispose() {
-    _keyboardVisibilityNotification.removeListener(_keyboardVisibilityId);
+    _keyboardStream?.cancel();
     _descriptionCt.dispose();
     _costCt.dispose();
 

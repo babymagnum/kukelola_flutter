@@ -18,42 +18,52 @@ class Onboarding3 extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: EdgeInsets.symmetric(horizontal: 24.w),
-      child: Column(
-        children: [
-          Expanded(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                SvgPicture.asset(item.image, width: Get.width * 0.4, height: Get.height * 0.4, fit: BoxFit.contain,)
-              ],
-            ),
+    return Column(
+      children: [
+        Expanded(
+          child: Stack(
+            children: [
+              Align(
+                child: Image.asset('assets/images/kukelola_logo.png', width: Get.width * 0.45, height: Get.height * 0.4, fit: BoxFit.contain,),
+                alignment: Alignment.topCenter,
+              ),
+              Positioned(
+                left: 0, right: 0, bottom: 0,
+                child: Image.asset('assets/images/onboarding3_leaves.png', width: Get.width, height: Get.height * 0.3, fit: BoxFit.fitWidth,),
+              )
+            ],
           ),
-          Align(
-            alignment: Alignment.centerLeft,
-            child: Text(item.title, style: ThemeTextStyle.biryaniBold.apply(fontSizeDelta: 26.ssp),),
-          ),
-          SizedBox(height: 10.h,),
-          Text(item.description, style: ThemeTextStyle.biryaniRegular.apply(fontSizeDelta: 16.ssp),),
-          SizedBox(height: 24.h,),
-          ButtonLoading(
-            backgroundColor: ThemeColor.primary,
-            disable: false,
-            title: 'Sign In',
-            loading: false,
-            textStyle: ThemeTextStyle.biryaniBold.apply(color: Colors.white, fontSizeDelta: 14.ssp),
-            onTap: () async {
-              final preference = await SharedPreferences.getInstance();
-              await preference.setBool(Constant.IS_ONBOARDING, true);
+        ),
+        Padding(
+          padding: EdgeInsets.symmetric(horizontal: 24.w),
+          child: Column(
+            children: [
+              Align(
+                alignment: Alignment.centerLeft,
+                child: Text(item.title, style: ThemeTextStyle.biryaniBold.apply(fontSizeDelta: 26.ssp),),
+              ),
+              SizedBox(height: 10.h,),
+              Text(item.description, style: ThemeTextStyle.biryaniRegular.apply(fontSizeDelta: 16.ssp),),
+              SizedBox(height: 24.h,),
+              ButtonLoading(
+                backgroundColor: ThemeColor.primary,
+                disable: false,
+                title: 'Sign In',
+                loading: false,
+                textStyle: ThemeTextStyle.biryaniBold.apply(color: Colors.white, fontSizeDelta: 14.ssp),
+                onTap: () async {
+                  final preference = await SharedPreferences.getInstance();
+                  await preference.setBool(Constant.IS_ONBOARDING, true);
 
-              Get.off(LoginView());
-            },
-            verticalPadding: 18.h,
+                  Get.off(LoginView());
+                },
+                verticalPadding: 13.h,
+              ),
+              SizedBox(height: 85.h,)
+            ],
           ),
-          SizedBox(height: 85.h,)
-        ],
-      ),
+        )
+      ],
     );
   }
 }

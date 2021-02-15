@@ -52,7 +52,7 @@ class DialogCancelLeaveRequest extends StatelessWidget {
                           Get.back();
                         },
                         borderRadius: 6,
-                        verticalPadding: 12.h,
+                        verticalPadding: 10.h,
                         textStyle: ThemeTextStyle.biryaniBold.apply(color: Colors.white, fontSizeDelta: 14.ssp),
                       ),
                     ),

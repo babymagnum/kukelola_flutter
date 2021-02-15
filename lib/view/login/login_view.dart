@@ -77,7 +77,7 @@ class _LoginViewState extends State<LoginView> {
                           title: 'Sign In',
                           loading: false,
                           onTap: () => Get.to(VerificationCodeView()),
-                          verticalPadding: 14.h,
+                          verticalPadding: 13.h,
                           textStyle: ThemeTextStyle.biryaniBold.apply(color: Colors.white, fontSizeDelta: 14.ssp),
                         )
                       ],

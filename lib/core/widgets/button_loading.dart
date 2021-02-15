@@ -7,7 +7,7 @@ class ButtonLoading extends StatelessWidget {
 
   ButtonLoading({Key key, @required this.backgroundColor, @required this.disable,
     @required this.title, @required this.loading, @required this.onTap, @required this.textStyle,
-    this.verticalPadding = 5, this.horizontalPadding = 10, this.loadingSize = 17,
+    this.verticalPadding = 13, this.horizontalPadding = 10, this.loadingSize = 17,
     this.borderRadius = 6}): super(key: key);
 
   final String title;

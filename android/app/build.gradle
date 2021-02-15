@@ -38,9 +38,9 @@ android {
 
     signingConfigs {
         release {
-            keyAlias 'key'
+            keyAlias 'kukelola_key'
             keyPassword 'password'
-            storeFile file('/Users/ariefzainuri/Documents/FlutterProject/satu_pos_flutter/android/app/keystore/satu_pos.jks')
+            storeFile file('/Users/ariefzainuri/Documents/Flutter Project/kukelola_flutter/android/app/keystore/kukelola_key.jks')
             storePassword 'password'
         }
     }
@@ -54,7 +54,6 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
         debug {
-            applicationIdSuffix = '.debug'
             resValue "string", "app_name", "KuKelola Dev"
         }
     }

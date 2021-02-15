@@ -1,12 +1,13 @@
+import 'dart:async';
 import 'dart:io';
 import 'package:division/division.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
-import 'package:keyboard_visibility/keyboard_visibility.dart';
 import 'package:kukelola_flutter/core/theme/theme_color.dart';
 import 'package:kukelola_flutter/core/theme/theme_text_style.dart';
 import 'package:kukelola_flutter/core/widgets/button_back.dart';
@@ -29,7 +30,7 @@ class _ReimbursmentRequestViewState extends State<ReimbursmentRequestView> {
   var _reimbursmentRequestCt = Get.put(ReimbursmentRequestController());
   var _descriptionFocus = FocusNode();
   var _descriptionCt = TextEditingController();
-  var _keyboardVisibilityId = 0;
+  StreamSubscription _keyboardStream;
 
   Widget _textTitleDetails(String label, int flex) {
     return Flexible(child: Text(label, maxLines: 1, overflow: TextOverflow.ellipsis, style: ThemeTextStyle.biryaniBold.apply(color: Color(0xFFC4C4C4), fontSizeDelta: 10.ssp),));
@@ -60,14 +61,14 @@ class _ReimbursmentRequestViewState extends State<ReimbursmentRequestView> {
   void initState() {
     super.initState();
 
-    _keyboardVisibilityId = KeyboardVisibilityNotification().addNewListener(
-      onHide: () => FocusScope.of(context).requestFocus(FocusNode())
-    );
+    _keyboardStream = KeyboardVisibilityController().onChange.listen((bool visible) {
+      if (!visible) FocusScope.of(context).requestFocus(FocusNode());
+    });
   }
 
   @override
   void dispose() {
-    KeyboardVisibilityNotification().removeListener(_keyboardVisibilityId);
+    _keyboardStream?.cancel();
     _descriptionCt.dispose();
 
     super.dispose();

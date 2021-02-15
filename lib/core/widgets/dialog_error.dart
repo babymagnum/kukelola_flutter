@@ -54,7 +54,15 @@ class DialogError extends StatelessWidget {
                       ),
                     ),
                     SizedBox(width: 10.w,),
-                    Expanded(child: ButtonLoading(backgroundColor: ThemeColor.primary, disable: false, title: button2, loading: false, onTap: button2Click)),
+                    Expanded(child: ButtonLoading(
+                      backgroundColor: ThemeColor.primary,
+                      disable: false,
+                      title: button2,
+                      loading: false,
+                      onTap: button2Click,
+                      verticalPadding: 10.h,
+                      textStyle: ThemeTextStyle.biryaniBold.apply(color: Colors.white, fontSizeDelta: 14.ssp),
+                    )),
                   ],
                 )
               ],
