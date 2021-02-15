@@ -18,7 +18,7 @@ class CommonFunction {
             )
           ],
         ),
-        barBlur: 0, snackPosition: SnackPosition.BOTTOM,
+        barBlur: 5, snackPosition: SnackPosition.BOTTOM,
         backgroundColor: Colors.black45, margin: EdgeInsets.symmetric(vertical: 0, horizontal: 0));
   }
 
