@@ -1,5 +1,4 @@
 import 'dart:io';
-import 'package:flutter/cupertino.dart';
 import 'package:kukelola_flutter/core/helper/text_util.dart';
 
 class SummaryMenuItems {
@@ -25,6 +24,31 @@ class FamiliesItem {
   String occupation = '';
   String dateOfBirth = '';
   String phone = '';
+  bool loading = false;
+}
+
+class BusinessTripDetailForm {
+  BusinessTripDetailInput airplaneBusTicket = BusinessTripDetailInput();
+  BusinessTripDetailInput localTransportation = BusinessTripDetailInput();
+  BusinessTripDetailInput airportParkingFuel = BusinessTripDetailInput();
+  BusinessTripDetailInput housing = BusinessTripDetailInput();
+  BusinessTripDetailInput meal = BusinessTripDetailInput();
+  BusinessTripDetailInput laundry = BusinessTripDetailInput();
+  BusinessTripDetailInput pocketMoney = BusinessTripDetailInput();
+  BusinessTripDetailInput other = BusinessTripDetailInput();
+}
+
+class BusinessTripDetailInput {
+  String amount = '';
+  String description = '';
+}
+
+class BusinessTripForm {
+  String startDate = TextUtil.getCurrentDate('dd/MM/yyyy');
+  String endDate = TextUtil.getCurrentDate('dd/MM/yyyy');
+  String destination = '';
+  String purpose = '';
+  File attachment = File('');
   bool loading = false;
 }
 
