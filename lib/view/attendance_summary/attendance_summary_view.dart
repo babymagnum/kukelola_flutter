@@ -182,7 +182,8 @@ class _AttendanceSummaryViewState extends State<AttendanceSummaryView> with Tick
                           calendarController: _calendarCt,
                           locale: commonController.language.value,
                           initialCalendarFormat: CalendarFormat.week,
-                          startDay: DateTime.now(),
+                          startDay: DateTime(DateTime.now().year - 2),
+                          endDay: DateTime(DateTime.now().year + 2),
                           onDaySelected: (date, _, __) {
                             _attendanceSummaryCt.setSelectedDay(TextUtil.dateTimeToString(date, 'dd/MM/yyyy'));
                             _animationCt.reset();
