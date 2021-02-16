@@ -4,23 +4,28 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import 'package:kukelola_flutter/core/helper/text_util.dart';
 import 'package:kukelola_flutter/core/model/static_model.dart';
 import 'package:kukelola_flutter/core/theme/theme_color.dart';
 import 'package:kukelola_flutter/core/theme/theme_text_style.dart';
 import 'package:kukelola_flutter/core/widgets/button_back.dart';
 import 'package:kukelola_flutter/core/widgets/button_loading.dart';
+import 'package:kukelola_flutter/core/widgets/dialog_cancel_leave_request.dart';
 import 'package:kukelola_flutter/core/widgets/summary_detail_status.dart';
 import 'package:kukelola_flutter/view/base_view.dart';
-import 'package:kukelola_flutter/view/overtime_summary_detail/overtime_summary_detail_controller.dart';
+import 'package:kukelola_flutter/view/leave_summary_detail/leave_summary_detail_controller.dart';
+import 'package:kukelola_flutter/view/workflow_approval/controller/ongoing_request_controller.dart';
 
-class OvertimeSummaryDetailView extends StatelessWidget {
+class OngoingRequestDetailView extends StatelessWidget {
 
-  OvertimeSummaryDetailView({@required this.index, @required this.item});
+  OngoingRequestDetailView({@required this.index, @required this.item});
 
-  final OvertimeRequestFormObject item;
+  final WorkflowApprovalItem item;
   final int index;
 
-  var _overtimeSummaryDetailCt = Get.put(OvertimeSummaryDetailController());
+  var _ongoingRequestCt = Get.find<OngoingRequestController>();
+
+  bool _isSpecialLeave() => item.leaveType == 'Special Leave';
 
   Widget _content(String title, String content, bool isAttachment) {
     return Expanded(
@@ -33,7 +38,7 @@ class OvertimeSummaryDetailView extends StatelessWidget {
       ),
     );
   }
-  
+
   @override
   Widget build(BuildContext context) {
     return BaseView(
@@ -56,16 +61,18 @@ class OvertimeSummaryDetailView extends StatelessWidget {
                         Row(
                           children: [
                             Flexible(
-                              child: Text('Overtime', style: ThemeTextStyle.biryaniBold.apply(color: Colors.white, fontSizeDelta: 18.ssp),),
+                              child: Text(item.leaveType, style: ThemeTextStyle.biryaniBold.apply(color: Colors.white, fontSizeDelta: 18.ssp),),
                             ),
                             SizedBox(width: 4.w,),
+                            item.status == '' ?
+                            Container() :
                             SummaryDetailStatus(color: Color(0xFFC3C3C3), label: item.status),
                           ],
                         ),
                         SizedBox(height: 4.h,),
-                        Text('${item.overtimeDate} ${item.startHour} - ${item.endHour}', style: ThemeTextStyle.biryaniRegular.apply(color: Colors.white, fontSizeDelta: 12.ssp),),
+                        Text('${item.startDate} - ${item.endDate}', style: ThemeTextStyle.biryaniRegular.apply(color: Colors.white, fontSizeDelta: 12.ssp),),
                         SizedBox(height: 16.h,),
-                        Text('Newt Salamander / Field Officer', style: ThemeTextStyle.biryaniRegular.apply(color: Colors.white, fontSizeDelta: 12.ssp),),
+                        Text('Newt Salamander', style: ThemeTextStyle.biryaniRegular.apply(color: Colors.white, fontSizeDelta: 12.ssp),),
                         Text('K0090192', style: ThemeTextStyle.biryaniRegular.apply(color: Colors.white, fontSizeDelta: 12.ssp),),
                         SizedBox(height: 24.h,)
                       ],
@@ -84,21 +91,21 @@ class OvertimeSummaryDetailView extends StatelessWidget {
               child: SingleChildScrollView(
                 child: Padding(
                   padding: EdgeInsets.symmetric(horizontal: 24.w),
-                  child: Column(
+                  child: Obx(() => Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       SizedBox(height: 24.h,),
                       Row(
                         children: [
-                          _content('START', item.startHour, false),
+                          _content(_isSpecialLeave() ? 'SPECIAL LEAVE' : 'LEAVE TYPE', _isSpecialLeave() ? item.specialLeaveType : item.leaveType, false),
                           SizedBox(width: 10.w,),
-                          _content('END', item.endHour, false)
+                          _content('TOTAL DAYS', '${TextUtil.differenceDate(item.endDate, item.startDate, 'dd/MM/yyyy')}', false)
                         ],
                       ),
                       SizedBox(height: 24.h,),
                       Row(
                         children: [
-                          _content('DESCRIPTION', item.reason, false)
+                          _content('DESCRIPTION', item.description, false)
                         ],
                       ),
                       SizedBox(height: 24.h,),
@@ -106,24 +113,58 @@ class OvertimeSummaryDetailView extends StatelessWidget {
                         children: [
                           _content('APPROVAL DATE', '-', false),
                           SizedBox(width: 10.w,),
-                          _content('ATTACHMENT', item.attachment.path, true)
+                          _content('ATTACHMENT', item.attachment, true)
                         ],
                       ),
-                      SizedBox(height: item.status == 'PENDING' ? 24.h : 0,),
-                      item.status == 'PENDING' ?
-                      Obx(() => ButtonLoading(
-                          backgroundColor: ThemeColor.primary,
-                          disable: _overtimeSummaryDetailCt.loadingCancel.value,
-                          title: 'Cancel',
-                          loading: _overtimeSummaryDetailCt.loadingCancel.value,
-                          onTap: () => _overtimeSummaryDetailCt.cancelLeave(index),
-                          verticalPadding: 14.h,
-                          textStyle: ThemeTextStyle.biryaniBold.apply(color: Colors.white, fontSizeDelta: 14.ssp),
-                        ),
+                      SizedBox(height: item.status == '' ? 24.h : 0,),
+                      item.status != '' ?
+                      Container() :
+                      item.forSuperior ?
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: [
+                          ButtonLoading(
+                            backgroundColor: Color(0xFF158AC9),
+                            disable: item.loadingApprove,
+                            title: 'Approve',
+                            loading: item.loadingApprove,
+                            onTap: () => Get.dialog(DialogCancelLeaveRequest(action2Click: () => _ongoingRequestCt.approveRequest(index))),
+                            textStyle: ThemeTextStyle.biryaniSemiBold.apply(color: Colors.white, fontSizeDelta: 10.ssp),
+                            verticalPadding: 7.h,
+                            horizontalPadding: 17.w,
+                            borderRadius: 4,
+                            loadingSize: 10.w,
+                          ),
+                          SizedBox(width: 8.h,),
+                          ButtonLoading(
+                            backgroundColor: Color(0xFFED5565),
+                            disable: item.loadingReject,
+                            title: 'Reject',
+                            loading: item.loadingReject,
+                            onTap: () => Get.dialog(DialogCancelLeaveRequest(action2Click: () => _ongoingRequestCt.rejectRequest(index))),
+                            textStyle: ThemeTextStyle.biryaniSemiBold.apply(color: Colors.white, fontSizeDelta: 10.ssp),
+                            verticalPadding: 7.h,
+                            horizontalPadding: 17.w,
+                            borderRadius: 4,
+                            loadingSize: 10.w,
+                          )
+                        ],
                       ) :
-                      Container(),
+                      ButtonLoading(
+                        backgroundColor: Color(0xFFF85C58),
+                        disable: item.loadingCancel,
+                        title: 'Cancel',
+                        loading: item.loadingCancel,
+                        onTap: () => Get.dialog(DialogCancelLeaveRequest(action2Click: () => _ongoingRequestCt.cancelRequest(index))),
+                        textStyle: ThemeTextStyle.biryaniSemiBold.apply(color: Colors.white, fontSizeDelta: 10.ssp),
+                        verticalPadding: 7.h,
+                        horizontalPadding: 17.w,
+                        borderRadius: 4,
+                        loadingSize: 10.w,
+                      ),
                       SizedBox(height: 24.h,)
                     ],
+                  ),
                   ),
                 ),
               ),

@@ -13,6 +13,7 @@ import 'package:kukelola_flutter/view/dialog_payslip/dialog_payslip_controller.d
 import 'package:kukelola_flutter/view/leave_request/leave_request_view.dart';
 import 'package:kukelola_flutter/view/overtime_request/overtime_request_view.dart';
 import 'package:kukelola_flutter/view/reimbursment_request/reimbursment_request_view.dart';
+import 'package:kukelola_flutter/view/workflow_approval/workflow_approval_view.dart';
 
 class ListHomeMenuItem extends StatelessWidget {
   ListHomeMenuItem({@required this.item, @required this.index});
@@ -41,7 +42,7 @@ class ListHomeMenuItem extends StatelessWidget {
         _dialogPayslipCt.setDownloadSuccess(false);
       });
     } else if (index == 7) {
-
+      Get.to(WorkflowApprovalView());
     } else {
       Get.to(CalendarView());
     }

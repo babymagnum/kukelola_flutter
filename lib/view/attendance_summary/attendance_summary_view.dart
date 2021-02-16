@@ -152,14 +152,14 @@ class _AttendanceSummaryViewState extends State<AttendanceSummaryView> with Tick
                 Row(
                   children: [
                     Padding(
-                      padding: EdgeInsets.only(top: context.mediaQueryPadding.top + 15.h, bottom: 15.h),
+                      padding: EdgeInsets.only(top: context.mediaQueryPadding.top + 15.h, bottom: 36.h),
                       child: SvgPicture.asset('assets/images/summary_detail_flower.svg', width: Get.width * 0.2, height: Get.height * 0.25,),
                     ),
                   ],
                   mainAxisAlignment: MainAxisAlignment.end,
                 ),
                 Positioned(
-                  left: 0, right: 0, bottom: 0,
+                  left: 0, right: 0, bottom: 14.h,
                   child: Obx(() => Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [

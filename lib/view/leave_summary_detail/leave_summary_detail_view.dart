@@ -70,12 +70,13 @@ class LeaveSummaryDetailView extends StatelessWidget {
                         SizedBox(height: 16.h,),
                         Text('Newt Salamander', style: ThemeTextStyle.biryaniRegular.apply(color: Colors.white, fontSizeDelta: 12.ssp),),
                         Text('K0090192', style: ThemeTextStyle.biryaniRegular.apply(color: Colors.white, fontSizeDelta: 12.ssp),),
+                        SizedBox(height: 24.h,)
                       ],
                     ),
                   ),
                 ),
                 Padding(
-                  padding: EdgeInsets.only(top: context.mediaQueryPadding.top + 15.h, bottom: 15.h),
+                  padding: EdgeInsets.only(top: context.mediaQueryPadding.top + 15.h, bottom: 24.h),
                   child: SvgPicture.asset('assets/images/summary_detail_flower.svg', width: Get.width * 0.2, height: Get.height * 0.25,),
                 )
               ],

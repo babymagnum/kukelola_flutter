@@ -17,6 +17,25 @@ class WorkingExperienceItem {
   bool loading = false;
 }
 
+class WorkflowApprovalItem {
+  String description;
+  String leaveType;
+  String specialLeaveType;
+  String startDate;
+  String endDate;
+  String name;
+  String placement;
+  String id;
+  String status;
+  String attachment = 'attachment.pdf';
+  bool forSuperior;
+  bool loadingCancel = false;
+  bool loadingApprove = false;
+  bool loadingReject = false;
+
+  WorkflowApprovalItem(this.description, this.status, this.leaveType, this.specialLeaveType, this.startDate, this.endDate, this.name, this.placement, this.id, this.forSuperior);
+}
+
 class FamiliesItem {
   String name = '';
   String relation = '';
