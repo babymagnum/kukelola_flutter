@@ -46,7 +46,7 @@ class ListWorkingExperienceItem extends StatelessWidget {
                 loading: item.loading,
                 onTap: () => _familiesCt.removeData(index),
                 textStyle: ThemeTextStyle.biryaniSemiBold.apply(color: Colors.white, fontSizeDelta: 10.ssp),
-                verticalPadding: 7.h,
+                verticalPadding: 5.h,
                 horizontalPadding: 17.w,
                 borderRadius: 4,
                 loadingSize: 10.w,

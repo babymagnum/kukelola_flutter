@@ -8,9 +8,11 @@ import 'package:kukelola_flutter/core/widgets/button_loading_bordered.dart';
 
 class DialogCancelLeaveRequest extends StatelessWidget {
 
-  DialogCancelLeaveRequest({@required this.action2Click});
+  DialogCancelLeaveRequest({@required this.action2Click, this.action2Content = 'Yes', this.description = "Are you sure you want to cancel request? You can't undo this action."});
 
   final Function action2Click;
+  final String description;
+  final String action2Content;
 
   @override
   Widget build(BuildContext context) {
@@ -24,7 +26,7 @@ class DialogCancelLeaveRequest extends StatelessWidget {
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: <Widget>[
-                Text("Are you sure you want to cancel request? You can't undo this action.", textAlign: TextAlign.center, maxLines: 5, overflow: TextOverflow.ellipsis, style: ThemeTextStyle.biryaniRegular.apply(fontSizeDelta: 12.ssp, decoration: TextDecoration.none),),
+                Text(description, textAlign: TextAlign.center, maxLines: 5, overflow: TextOverflow.ellipsis, style: ThemeTextStyle.biryaniRegular.apply(fontSizeDelta: 12.ssp, decoration: TextDecoration.none),),
                 SizedBox(height: 24.h,),
                 Row(
                   children: <Widget>[
@@ -32,12 +34,12 @@ class DialogCancelLeaveRequest extends StatelessWidget {
                       child: ButtonLoadingBordered(
                         borderColor: Color(0xFFED5565),
                         disable: false,
-                        title: 'No, Go back',
+                        title: 'No',
                         loading: false,
                         onTap: () => Get.back(),
                         borderRadius: 6,
-                        verticalPadding: 12.h,
-                        textStyle: ThemeTextStyle.biryaniBold.apply(color: Color(0xFFED5565), fontSizeDelta: 14.ssp),
+                        verticalPadding: 6.h,
+                        textStyle: ThemeTextStyle.biryaniBold.apply(color: Color(0xFFED5565), fontSizeDelta: 12.ssp),
                       ),
                     ),
                     SizedBox(width: 10.w,),
@@ -45,15 +47,15 @@ class DialogCancelLeaveRequest extends StatelessWidget {
                       child: ButtonLoading(
                         backgroundColor: Color(0xFFED5565),
                         disable: false,
-                        title: 'Yes, Cancel',
+                        title: action2Content,
                         loading: false,
                         onTap: () {
                           action2Click();
                           Get.back();
                         },
                         borderRadius: 6,
-                        verticalPadding: 10.h,
-                        textStyle: ThemeTextStyle.biryaniBold.apply(color: Colors.white, fontSizeDelta: 14.ssp),
+                        verticalPadding: 6.h,
+                        textStyle: ThemeTextStyle.biryaniBold.apply(color: Colors.white, fontSizeDelta: 12.ssp),
                       ),
                     ),
                   ],

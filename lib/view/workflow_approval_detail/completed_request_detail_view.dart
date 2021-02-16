@@ -8,21 +8,14 @@ import 'package:kukelola_flutter/core/helper/text_util.dart';
 import 'package:kukelola_flutter/core/model/static_model.dart';
 import 'package:kukelola_flutter/core/theme/theme_text_style.dart';
 import 'package:kukelola_flutter/core/widgets/button_back.dart';
-import 'package:kukelola_flutter/core/widgets/button_loading.dart';
-import 'package:kukelola_flutter/core/widgets/dialog_cancel_leave_request.dart';
 import 'package:kukelola_flutter/core/widgets/summary_detail_status.dart';
 import 'package:kukelola_flutter/view/base_view.dart';
-import 'package:kukelola_flutter/view/workflow_approval/controller/ongoing_request_controller.dart';
-import 'package:kukelola_flutter/view/workflow_approval/widget/dialog_reject_approval.dart';
 
-class OngoingRequestDetailView extends StatelessWidget {
+class CompletedRequestDetailView extends StatelessWidget {
 
-  OngoingRequestDetailView({@required this.index, @required this.item});
+  CompletedRequestDetailView({@required this.item});
 
   final WorkflowApprovalItem item;
-  final int index;
-
-  var _ongoingRequestCt = Get.find<OngoingRequestController>();
 
   bool _isSpecialLeave() => item.leaveType == 'Special Leave';
 
@@ -57,17 +50,16 @@ class OngoingRequestDetailView extends StatelessWidget {
                         SizedBox(height: context.mediaQueryPadding.top + 24.h,),
                         ButtonBack(label: '', onBack: () => Get.back()),
                         SizedBox(height: 40.h,),
-                        Obx(() => Row(
-                            children: [
-                              Flexible(
-                                child: Text(item.leaveType, style: ThemeTextStyle.biryaniBold.apply(color: Colors.white, fontSizeDelta: 18.ssp),),
-                              ),
-                              SizedBox(width: 4.w,),
-                              _ongoingRequestCt.listOngoingRequest[index].status == '' ?
-                              Container() :
-                              SummaryDetailStatus(color: Color(0xFFC3C3C3), label: _ongoingRequestCt.listOngoingRequest[index].status),
-                            ],
-                          ),
+                        Row(
+                          children: [
+                            Flexible(
+                              child: Text(item.leaveType, style: ThemeTextStyle.biryaniBold.apply(color: Colors.white, fontSizeDelta: 18.ssp),),
+                            ),
+                            SizedBox(width: 4.w,),
+                            item.status == '' ?
+                            Container() :
+                            SummaryDetailStatus(color: Color(0xFFC3C3C3), label: item.status),
+                          ],
                         ),
                         SizedBox(height: 4.h,),
                         Text('${item.startDate} - ${item.endDate}', style: ThemeTextStyle.biryaniRegular.apply(color: Colors.white, fontSizeDelta: 12.ssp),),
@@ -115,56 +107,6 @@ class OngoingRequestDetailView extends StatelessWidget {
                           SizedBox(width: 10.w,),
                           _content('ATTACHMENT', item.attachment, true)
                         ],
-                      ),
-                      SizedBox(height: item.status == '' ? 24.h : 0,),
-                      item.status != '' ?
-                      Container() :
-                      item.forSuperior ?
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.end,
-                        children: [
-                          Expanded(
-                            child: ButtonLoading(
-                              backgroundColor: Color(0xFF158AC9),
-                              disable: _ongoingRequestCt.listOngoingRequest[index].loadingApprove,
-                              title: 'Approve',
-                              loading: _ongoingRequestCt.listOngoingRequest[index].loadingApprove,
-                              onTap: () => Get.dialog(DialogCancelLeaveRequest(action2Click: () => _ongoingRequestCt.approveRequest(index), description: "Are you sure want to approve this request? This process can't be undo.",)),
-                              textStyle: ThemeTextStyle.biryaniSemiBold.apply(color: Colors.white, fontSizeDelta: 14.ssp),
-                              verticalPadding: 10.h,
-                              horizontalPadding: 17.w,
-                              borderRadius: 4,
-                              loadingSize: 10.w,
-                            ),
-                          ),
-                          SizedBox(width: 8.h,),
-                          Expanded(
-                            child: ButtonLoading(
-                              backgroundColor: Color(0xFFED5565),
-                              disable: _ongoingRequestCt.listOngoingRequest[index].loadingReject,
-                              title: 'Reject',
-                              loading: _ongoingRequestCt.listOngoingRequest[index].loadingReject,
-                              onTap: () => Get.dialog(DialogRejectApproval(index: index)),
-                              textStyle: ThemeTextStyle.biryaniSemiBold.apply(color: Colors.white, fontSizeDelta: 14.ssp),
-                              verticalPadding: 10.h,
-                              horizontalPadding: 17.w,
-                              borderRadius: 4,
-                              loadingSize: 10.w,
-                            ),
-                          )
-                        ],
-                      ) :
-                      ButtonLoading(
-                        backgroundColor: Color(0xFFF85C58),
-                        disable: _ongoingRequestCt.listOngoingRequest[index].loadingCancel,
-                        title: 'Cancel',
-                        loading: _ongoingRequestCt.listOngoingRequest[index].loadingCancel,
-                        onTap: () => Get.dialog(DialogCancelLeaveRequest(action2Click: () => _ongoingRequestCt.cancelRequest(index))),
-                        textStyle: ThemeTextStyle.biryaniSemiBold.apply(color: Colors.white, fontSizeDelta: 14.ssp),
-                        verticalPadding: 10.h,
-                        horizontalPadding: 17.w,
-                        borderRadius: 4,
-                        loadingSize: 10.w,
                       ),
                       SizedBox(height: 24.h,)
                     ],

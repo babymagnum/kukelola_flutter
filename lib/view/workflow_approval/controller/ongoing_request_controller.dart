@@ -3,15 +3,19 @@ import 'package:kukelola_flutter/core/helper/common_function.dart';
 import 'package:kukelola_flutter/core/model/static_model.dart';
 
 class OngoingRequestController extends GetxController {
+  var rejectReason = ''.obs;
   var loading = false.obs;
+  var loadingReject = false.obs;
   var listOngoingRequest = List<WorkflowApprovalItem>().obs;
-  
+
+  setRejectReason(String value) => rejectReason.value = value;
+
   getOngoingRequest() async {
     loading.value = true;
     await Future.delayed(Duration(seconds: 1), () {});
     loading.value = false;
     var list = [
-      WorkflowApprovalItem("i'll have my wedding ceremony", '', 'Special Leave', 'Married', '11/01/2021', '13/01/2021', 'Arief Zainuri', 'Developer', 'K009182', false),
+      WorkflowApprovalItem("i'll have my wedding ceremony", '', 'Special Leave', 'Married', '11/01/2021', '13/01/2021', 'Arief Zainuri', 'Developer', 'K009182', true),
       WorkflowApprovalItem('Mantap', '', 'Unpaid Leave', '', '15/01/2021', '16/01/2021', 'Arief Zainuri', 'Developer', 'K009182', false),
       WorkflowApprovalItem('Mantap', '', 'Annual Leave', '', '11/01/2021', '13/01/2021', 'Arief Zainuri', 'Developer', 'K009182', false),
     ];

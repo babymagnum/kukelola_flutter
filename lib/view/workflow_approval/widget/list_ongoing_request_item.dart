@@ -7,6 +7,7 @@ import 'package:kukelola_flutter/core/theme/theme_text_style.dart';
 import 'package:kukelola_flutter/core/widgets/button_loading.dart';
 import 'package:kukelola_flutter/core/widgets/dialog_cancel_leave_request.dart';
 import 'package:kukelola_flutter/view/workflow_approval/controller/ongoing_request_controller.dart';
+import 'package:kukelola_flutter/view/workflow_approval/widget/dialog_reject_approval.dart';
 import 'package:kukelola_flutter/view/workflow_approval_detail/ongoing_request_detail_view.dart';
 
 class ListOngoingRequestItem extends StatelessWidget {
@@ -21,7 +22,7 @@ class ListOngoingRequestItem extends StatelessWidget {
   Color _statusColor() {
     if (item.status == 'PENDING') return Color(0xFFC3C3C3);
     else if (item.status == 'APPROVED') return Color(0xFF1AB394);
-    else if (item.status == 'CANCELLED') return Color(0xFF4D4D4D);
+    else if (item.status == 'CANCELED') return Color(0xFF4D4D4D);
     else if (item.status == 'REJECTED') return Color(0xFFED5565);
     else return Colors.transparent;
   }
@@ -50,7 +51,7 @@ class ListOngoingRequestItem extends StatelessWidget {
               Text(item.status, style: ThemeTextStyle.biryaniExtraBold.apply(color: _statusColor(), fontSizeDelta: 12.ssp),)
             ],
           ),
-          SizedBox(height: 24.h,),
+          SizedBox(height: 16.h,),
           Text('Newt Salamander', style: ThemeTextStyle.biryaniRegular.apply(color: Color(0xFF6D6D6D), fontSizeDelta: 10.ssp),),
           Text('K00937', style: ThemeTextStyle.biryaniRegular.apply(color: Color(0xFF6D6D6D), fontSizeDelta: 10.ssp),),
           SizedBox(height: item.status == '' ? 8.h : 0,),
@@ -67,7 +68,7 @@ class ListOngoingRequestItem extends StatelessWidget {
                 loading: item.loadingApprove,
                 onTap: () => Get.dialog(DialogCancelLeaveRequest(action2Click: () => _ongoingRequestCt.approveRequest(index))),
                 textStyle: ThemeTextStyle.biryaniSemiBold.apply(color: Colors.white, fontSizeDelta: 10.ssp),
-                verticalPadding: 7.h,
+                verticalPadding: 5.h,
                 horizontalPadding: 17.w,
                 borderRadius: 4,
                 loadingSize: 10.w,
@@ -78,9 +79,9 @@ class ListOngoingRequestItem extends StatelessWidget {
                 disable: item.loadingReject,
                 title: 'Reject',
                 loading: item.loadingReject,
-                onTap: () => Get.dialog(DialogCancelLeaveRequest(action2Click: () => _ongoingRequestCt.rejectRequest(index))),
+                onTap: () => Get.dialog(DialogRejectApproval(index: index)),
                 textStyle: ThemeTextStyle.biryaniSemiBold.apply(color: Colors.white, fontSizeDelta: 10.ssp),
-                verticalPadding: 7.h,
+                verticalPadding: 5.h,
                 horizontalPadding: 17.w,
                 borderRadius: 4,
                 loadingSize: 10.w,
@@ -97,7 +98,7 @@ class ListOngoingRequestItem extends StatelessWidget {
                 loading: item.loadingCancel,
                 onTap: () => Get.dialog(DialogCancelLeaveRequest(action2Click: () => _ongoingRequestCt.cancelRequest(index))),
                 textStyle: ThemeTextStyle.biryaniSemiBold.apply(color: Colors.white, fontSizeDelta: 10.ssp),
-                verticalPadding: 7.h,
+                verticalPadding: 5.h,
                 horizontalPadding: 17.w,
                 borderRadius: 4,
                 loadingSize: 10.w,
