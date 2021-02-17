@@ -1,4 +1,4 @@
-package com.abbifam.satupos
+package com.netika.kukelola
 
 import androidx.annotation.NonNull;
 import io.flutter.embedding.android.FlutterActivity

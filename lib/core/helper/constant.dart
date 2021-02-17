@@ -8,8 +8,8 @@ class Constant {
   static const LANGUANGE_CODE = 'LANGUANGE_CODE';
 
   // VARIABLE //
-  static const API_PRODUCTION = 'api_production';
-  static const API_STAGING = 'api_staging';
+  static const API_PRODUCTION = 'https://app.kukelola.id/';
+  static const API_STAGING = 'https://app.kukelola.id/';
   static const INDONESIAN = 'id';
   static const ENGLISH = 'en';
 

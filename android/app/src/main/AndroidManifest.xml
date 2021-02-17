@@ -1,5 +1,5 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.abbifam.satupos">
+    package="com.netika.kukelola">
     <!-- io.flutter.app.FlutterApplication is an android.app.Application that
          calls FlutterMain.startInitialization(this); in its onCreate method.
          In most cases you can leave this as-is, but you if you want to provide
@@ -16,6 +16,9 @@
         android:name=".Application"
         android:label="@string/app_name"
         android:icon="@mipmap/launcher_icon">
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="AIzaSyDsGqWGWyaBm3RvZVjD5L2VNkkf53gcyQU"/>
         <activity
             android:name=".MainActivity"
             android:launchMode="singleTop"

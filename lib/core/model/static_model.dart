@@ -1,6 +1,11 @@
 import 'dart:io';
 import 'package:kukelola_flutter/core/helper/text_util.dart';
 
+class LoginForm {
+  String username = '';
+  String password = '';
+}
+
 class SummaryMenuItems {
   SummaryMenuItems(this.image, this.label);
 

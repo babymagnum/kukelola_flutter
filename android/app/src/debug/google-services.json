@@ -1,33 +1,33 @@
 {
   "project_info": {
-    "project_number": "272923157507",
-    "project_id": "dummy-5d683",
-    "storage_bucket": "dummy-5d683.appspot.com"
+    "project_number": "103484181816",
+    "project_id": "kukelola-f6a61",
+    "storage_bucket": "kukelola-f6a61.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:272923157507:android:667c91be670efc18a15a36",
+        "mobilesdk_app_id": "1:103484181816:android:771054c057e24920dc05cd",
         "android_client_info": {
-          "package_name": "com.abbifam.satupos"
+          "package_name": "com.netika.kukelola"
         }
       },
       "oauth_client": [
         {
-          "client_id": "272923157507-pd9fgmp18prtqrr3p46goghf2ah2aspc.apps.googleusercontent.com",
+          "client_id": "103484181816-l87q2p61ga46uspcd4k0f8bnpq57ae97.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyAuOpRnk4uAvaPwfYFc3EUJXBpzs-Fd9gM"
+          "current_key": "AIzaSyBqmHwnKihWKCj1q5bZEUEDoDkLaIoNJbg"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "272923157507-pd9fgmp18prtqrr3p46goghf2ah2aspc.apps.googleusercontent.com",
+              "client_id": "103484181816-l87q2p61ga46uspcd4k0f8bnpq57ae97.apps.googleusercontent.com",
               "client_type": 3
             }
           ]

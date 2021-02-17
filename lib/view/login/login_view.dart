@@ -56,6 +56,10 @@ class _LoginViewState extends State<LoginView> {
                             FocusScope.of(context).requestFocus(_passwordFocus);
                             setState(() {});
                           },
+                          onChanged: (text) {
+                            _loginCt.form.value.username = text.trim();
+                            _loginCt.setForm(_loginCt.form.value);
+                          },
                           onTap: () => setState(() => _emailFocus.requestFocus()),
                         ),
                         SizedBox(height: 24.h,),
@@ -66,6 +70,10 @@ class _LoginViewState extends State<LoginView> {
                           focusNode: _passwordFocus,
                           hintText: 'type password...',
                           labelText: 'PASSWORD',
+                          onChanged: (text) {
+                            _loginCt.form.value.password = text.trim();
+                            _loginCt.setForm(_loginCt.form.value);
+                          },
                           inputType: TextInputType.name,
                           onEditingComplete: () => FocusScope.of(context).requestFocus(FocusNode()),
                           onTap: () => setState(() => _passwordFocus.requestFocus()),
@@ -73,10 +81,10 @@ class _LoginViewState extends State<LoginView> {
                         SizedBox(height: 40.h,),
                         ButtonLoading(
                           backgroundColor: ThemeColor.primary,
-                          disable: false,
+                          disable: _loginCt.loadingLogin.value || _loginCt.form.value.username == '' || _loginCt.form.value.password == '',
                           title: 'Sign In',
-                          loading: false,
-                          onTap: () => Get.to(VerificationCodeView()),
+                          loading: _loginCt.loadingLogin.value,
+                          onTap: () => _loginCt.login(),
                           verticalPadding: 13.h,
                           textStyle: ThemeTextStyle.biryaniBold.apply(color: Colors.white, fontSizeDelta: 14.ssp),
                         )
