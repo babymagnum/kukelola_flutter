@@ -161,13 +161,8 @@ class _VerificationCodeViewState extends State<VerificationCodeView> {
                         disable: _hasEmpty() || _verificationCodeCt.loadingVerify.value,
                         title: 'Verify',
                         loading: _verificationCodeCt.loadingVerify.value,
-                        onTap: () async {
-                          await _verificationCodeCt.verifyOtp();
-
-                          final preference = await SharedPreferences.getInstance();
-                          await preference.setBool(Constant.IS_LOGIN, true);
-
-                          Get.offAll(ContainerHomeView());
+                        onTap: () {
+                          _verificationCodeCt.verifyOtp('${_input1Controller.text.trim()}${_input2Controller.text.trim()}${_input3Controller.text.trim()}${_input4Controller.text.trim()}');
                         },
                         verticalPadding: 13.h,
                       ),

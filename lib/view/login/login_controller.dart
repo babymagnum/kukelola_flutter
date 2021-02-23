@@ -1,10 +1,13 @@
 import 'package:get/get.dart';
 import 'package:kukelola_flutter/core/helper/constant.dart';
+import 'package:kukelola_flutter/core/helper/text_util.dart';
 import 'package:kukelola_flutter/core/model/static_model.dart';
 import 'package:kukelola_flutter/core/widgets/dialog_error.dart';
 import 'package:kukelola_flutter/main.dart';
+import 'package:kukelola_flutter/networking/request/login_request.dart';
 import 'package:kukelola_flutter/networking/service/service.dart';
 import 'package:kukelola_flutter/view/container_home/container_home_view.dart';
+import 'package:kukelola_flutter/view/verification_code/verification_code_view.dart';
 
 class LoginController extends GetxController {
   var obsecure = true.obs;
@@ -14,14 +17,20 @@ class LoginController extends GetxController {
   setObsecure(bool value) => obsecure.value = value;
   setForm(LoginForm value) => form.value = value;
 
+  String _random4Digit() {
+    return '${TextUtil.randomInt(0, 9)}${TextUtil.randomInt(0, 9)}${TextUtil.randomInt(0, 9)}${TextUtil.randomInt(0, 9)}';
+  }
+
   login() async {
+    var otp = _random4Digit();
     loadingLogin.value = true;
-    final data = await Service().token('?grant_type=password&username=${form.value.username}&password=${form.value.password}');
+    final data = await Service().token(LoginRequest(form.value.username, form.value.password, otp));
     loadingLogin.value = false;
 
     if (data != null) {
+      commonController.preferences.setString(Constant.OTP, otp);
       commonController.preferences.setString(Constant.TOKEN, data.access_token);
-      Get.to(ContainerHomeView());
+      Get.to(VerificationCodeView());
     } else {
       Get.dialog(DialogError(error: 'Failed to login', button: 'Ok', buttonClick: () => Get.back()));
     }

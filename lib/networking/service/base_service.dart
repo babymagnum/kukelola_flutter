@@ -34,14 +34,15 @@ class BaseService {
   }
 
   // TODO: POST
-  Future<T> postUrlEncoded<T>(String url) async {
+  Future<T> postUrlEncoded<T>(String url, dynamic body) async {
     T resultResponse;
 
     try {
       final dio = Dio();
       dio.options.contentType = Headers.formUrlEncodedContentType;
       dio.interceptors.add(LogInterceptor(responseBody: true, requestBody: true));
-      var response = await dio.post(url, options: Options(headers: await getHeaders()));
+      var response = await dio.post(url, data: body,
+          options: Options(contentType: Headers.formUrlEncodedContentType, headers: await getHeaders()));
       var responseMap = jsonDecode(response.toString());
       resultResponse = fromJson<T>(responseMap);
     } on DioError catch (e) {

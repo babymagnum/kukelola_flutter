@@ -86,7 +86,7 @@ class ListHomeMenuItem extends StatelessWidget {
             ],
           ),
           SizedBox(height: 8.h,),
-          Text('${item.label}\n', textAlign: TextAlign.center, overflow: TextOverflow.ellipsis, style: ThemeTextStyle.biryaniRegular.apply(color: Color(0xFF6D6D6D), fontSizeDelta: 10.ssp), maxLines: 2,),
+          Text('${item.label}\n\n', textAlign: TextAlign.center, overflow: TextOverflow.ellipsis, style: ThemeTextStyle.biryaniRegular.apply(color: Color(0xFF6D6D6D), fontSizeDelta: 10.ssp), maxLines: 3,),
           SizedBox(height: 12.h,)
         ],
       ),

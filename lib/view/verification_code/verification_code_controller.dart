@@ -1,6 +1,10 @@
 import 'dart:async';
 
 import 'package:get/get.dart';
+import 'package:kukelola_flutter/core/helper/common_function.dart';
+import 'package:kukelola_flutter/core/helper/constant.dart';
+import 'package:kukelola_flutter/main.dart';
+import 'package:kukelola_flutter/view/container_home/container_home_view.dart';
 
 class VerificationCodeController extends GetxController {
 
@@ -34,10 +38,17 @@ class VerificationCodeController extends GetxController {
     });
   }
 
-  verifyOtp() async {
+  verifyOtp(String otp) async {
     loadingVerify.value = true;
     await Future.delayed(Duration(seconds: 1), () {});
     loadingVerify.value = false;
+
+    if (otp == commonController.preferences?.getString(Constant.OTP) ?? '') {
+      commonController.preferences.setBool(Constant.IS_LOGIN, true);
+      Get.offAll(ContainerHomeView());
+    } else {
+      CommonFunction.standartSnackbar('OTP yang dimasukan salah');
+    }
   }
 
   resendOtp() async {
