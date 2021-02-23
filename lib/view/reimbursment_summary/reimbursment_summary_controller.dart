@@ -14,8 +14,8 @@ class ReimbursmentSummaryController extends GetxController {
 
     var leave1 = ReimbursmentRequestForm();
     leave1.listDetails.addAll([
-      ReimbursmentDetailItem('Panadol', 5000),
-      ReimbursmentDetailItem('Bodrex', 6000),
+      ReimbursmentDetailItem('Panadol', '5000'),
+      ReimbursmentDetailItem('Bodrex', '6000'),
     ]);
     leave1.attachment = File('mantap1.png');
     leave1.reason = 'Pingin liburan sepertinya bos.';
@@ -23,8 +23,8 @@ class ReimbursmentSummaryController extends GetxController {
 
     var leave2 = ReimbursmentRequestForm();
     leave2.listDetails.addAll([
-      ReimbursmentDetailItem('Anggur Merah', 5000),
-      ReimbursmentDetailItem('Ciu Dewa', 6000),
+      ReimbursmentDetailItem('Anggur Merah', '5000'),
+      ReimbursmentDetailItem('Ciu Dewa', '6000'),
     ]);
     leave2.attachment = File('mantap2.png');
     leave2.reason = 'Hmmmm';

@@ -1,6 +1,12 @@
 import 'dart:io';
 import 'package:kukelola_flutter/core/helper/text_util.dart';
 
+class ChangePasswordForm {
+  String currentPassword = '';
+  String newPassword = '';
+  String confirmPassword = '';
+}
+
 class LoginForm {
   String username = '';
   String password = '';
@@ -153,10 +159,10 @@ class LeaveRequestForm {
 }
 
 class ReimbursmentDetailItem {
-  ReimbursmentDetailItem(this.description, this.price);
+  ReimbursmentDetailItem(this.description, this.cost);
 
   String description;
-  int price;
+  String cost;
 }
 
 class LeaveTypeItem {

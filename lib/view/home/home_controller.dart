@@ -1,11 +1,16 @@
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:kukelola_flutter/core/model/static_model.dart';
+import 'package:kukelola_flutter/networking/model/user.dart';
+import 'package:kukelola_flutter/networking/service/service.dart';
 
 class HomeController extends GetxController {
   var listMenuHome = List<HomeMenuItem>().obs;
-  
-  populateMenu(BuildContext context) {
+  var user = User().obs;
+  var loadingUser = false.obs;
+  var errorUser = false.obs;
+
+  populateMenu() {
     var list = [
       HomeMenuItem('Online Attendance', 'assets/images/attendance_online 1.png', 0),
       HomeMenuItem('Attendance Request', 'assets/images/attendance_request 1.png', 0),
@@ -20,5 +25,12 @@ class HomeController extends GetxController {
 
     list.forEach((element) => listMenuHome.add(element));
     update();
+  }
+
+  getUser() async {
+    loadingUser.value = true;
+    final data = await Service().account();
+    loadingUser.value = false;
+    errorUser.value = data?.data == null;
   }
 }

@@ -24,6 +24,11 @@ class _ChangePasswordViewState extends State<ChangePasswordView> {
     return Text(label, style: ThemeTextStyle.biryaniRegular.apply(fontSizeDelta: 12.ssp),);
   }
 
+  bool _disable() {
+    final form = _changePasswordCt.form.value;
+    return form.currentPassword == '' || form.newPassword == '' || form.confirmPassword == '';
+  }
+
   @override
   Widget build(BuildContext context) {
     return BaseView(
@@ -43,7 +48,7 @@ class _ChangePasswordViewState extends State<ChangePasswordView> {
                   SizedBox(width: 10.w,),
                   ButtonLoading(
                     backgroundColor: ThemeColor.primary,
-                    disable: _changePasswordCt.loadingChangePassword.value,
+                    disable: _changePasswordCt.loadingChangePassword.value || _disable(),
                     title: 'Save',
                     loading: _changePasswordCt.loadingChangePassword.value,
                     onTap: () => _changePasswordCt.changePassword(context),
@@ -78,6 +83,11 @@ class _ChangePasswordViewState extends State<ChangePasswordView> {
                         onObsecureClick: () => _changePasswordCt.setCurrentPasswordObsecure(!_changePasswordCt.currentPasswordObsecure.value),
                         textInputAction: TextInputAction.next,
                         focusNode: _currentPasswordFocus,
+                        onChanged: (text) {
+                          _changePasswordCt.form.value.currentPassword = text.trim();
+                          _changePasswordCt.setForm(_changePasswordCt.form.value);
+                          setState(() {});
+                        },
                         hintText: 'type password...',
                         labelText: 'CURRENT PASSWORD',
                         inputType: TextInputType.name,
@@ -90,6 +100,11 @@ class _ChangePasswordViewState extends State<ChangePasswordView> {
                         onObsecureClick: () => _changePasswordCt.setNewPasswordObsecure(!_changePasswordCt.newPasswordObsecure.value),
                         textInputAction: TextInputAction.next,
                         focusNode: _newPasswordFocus,
+                        onChanged: (text) {
+                          _changePasswordCt.form.value.newPassword = text.trim();
+                          _changePasswordCt.setForm(_changePasswordCt.form.value);
+                          setState(() {});
+                        },
                         hintText: 'type password...',
                         labelText: 'NEW PASSWORD',
                         inputType: TextInputType.name,
@@ -102,6 +117,11 @@ class _ChangePasswordViewState extends State<ChangePasswordView> {
                         onObsecureClick: () => _changePasswordCt.setConfirmPasswordObsecure(!_changePasswordCt.confirmPasswordObsecure.value),
                         textInputAction: TextInputAction.done,
                         focusNode: _confirmPasswordFocus,
+                        onChanged: (text) {
+                          _changePasswordCt.form.value.confirmPassword = text.trim();
+                          _changePasswordCt.setForm(_changePasswordCt.form.value);
+                          setState(() {});
+                        },
                         hintText: 'type password...',
                         labelText: 'CONFIRM PASSWORD',
                         inputType: TextInputType.name,

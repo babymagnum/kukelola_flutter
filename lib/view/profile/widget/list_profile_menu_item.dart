@@ -8,18 +8,22 @@ import 'package:kukelola_flutter/core/model/static_model.dart';
 import 'package:kukelola_flutter/core/theme/theme_text_style.dart';
 import 'package:kukelola_flutter/main.dart';
 import 'package:kukelola_flutter/view/change_password/change_password_view.dart';
+import 'package:kukelola_flutter/view/container_home/container_home_controller.dart';
 import 'package:kukelola_flutter/view/education_data/education_data_view.dart';
 import 'package:kukelola_flutter/view/families/families_view.dart';
+import 'package:kukelola_flutter/view/login/login_view.dart';
 import 'package:kukelola_flutter/view/personal_data/personal_data_view.dart';
 import 'package:kukelola_flutter/view/working_experience/working_experience_view.dart';
 
 class ListProfileMenuItem extends StatelessWidget {
 
-  ListProfileMenuItem({@required this.index, @required this.item, @required this.context});
-
   final ProfileMenuItem item;
   final int index;
   final BuildContext context;
+
+  ListProfileMenuItem({@required this.index, @required this.item, @required this.context});
+
+  var _containerHomeCt = Get.find<ContainerHomeController>();
 
   _onClick() {
     if (index == 0) {
@@ -34,7 +38,9 @@ class ListProfileMenuItem extends StatelessWidget {
     } else if (index == 4) {
       Get.to(ChangePasswordView());
     } else {
-
+      _containerHomeCt.setSelectedPage(0);
+      commonController.preferences.setBool(Constant.IS_LOGIN, false);
+      Get.offAll(LoginView());
     }
   }
 

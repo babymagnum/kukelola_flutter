@@ -1,20 +1,20 @@
 class Standart {
-    bool isSuccess;
-    String message;
+    bool IsSuccess;
+    String Message;
 
-    Standart({this.isSuccess, this.message});
+    Standart({this.IsSuccess, this.Message});
 
     factory Standart.fromJson(Map<String, dynamic> json) {
         return Standart(
-            isSuccess: json['isSuccess'], 
-            message: json['message'], 
+            IsSuccess: json['IsSuccess'],
+            Message: json['Message'],
         );
     }
 
     Map<String, dynamic> toJson() {
         final Map<String, dynamic> data = new Map<String, dynamic>();
-        data['isSuccess'] = this.isSuccess;
-        data['message'] = this.message;
+        data['IsSuccess'] = this.IsSuccess;
+        data['Message'] = this.Message;
         return data;
     }
 }

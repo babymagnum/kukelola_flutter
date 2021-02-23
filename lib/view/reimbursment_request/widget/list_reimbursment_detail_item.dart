@@ -25,7 +25,7 @@ class ListReimbursmentDetailItem extends StatelessWidget {
           child: Text(item.description, textAlign: TextAlign.start, maxLines: 1, overflow: TextOverflow.ellipsis, style: ThemeTextStyle.biryaniRegular.apply(fontSizeDelta: 14.ssp),),
         ),
         Expanded(
-          child: Text(TextUtil.toRupiah('.', item.price, false), maxLines: 1, overflow: TextOverflow.ellipsis, textAlign: TextAlign.end, style: ThemeTextStyle.biryaniRegular.apply(fontSizeDelta: 14.ssp),),
+          child: Text(TextUtil.toRupiah('.', int.parse(item.cost), false), maxLines: 1, overflow: TextOverflow.ellipsis, textAlign: TextAlign.end, style: ThemeTextStyle.biryaniRegular.apply(fontSizeDelta: 14.ssp),),
         ),
         Expanded(
           child: Row(

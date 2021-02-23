@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:kukelola_flutter/core/helper/constant.dart';
+import 'package:kukelola_flutter/generated/json/user_helper.dart';
 import 'package:kukelola_flutter/networking/model/Standart.dart';
 import 'package:kukelola_flutter/networking/model/token.dart';
 import 'package:kukelola_flutter/networking/model/user.dart';
@@ -149,7 +150,7 @@ class BaseService {
     } else if (T == Token) {
       return Token.fromJson(json) as T;
     } else if (T == User) {
-      return User.fromJson(json) as T;
+      return userFromJson(User(), json) as T;
     } else if (T == Standart) {
       return Standart.fromJson(json) as T;
     } else {

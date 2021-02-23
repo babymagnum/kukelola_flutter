@@ -15,7 +15,8 @@ class ProfileController extends GetxController {
       ProfileMenuItem('assets/images/fa-solid_sign-out-alt.png', 'Logout', true),
     ];
 
-    list.forEach((element) => listProfileMenu.add(element));
+    list.clear();
+    list.addAll(list);
     update();
   }
 }

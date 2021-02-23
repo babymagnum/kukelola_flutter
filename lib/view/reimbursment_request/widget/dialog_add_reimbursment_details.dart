@@ -41,7 +41,7 @@ class _DialogAddReimbursmentDetailsState extends State<DialogAddReimbursmentDeta
 
     if (widget.item != null) {
       _descriptionCt.text = widget.item.description;
-      _costCt.text = '${widget.item.price}';
+      _costCt.text = '${widget.item.cost}';
     }
   }
 
@@ -121,7 +121,7 @@ class _DialogAddReimbursmentDetailsState extends State<DialogAddReimbursmentDeta
                 title: 'Add Details',
                 loading: false,
                 onTap: () {
-                  _reimbursmentRequestCt.addReimbursmentDetail(ReimbursmentDetailItem(_descriptionCt.text.trim(), int.parse(_costCt.text.trim().replaceAll('Rp', '').replaceAll('.', ''))));
+                  _reimbursmentRequestCt.addReimbursmentDetail(ReimbursmentDetailItem(_descriptionCt.text.trim(), _costCt.text.trim().replaceAll('Rp', '').replaceAll('.', '')));
                   Get.back();
                 },
                 verticalPadding: 12.h,

@@ -19,7 +19,7 @@ class ListReimbursmentSummaryDetailItem extends StatelessWidget {
         ),
         SizedBox(width: 10.w,),
         Expanded(
-          child: Text(TextUtil.toRupiah('.', item.price, false), style: ThemeTextStyle.biryaniRegular.apply(fontSizeDelta: 14.ssp),),
+          child: Text(TextUtil.toRupiah('.', int.parse(item.cost), false), style: ThemeTextStyle.biryaniRegular.apply(fontSizeDelta: 14.ssp),),
         ),
       ],
     );
