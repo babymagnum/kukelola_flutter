@@ -82,6 +82,12 @@ class AttendanceRequestViewState extends State<AttendanceRequestView> {
     );
   }
 
+  bool _disable() {
+    final form = _attendanceRequestCt.form.value;
+
+    return form.reason == '' || form.attachment.path == '';
+  }
+
   _pickFile() async {
     _attendanceRequestCt.setLoadingPickFile(true);
     FilePickerResult result = await FilePicker.platform.pickFiles(type: FileType.custom,
@@ -116,7 +122,7 @@ class AttendanceRequestViewState extends State<AttendanceRequestView> {
                 SizedBox(width: 10.w,),
                 ButtonLoading(
                   backgroundColor: ThemeColor.primary,
-                  disable: _attendanceRequestCt.loadingSubmit.value,
+                  disable: _attendanceRequestCt.loadingSubmit.value || _disable(),
                   title: 'Submit',
                   loading: _attendanceRequestCt.loadingSubmit.value,
                   onTap: () => _attendanceRequestCt.submitLeaveRequest(),
@@ -136,7 +142,7 @@ class AttendanceRequestViewState extends State<AttendanceRequestView> {
                   padding: EdgeInsets.symmetric(horizontal: 24.w),
                   child: Obx(() => Column(
                       children: [
-                        SizedBox(height: 32.h,),
+                        SizedBox(height: 24.h,),
                         InputTap(
                           labelText: 'START DATE',
                           hintText: '',
@@ -196,6 +202,7 @@ class AttendanceRequestViewState extends State<AttendanceRequestView> {
                           onChanged: (text) {
                             _attendanceRequestCt.form.value.reason = text.trim();
                             _attendanceRequestCt.updateForm(_attendanceRequestCt.form.value);
+                            setState(() {});
                           },
                           hintText: 'type reason...',
                           inputType: TextInputType.multiline,
@@ -211,6 +218,7 @@ class AttendanceRequestViewState extends State<AttendanceRequestView> {
                           loading: _attendanceRequestCt.loadingPickFile.value,
                           value: _attendanceRequestCt.form.value.attachment.path == '' ? '' : '${_attendanceRequestCt.form.value.attachment.path} (${(_attendanceRequestCt.form.value.attachment.lengthSync() / 1024).round()} KB)',
                         ),
+                        SizedBox(height: 24.h,)
                       ],
                     ),
                   ),

@@ -151,8 +151,8 @@ class LeaveRequestForm {
   String reason = '';
   File attachment = File('');
   String status = '';
-  LeaveTypeItem leaveType = LeaveTypeItem('');
-  LeaveTypeItem specialLeaveType = LeaveTypeItem('');
+  LeaveTypeItem leaveType = LeaveTypeItem('', '');
+  LeaveTypeItem specialLeaveType = LeaveTypeItem('', '');
   bool loading = false;
 
   bool showSpecialType() => leaveType.label == 'Special Leave';
@@ -166,9 +166,10 @@ class ReimbursmentDetailItem {
 }
 
 class LeaveTypeItem {
-  LeaveTypeItem(this.label);
-  
+  LeaveTypeItem(this.label, this.id);
+
   String label = '';
+  String id = '';
 }
 
 class ProfileMenuItem {

@@ -1,7 +1,8 @@
-import 'dart:io';
 import 'package:get/get.dart';
-import 'package:kukelola_flutter/core/helper/text_util.dart';
+import 'package:kukelola_flutter/core/helper/constant.dart';
 import 'package:kukelola_flutter/core/model/static_model.dart';
+import 'package:kukelola_flutter/networking/request/attendance_request.dart';
+import 'package:kukelola_flutter/networking/service/service.dart';
 
 class AttendanceRequestController extends GetxController {
   var loadingSubmit = false.obs;
@@ -13,7 +14,13 @@ class AttendanceRequestController extends GetxController {
 
   submitLeaveRequest() async {
     loadingSubmit.value = true;
-    await Future.delayed(Duration(seconds: 1), () {});
+    final data = await Service().submitAttendanceRequest(AttendanceRequest(Constant.DUMMY_USER_ID, form.value.startDate, form.value.endDate, form.value.reason, form.value.startHour, form.value.endHour, form.value.attachment));
     loadingSubmit.value = false;
+
+    if (data.IsSuccess) {
+
+    } else {
+
+    }
   }
 }

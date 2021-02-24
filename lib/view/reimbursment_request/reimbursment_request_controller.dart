@@ -1,5 +1,8 @@
 import 'package:get/get.dart';
+import 'package:kukelola_flutter/core/helper/constant.dart';
 import 'package:kukelola_flutter/core/model/static_model.dart';
+import 'package:kukelola_flutter/networking/request/reimbursment_request.dart';
+import 'package:kukelola_flutter/networking/service/service.dart';
 
 class ReimbursmentRequestController extends GetxController {
   var loadingSubmit = false.obs;
@@ -11,7 +14,7 @@ class ReimbursmentRequestController extends GetxController {
 
   submitReimbursment() async {
     loadingSubmit.value = true;
-    await Future.delayed(Duration(seconds: 1), () {});
+    final data = await Service().submitReimbursmentRequest(ReimbursmentRequest(Constant.DUMMY_USER_ID, form.value.reason, form.value.attachment, form.value.listDetails));
     loadingSubmit.value = false;
   }
 

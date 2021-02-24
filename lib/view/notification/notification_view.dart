@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:kukelola_flutter/core/widgets/account_image.dart';
 import 'package:kukelola_flutter/core/widgets/button_back.dart';
 import 'package:kukelola_flutter/core/widgets/empty_text.dart';
+import 'package:kukelola_flutter/view/container_home/container_home_controller.dart';
 import 'package:kukelola_flutter/view/notification/notification_controller.dart';
 import 'package:kukelola_flutter/view/notification/widget/list_notification_item.dart';
 
@@ -15,6 +16,7 @@ class NotificationView extends StatefulWidget {
 class _NotificationViewState extends State<NotificationView> with AutomaticKeepAliveClientMixin<NotificationView> {
 
   var _notificationCt = Get.put(NotificationController());
+  var _containerHomeCt = Get.find<ContainerHomeController>();
 
   @override
   void initState() {
@@ -35,7 +37,7 @@ class _NotificationViewState extends State<NotificationView> with AutomaticKeepA
             child: Row(
               children: [
                 Expanded(
-                  child: ButtonBack(label: 'Notification', onBack: () {}),
+                  child: ButtonBack(label: 'Notification', onBack: () => _containerHomeCt.pageController.jumpToPage(0)),
                 ),
                 SizedBox(width: 10.w,),
                 AccountImage(url: 'asdobs', size: Size(28.w, 28.w), boxFit: BoxFit.fill)

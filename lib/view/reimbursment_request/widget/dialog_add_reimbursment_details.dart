@@ -124,7 +124,7 @@ class _DialogAddReimbursmentDetailsState extends State<DialogAddReimbursmentDeta
                   _reimbursmentRequestCt.addReimbursmentDetail(ReimbursmentDetailItem(_descriptionCt.text.trim(), _costCt.text.trim().replaceAll('Rp', '').replaceAll('.', '')));
                   Get.back();
                 },
-                verticalPadding: 12.h,
+                verticalPadding: 9.h,
                 textStyle: ThemeTextStyle.biryaniBold.apply(color: Colors.white, fontSizeDelta: 14.ssp),
               ),
             ],

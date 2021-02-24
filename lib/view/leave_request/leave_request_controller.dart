@@ -1,5 +1,8 @@
 import 'package:get/get.dart';
+import 'package:kukelola_flutter/core/helper/constant.dart';
 import 'package:kukelola_flutter/core/model/static_model.dart';
+import 'package:kukelola_flutter/networking/request/leave_request.dart';
+import 'package:kukelola_flutter/networking/service/service.dart';
 import 'package:kukelola_flutter/view/leave_summary/leave_summary_controller.dart';
 
 class LeaveRequestController extends GetxController {
@@ -23,15 +26,15 @@ class LeaveRequestController extends GetxController {
 
   populateLeaveType() {
     var leaveType = [
-      LeaveTypeItem('Annual Leave'),
-      LeaveTypeItem('Special Leave'),
-      LeaveTypeItem('Sick Leave'),
+      LeaveTypeItem('Annual Leave', '1'),
+      LeaveTypeItem('Special Leave', '2'),
+      LeaveTypeItem('Sick Leave', '3'),
     ];
 
     var specialLeave = [
-      LeaveTypeItem('Wedding Leave'),
-      LeaveTypeItem('Born Kids Leave'),
-      LeaveTypeItem('Parents Meeting Leave'),
+      LeaveTypeItem('Wedding Leave', '1'),
+      LeaveTypeItem('Born Kids Leave', '2'),
+      LeaveTypeItem('Parents Meeting Leave', '3'),
     ];
 
     leaveType.forEach((element) => listLeaveType.add(element));
@@ -41,8 +44,14 @@ class LeaveRequestController extends GetxController {
 
   submitLeaveRequest() async {
     loadingSubmit.value = true;
-    await Future.delayed(Duration(seconds: 1), () {});
+    final data = await Service().submitLeaveRequest(LeaveRequest(Constant.DUMMY_USER_ID, form.value.startDate, form.value.reason, form.value.endDate, form.value.attachment, form.value.leaveType.id));
     loadingSubmit.value = false;
-    _leaveSummaryCt.addLeave(form.value);
+
+    if (data?.IsSuccess ?? false) {
+
+    } else {
+
+    }
+
   }
 }

@@ -101,7 +101,7 @@ class OvertimeRequestViewState extends State<OvertimeRequestView> {
 
   bool _disable() {
     var data = _overtimeRequestCt.form.value;
-    return data.attachment.path == '' || data.reason == '' || data.overtimeDate == '' || data.startHour == '' || data.endHour == '';
+    return data.attachment.path == '' || data.reason == '';
   }
 
   @override
@@ -210,6 +210,7 @@ class OvertimeRequestViewState extends State<OvertimeRequestView> {
                           onChanged: (text) {
                             _overtimeRequestCt.form.value.reason = text.trim();
                             _overtimeRequestCt.updateForm(_overtimeRequestCt.form.value);
+                            setState(() {});
                           },
                           onTap: () => setState(() => _reasonFocus.requestFocus()),
                         ),

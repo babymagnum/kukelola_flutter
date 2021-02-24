@@ -23,10 +23,10 @@ class OnlineAttendanceController extends GetxController {
   }
 
   @override
-  void dispose() {
+  void onClose() {
     _timer?.cancel();
 
-    super.dispose();
+    super.onClose();
   }
 
   submit() async {

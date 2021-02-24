@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import 'package:kukelola_flutter/core/theme/theme_text_style.dart';
 import 'package:kukelola_flutter/core/widgets/account_image.dart';
 import 'package:kukelola_flutter/core/widgets/button_back.dart';
+import 'package:kukelola_flutter/view/container_home/container_home_controller.dart';
 import 'package:kukelola_flutter/view/profile/profile_controller.dart';
 import 'package:kukelola_flutter/view/profile/widget/list_profile_menu_item.dart';
 
@@ -16,15 +17,7 @@ class ProfileView extends StatefulWidget {
 class _ProfileViewState extends State<ProfileView> with AutomaticKeepAliveClientMixin<ProfileView> {
 
   var _profileCt = Get.put(ProfileController());
-
-  @override
-  void initState() {
-    super.initState();
-
-    Future.delayed(Duration.zero, () {
-      _profileCt.populateProfileMenu(context);
-    });
-  }
+  var _containerHomeCt = Get.find<ContainerHomeController>();
 
   @override
   Widget build(BuildContext context) {
@@ -33,7 +26,7 @@ class _ProfileViewState extends State<ProfileView> with AutomaticKeepAliveClient
         SizedBox(height: context.mediaQueryPadding.top + 24.h,),
         Padding(
           padding: EdgeInsets.symmetric(horizontal: 24.w),
-          child: ButtonBack(label: 'Profile', onBack: () {}),
+          child: ButtonBack(label: 'Profile', onBack: () => _containerHomeCt.pageController.jumpToPage(0)),
         ),
         Expanded(
           child: CupertinoScrollbar(

@@ -17,19 +17,11 @@ class ContainerHomeView extends StatefulWidget {
 
 class _ContainerHomeViewState extends State<ContainerHomeView> {
 
-  var _pageCt = PageController(initialPage: 0);
   var _containerHomeCt = Get.put(ContainerHomeController());
-
-  @override
-  void dispose() {
-    _pageCt.dispose();
-
-    super.dispose();
-  }
 
   _changePage(int index) {
     _containerHomeCt.setSelectedPage(index);
-    _pageCt.jumpToPage(index);
+    _containerHomeCt.pageController.jumpToPage(index);
   }
 
   @override
@@ -39,7 +31,7 @@ class _ContainerHomeViewState extends State<ContainerHomeView> {
         children: [
           Expanded(
             child: PageView(
-              controller: _pageCt,
+              controller: _containerHomeCt.pageController,
               physics: NeverScrollableScrollPhysics(),
               children: [
                 HomeView(),

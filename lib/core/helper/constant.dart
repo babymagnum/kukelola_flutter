@@ -13,5 +13,6 @@ class Constant {
   static const API_STAGING = 'https://app.kukelola.id/';
   static const INDONESIAN = 'id';
   static const ENGLISH = 'en';
+  static const DUMMY_USER_ID = '8f8d9d91-4275-4394-b8f0-f04f4770ce46';
 
 }

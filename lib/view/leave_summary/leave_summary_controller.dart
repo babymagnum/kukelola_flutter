@@ -13,7 +13,7 @@ class LeaveSummaryController extends GetxController {
     loadingSummary.value = false;
 
     var leave1 = LeaveRequestForm();
-    leave1.leaveType = LeaveTypeItem('Special Leave');
+    leave1.leaveType = LeaveTypeItem('Special Leave', '1');
     leave1.startDate = '11/01/2021';
     leave1.endDate = '13/01/2021';
     leave1.attachment = File('mantap1.png');
@@ -21,7 +21,7 @@ class LeaveSummaryController extends GetxController {
     leave1.status = 'PENDING';
 
     var leave2 = LeaveRequestForm();
-    leave2.leaveType = LeaveTypeItem('Unpaid Leave');
+    leave2.leaveType = LeaveTypeItem('Unpaid Leave', '2');
     leave2.startDate = '11/01/2021';
     leave2.endDate = '12/01/2021';
     leave2.attachment = File('mantap2.png');

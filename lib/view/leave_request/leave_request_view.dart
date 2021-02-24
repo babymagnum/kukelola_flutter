@@ -124,8 +124,8 @@ class _LeaveRequestViewState extends State<LeaveRequestView> {
 
   bool _disable() {
     var form = _leaveRequestCt.form.value;
-    return form.leaveType.label == '' || (form.leaveType.label == 'Special Leave' ? form.specialLeaveType.label == '' : form.leaveType.label == '') ||
-        form.startDate == '' || form.endDate == '' || form.reason == '' || form.attachment.path == '';
+    return form.leaveType.label == '' || (form.leaveType.label == 'Special Leave' ? form.specialLeaveType.label == '' : form.leaveType.label == '')
+        || form.reason == '' || form.attachment.path == '';
   }
 
   @override
