@@ -31,7 +31,7 @@ class _HomeViewState extends State<HomeView>  with AutomaticKeepAliveClientMixin
 
   @override
   Widget build(BuildContext context) {
-    return Obx(() => _homeCt.loadingUser.value ?
+    return Obx(() => !_homeCt.loadingUser.value ?
       Center(
         child: SizedBox(
           width: 20.w, height: 20.w,

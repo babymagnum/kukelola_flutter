@@ -79,7 +79,7 @@ class _MyAppState extends State<MyApp> {
     return ScreenUtilInit(
       designSize: Size(360, 640),
       allowFontScaling: true,
-      child: GetMaterialApp(
+      builder: () => GetMaterialApp(
         title: 'KuKelola',
         navigatorKey: globalNavigatorKey,
         home: _initView(),

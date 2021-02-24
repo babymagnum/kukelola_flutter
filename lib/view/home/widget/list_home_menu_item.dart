@@ -11,6 +11,7 @@ import 'package:kukelola_flutter/view/calendar/calendar_view.dart';
 import 'package:kukelola_flutter/view/dialog_payslip/dialog_payslip.dart';
 import 'package:kukelola_flutter/view/dialog_payslip/dialog_payslip_controller.dart';
 import 'package:kukelola_flutter/view/leave_request/leave_request_view.dart';
+import 'package:kukelola_flutter/view/online_attendance/online_attendance_view.dart';
 import 'package:kukelola_flutter/view/overtime_request/overtime_request_view.dart';
 import 'package:kukelola_flutter/view/reimbursment_request/reimbursment_request_view.dart';
 import 'package:kukelola_flutter/view/workflow_approval/workflow_approval_view.dart';
@@ -25,7 +26,7 @@ class ListHomeMenuItem extends StatelessWidget {
   
   _onClick() {
     if (index == 0) {
-
+      Get.to(OnlineAttendanceView());
     } else if (index == 1) {
       Get.to(AttendanceRequestView());
     } else if (index == 2) {
