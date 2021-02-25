@@ -1,4 +1,5 @@
 import 'package:get/get.dart';
+import 'package:kukelola_flutter/core/helper/common_function.dart';
 import 'package:kukelola_flutter/core/model/static_model.dart';
 import 'package:kukelola_flutter/networking/request/reimbursment_request.dart';
 import 'package:kukelola_flutter/networking/service/service.dart';
@@ -18,6 +19,13 @@ class ReimbursmentRequestController extends GetxController {
     loadingSubmit.value = true;
     final data = await Service().submitReimbursmentRequest(ReimbursmentRequest(_homeCt.userData.value.id, form.value.reason, form.value.attachment, form.value.listDetails));
     loadingSubmit.value = false;
+
+    if (data?.isSuccess ?? false) {
+      CommonFunction.standartSnackbar('Berhasil melakukan submit overtime request');
+      updateForm(ReimbursmentRequestForm());
+    } else {
+      CommonFunction.standartSnackbar('Gagal melakukan submit overtime request');
+    }
   }
 
   addReimbursmentDetail(ReimbursmentDetailItem item) {

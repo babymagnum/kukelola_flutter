@@ -1,4 +1,5 @@
 import 'package:get/get.dart';
+import 'package:kukelola_flutter/core/helper/common_function.dart';
 import 'package:kukelola_flutter/core/model/static_model.dart';
 import 'package:kukelola_flutter/networking/request/leave_request.dart';
 import 'package:kukelola_flutter/networking/service/service.dart';
@@ -46,11 +47,11 @@ class LeaveRequestController extends GetxController {
     final data = await Service().submitLeaveRequest(LeaveRequest(_homeCt.userData.value.id, form.value.startDate, form.value.reason, form.value.endDate, form.value.attachment, form.value.leaveType.id));
     loadingSubmit.value = false;
 
-    if (data?.IsSuccess ?? false) {
-
+    if (data?.isSuccess ?? false) {
+      CommonFunction.standartSnackbar('Berhasil melakukan submit overtime request');
+      updateForm(LeaveRequestForm());
     } else {
-
+      CommonFunction.standartSnackbar('Gagal melakukan submit overtime request');
     }
-
   }
 }

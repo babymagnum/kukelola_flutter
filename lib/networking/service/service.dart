@@ -25,7 +25,7 @@ class Service extends BaseService {
     return await postFormData('${MyApp.BASE_API}api/User/ChangePassword', request.body());
   }
 
-  Future<Standart> submitAttendanceRequest(AttendanceRequest request) async {
+  Future<OvertimeRequestPost> submitAttendanceRequest(AttendanceRequest request) async {
     return await postFormData('${MyApp.BASE_API}api/AttendanceRequest/SubmitRequest', await request.body());
   }
 
@@ -33,11 +33,11 @@ class Service extends BaseService {
     return await postFormData('${MyApp.BASE_API}api/OvertimeRequest/SubmitRequest', await request.body());
   }
 
-  Future<Standart> submitReimbursmentRequest(ReimbursmentRequest request) async {
+  Future<OvertimeRequestPost> submitReimbursmentRequest(ReimbursmentRequest request) async {
     return await postFormData('${MyApp.BASE_API}api/ReimbursementRequest/SubmitRequest', await request.body());
   }
 
-  Future<Standart> submitLeaveRequest(LeaveRequest request) async {
+  Future<OvertimeRequestPost> submitLeaveRequest(LeaveRequest request) async {
     return await postFormData('${MyApp.BASE_API}api/LeaveRequest/SubmitRequest', await request.body());
   }
 }

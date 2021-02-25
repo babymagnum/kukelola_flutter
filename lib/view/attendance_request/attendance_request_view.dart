@@ -28,6 +28,7 @@ class AttendanceRequestView extends StatefulWidget {
 class AttendanceRequestViewState extends State<AttendanceRequestView> {
 
   var _reasonFocus = FocusNode();
+  var _reasonCt = TextEditingController();
   var _attendanceRequestCt = Get.put(AttendanceRequestController());
 
   _showDatePicker(BuildContext context, String selectedDate, Function (String date) onPick) {
@@ -104,6 +105,13 @@ class AttendanceRequestViewState extends State<AttendanceRequestView> {
   }
 
   @override
+  void dispose() {
+    _reasonCt.dispose();
+
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return BaseView(
       body: Column(
@@ -125,7 +133,13 @@ class AttendanceRequestViewState extends State<AttendanceRequestView> {
                   disable: _attendanceRequestCt.loadingSubmit.value || _disable(),
                   title: 'Submit',
                   loading: _attendanceRequestCt.loadingSubmit.value,
-                  onTap: () => _attendanceRequestCt.submitLeaveRequest(),
+                  onTap: () async {
+                    await _attendanceRequestCt.submitLeaveRequest();
+
+                    if (_attendanceRequestCt.form.value.reason == '') {
+                      setState(() => _reasonCt.text = '');
+                    }
+                  },
                   verticalPadding: 6.h,
                   horizontalPadding: 15.w,
                   loadingSize: 12.w,

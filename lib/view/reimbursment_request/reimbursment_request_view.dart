@@ -96,7 +96,13 @@ class _ReimbursmentRequestViewState extends State<ReimbursmentRequestView> {
                   disable: _reimbursmentRequestCt.loadingSubmit.value || _disable(),
                   title: 'Submit',
                   loading: _reimbursmentRequestCt.loadingSubmit.value,
-                  onTap: () => _reimbursmentRequestCt.submitReimbursment(),
+                  onTap: () async {
+                    await _reimbursmentRequestCt.submitReimbursment();
+
+                    if (_reimbursmentRequestCt.form.value.reason == '') {
+                      setState(() => _descriptionCt.text = '');
+                    }
+                  },
                   verticalPadding: 5.h,
                   horizontalPadding: 15.w,
                   loadingSize: 12.w,

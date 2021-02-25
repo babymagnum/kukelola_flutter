@@ -35,6 +35,7 @@ class _LeaveRequestViewState extends State<LeaveRequestView> {
 
   var _typeKey = GlobalKey(), _specialLeaveKey = GlobalKey();
   var _reasonFocus = FocusNode();
+  var _reasonCt = TextEditingController();
   var _leaveRequestCt = Get.put(LeaveRequestController());
   StreamSubscription _keyboardStream;
 
@@ -140,6 +141,7 @@ class _LeaveRequestViewState extends State<LeaveRequestView> {
   @override
   void dispose() {
     _keyboardStream?.cancel();
+    _reasonCt.dispose();
 
     super.dispose();
   }
@@ -168,7 +170,10 @@ class _LeaveRequestViewState extends State<LeaveRequestView> {
                   loading: _leaveRequestCt.loadingSubmit.value,
                   onTap: () async {
                     await _leaveRequestCt.submitLeaveRequest();
-                    Get.to(LeaveSummaryView());
+
+                    if (_leaveRequestCt.form.value.reason == '') {
+                      setState(() => _reasonCt.text = '');
+                    }
                   },
                   verticalPadding: 6.h,
                   horizontalPadding: 15.w,
