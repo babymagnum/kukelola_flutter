@@ -1,7 +1,11 @@
+import 'dart:io';
 import 'package:dio/dio.dart';
 import 'package:kukelola_flutter/core/helper/constant.dart';
+import 'package:kukelola_flutter/generated/json/overtime_request_post_helper.dart';
 import 'package:kukelola_flutter/generated/json/user_helper.dart';
+import 'package:kukelola_flutter/main.dart';
 import 'package:kukelola_flutter/networking/model/Standart.dart';
+import 'package:kukelola_flutter/networking/model/overtime_request_post.dart';
 import 'package:kukelola_flutter/networking/model/token.dart';
 import 'package:kukelola_flutter/networking/model/user.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -12,7 +16,7 @@ class BaseService {
   Future<Map<String, String>> getHeaders() async {
     var prefs = await SharedPreferences.getInstance();
     var maps = Map<String, String>();
-    maps['token'] = '${prefs.getString(Constant.TOKEN)}';
+    maps['authorization'] = 'Bearer ${prefs.getString(Constant.TOKEN)}';
     return maps;
   }
 
@@ -97,6 +101,8 @@ class BaseService {
       final dio = Dio();
       dio.interceptors.add(LogInterceptor(responseBody: true, requestBody: true));
       var response = await dio.get(url, options: Options(headers: await getHeaders()));
+      // dio.options.headers[HttpHeaders.authorizationHeader] = "Bearer ${commonController.preferences.getString(Constant.TOKEN)}";
+      // var response = await dio.get(url);
       var responseMap = jsonDecode(response.toString());
       resultResponse = fromJson<T>(responseMap);
     } on DioError catch (e) {
@@ -151,6 +157,8 @@ class BaseService {
       return Token.fromJson(json) as T;
     } else if (T == User) {
       return userFromJson(User(), json) as T;
+    } else if (T == OvertimeRequestPost) {
+      return overtimeRequestPostFromJson(OvertimeRequestPost(), json) as T;
     } else if (T == Standart) {
       return Standart.fromJson(json) as T;
     } else {

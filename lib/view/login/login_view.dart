@@ -85,7 +85,7 @@ class _LoginViewState extends State<LoginView> {
                           title: 'Sign In',
                           loading: _loginCt.loadingLogin.value,
                           onTap: () => _loginCt.login(),
-                          verticalPadding: 13.h,
+                          verticalPadding: 10.h,
                           textStyle: ThemeTextStyle.biryaniBold.apply(color: Colors.white, fontSizeDelta: 14.ssp),
                         )
                       ],

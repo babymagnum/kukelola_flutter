@@ -21,7 +21,7 @@ class _ProfileViewState extends State<ProfileView> with AutomaticKeepAliveClient
 
   @override
   Widget build(BuildContext context) {
-    return Obx(() => Column(
+    return Column(
       children: [
         SizedBox(height: context.mediaQueryPadding.top + 24.h,),
         Padding(
@@ -74,7 +74,6 @@ class _ProfileViewState extends State<ProfileView> with AutomaticKeepAliveClient
           ),
         )
       ],
-    ),
     );
   }
 

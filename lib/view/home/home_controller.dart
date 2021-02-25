@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:kukelola_flutter/core/model/static_model.dart';
 import 'package:kukelola_flutter/networking/model/user.dart';
@@ -6,6 +5,7 @@ import 'package:kukelola_flutter/networking/service/service.dart';
 
 class HomeController extends GetxController {
   var listMenuHome = List<HomeMenuItem>().obs;
+  var userData = UserData().obs;
   var user = User().obs;
   var loadingUser = false.obs;
   var errorUser = false.obs;
@@ -31,6 +31,12 @@ class HomeController extends GetxController {
     loadingUser.value = true;
     final data = await Service().account();
     loadingUser.value = false;
-    errorUser.value = data?.data == null;
+
+    if (data?.data != null) {
+      user.value = data;
+      userData.value = data.data;
+    } else {
+      errorUser.value = data?.data == null;
+    }
   }
 }

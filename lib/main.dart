@@ -11,6 +11,7 @@ import 'package:kukelola_flutter/view/onboarding/onboarding_view.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:kukelola_flutter/view/verification_code/verification_code_view.dart';
 
 final globalNavigatorKey = GlobalKey<NavigatorState>();
 final firebaseMessaging = FirebaseMessaging();
@@ -50,8 +51,17 @@ class _MyAppState extends State<MyApp> {
   Widget _initView() {
     final isLogin = commonController?.preferences?.getBool(Constant.IS_LOGIN) ?? false;
     final isOnboarding = commonController?.preferences?.getBool(Constant.IS_ONBOARDING) ?? false;
+    final isPassLogin = commonController?.preferences?.getBool(Constant.IS_PASS_LOGIN) ?? false;
 
-    return !isOnboarding ? OnboardingView() : !isLogin ? LoginView() : ContainerHomeView();
+    if (isLogin) {
+      return ContainerHomeView();
+    } else if (isPassLogin) {
+      return VerificationCodeView();
+    } else if (isOnboarding) {
+      return LoginView();
+    } else {
+      return OnboardingView();
+    }
   }
 
   @override

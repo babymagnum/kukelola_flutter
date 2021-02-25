@@ -1,4 +1,5 @@
 import 'package:kukelola_flutter/networking/model/Standart.dart';
+import 'package:kukelola_flutter/networking/model/overtime_request_post.dart';
 import 'package:kukelola_flutter/networking/model/token.dart';
 import 'package:kukelola_flutter/networking/model/user.dart';
 import 'package:kukelola_flutter/networking/request/attendance_request.dart';
@@ -28,7 +29,7 @@ class Service extends BaseService {
     return await postFormData('${MyApp.BASE_API}api/AttendanceRequest/SubmitRequest', await request.body());
   }
 
-  Future<Standart> submitOvertimeRequest(OvertimeRequest request) async {
+  Future<OvertimeRequestPost> submitOvertimeRequest(OvertimeRequest request) async {
     return await postFormData('${MyApp.BASE_API}api/OvertimeRequest/SubmitRequest', await request.body());
   }
 

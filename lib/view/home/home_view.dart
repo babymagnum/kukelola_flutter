@@ -21,17 +21,17 @@ class _HomeViewState extends State<HomeView>  with AutomaticKeepAliveClientMixin
 
   @override
   void initState() {
-    Future.delayed(Duration.zero, () {
-      _homeCt.populateMenu();
-      _homeCt.getUser();
-    });
-
     super.initState();
+
+    Future.delayed(Duration.zero, () {
+      _homeCt.getUser();
+      _homeCt.populateMenu();
+    });
   }
 
   @override
   Widget build(BuildContext context) {
-    return Obx(() => !_homeCt.loadingUser.value ?
+    return Obx(() => _homeCt.loadingUser.value ?
       Center(
         child: SizedBox(
           width: 20.w, height: 20.w,
@@ -70,12 +70,12 @@ class _HomeViewState extends State<HomeView>  with AutomaticKeepAliveClientMixin
                       SizedBox(height: context.mediaQueryPadding.top + 35.h,),
                       Align(
                         alignment: Alignment.center,
-                        child: AccountImage(url: 'aksdjobs', size: Size(64.w, 64.w), boxFit: BoxFit.fill),
+                        child: AccountImage(url: _homeCt.userData?.value?.profilePicture?.file ?? '-', size: Size(64.w, 64.w), boxFit: BoxFit.fill),
                       ),
                       SizedBox(height: 14.h,),
-                      Text('NEWT SALAMANDER', style: ThemeTextStyle.biryaniSemiBold.apply(fontSizeDelta: 20.ssp, color: Color(0xFF404040)),),
+                      Text(_homeCt.userData?.value?.fullName ?? '-', style: ThemeTextStyle.biryaniSemiBold.apply(fontSizeDelta: 20.ssp, color: Color(0xFF404040)),),
                       SizedBox(height: 2.h,),
-                      Text('Field Officer', style: ThemeTextStyle.biryaniSemiBold.apply(fontSizeDelta: 12.ssp, color: Colors.white),),
+                      Text(_homeCt.userData?.value?.jobTitle ?? '-', style: ThemeTextStyle.biryaniSemiBold.apply(fontSizeDelta: 12.ssp, color: Colors.white),),
                       SizedBox(height: 2.h,),
                       Text('PT. App KuKulola ID', style: ThemeTextStyle.biryaniSemiBold.apply(fontSizeDelta: 11.ssp, color: Color(0xFF404040)),),
                       SizedBox(height: 18.h,),

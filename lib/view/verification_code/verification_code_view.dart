@@ -164,7 +164,7 @@ class _VerificationCodeViewState extends State<VerificationCodeView> {
                         onTap: () {
                           _verificationCodeCt.verifyOtp('${_input1Controller.text.trim()}${_input2Controller.text.trim()}${_input3Controller.text.trim()}${_input4Controller.text.trim()}');
                         },
-                        verticalPadding: 13.h,
+                        verticalPadding: 10.h,
                       ),
                       SizedBox(height: 24.h,)
                     ],

@@ -10,6 +10,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:kukelola_flutter/core/helper/constant.dart';
 import 'package:kukelola_flutter/core/helper/text_util.dart';
+import 'package:kukelola_flutter/core/model/static_model.dart';
 import 'package:kukelola_flutter/core/theme/theme_color.dart';
 import 'package:kukelola_flutter/core/theme/theme_text_style.dart';
 import 'package:kukelola_flutter/core/widgets/button_back.dart';
@@ -29,6 +30,7 @@ class OvertimeRequestView extends StatefulWidget {
 
 class OvertimeRequestViewState extends State<OvertimeRequestView> {
 
+  var _reasonCt = TextEditingController();
   var _reasonFocus = FocusNode();
   var _overtimeRequestCt = Get.put(OvertimeRequestController());
   StreamSubscription _keyboardStream;
@@ -94,6 +96,7 @@ class OvertimeRequestViewState extends State<OvertimeRequestView> {
       File file = File(result.files.single.path);
       _overtimeRequestCt.form.value.attachment = file;
       _overtimeRequestCt.updateForm(_overtimeRequestCt.form.value);
+      setState(() {});
     } else {
       Fluttertoast.showToast(msg: 'Canceled the picker.', backgroundColor: Colors.black.withOpacity(0.6));
     }
@@ -116,6 +119,7 @@ class OvertimeRequestViewState extends State<OvertimeRequestView> {
   @override
   void dispose() {
     _keyboardStream?.cancel();
+    _reasonCt.dispose();
 
     super.dispose();
   }
@@ -142,7 +146,13 @@ class OvertimeRequestViewState extends State<OvertimeRequestView> {
                   disable: _overtimeRequestCt.loadingSubmit.value || _disable(),
                   title: 'Submit',
                   loading: _overtimeRequestCt.loadingSubmit.value,
-                  onTap: () => _overtimeRequestCt.submitLeaveRequest(),
+                  onTap: () async {
+                    await _overtimeRequestCt.submitLeaveRequest();
+
+                    if (_overtimeRequestCt.form.value.reason == '') {
+                      setState(() => _reasonCt.text = '');
+                    }
+                  },
                   verticalPadding: 6.h,
                   horizontalPadding: 15.w,
                   loadingSize: 12.w,
@@ -204,6 +214,7 @@ class OvertimeRequestViewState extends State<OvertimeRequestView> {
                           focusNode: _reasonFocus,
                           labelText: 'REASON',
                           hintText: 'type reason...',
+                          controller: _reasonCt,
                           inputType: TextInputType.multiline,
                           onEditingComplete: () {},
                           maxLines: null,
@@ -222,6 +233,7 @@ class OvertimeRequestViewState extends State<OvertimeRequestView> {
                           loading: _overtimeRequestCt.loadingPickFile.value,
                           value: _overtimeRequestCt.form.value.attachment.path == '' ? '' : '${_overtimeRequestCt.form.value.attachment.path} (${(_overtimeRequestCt.form.value.attachment.lengthSync() / 1024).round()} KB)',
                         ),
+                        SizedBox(height: 24.h,)
                       ],
                     ),
                   ),

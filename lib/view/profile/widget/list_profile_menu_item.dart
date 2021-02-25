@@ -40,6 +40,7 @@ class ListProfileMenuItem extends StatelessWidget {
     } else {
       _containerHomeCt.setSelectedPage(0);
       commonController.preferences.setBool(Constant.IS_LOGIN, false);
+      commonController.preferences.setBool(Constant.IS_PASS_LOGIN, false);
       Get.offAll(LoginView());
     }
   }

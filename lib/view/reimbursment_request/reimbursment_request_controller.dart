@@ -1,20 +1,22 @@
 import 'package:get/get.dart';
-import 'package:kukelola_flutter/core/helper/constant.dart';
 import 'package:kukelola_flutter/core/model/static_model.dart';
 import 'package:kukelola_flutter/networking/request/reimbursment_request.dart';
 import 'package:kukelola_flutter/networking/service/service.dart';
+import 'package:kukelola_flutter/view/home/home_controller.dart';
 
 class ReimbursmentRequestController extends GetxController {
   var loadingSubmit = false.obs;
   var loadingAttachment = false.obs;
   var form = ReimbursmentRequestForm().obs;
 
+  var _homeCt = Get.find<HomeController>();
+
   setLoadingAttachment(value) => loadingAttachment.value = value;
   updateForm(ReimbursmentRequestForm value) => form.value = value;
 
   submitReimbursment() async {
     loadingSubmit.value = true;
-    final data = await Service().submitReimbursmentRequest(ReimbursmentRequest(Constant.DUMMY_USER_ID, form.value.reason, form.value.attachment, form.value.listDetails));
+    final data = await Service().submitReimbursmentRequest(ReimbursmentRequest(_homeCt.userData.value.id, form.value.reason, form.value.attachment, form.value.listDetails));
     loadingSubmit.value = false;
   }
 

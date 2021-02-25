@@ -29,6 +29,7 @@ class LoginController extends GetxController {
 
     if (data != null) {
       commonController.preferences.setString(Constant.OTP, otp);
+      commonController.preferences.setBool(Constant.IS_PASS_LOGIN, true);
       commonController.preferences.setString(Constant.TOKEN, data.access_token);
       Get.to(VerificationCodeView());
     } else {
