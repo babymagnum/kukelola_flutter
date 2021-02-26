@@ -1,8 +1,11 @@
 import 'package:kukelola_flutter/networking/model/overtime_request_post.dart';
+import 'package:kukelola_flutter/networking/model/special_leave_list.dart';
 import 'package:kukelola_flutter/networking/model/standart.dart';
 import 'package:kukelola_flutter/networking/model/token.dart';
 import 'package:kukelola_flutter/networking/model/user.dart';
+import 'package:kukelola_flutter/networking/request/attendance_online_request.dart';
 import 'package:kukelola_flutter/networking/request/attendance_request.dart';
+import 'package:kukelola_flutter/networking/request/business_trip_request.dart';
 import 'package:kukelola_flutter/networking/request/change_password_request.dart';
 import 'package:kukelola_flutter/networking/request/leave_request.dart';
 import 'package:kukelola_flutter/networking/request/login_request.dart';
@@ -44,7 +47,7 @@ class Service extends BaseService {
 
   Future<Standart> approveRequest(String id) async {
     return await postJsonBody('${MyApp.BASE_API}api/Workflow/Approve', {
-      "Id": id
+      'Id': id
     });
   }
 
@@ -54,7 +57,21 @@ class Service extends BaseService {
 
   Future<Standart> cancelRequest(String id) async {
     return await postJsonBody('${MyApp.BASE_API}api/Workflow/Cancel', {
-      "Id": id
+      'Id': id
     });
+  }
+  
+  Future<SpecialLeaveList> specialLeaveList() async {
+    return await postJsonBody('${MyApp.BASE_API}api/SpecialLeave/SpecialLeaveList', {
+      'Text': ''
+    });
+  }
+
+  Future<Standart> attendanceOnline(AttendanceOnlineRequest request) async {
+    return await postJsonBody('${MyApp.BASE_API}api/Attendance/Online', request.getBody());
+  }
+
+  Future<Standart> businessTripRequest(BusinessTripRequest request) async {
+    return await postFormData('${MyApp.BASE_API}api/BusinessTripRequest/SubmitRequest', await request.getBody());
   }
 }

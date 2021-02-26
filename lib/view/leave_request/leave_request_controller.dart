@@ -1,15 +1,22 @@
 import 'package:get/get.dart';
 import 'package:kukelola_flutter/core/helper/common_function.dart';
 import 'package:kukelola_flutter/core/model/static_model.dart';
+import 'package:kukelola_flutter/networking/model/special_leave_list.dart';
 import 'package:kukelola_flutter/networking/request/leave_request.dart';
 import 'package:kukelola_flutter/networking/service/service.dart';
 import 'package:kukelola_flutter/view/home/home_controller.dart';
 
 class LeaveRequestController extends GetxController {
-  var listLeaveType = List<LeaveTypeItem>().obs;
-  var listSpecialLeave = List<LeaveTypeItem>().obs;
+  var listLeaveType = [
+    LeaveTypeItem('Annual Leave', '1'),
+    LeaveTypeItem('Special Leave', '2'),
+    LeaveTypeItem('Unpaid Leave', '3'),
+  ];
+  var listSpecialLeave = List<SpecialLeaveListData>();
   var loadingSubmit = false.obs;
   var loadingPickFile = false.obs;
+  var loadingSpecialLeaveType = false.obs;
+  var errorSpecialLeaveType = false.obs;
   var form = LeaveRequestForm().obs;
 
   var _homeCt = Get.find<HomeController>();
@@ -17,29 +24,16 @@ class LeaveRequestController extends GetxController {
   updateForm(LeaveRequestForm value) => form.value = value;
   setLoadingPickFile(bool value) => loadingPickFile.value = value;
 
-  @override
-  void onInit() {
-    populateLeaveType();
+  populateSpecialLeaveType() async {
+    if (listSpecialLeave.length > 0) return;
 
-    super.onInit();
-  }
+    loadingSpecialLeaveType.value = true;
+    final data = await Service().specialLeaveList();
+    loadingSpecialLeaveType.value = false;
 
-  populateLeaveType() {
-    var leaveType = [
-      LeaveTypeItem('Annual Leave', '1'),
-      LeaveTypeItem('Special Leave', '2'),
-      LeaveTypeItem('Sick Leave', '3'),
-    ];
+    errorSpecialLeaveType.value = data?.data == null;
 
-    var specialLeave = [
-      LeaveTypeItem('Wedding Leave', '1'),
-      LeaveTypeItem('Born Kids Leave', '2'),
-      LeaveTypeItem('Parents Meeting Leave', '3'),
-    ];
-
-    leaveType.forEach((element) => listLeaveType.add(element));
-    specialLeave.forEach((element) => listSpecialLeave.add(element));
-    update();
+    if (data?.data != null) listSpecialLeave.addAll(data.data);
   }
 
   submitLeaveRequest() async {

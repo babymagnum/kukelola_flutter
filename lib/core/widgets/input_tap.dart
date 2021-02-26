@@ -45,7 +45,7 @@ class InputTap extends StatelessWidget {
                 ),
                 SizedBox(width: leftIcon == '' ? 0 : 10.w,),
                 Expanded(
-                  child: Text(value == '' ? hintText : value, style: value == '' ? ThemeTextStyle.biryaniRegular.apply(fontSizeDelta: 14.ssp, color: Color(0xFFC4C4C4)) : ThemeTextStyle.biryaniRegular.apply(fontSizeDelta: 14.ssp),),
+                  child: Text(value == '' ? hintText : value, maxLines: 1, overflow: TextOverflow.ellipsis, style: value == '' ? ThemeTextStyle.biryaniRegular.apply(fontSizeDelta: 14.ssp, color: Color(0xFFC4C4C4)) : ThemeTextStyle.biryaniRegular.apply(fontSizeDelta: 14.ssp),),
                 ),
                 SizedBox(width: 10.w,),
                 rightIcon == '' ?

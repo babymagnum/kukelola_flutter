@@ -16,15 +16,16 @@ import 'package:kukelola_flutter/core/theme/theme_color.dart';
 import 'package:kukelola_flutter/core/theme/theme_text_style.dart';
 import 'package:kukelola_flutter/core/widgets/button_back.dart';
 import 'package:kukelola_flutter/core/widgets/button_loading.dart';
+import 'package:kukelola_flutter/core/widgets/button_reload.dart';
 import 'package:kukelola_flutter/core/widgets/custom_date_picker.dart';
 import 'package:kukelola_flutter/core/widgets/custom_input.dart';
 import 'package:kukelola_flutter/core/widgets/input_attachment.dart';
 import 'package:kukelola_flutter/core/widgets/input_tap.dart';
 import 'package:kukelola_flutter/core/widgets/list_standart_dropdown_item.dart';
 import 'package:kukelola_flutter/main.dart';
+import 'package:kukelola_flutter/networking/model/special_leave_list.dart';
 import 'package:kukelola_flutter/view/base_view.dart';
 import 'package:kukelola_flutter/view/leave_request/leave_request_controller.dart';
-import 'package:kukelola_flutter/view/leave_summary/leave_summary_view.dart';
 
 class LeaveRequestView extends StatefulWidget {
   @override
@@ -91,6 +92,48 @@ class _LeaveRequestViewState extends State<LeaveRequestView> {
                     itemCount: list.length,
                     itemBuilder: (_, index) => ListStandartDropdownItem(
                       content: list[index].label,
+                      onClick: () {
+                        onSelect(list[index]);
+                        Navigator.pop(context);
+                      },
+                    ),
+                    separatorBuilder: (_, __) => Divider(color: Colors.transparent, height: 5.h,),
+                  ),
+                ),
+              ],
+            ),
+          )
+        ],
+      ),
+    );
+  }
+
+  _showDropdownSpecialLeaveType(BuildContext context, GlobalKey key, List<SpecialLeaveListData> list, Function(SpecialLeaveListData item) onSelect) {
+
+    FocusScope.of(context).requestFocus(FocusNode());
+
+    final RenderBox renderBoxRed = key.currentContext.findRenderObject();
+    final position = renderBoxRed.localToGlobal(Offset.zero);
+
+    showDialog(
+      context: context,
+      barrierColor: Colors.transparent,
+      child: Stack(
+        children: [
+          Container(width: Get.width, height: Get.height,),
+          Positioned(
+            left: 24.w, right: 24.w,
+            top: position.dy > Get.height - 150.h ? Get.height / 2 : position.dy + context.mediaQueryPadding.top,
+            child: Column(
+              children: [
+                Parent(
+                  style: ParentStyle()..width(Get.width)..maxHeight(150.h)..borderRadius(bottomLeft: 6, bottomRight: 6)
+                    ..background.color(Colors.white)..boxShadow(color: Colors.black.withOpacity(0.05), blur: 6, spread: 0, offset: Offset(0, 2)),
+                  child: ListView.separated(
+                    shrinkWrap: true,
+                    itemCount: list.length,
+                    itemBuilder: (_, index) => ListStandartDropdownItem(
+                      content: list[index].text,
                       onClick: () {
                         onSelect(list[index]);
                         Navigator.pop(context);
@@ -197,13 +240,30 @@ class _LeaveRequestViewState extends State<LeaveRequestView> {
                           labelText: 'TYPE',
                           hintText: 'choose leave type...',
                           onTap: () => _showDropdownType(context, _typeKey, _leaveRequestCt.listLeaveType, (leaveType) {
-                            _leaveRequestCt.form.value.leaveType.label = leaveType.label;
+                            _leaveRequestCt.form.value.leaveType = leaveType;
                             _leaveRequestCt.updateForm(_leaveRequestCt.form.value);
+
+                            if (leaveType.label == 'Special Leave') _leaveRequestCt.populateSpecialLeaveType();
                           }),
                           rightIcon: 'assets/images/fa-solid_caret-down.svg',
                           rightSize: Size(10.w, 16.h),
                           value: _leaveRequestCt.form.value.leaveType.label,
                         ),
+                        _leaveRequestCt.loadingSpecialLeaveType.value ?
+                        Align(
+                          alignment: Alignment.centerLeft,
+                          child: Padding(
+                            padding: EdgeInsets.only(top: 24.h),
+                            child: SizedBox(
+                              width: 15.w, height: 15.w,
+                              child: CircularProgressIndicator(
+                                valueColor: AlwaysStoppedAnimation<Color>(ThemeColor.primary),
+                              ),
+                            ),
+                          ),
+                        ) :
+                        _leaveRequestCt.errorSpecialLeaveType.value ?
+                        ButtonReload(onTap: () => _leaveRequestCt.populateSpecialLeaveType()) :
                         AnimatedContainer(
                           duration: Duration(milliseconds: 200),
                           height: _leaveRequestCt.form.value.showSpecialType() ? commonController.inputTapHeight.value + 24.h : 0.0,
@@ -213,10 +273,13 @@ class _LeaveRequestViewState extends State<LeaveRequestView> {
                               key: _specialLeaveKey,
                               labelText: 'SPECIAL LEAVE',
                               hintText: 'choose special leave...',
-                              onTap: () => _showDropdownType(context, _specialLeaveKey, _leaveRequestCt.listSpecialLeave, (leaveType) {
-                                _leaveRequestCt.form.value.specialLeaveType.label = leaveType.label;
-                                _leaveRequestCt.updateForm(_leaveRequestCt.form.value);
-                              }),
+                              onTap: () {
+                                _showDropdownSpecialLeaveType(context, _specialLeaveKey, _leaveRequestCt.listSpecialLeave, (leaveType) {
+                                  _leaveRequestCt.form.value.specialLeaveType.label = leaveType.text;
+                                  _leaveRequestCt.form.value.specialLeaveType.id = leaveType.id;
+                                  _leaveRequestCt.updateForm(_leaveRequestCt.form.value);
+                                });
+                              },
                               rightIcon: 'assets/images/fa-solid_caret-down.svg',
                               rightSize: Size(10.w, 16.h),
                               value: _leaveRequestCt.form.value.specialLeaveType.label,

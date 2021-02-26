@@ -2,10 +2,12 @@ import 'dart:io';
 import 'package:dio/dio.dart';
 import 'package:kukelola_flutter/core/helper/constant.dart';
 import 'package:kukelola_flutter/generated/json/overtime_request_post_helper.dart';
+import 'package:kukelola_flutter/generated/json/special_leave_list_helper.dart';
 import 'package:kukelola_flutter/generated/json/user_helper.dart';
 import 'package:kukelola_flutter/main.dart';
 import 'package:kukelola_flutter/networking/model/Standart.dart';
 import 'package:kukelola_flutter/networking/model/overtime_request_post.dart';
+import 'package:kukelola_flutter/networking/model/special_leave_list.dart';
 import 'package:kukelola_flutter/networking/model/token.dart';
 import 'package:kukelola_flutter/networking/model/user.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -159,6 +161,8 @@ class BaseService {
       return userFromJson(User(), json) as T;
     } else if (T == OvertimeRequestPost) {
       return overtimeRequestPostFromJson(OvertimeRequestPost(), json) as T;
+    } else if (T == SpecialLeaveList) {
+      return specialLeaveListFromJson(SpecialLeaveList(), json) as T;
     } else if (T == Standart) {
       return Standart.fromJson(json) as T;
     } else {

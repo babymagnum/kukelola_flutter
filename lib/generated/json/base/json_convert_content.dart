@@ -7,6 +7,8 @@ import 'package:kukelola_flutter/networking/model/user.dart';
 import 'package:kukelola_flutter/generated/json/user_helper.dart';
 import 'package:kukelola_flutter/networking/model/overtime_request_post.dart';
 import 'package:kukelola_flutter/generated/json/overtime_request_post_helper.dart';
+import 'package:kukelola_flutter/networking/model/special_leave_list.dart';
+import 'package:kukelola_flutter/generated/json/special_leave_list_helper.dart';
 
 class JsonConvert<T> {
 	T fromJson(Map<String, dynamic> json) {
@@ -36,7 +38,11 @@ class JsonConvert<T> {
 			case OvertimeRequestPostDataWorkflow:
 				return overtimeRequestPostDataWorkflowFromJson(data as OvertimeRequestPostDataWorkflow, json) as T;
 			case OvertimeRequestPostDataWorkflowData:
-				return overtimeRequestPostDataWorkflowDataFromJson(data as OvertimeRequestPostDataWorkflowData, json) as T;    }
+				return overtimeRequestPostDataWorkflowDataFromJson(data as OvertimeRequestPostDataWorkflowData, json) as T;
+			case SpecialLeaveList:
+				return specialLeaveListFromJson(data as SpecialLeaveList, json) as T;
+			case SpecialLeaveListData:
+				return specialLeaveListDataFromJson(data as SpecialLeaveListData, json) as T;    }
     return data as T;
   }
 
@@ -60,6 +66,10 @@ class JsonConvert<T> {
 				return overtimeRequestPostDataWorkflowToJson(data as OvertimeRequestPostDataWorkflow);
 			case OvertimeRequestPostDataWorkflowData:
 				return overtimeRequestPostDataWorkflowDataToJson(data as OvertimeRequestPostDataWorkflowData);
+			case SpecialLeaveList:
+				return specialLeaveListToJson(data as SpecialLeaveList);
+			case SpecialLeaveListData:
+				return specialLeaveListDataToJson(data as SpecialLeaveListData);
 			}
 			return data as T;
 		}
@@ -84,6 +94,10 @@ class JsonConvert<T> {
 			return OvertimeRequestPostDataWorkflow().fromJson(json);
 		}	else if(type == (OvertimeRequestPostDataWorkflowData).toString()){
 			return OvertimeRequestPostDataWorkflowData().fromJson(json);
+		}	else if(type == (SpecialLeaveList).toString()){
+			return SpecialLeaveList().fromJson(json);
+		}	else if(type == (SpecialLeaveListData).toString()){
+			return SpecialLeaveListData().fromJson(json);
 		}	
 		return null;
 	}
@@ -108,6 +122,10 @@ class JsonConvert<T> {
 			return data.map<OvertimeRequestPostDataWorkflow>((e) => OvertimeRequestPostDataWorkflow().fromJson(e)).toList() as M;
 		}	else if(List<OvertimeRequestPostDataWorkflowData>() is M){
 			return data.map<OvertimeRequestPostDataWorkflowData>((e) => OvertimeRequestPostDataWorkflowData().fromJson(e)).toList() as M;
+		}	else if(List<SpecialLeaveList>() is M){
+			return data.map<SpecialLeaveList>((e) => SpecialLeaveList().fromJson(e)).toList() as M;
+		}	else if(List<SpecialLeaveListData>() is M){
+			return data.map<SpecialLeaveListData>((e) => SpecialLeaveListData().fromJson(e)).toList() as M;
 		}
 		return null;
 	}
