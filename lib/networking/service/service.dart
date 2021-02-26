@@ -1,5 +1,5 @@
-import 'package:kukelola_flutter/networking/model/Standart.dart';
 import 'package:kukelola_flutter/networking/model/overtime_request_post.dart';
+import 'package:kukelola_flutter/networking/model/standart.dart';
 import 'package:kukelola_flutter/networking/model/token.dart';
 import 'package:kukelola_flutter/networking/model/user.dart';
 import 'package:kukelola_flutter/networking/request/attendance_request.dart';
@@ -8,6 +8,7 @@ import 'package:kukelola_flutter/networking/request/leave_request.dart';
 import 'package:kukelola_flutter/networking/request/login_request.dart';
 import 'package:kukelola_flutter/networking/request/overtime_request.dart';
 import 'package:kukelola_flutter/networking/request/reimbursment_request.dart';
+import 'package:kukelola_flutter/networking/request/reject_request.dart';
 import 'package:kukelola_flutter/networking/service/base_service.dart';
 import '../../main.dart';
 
@@ -39,5 +40,21 @@ class Service extends BaseService {
 
   Future<OvertimeRequestPost> submitLeaveRequest(LeaveRequest request) async {
     return await postFormData('${MyApp.BASE_API}api/LeaveRequest/SubmitRequest', await request.body());
+  }
+
+  Future<Standart> approveRequest(String id) async {
+    return await postJsonBody('${MyApp.BASE_API}api/Workflow/Approve', {
+      "Id": id
+    });
+  }
+
+  Future<Standart> rejectRequest(RejectRequest request) async {
+    return await postJsonBody('${MyApp.BASE_API}api/Workflow/Reject', request.getBody());
+  }
+
+  Future<Standart> cancelRequest(String id) async {
+    return await postJsonBody('${MyApp.BASE_API}api/Workflow/Cancel', {
+      "Id": id
+    });
   }
 }

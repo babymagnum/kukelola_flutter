@@ -75,7 +75,7 @@ class BaseService {
   }
 
   // TODO: POST WITH JSON BODY
-  Future<T> postJsonBody<T>(String url, dynamic body, Map<String, dynamic> customHeaders) async {
+  Future<T> postJsonBody<T>(String url, dynamic body) async {
     T resultResponse;
 
     try {
