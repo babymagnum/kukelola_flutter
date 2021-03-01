@@ -126,6 +126,7 @@ class _ReimbursmentRequestViewState extends State<ReimbursmentRequestView> {
                           focusNode: _descriptionFocus,
                           hintText: 'type description...',
                           maxLines: null,
+                          controller: _descriptionCt,
                           inputType: TextInputType.multiline,
                           onEditingComplete: () {},
                           onChanged: (text) {

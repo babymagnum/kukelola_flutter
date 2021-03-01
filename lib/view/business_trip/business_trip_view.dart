@@ -32,6 +32,7 @@ class BusinessTripView extends StatefulWidget {
 class BusinessTripViewState extends State<BusinessTripView> {
 
   var _destinationFocus = FocusNode(), _purposeFocus = FocusNode();
+  var _destinationCt = TextEditingController(), _purporseCt = TextEditingController();
   var _businessTripCt = Get.put(BusinessTripController());
   StreamSubscription _keyboardStream;
 
@@ -93,6 +94,8 @@ class BusinessTripViewState extends State<BusinessTripView> {
 
   @override
   void dispose() {
+    _destinationCt.dispose();
+    _purporseCt.dispose();
     _keyboardStream?.cancel();
 
     super.dispose();
@@ -121,8 +124,14 @@ class BusinessTripViewState extends State<BusinessTripView> {
                   title: 'Save',
                   loading: _businessTripCt.loadingSubmit.value,
                   onTap: () async {
-                    await _businessTripCt.submitBusinessTrip();
-                    Get.to(BusinessTripDetailView());
+                    await Get.to(BusinessTripDetailView());
+
+                    if (_businessTripCt.form.value.destination == '') {
+                      setState(() {
+                        _destinationCt.text = '';
+                        _purporseCt.text = '';
+                      });
+                    }
                   },
                   verticalPadding: 6.h,
                   horizontalPadding: 15.w,
@@ -171,6 +180,7 @@ class BusinessTripViewState extends State<BusinessTripView> {
                         textInputAction: null,
                         focusNode: _destinationFocus,
                         labelText: 'DESTINATION',
+                        controller: _destinationCt,
                         hintText: 'type destination...',
                         inputType: TextInputType.text,
                         onEditingComplete: () {},
@@ -186,6 +196,7 @@ class BusinessTripViewState extends State<BusinessTripView> {
                       CustomInput(
                         textInputAction: null,
                         focusNode: _purposeFocus,
+                        controller: _purporseCt,
                         labelText: 'PURPORSE',
                         hintText: 'type purpose...',
                         inputType: TextInputType.multiline,

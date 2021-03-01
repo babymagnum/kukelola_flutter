@@ -41,9 +41,7 @@ class _BusinessTripDetailViewState extends State<BusinessTripDetailView> {
                   disable: _businessTripDetailCt.loadingSubmit.value,
                   title: 'Submit',
                   loading: _businessTripDetailCt.loadingSubmit.value,
-                  onTap: () async {
-                    await _businessTripDetailCt.submitBusinessTrip();
-                  },
+                  onTap: () => _businessTripDetailCt.submitBusinessTrip(),
                   verticalPadding: 6.h,
                   horizontalPadding: 15.w,
                   loadingSize: 12.w,
@@ -64,7 +62,7 @@ class _BusinessTripDetailViewState extends State<BusinessTripDetailView> {
                       BusinessTripDetailInput(
                         title: 'AIRPLANE / BUS / TICKET',
                         onAmountChange: (text) {
-                          _businessTripDetailCt.form.value.airplaneBusTicket.amount = text.trim();
+                          _businessTripDetailCt.form.value.airplaneBusTicket.amount = text.trim().replaceAll('Rp ', '').replaceAll('.', '');
                           _businessTripDetailCt.setForm(_businessTripDetailCt.form.value);
                         },
                         onDescriptionChange: (text) {
@@ -76,7 +74,7 @@ class _BusinessTripDetailViewState extends State<BusinessTripDetailView> {
                       BusinessTripDetailInput(
                         title: 'LOCAL TRANSPORTATION',
                         onAmountChange: (text) {
-                          _businessTripDetailCt.form.value.localTransportation.amount = text.trim();
+                          _businessTripDetailCt.form.value.localTransportation.amount = text.trim().replaceAll('Rp ', '').replaceAll('.', '');
                           _businessTripDetailCt.setForm(_businessTripDetailCt.form.value);
                         },
                         onDescriptionChange: (text) {
@@ -88,7 +86,7 @@ class _BusinessTripDetailViewState extends State<BusinessTripDetailView> {
                       BusinessTripDetailInput(
                         title: 'AIRPORT TAX, PARKING, FUEL',
                         onAmountChange: (text) {
-                          _businessTripDetailCt.form.value.airportParkingFuel.amount = text.trim();
+                          _businessTripDetailCt.form.value.airportParkingFuel.amount = text.trim().replaceAll('Rp ', '').replaceAll('.', '');
                           _businessTripDetailCt.setForm(_businessTripDetailCt.form.value);
                         },
                         onDescriptionChange: (text) {
@@ -100,7 +98,7 @@ class _BusinessTripDetailViewState extends State<BusinessTripDetailView> {
                       BusinessTripDetailInput(
                         title: 'HOUSING',
                         onAmountChange: (text) {
-                          _businessTripDetailCt.form.value.housing.amount = text.trim();
+                          _businessTripDetailCt.form.value.housing.amount = text.trim().replaceAll('Rp ', '').replaceAll('.', '');
                           _businessTripDetailCt.setForm(_businessTripDetailCt.form.value);
                         },
                         onDescriptionChange: (text) {
@@ -112,7 +110,7 @@ class _BusinessTripDetailViewState extends State<BusinessTripDetailView> {
                       BusinessTripDetailInput(
                         title: 'MEAL',
                         onAmountChange: (text) {
-                          _businessTripDetailCt.form.value.meal.amount = text.trim();
+                          _businessTripDetailCt.form.value.meal.amount = text.trim().replaceAll('Rp ', '').replaceAll('.', '');
                           _businessTripDetailCt.setForm(_businessTripDetailCt.form.value);
                         },
                         onDescriptionChange: (text) {
@@ -124,7 +122,7 @@ class _BusinessTripDetailViewState extends State<BusinessTripDetailView> {
                       BusinessTripDetailInput(
                         title: 'LAUNDRY',
                         onAmountChange: (text) {
-                          _businessTripDetailCt.form.value.laundry.amount = text.trim();
+                          _businessTripDetailCt.form.value.laundry.amount = text.trim().replaceAll('Rp ', '').replaceAll('.', '');
                           _businessTripDetailCt.setForm(_businessTripDetailCt.form.value);
                         },
                         onDescriptionChange: (text) {
@@ -134,9 +132,9 @@ class _BusinessTripDetailViewState extends State<BusinessTripDetailView> {
                       ),
                       SizedBox(height: 24.h,),
                       BusinessTripDetailInput(
-                        title: 'POCKEY MONEY',
+                        title: 'POCKET MONEY',
                         onAmountChange: (text) {
-                          _businessTripDetailCt.form.value.pocketMoney.amount = text.trim();
+                          _businessTripDetailCt.form.value.pocketMoney.amount = text.trim().replaceAll('Rp ', '').replaceAll('.', '');
                           _businessTripDetailCt.setForm(_businessTripDetailCt.form.value);
                         },
                         onDescriptionChange: (text) {
@@ -148,7 +146,7 @@ class _BusinessTripDetailViewState extends State<BusinessTripDetailView> {
                       BusinessTripDetailInput(
                         title: 'OTHER',
                         onAmountChange: (text) {
-                          _businessTripDetailCt.form.value.other.amount = text.trim();
+                          _businessTripDetailCt.form.value.other.amount = text.trim().replaceAll('Rp ', '').replaceAll('.', '');
                           _businessTripDetailCt.setForm(_businessTripDetailCt.form.value);
                         },
                         onDescriptionChange: (text) {

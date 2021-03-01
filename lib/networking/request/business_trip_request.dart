@@ -26,6 +26,10 @@ class BusinessTripRequest {
   String OtherDescription;
   File FileOne;
 
+  BusinessTripRequest(this.UserId, this.StartDate, this.EndDate, this.Purpose, this.Destination, this.TransportAmount, this.TransportDescription, this.LocalTransportAmount,
+      this.LocalTransportDescription, this.ParkingAmount, this.ParkingDescription, this.HousingAmount, this.HousingDescription, this.MealAmount, this.MealDescription,
+      this.LaundryAmount, this.LaundryDescription, this.PocketMoneyAmount, this.PocketMoneyDescription, this.OtherAmount, this.OtherDescription, this.FileOne);
+
   Future<FormData> getBody() async {
     final form = FormData();
 

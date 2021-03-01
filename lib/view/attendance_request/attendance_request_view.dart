@@ -99,6 +99,7 @@ class AttendanceRequestViewState extends State<AttendanceRequestView> {
       File file = File(result.files.single.path);
       _attendanceRequestCt.form.value.attachment = file;
       _attendanceRequestCt.updateForm(_attendanceRequestCt.form.value);
+      setState(() {});
     } else {
       Fluttertoast.showToast(msg: 'Canceled the picker.', backgroundColor: Colors.black.withOpacity(0.6));
     }
@@ -213,6 +214,7 @@ class AttendanceRequestViewState extends State<AttendanceRequestView> {
                           textInputAction: null,
                           focusNode: _reasonFocus,
                           labelText: 'REASON',
+                          controller: _reasonCt,
                           onChanged: (text) {
                             _attendanceRequestCt.form.value.reason = text.trim();
                             _attendanceRequestCt.updateForm(_attendanceRequestCt.form.value);

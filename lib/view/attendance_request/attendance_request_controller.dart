@@ -21,10 +21,10 @@ class AttendanceRequestController extends GetxController {
     loadingSubmit.value = false;
 
     if (data?.isSuccess ?? false) {
-      CommonFunction.standartSnackbar('Berhasil melakukan submit overtime request');
+      CommonFunction.standartSnackbar('Berhasil melakukan submit attendance request');
       updateForm(AttendanceRequestForm());
     } else {
-      CommonFunction.standartSnackbar('Gagal melakukan submit overtime request');
+      CommonFunction.standartSnackbar('Gagal melakukan submit attendance request');
     }
   }
 }

@@ -8,10 +8,4 @@ class BusinessTripController extends GetxController {
 
   setForm(BusinessTripForm value) => form.value = value;
   setLoadingPickFile(bool value) => loadingPickFile.value = value;
-
-  submitBusinessTrip() async {
-    loadingSubmit.value = true;
-    await Future.delayed(Duration(seconds: 1), () {});
-    loadingSubmit.value = false;
-  }
 }

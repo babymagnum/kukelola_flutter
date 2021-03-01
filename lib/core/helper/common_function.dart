@@ -13,11 +13,14 @@ class CommonFunction {
               child: Text(content, style: ThemeTextStyle.biryaniBold.apply(fontSizeDelta: 12.ssp, color: Colors.white),),
             ),
             GestureDetector(
-              onTap: () => Get.back(),
+              onTap: () {
+                if (Get.isSnackbarOpen) Get.back();
+              },
               child: Text('CLOSE', style: ThemeTextStyle.biryaniHeavy.apply(color: Colors.white, fontSizeDelta: 12.ssp),),
             )
           ],
         ),
+        duration: Duration(milliseconds: 1500),
         barBlur: 5, snackPosition: SnackPosition.BOTTOM,
         backgroundColor: Colors.black45, margin: EdgeInsets.symmetric(vertical: 0, horizontal: 0));
   }
