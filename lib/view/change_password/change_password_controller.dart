@@ -32,10 +32,10 @@ class ChangePasswordController extends GetxController {
       final data = await Service().changePassword(ChangePasswordRequest(form.value.currentPassword, form.value.newPassword));
       loadingChangePassword.value = false;
 
-      if (data?.IsSuccess ?? false) {
-        CommonFunction.standartSnackbar(data?.Message ?? 'Berhasil melakukan operasi.');
+      if (data?.isSuccess ?? false) {
+        CommonFunction.standartSnackbar(data?.message ?? 'Berhasil melakukan operasi.');
       } else {
-        CommonFunction.standartSnackbar(data?.Message ?? 'Gagal melakukan operasi.');
+        CommonFunction.standartSnackbar(data?.message ?? 'Gagal melakukan operasi.');
       }
     }
   }

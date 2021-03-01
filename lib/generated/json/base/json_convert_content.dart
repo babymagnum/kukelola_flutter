@@ -7,6 +7,8 @@ import 'package:kukelola_flutter/networking/model/user.dart';
 import 'package:kukelola_flutter/generated/json/user_helper.dart';
 import 'package:kukelola_flutter/networking/model/overtime_request_post.dart';
 import 'package:kukelola_flutter/generated/json/overtime_request_post_helper.dart';
+import 'package:kukelola_flutter/networking/model/standart.dart';
+import 'package:kukelola_flutter/generated/json/standart_entity_helper.dart';
 import 'package:kukelola_flutter/networking/model/special_leave_list.dart';
 import 'package:kukelola_flutter/generated/json/special_leave_list_helper.dart';
 
@@ -39,6 +41,8 @@ class JsonConvert<T> {
 				return overtimeRequestPostDataWorkflowFromJson(data as OvertimeRequestPostDataWorkflow, json) as T;
 			case OvertimeRequestPostDataWorkflowData:
 				return overtimeRequestPostDataWorkflowDataFromJson(data as OvertimeRequestPostDataWorkflowData, json) as T;
+			case Standart:
+				return standartFromJson(data as Standart, json) as T;
 			case SpecialLeaveList:
 				return specialLeaveListFromJson(data as SpecialLeaveList, json) as T;
 			case SpecialLeaveListData:
@@ -66,6 +70,8 @@ class JsonConvert<T> {
 				return overtimeRequestPostDataWorkflowToJson(data as OvertimeRequestPostDataWorkflow);
 			case OvertimeRequestPostDataWorkflowData:
 				return overtimeRequestPostDataWorkflowDataToJson(data as OvertimeRequestPostDataWorkflowData);
+			case Standart:
+				return standartToJson(data as Standart);
 			case SpecialLeaveList:
 				return specialLeaveListToJson(data as SpecialLeaveList);
 			case SpecialLeaveListData:
@@ -94,6 +100,8 @@ class JsonConvert<T> {
 			return OvertimeRequestPostDataWorkflow().fromJson(json);
 		}	else if(type == (OvertimeRequestPostDataWorkflowData).toString()){
 			return OvertimeRequestPostDataWorkflowData().fromJson(json);
+		}	else if(type == (Standart).toString()){
+			return Standart().fromJson(json);
 		}	else if(type == (SpecialLeaveList).toString()){
 			return SpecialLeaveList().fromJson(json);
 		}	else if(type == (SpecialLeaveListData).toString()){
@@ -122,6 +130,8 @@ class JsonConvert<T> {
 			return data.map<OvertimeRequestPostDataWorkflow>((e) => OvertimeRequestPostDataWorkflow().fromJson(e)).toList() as M;
 		}	else if(List<OvertimeRequestPostDataWorkflowData>() is M){
 			return data.map<OvertimeRequestPostDataWorkflowData>((e) => OvertimeRequestPostDataWorkflowData().fromJson(e)).toList() as M;
+		}	else if(List<Standart>() is M){
+			return data.map<Standart>((e) => Standart().fromJson(e)).toList() as M;
 		}	else if(List<SpecialLeaveList>() is M){
 			return data.map<SpecialLeaveList>((e) => SpecialLeaveList().fromJson(e)).toList() as M;
 		}	else if(List<SpecialLeaveListData>() is M){

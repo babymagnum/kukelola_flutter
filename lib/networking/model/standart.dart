@@ -1,20 +1,9 @@
-class Standart {
-    bool IsSuccess;
-    String Message;
+import 'package:kukelola_flutter/generated/json/base/json_convert_content.dart';
+import 'package:kukelola_flutter/generated/json/base/json_field.dart';
 
-    Standart({this.IsSuccess, this.Message});
-
-    factory Standart.fromJson(Map<String, dynamic> json) {
-        return Standart(
-            IsSuccess: json['IsSuccess'],
-            Message: json['Message'],
-        );
-    }
-
-    Map<String, dynamic> toJson() {
-        final Map<String, dynamic> data = new Map<String, dynamic>();
-        data['IsSuccess'] = this.IsSuccess;
-        data['Message'] = this.Message;
-        return data;
-    }
+class Standart with JsonConvert<Standart> {
+	@JSONField(name: "Message")
+	String message;
+	@JSONField(name: "IsSuccess")
+	bool isSuccess;
 }

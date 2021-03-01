@@ -1,7 +1,8 @@
+import 'dart:async';
+
 import 'package:division/division.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:geolocator/geolocator.dart';
@@ -21,22 +22,34 @@ class OnlineAttendanceView extends StatefulWidget {
 }
 
 class _OnlineAttendanceViewState extends State<OnlineAttendanceView> {
+
+  StreamSubscription<Position> _locationStream;
   var _onlineAttendanceCt = Get.put(OnlineAttendanceController());
 
   @override
+  void dispose() {
+    _locationStream?.cancel();
+
+    super.dispose();
+  }
+
+  @override
   void initState() {
+    super.initState();
+
     _onlineAttendanceCt.listenClock();
 
     Future.delayed(Duration.zero, () async {
-      final position = await _determinePosition();
-      _onlineAttendanceCt.setLatLng(LatLng(position.latitude, position.longitude));
-      _onlineAttendanceCt.googleMapController?.animateCamera(CameraUpdate.newCameraPosition(CameraPosition(target: _onlineAttendanceCt.latLng.value, zoom: 15)));
-    });
+      await _determinePosition();
 
-    super.initState();
+      _locationStream = Geolocator.getPositionStream().listen((Position position) {
+        _onlineAttendanceCt.googleMapController?.animateCamera(CameraUpdate.newCameraPosition(CameraPosition(target: _onlineAttendanceCt.latLng.value, zoom: 15)));
+        _onlineAttendanceCt.setLatLng(LatLng(position.latitude, position.longitude));
+      });
+    });
   }
 
-  Future<Position> _determinePosition() async {
+  _determinePosition() async {
     bool serviceEnabled;
     LocationPermission permission;
 
@@ -59,8 +72,6 @@ class _OnlineAttendanceViewState extends State<OnlineAttendanceView> {
             'Location permissions are denied (actual value: $permission).');
       }
     }
-
-    return await Geolocator.getCurrentPosition();
   }
 
   @override
@@ -83,9 +94,9 @@ class _OnlineAttendanceViewState extends State<OnlineAttendanceView> {
             ),
           ),
           Expanded(
-            child: Obx(() => Padding(
+            child: Padding(
               padding: EdgeInsets.symmetric(horizontal: 24.w),
-              child: Column(
+              child: Obx(() => Column(
                   children: [
                     SizedBox(height: 21.h,),
                     Text(_onlineAttendanceCt.clock.value, style: ThemeTextStyle.biryaniRegular.apply(color: Color(0xFF181921), fontSizeDelta: 14.ssp),),
@@ -105,11 +116,9 @@ class _OnlineAttendanceViewState extends State<OnlineAttendanceView> {
                           Positioned.fill(
                             child: GoogleMap(
                               mapType: MapType.normal,
-                              initialCameraPosition: CameraPosition(target: _onlineAttendanceCt.latLng.value),
+                              initialCameraPosition: CameraPosition(target: _onlineAttendanceCt.latLng.value, zoom: 15),
                               onMapCreated: (GoogleMapController controller) {
                                 _onlineAttendanceCt.setGoogleMapController(controller);
-
-                                controller.animateCamera(CameraUpdate.newCameraPosition(CameraPosition(target: _onlineAttendanceCt.latLng.value, zoom: 15)));
                               },
                               mapToolbarEnabled: false,
                               myLocationEnabled: true,
@@ -121,8 +130,6 @@ class _OnlineAttendanceViewState extends State<OnlineAttendanceView> {
                             right: 7.w, bottom: 7.w,
                             child: Parent(
                               gesture: Gestures()..onTap(() async {
-                                final data = await _determinePosition();
-                                _onlineAttendanceCt.setLatLng(LatLng(data.latitude, data.longitude));
                                 _onlineAttendanceCt.googleMapController.animateCamera(CameraUpdate.newCameraPosition(CameraPosition(target: _onlineAttendanceCt.latLng.value, zoom: 15)));
                               }),
                               style: ParentStyle()..background.color(ThemeColor.secondary)
@@ -141,13 +148,13 @@ class _OnlineAttendanceViewState extends State<OnlineAttendanceView> {
                       disable: _onlineAttendanceCt.loadingSubmit.value,
                       title: 'Submit',
                       loading: _onlineAttendanceCt.loadingSubmit.value,
-                      onTap: () {},
+                      onTap: () => _onlineAttendanceCt.submit(),
                       textStyle: ThemeTextStyle.biryaniBold.apply(color: Color(0xFFF9F7F7), fontSizeDelta: 14.ssp),
                     ),
                     SizedBox(height: 21.h,)
                   ],
                 ),
-            ),
+              ),
             ),
           )
         ],

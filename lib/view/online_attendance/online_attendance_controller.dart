@@ -1,12 +1,15 @@
 import 'dart:async';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:kukelola_flutter/core/helper/common_function.dart';
 import 'package:kukelola_flutter/core/helper/text_util.dart';
+import 'package:kukelola_flutter/networking/request/attendance_online_request.dart';
+import 'package:kukelola_flutter/networking/service/service.dart';
 
 class OnlineAttendanceController extends GetxController {
   var clock = TextUtil.getCurrentDate('dd/MM/yyyy HH:mm:ss').obs;
   var isIn = true.obs;
-  var latLng = LatLng(0, 0).obs;
+  var latLng = LatLng(-6.2088, 106.8456).obs;
   var loadingSubmit = false.obs;
 
   GoogleMapController googleMapController;
@@ -31,7 +34,13 @@ class OnlineAttendanceController extends GetxController {
 
   submit() async {
     loadingSubmit.value = true;
-    await Future.delayed(Duration(seconds: 1), () {});
+    final data = await Service().attendanceOnline(AttendanceOnlineRequest(clock.value.split(' ')[0], clock.value.split(' ')[1], isIn.value ? 1 : 2, latLng.value.latitude, latLng.value.longitude));
     loadingSubmit.value = false;
+
+    if (data?.isSuccess ?? false) {
+      CommonFunction.standartSnackbar('Berhasil melakukan presensi ${isIn.value ? 'Masuk' : 'Keluar'}');
+    } else {
+      CommonFunction.standartSnackbar('Gagal melakukan presensi ${isIn.value ? 'Masuk' : 'Keluar'}');
+    }
   }
 }
