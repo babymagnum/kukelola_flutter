@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:get/get.dart';
+import 'package:kukelola_flutter/core/theme/theme_color.dart';
 import 'package:kukelola_flutter/core/theme/theme_text_style.dart';
 import 'package:kukelola_flutter/core/widgets/account_image.dart';
 import 'package:kukelola_flutter/core/widgets/button_reload.dart';
@@ -35,7 +36,7 @@ class _HomeViewState extends State<HomeView>  with AutomaticKeepAliveClientMixin
       Center(
         child: SizedBox(
           width: 20.w, height: 20.w,
-          child: CircularProgressIndicator(),
+          child: CircularProgressIndicator(valueColor: AlwaysStoppedAnimation<Color>(ThemeColor.primary),),
         ),
       ) :
       _homeCt.errorUser.value ?

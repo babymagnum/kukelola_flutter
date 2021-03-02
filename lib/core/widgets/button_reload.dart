@@ -16,9 +16,12 @@ class ButtonReload extends StatelessWidget {
       onTap: onTap,
       child: Row(
         children: [
-          SvgPicture.asset('assets/images/Refresh.svg', width: 13.w, height: 13.w, color: ThemeColor.secondary,),
+          Icon(Icons.refresh, color: ThemeColor.secondary, size: 20.w,),
           SizedBox(width: 6.w,),
-          Text('Muat Ulang?', style: ThemeTextStyle.robotoRegular.apply(fontSizeDelta: 12.ssp, color: ThemeColor.secondary),)
+          Padding(
+            padding: EdgeInsets.only(top: 2.h),
+            child: Text('Muat Ulang?', style: ThemeTextStyle.biryaniRegular.apply(fontSizeDelta: 12.ssp, color: ThemeColor.secondary),),
+          )
         ],
       ),
     );

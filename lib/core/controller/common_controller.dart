@@ -1,21 +1,23 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:kukelola_flutter/core/helper/common_function.dart';
 import 'package:kukelola_flutter/core/helper/constant.dart';
 import 'package:kukelola_flutter/main.dart';
+import 'package:kukelola_flutter/networking/service/service.dart';
+import 'package:kukelola_flutter/view/login/login_view.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:intl/date_symbol_data_local.dart';
 
 class CommonController extends GetxController {
 
   var notConnected = false.obs;
-  var logout = false.obs;
   var closeApps = false.obs;
   var language = Constant.INDONESIAN.obs;
   var inputTapHeight = (0.0).obs;
+  var loadingLogout = false.obs;
   SharedPreferences preferences;
 
-  setLogout(value) => logout.value = value;
   setCloseapps(value) => closeApps.value = value;
   setNotConnected(value) => notConnected.value = value;
   setInputTapHeight(double value) {
@@ -37,5 +39,19 @@ class CommonController extends GetxController {
 
   initValue() async {
     preferences = await SharedPreferences.getInstance();
+  }
+
+  logout() async {
+    loadingLogout.value = true;
+    final data = await Service().logout();
+    loadingLogout.value = false;
+
+    if (data?.isSuccess ?? false) {
+      commonController.preferences.setBool(Constant.IS_LOGIN, false);
+      commonController.preferences.setBool(Constant.IS_PASS_LOGIN, false);
+      Get.offAll(LoginView());
+    } else {
+      CommonFunction.standartSnackbar('Gagal melakukan logout, silahkan coba lagi!');
+    }
   }
 }

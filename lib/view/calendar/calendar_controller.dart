@@ -1,27 +1,23 @@
 import 'package:get/get.dart';
-import 'package:kukelola_flutter/core/helper/text_util.dart';
-import 'package:kukelola_flutter/core/model/static_model.dart';
+import 'package:kukelola_flutter/networking/model/corporate_calendar.dart';
+import 'package:kukelola_flutter/networking/service/service.dart';
 
 class CalendarController extends GetxController {
   var loadingCalendar = false.obs;
-  var listCalendar = List<CalendarItem>().obs;
-
-  @override
-  void onInit() {
-    super.onInit();
-
-    populateData();
-  }
-
+  var errorCalendar = false.obs;
+  var listCalendar = List<CorporateCalendarData>().obs;
+  
   populateData() async {
     loadingCalendar.value = true;
-    await Future.delayed(Duration(seconds: 1), () {});
+    final data = await Service().corporateCalendar('');
     loadingCalendar.value = false;
-
-    listCalendar.addAll([
-      CalendarItem('Event Name 1', TextUtil.getCurrentDate('dd/MM/yyyy'), 'Holiday', 'Event description goes here. Explain what the event is about so you’ll know what it is.'),
-      CalendarItem('Event Name 2', TextUtil.getCurrentDate('dd/MM/yyyy'), 'Work Day', 'Event description goes here. Explain what the event is about so you’ll know what it is.'),
-      CalendarItem('Event Name 3', TextUtil.getCurrentDate('dd/MM/yyyy'), 'Holiday', 'Event description goes here. Explain what the event is about so you’ll know what it is.'),
-    ]);
+    
+    if (data?.data != null) {
+      errorCalendar.value = false;
+      listCalendar.clear();
+      data.data.forEach((element) => listCalendar.add(element));
+    } else {
+      errorCalendar.value = true;
+    }
   }
 }

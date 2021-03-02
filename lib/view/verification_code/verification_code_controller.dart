@@ -18,7 +18,7 @@ class VerificationCodeController extends GetxController {
   var _timer;
 
   startTimer() {
-    seconds.value = 10;
+    seconds.value = 60;
     minutes.value = 0;
 
     seconds -= 1;

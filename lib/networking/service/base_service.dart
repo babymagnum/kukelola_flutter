@@ -1,11 +1,15 @@
 import 'package:dio/dio.dart';
 import 'package:kukelola_flutter/core/helper/constant.dart';
+import 'package:kukelola_flutter/generated/json/corporate_calendar_helper.dart';
 import 'package:kukelola_flutter/generated/json/overtime_request_post_helper.dart';
 import 'package:kukelola_flutter/generated/json/special_leave_list_helper.dart';
-import 'package:kukelola_flutter/generated/json/standart_entity_helper.dart';
+import 'package:kukelola_flutter/generated/json/staff_helper.dart';
+import 'package:kukelola_flutter/generated/json/standart_helper.dart';
 import 'package:kukelola_flutter/generated/json/user_helper.dart';
+import 'package:kukelola_flutter/networking/model/corporate_calendar.dart';
 import 'package:kukelola_flutter/networking/model/overtime_request_post.dart';
 import 'package:kukelola_flutter/networking/model/special_leave_list.dart';
+import 'package:kukelola_flutter/networking/model/staff.dart';
 import 'package:kukelola_flutter/networking/model/standart.dart';
 import 'package:kukelola_flutter/networking/model/token.dart';
 import 'package:kukelola_flutter/networking/model/user.dart';
@@ -164,6 +168,10 @@ class BaseService {
       return specialLeaveListFromJson(SpecialLeaveList(), json) as T;
     } else if (T == Standart) {
       return standartFromJson(Standart(), json) as T;
+    } else if (T == CorporateCalendar) {
+      return corporateCalendarFromJson(CorporateCalendar(), json) as T;
+    } else if (T == Staff) {
+      return staffFromJson(Staff(), json) as T;
     } else {
       // if this print statement occured, this means that you're not register the model class in here
       print('Unknown class, dont forget to add your model in BaseService.dart to parse the json');

@@ -6,10 +6,12 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:kukelola_flutter/core/helper/constant.dart';
 import 'package:kukelola_flutter/core/helper/text_util.dart';
+import 'package:kukelola_flutter/core/model/static_model.dart';
 import 'package:kukelola_flutter/core/theme/theme_color.dart';
 import 'package:kukelola_flutter/core/theme/theme_text_style.dart';
 import 'package:kukelola_flutter/core/widgets/button_back.dart';
 import 'package:kukelola_flutter/core/widgets/button_loading.dart';
+import 'package:kukelola_flutter/core/widgets/button_reload.dart';
 import 'package:kukelola_flutter/core/widgets/custom_date_picker.dart';
 import 'package:kukelola_flutter/core/widgets/custom_input.dart';
 import 'package:kukelola_flutter/core/widgets/input_tap.dart';
@@ -25,7 +27,7 @@ class PersonalDataView extends StatefulWidget {
 
 class _PersonalDataViewState extends State<PersonalDataView> {
 
-  var _personalDataCt = Get.put(PersonalDataController());
+  var _personalDataCt = Get.put(PersonalDataController(), permanent: true);
   var _genderKey = GlobalKey(), _religionKey = GlobalKey(), _maritalStatusKey = GlobalKey();
   var _firstNameCt = TextEditingController(), _middleNameCt = TextEditingController(), _lastNameCt = TextEditingController(),
       _cityOfBirthCt = TextEditingController(), _emailCt = TextEditingController(), _phoneCt = TextEditingController(),
@@ -34,7 +36,7 @@ class _PersonalDataViewState extends State<PersonalDataView> {
       _cityOfBirthFocus = FocusNode(), _emailFocus = FocusNode(), _phoneFocus = FocusNode(),
       _identificationNumberFocus = FocusNode(), _addressFocus = FocusNode();
 
-  _showDropdownType(BuildContext context, GlobalKey key, List<String> list, Function(String item) onSelect) {
+  _showDropdownType(BuildContext context, GlobalKey key, List<CommonType> list, Function(int item) onSelect) {
 
     FocusScope.of(context).requestFocus(FocusNode());
 
@@ -59,9 +61,9 @@ class _PersonalDataViewState extends State<PersonalDataView> {
                     shrinkWrap: true,
                     itemCount: list.length,
                     itemBuilder: (_, index) => ListStandartDropdownItem(
-                      content: list[index],
+                      content: list[index].label,
                       onClick: () {
-                        onSelect(list[index]);
+                        onSelect(list[index].id);
                         Navigator.pop(context);
                       },
                     ),
@@ -119,14 +121,22 @@ class _PersonalDataViewState extends State<PersonalDataView> {
   void initState() {
     super.initState();
 
-    _firstNameCt.text = _personalDataCt.form.value.firstName;
-    _middleNameCt.text = _personalDataCt.form.value.middleName;
-    _lastNameCt.text = _personalDataCt.form.value.lastName;
-    _cityOfBirthCt.text = _personalDataCt.form.value.cityOfBirth;
-    _emailCt.text = _personalDataCt.form.value.email;
-    _phoneCt.text = _personalDataCt.form.value.phone;
-    _identificationNumberCt.text = _personalDataCt.form.value.identificationNumber;
-    _addressCt.text = _personalDataCt.form.value.address;
+    Future.delayed(Duration.zero, () async {
+      if (_personalDataCt.staff.value.firstName != '') return;
+
+      await _personalDataCt.getStaff();
+
+      setState(() {
+        _firstNameCt.text = _personalDataCt.staff.value.firstName;
+        _middleNameCt.text = _personalDataCt.staff.value.middleName;
+        _lastNameCt.text = _personalDataCt.staff.value.lastName;
+        _cityOfBirthCt.text = _personalDataCt.staff.value.cityOfBirth;
+        _emailCt.text = _personalDataCt.staff.value.email;
+        _phoneCt.text = _personalDataCt.staff.value.phone;
+        _identificationNumberCt.text = _personalDataCt.staff.value.identificationNumber;
+        _addressCt.text = _personalDataCt.staff.value.mainAddress;
+      });
+    });
   }
 
   @override
@@ -162,17 +172,40 @@ class _PersonalDataViewState extends State<PersonalDataView> {
             ),
           ),
           Expanded(
-            child: CupertinoScrollbar(
-              child: SingleChildScrollView(
-                child: Obx(() => Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 24.w),
-                  child: Column(
+            child: Obx(() => _personalDataCt.loadingStaff.value ?
+              Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  SizedBox(
+                    width: 20.w, height: 20.w,
+                    child: CircularProgressIndicator(valueColor: AlwaysStoppedAnimation<Color>(ThemeColor.primary),),
+                  )
+                ],
+              ) :
+              _personalDataCt.errorStaff.value ?
+              Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Row(
+                    children: [
+                      ButtonReload(onTap: () => _personalDataCt.getStaff()),
+                    ],
+                    mainAxisAlignment: MainAxisAlignment.center,
+                  )
+                ],
+              ) :
+              CupertinoScrollbar(
+                child: SingleChildScrollView(
+                  child: Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 24.w),
+                    child: Column(
                       children: [
                         SizedBox(height: 32.h,),
                         CustomInput(
                           textInputAction: TextInputAction.next,
                           focusNode: _firstNameFocus,
-                          hintText: '',
+                          hintText: 'e.g Arief',
+                          controller: _firstNameCt,
                           inputType: TextInputType.name,
                           onEditingComplete: () => setState(() => _middleNameFocus.requestFocus()),
                           onTap: () => setState(() => _firstNameFocus.requestFocus()),
@@ -182,7 +215,8 @@ class _PersonalDataViewState extends State<PersonalDataView> {
                         CustomInput(
                           textInputAction: TextInputAction.next,
                           focusNode: _middleNameFocus,
-                          hintText: '',
+                          hintText: 'e.g Zulfikar',
+                          controller: _middleNameCt,
                           inputType: TextInputType.name,
                           onEditingComplete: () => setState(() => _lastNameFocus.requestFocus()),
                           onTap: () => setState(() => _middleNameFocus.requestFocus()),
@@ -192,7 +226,8 @@ class _PersonalDataViewState extends State<PersonalDataView> {
                         CustomInput(
                           textInputAction: TextInputAction.next,
                           focusNode: _lastNameFocus,
-                          hintText: '',
+                          hintText: 'e.g Naik',
+                          controller: _lastNameCt,
                           inputType: TextInputType.name,
                           onEditingComplete: () => setState(() => _cityOfBirthFocus.requestFocus()),
                           onTap: () => setState(() => _lastNameFocus.requestFocus()),
@@ -202,7 +237,8 @@ class _PersonalDataViewState extends State<PersonalDataView> {
                         CustomInput(
                           textInputAction: TextInputAction.next,
                           focusNode: _cityOfBirthFocus,
-                          hintText: '',
+                          hintText: 'e.g Yogyakarta',
+                          controller: _cityOfBirthCt,
                           inputType: TextInputType.name,
                           onEditingComplete: () => setState(() => _middleNameFocus.requestFocus()),
                           onTap: () => setState(() => _firstNameFocus.requestFocus()),
@@ -212,21 +248,22 @@ class _PersonalDataViewState extends State<PersonalDataView> {
                         InputTap(
                           labelText: 'DATE OF BIRTH',
                           hintText: '',
-                          onTap: () => _showDatePicker(context, _personalDataCt.form.value.dateOfBirth, (date) {
-                            _personalDataCt.form.value.dateOfBirth = date;
-                            _personalDataCt.updateForm(_personalDataCt.form.value);
+                          onTap: () => _showDatePicker(context, _personalDataCt.staff.value.dateOfBirth, (date) {
+                            _personalDataCt.staff.value.dateOfBirth = date;
+                            _personalDataCt.updateStaff(_personalDataCt.staff.value);
                           }),
                           rightIcon: '',
                           leftSize: Size(14.w, 16.h),
-                          value: _personalDataCt.form.value.dateOfBirth,
+                          value: _personalDataCt.staff.value.dateOfBirth,
                           leftIcon: 'assets/images/fa-solid_calendar-day.svg',
                         ),
                         SizedBox(height: 24.h,),
                         CustomInput(
                           textInputAction: TextInputAction.next,
                           focusNode: _emailFocus,
-                          hintText: '',
+                          hintText: 'e.g 085792810602',
                           inputType: TextInputType.name,
+                          controller: _phoneCt,
                           onEditingComplete: () => setState(() => _phoneFocus.requestFocus()),
                           onTap: () => setState(() => _phoneFocus.requestFocus()),
                           labelText: 'PHONE',
@@ -235,7 +272,8 @@ class _PersonalDataViewState extends State<PersonalDataView> {
                         CustomInput(
                           textInputAction: TextInputAction.next,
                           focusNode: _identificationNumberFocus,
-                          hintText: '',
+                          hintText: 'e.g 347112080819872727',
+                          controller: _identificationNumberCt,
                           inputType: TextInputType.name,
                           onEditingComplete: () => FocusScope.of(context).requestFocus(FocusNode()),
                           onTap: () => setState(() => _identificationNumberFocus.requestFocus()),
@@ -247,12 +285,14 @@ class _PersonalDataViewState extends State<PersonalDataView> {
                           labelText: 'GENDER',
                           hintText: 'choose gender...',
                           onTap: () => _showDropdownType(context, _genderKey, _personalDataCt.listGender, (item) {
-                            _personalDataCt.form.value.gender = item;
-                            _personalDataCt.updateForm(_personalDataCt.form.value);
+                            _personalDataCt.staff.value.gender = item;
+                            _personalDataCt.updateStaff(_personalDataCt.staff.value);
                           }),
                           rightIcon: 'assets/images/fa-solid_caret-down.svg',
                           rightSize: Size(10.w, 16.h),
-                          value: _personalDataCt.form.value.gender,
+                          value: _personalDataCt.listGender.any((element) => element.id == _personalDataCt.staff.value.gender) ?
+                          _personalDataCt.listGender.firstWhere((element) => element.id == _personalDataCt.staff.value.gender).label :
+                          '-',
                         ),
                         SizedBox(height: 24.h,),
                         InputTap(
@@ -260,12 +300,14 @@ class _PersonalDataViewState extends State<PersonalDataView> {
                           labelText: 'RELIGION',
                           hintText: 'choose religion...',
                           onTap: () => _showDropdownType(context, _religionKey, _personalDataCt.listReligion, (item) {
-                            _personalDataCt.form.value.religion = item;
-                            _personalDataCt.updateForm(_personalDataCt.form.value);
+                            _personalDataCt.staff.value.religion = item;
+                            _personalDataCt.updateStaff(_personalDataCt.staff.value);
                           }),
                           rightIcon: 'assets/images/fa-solid_caret-down.svg',
                           rightSize: Size(10.w, 16.h),
-                          value: _personalDataCt.form.value.religion,
+                          value: _personalDataCt.listReligion.any((element) => element.id == _personalDataCt.staff.value.religion) ?
+                          _personalDataCt.listReligion.firstWhere((element) => element.id == _personalDataCt.staff.value.religion).label :
+                          '-',
                         ),
                         SizedBox(height: 24.h,),
                         InputTap(
@@ -273,28 +315,31 @@ class _PersonalDataViewState extends State<PersonalDataView> {
                           labelText: 'MARITAL STATUS',
                           hintText: 'choose marital...',
                           onTap: () => _showDropdownType(context, _maritalStatusKey, _personalDataCt.listMarital, (item) {
-                            _personalDataCt.form.value.maritalStatus = item;
-                            _personalDataCt.updateForm(_personalDataCt.form.value);
+                            _personalDataCt.staff.value.maritalStatus = item;
+                            _personalDataCt.updateStaff(_personalDataCt.staff.value);
                           }),
                           rightIcon: 'assets/images/fa-solid_caret-down.svg',
                           rightSize: Size(10.w, 16.h),
-                          value: _personalDataCt.form.value.maritalStatus,
+                          value: _personalDataCt.listMarital.any((element) => element.id == _personalDataCt.staff.value.maritalStatus) ?
+                          _personalDataCt.listMarital.firstWhere((element) => element.id == _personalDataCt.staff.value.maritalStatus).label :
+                          '-',
                         ),
                         SizedBox(height: 24.h,),
                         CustomInput(
-                          textInputAction: TextInputAction.next,
+                          textInputAction: TextInputAction.newline,
                           focusNode: _addressFocus,
                           hintText: '',
                           maxLines: null,
                           inputType: TextInputType.multiline,
                           onEditingComplete: () {},
+                          controller: _addressCt,
                           onTap: () => setState(() => _addressFocus.requestFocus()),
                           labelText: 'MAIN ADDRESS',
                         ),
                         SizedBox(height: 24.h,)
                       ],
                     ),
-                ),
+                  ),
                 ),
               ),
             ),

@@ -40,7 +40,7 @@ android {
         release {
             keyAlias 'kukelola_key'
             keyPassword 'password'
-            storeFile file('/Users/ariefzainuri/Documents/Flutter Project/kukelola_flutter/android/app/keystore/kukelola_key.jks')
+            storeFile file('/Users/arief/Documents/Flutter Project/kukelola_flutter/android/app/keystore/kukelola_key.jks')
             storePassword 'password'
         }
     }

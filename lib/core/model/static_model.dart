@@ -1,6 +1,12 @@
 import 'dart:io';
-import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:kukelola_flutter/core/helper/text_util.dart';
+
+class CommonType {
+  String label;
+  int id;
+
+  CommonType(this.label, this.id);
+}
 
 class ChangePasswordForm {
   String currentPassword = '';
