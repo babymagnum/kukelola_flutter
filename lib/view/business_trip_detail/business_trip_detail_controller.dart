@@ -1,6 +1,7 @@
 import 'package:get/get.dart';
 import 'package:kukelola_flutter/core/helper/common_function.dart';
 import 'package:kukelola_flutter/core/model/static_model.dart';
+import 'package:kukelola_flutter/main.dart';
 import 'package:kukelola_flutter/networking/request/business_trip_request.dart';
 import 'package:kukelola_flutter/networking/service/service.dart';
 import 'package:kukelola_flutter/view/business_trip/business_trip_controller.dart';
@@ -8,7 +9,6 @@ import 'package:kukelola_flutter/view/home/home_controller.dart';
 
 class BusinessTripDetailController extends GetxController {
   var _businessTripCt = Get.find<BusinessTripController>();
-  var _homeCt = Get.find<HomeController>();
   var loadingSubmit = false.obs;
   var form = BusinessTripDetailForm().obs;
 
@@ -18,7 +18,7 @@ class BusinessTripDetailController extends GetxController {
     final tripData = _businessTripCt.form.value;
 
     loadingSubmit.value = true;
-    final data = await Service().businessTripRequest(BusinessTripRequest(_homeCt.userData.value.id, tripData.startDate,
+    final data = await Service().businessTripRequest(BusinessTripRequest(homeController.userData.value.id, tripData.startDate,
         tripData.endDate, tripData.purpose, tripData.destination, form.value.airplaneBusTicket.amount,
         form.value.airplaneBusTicket.description, form.value.localTransportation.amount,
         form.value.localTransportation.description, form.value.airportParkingFuel.amount,

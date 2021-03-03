@@ -41,4 +41,5 @@ class StaffEducationData with JsonConvert<StaffEducationData> {
 	String score;
 	@JSONField(name: "StaffId")
 	String staffId;
+	bool loading = false;
 }

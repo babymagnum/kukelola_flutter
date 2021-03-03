@@ -6,6 +6,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:kukelola_flutter/core/helper/constant.dart';
 import 'package:kukelola_flutter/core/helper/text_util.dart';
+import 'package:kukelola_flutter/core/model/static_model.dart';
 import 'package:kukelola_flutter/core/theme/theme_color.dart';
 import 'package:kukelola_flutter/core/theme/theme_text_style.dart';
 import 'package:kukelola_flutter/core/widgets/button_back.dart';
@@ -56,7 +57,7 @@ class _AddEducationViewState extends State<AddEducationView> {
     );
   }
 
-  _showDropdownType(BuildContext context, GlobalKey key, List<String> list, Function(String item) onSelect) {
+  _showDropdownType(BuildContext context, GlobalKey key, List<CommonType> list, Function(int item) onSelect) {
 
     FocusScope.of(context).requestFocus(FocusNode());
 
@@ -81,9 +82,9 @@ class _AddEducationViewState extends State<AddEducationView> {
                     shrinkWrap: true,
                     itemCount: list.length,
                     itemBuilder: (_, index) => ListStandartDropdownItem(
-                      content: list[index],
+                      content: list[index].label,
                       onClick: () {
-                        onSelect(list[index]);
+                        onSelect(list[index].id);
                         Navigator.pop(context);
                       },
                     ),
@@ -100,7 +101,7 @@ class _AddEducationViewState extends State<AddEducationView> {
 
   bool _disable() {
     var form = _addEducationCt.form.value;
-    return form.degree == '' || form.endYear == '' || form.startYear == '' || form.institution == '' || form.major == '' || form.score == '';
+    return form.educationStep == 0 || form.endYear == '' || form.startYear == '' || form.institution == '' || form.major == '' || form.score == '';
   }
 
   @override
@@ -151,10 +152,10 @@ class _AddEducationViewState extends State<AddEducationView> {
                           labelText: 'DEGREE',
                           hintText: 'tap to fill degree',
                           onTap: () => _showDropdownType(context, _degreeKey, _addEducationCt.listDegree, (item) {
-                            _addEducationCt.form.value.degree = item;
+                            _addEducationCt.form.value.educationStep = item;
                             _addEducationCt.updateForm(_addEducationCt.form.value);
                           }),
-                          value: _addEducationCt.form.value.degree,
+                          value: _addEducationCt.listDegree.any((element) => element.id == _addEducationCt.form.value.educationStep) ? _addEducationCt.listDegree.firstWhere((element) => element.id == _addEducationCt.form.value.educationStep).label : '',
                           rightIcon: 'assets/images/fa-solid_caret-down.svg',
                           rightSize: Size(10.w, 16.h),
                         ),

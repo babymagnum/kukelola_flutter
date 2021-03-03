@@ -5,11 +5,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import 'package:kukelola_flutter/core/helper/constant.dart';
 import 'package:kukelola_flutter/core/theme/theme_color.dart';
 import 'package:kukelola_flutter/core/theme/theme_text_style.dart';
 import 'package:kukelola_flutter/core/widgets/button_back.dart';
 import 'package:kukelola_flutter/core/widgets/button_loading.dart';
 import 'package:kukelola_flutter/core/widgets/custom_input.dart';
+import 'package:kukelola_flutter/main.dart';
 import 'package:kukelola_flutter/view/base_view.dart';
 import 'package:kukelola_flutter/view/login/login_controller.dart';
 import 'package:kukelola_flutter/view/verification_code/verification_code_view.dart';
@@ -22,7 +24,26 @@ class LoginView extends StatefulWidget {
 class _LoginViewState extends State<LoginView> {
 
   var _emailFocus = FocusNode(), _passwordFocus = FocusNode();
+  var _emailCt = TextEditingController(), _passwordCt = TextEditingController();
   var _loginCt = Get.put(LoginController());
+
+  @override
+  void initState() {
+    super.initState();
+
+    if (commonController.autoLogin.value) {
+      if (commonController?.preferences?.getString(Constant.EMAIL) ?? '' != '') {
+        _loginCt.form.value.username = commonController?.preferences?.getString(Constant.EMAIL) ?? '';
+        _loginCt.form.value.password = commonController?.preferences?.getString(Constant.PASSWORD) ?? '';
+        _loginCt.setForm(_loginCt.form.value);
+      }
+
+      _emailCt.text = _loginCt.form.value.username;
+      _passwordCt.text = _loginCt.form.value.password;
+      setState(() {});
+      _loginCt.login();
+    }
+  }
 
   @override
   Widget build(BuildContext context) {

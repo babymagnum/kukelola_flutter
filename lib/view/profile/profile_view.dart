@@ -7,6 +7,13 @@ import 'package:kukelola_flutter/core/theme/theme_text_style.dart';
 import 'package:kukelola_flutter/core/widgets/account_image.dart';
 import 'package:kukelola_flutter/core/widgets/button_back.dart';
 import 'package:kukelola_flutter/core/widgets/button_reload.dart';
+import 'package:kukelola_flutter/main.dart';
+import 'package:kukelola_flutter/main.dart';
+import 'package:kukelola_flutter/main.dart';
+import 'package:kukelola_flutter/main.dart';
+import 'package:kukelola_flutter/main.dart';
+import 'package:kukelola_flutter/main.dart';
+import 'package:kukelola_flutter/main.dart';
 import 'package:kukelola_flutter/view/container_home/container_home_controller.dart';
 import 'package:kukelola_flutter/view/home/home_controller.dart';
 import 'package:kukelola_flutter/view/profile/profile_controller.dart';
@@ -21,7 +28,6 @@ class _ProfileViewState extends State<ProfileView> with AutomaticKeepAliveClient
 
   var _profileCt = Get.put(ProfileController());
   var _containerHomeCt = Get.find<ContainerHomeController>();
-  var _homeCt = Get.find<HomeController>();
 
   @override
   Widget build(BuildContext context) {
@@ -33,7 +39,7 @@ class _ProfileViewState extends State<ProfileView> with AutomaticKeepAliveClient
           child: ButtonBack(label: 'Profile', onBack: () => _containerHomeCt.pageController.jumpToPage(0)),
         ),
         Expanded(
-          child: Obx(() => _homeCt.loadingUser.value ?
+          child: Obx(() => homeController.loadingUser.value ?
             Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
@@ -43,13 +49,13 @@ class _ProfileViewState extends State<ProfileView> with AutomaticKeepAliveClient
                 )
               ],
             ) :
-            _homeCt.errorUser.value ?
+            homeController.errorUser.value ?
             Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Row(
                   children: [
-                    ButtonReload(onTap: () => _homeCt.getUser()),
+                    ButtonReload(onTap: () => homeController.getUser()),
                   ],
                   mainAxisAlignment: MainAxisAlignment.center,
                 )
@@ -60,11 +66,11 @@ class _ProfileViewState extends State<ProfileView> with AutomaticKeepAliveClient
                 child: Column(
                   children: [
                     SizedBox(height: 14.h,),
-                    AccountImage(url: _homeCt?.userData?.value?.profilePicture?.file ?? '', size: Size(64.w, 64.w), boxFit: BoxFit.fill),
+                    AccountImage(url: homeController?.userData?.value?.profilePicture?.file ?? '', size: Size(64.w, 64.w), boxFit: BoxFit.fill),
                     SizedBox(height: 14.h,),
-                    Text(_homeCt?.userData?.value?.fullName ?? '-', style: ThemeTextStyle.biryaniRegular.apply(fontSizeDelta: 20.ssp),),
+                    Text(homeController?.userData?.value?.fullName ?? '-', style: ThemeTextStyle.biryaniRegular.apply(fontSizeDelta: 20.ssp),),
                     SizedBox(height: 2.h,),
-                    Text(_homeCt?.userData?.value?.jobTitle ?? '-', style: ThemeTextStyle.biryaniSemiBold.apply(fontSizeDelta: 12.ssp),),
+                    Text(homeController?.userData?.value?.jobTitle ?? '-', style: ThemeTextStyle.biryaniSemiBold.apply(fontSizeDelta: 12.ssp),),
                     SizedBox(height: 2.h,),
                     Text('PT. App KuKelola ID', style: ThemeTextStyle.biryaniSemiBold.apply(fontSizeDelta: 11.ssp),),
                     SizedBox(height: 18.h,),
@@ -77,7 +83,7 @@ class _ProfileViewState extends State<ProfileView> with AutomaticKeepAliveClient
                           children: [
                             Text('NIP', style: ThemeTextStyle.biryaniBold.apply(color: Color(0xFFC4C4C4), fontSizeDelta: 10.ssp),),
                             SizedBox(height: 5.h,),
-                            Text(_homeCt?.userData?.value?.nip ?? '-', style: ThemeTextStyle.biryaniRegular.apply(fontSizeDelta: 14.ssp),),
+                            Text(homeController?.userData?.value?.nip ?? '-', style: ThemeTextStyle.biryaniRegular.apply(fontSizeDelta: 14.ssp),),
                             SizedBox(height: 12.h,),
                             Text('OPTIONS', style: ThemeTextStyle.biryaniBold.apply(color: Color(0xFFC4C4C4), fontSizeDelta: 10.ssp),),
                             ListView.separated(

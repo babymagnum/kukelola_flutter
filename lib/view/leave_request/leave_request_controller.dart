@@ -1,6 +1,7 @@
 import 'package:get/get.dart';
 import 'package:kukelola_flutter/core/helper/common_function.dart';
 import 'package:kukelola_flutter/core/model/static_model.dart';
+import 'package:kukelola_flutter/main.dart';
 import 'package:kukelola_flutter/networking/model/special_leave_list.dart';
 import 'package:kukelola_flutter/networking/request/leave_request.dart';
 import 'package:kukelola_flutter/networking/service/service.dart';
@@ -19,8 +20,6 @@ class LeaveRequestController extends GetxController {
   var errorSpecialLeaveType = false.obs;
   var form = LeaveRequestForm().obs;
 
-  var _homeCt = Get.find<HomeController>();
-
   updateForm(LeaveRequestForm value) => form.value = value;
   setLoadingPickFile(bool value) => loadingPickFile.value = value;
 
@@ -38,7 +37,7 @@ class LeaveRequestController extends GetxController {
 
   submitLeaveRequest() async {
     loadingSubmit.value = true;
-    final data = await Service().submitLeaveRequest(LeaveRequest(_homeCt.userData.value.id, form.value.startDate, form.value.reason, form.value.endDate, form.value.attachment, form.value.leaveType.id));
+    final data = await Service().submitLeaveRequest(LeaveRequest(homeController.userData.value.id, form.value.startDate, form.value.reason, form.value.endDate, form.value.attachment, form.value.leaveType.id));
     loadingSubmit.value = false;
 
     if (data?.isSuccess ?? false) {

@@ -16,8 +16,10 @@ class CommonController extends GetxController {
   var language = Constant.INDONESIAN.obs;
   var inputTapHeight = (0.0).obs;
   var loadingLogout = false.obs;
+  var autoLogin = false.obs;
   SharedPreferences preferences;
 
+  setAutoLogin(bool value) => autoLogin.value = value;
   setCloseapps(value) => closeApps.value = value;
   setNotConnected(value) => notConnected.value = value;
   setInputTapHeight(double value) {
@@ -53,5 +55,12 @@ class CommonController extends GetxController {
     } else {
       CommonFunction.standartSnackbar('Gagal melakukan logout, silahkan coba lagi!');
     }
+  }
+
+  standartLogout() {
+    autoLogin.value = true;
+    commonController.preferences.setBool(Constant.IS_LOGIN, false);
+    commonController.preferences.setBool(Constant.IS_PASS_LOGIN, false);
+    Get.offAll(LoginView());
   }
 }

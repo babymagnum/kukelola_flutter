@@ -3,9 +3,9 @@ class LoginRequest {
   String username;
   String password;
   String otp;
-  String autologin = 'false';
+  String autologin;
 
-  LoginRequest(this.username, this.password, this.otp);
+  LoginRequest(this.username, this.password, this.otp, this.autologin);
 
   dynamic getBody() {
     return {

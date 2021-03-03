@@ -30,8 +30,6 @@ import '../../main.dart';
 
 class Service extends BaseService {
 
-  var _homeCt = Get.find<HomeController>();
-
   Future<Token> token(LoginRequest request) async {
     return await postUrlEncoded('${MyApp.BASE_API}token', request.getBody());
   }
@@ -99,11 +97,11 @@ class Service extends BaseService {
   }
   
   Future<Staff> staff() async {
-    return await get('${MyApp.BASE_API}api/Staff/${_homeCt.userData.value.id}');
+    return await get('${MyApp.BASE_API}api/Staff/${homeController.userData.value.id}');
   }
 
   Future<StaffEducation> staffEducation() async {
-    return await get('${MyApp.BASE_API}api/StaffEducation/EducationList?StaffId=${_homeCt.userData.value.id}');
+    return await get('${MyApp.BASE_API}api/StaffEducation/EducationList?StaffId=${homeController.userData.value.id}');
   }
 
   Future<StaffEducationInsert> staffEducationInsert(StaffEducationInsertRequest request) async {
@@ -115,7 +113,7 @@ class Service extends BaseService {
   }
 
   Future<StaffExperience> staffExperience() async {
-    return await get('${MyApp.BASE_API}api/StaffExperience/ExperienceList?StaffId=${_homeCt.userData.value.id}');
+    return await get('${MyApp.BASE_API}api/StaffExperience/ExperienceList?StaffId=${homeController.userData.value.id}');
   }
 
   Future<StaffExperienceInsert> staffExperienceInsert(StaffExperienceInsertRequest request) async {
@@ -127,7 +125,7 @@ class Service extends BaseService {
   }
 
   Future<StaffFamily> staffFamily() async {
-    return await get('${MyApp.BASE_API}api/StaffFamily/FamilyList?StaffId=${_homeCt.userData.value.id}');
+    return await get('${MyApp.BASE_API}api/StaffFamily/FamilyList?StaffId=${homeController.userData.value.id}');
   }
 
   Future<StaffFamilyInsert> staffFamilyInsert(StaffFamilyInsertRequest request) async {

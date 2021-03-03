@@ -2,16 +2,16 @@ import 'package:division/division.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:kukelola_flutter/core/model/static_model.dart';
 import 'package:kukelola_flutter/core/theme/theme_text_style.dart';
 import 'package:kukelola_flutter/core/widgets/button_loading.dart';
+import 'package:kukelola_flutter/networking/model/staff_education.dart';
 import 'package:kukelola_flutter/view/education_data/education_data_controller.dart';
 
 class ListEducationDataItem extends StatelessWidget {
   
   ListEducationDataItem({@required this.item, @required this.index});
   
-  final EducationDataItem item;
+  final StaffEducationData item;
   final int index;
 
   var _educationDataCt = Get.find<EducationDataController>();
@@ -23,7 +23,7 @@ class ListEducationDataItem extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(item.degree, style: ThemeTextStyle.biryaniBold.apply(color: Color(0xFF158AC9), fontSizeDelta: 14.ssp),),
+          Text(item.score, style: ThemeTextStyle.biryaniBold.apply(color: Color(0xFF158AC9), fontSizeDelta: 14.ssp),),
           Text('${item.startYear} - ${item.endYear}', style: ThemeTextStyle.biryaniRegular.apply(color: Color(0xFF6D6D6D), fontSizeDelta: 10.ssp),),
           SizedBox(height: 24.h,),
           Row(

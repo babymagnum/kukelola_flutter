@@ -90,7 +90,7 @@ class BusinessTripForm {
 }
 
 class EducationDataItem {
-  String degree = '';
+  int educationStep = 0;
   String startYear = TextUtil.getCurrentDate('yyyy');
   String endYear = TextUtil.getCurrentDate('yyyy');
   String institution = '';

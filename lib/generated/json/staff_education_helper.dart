@@ -86,6 +86,9 @@ staffEducationDataFromJson(StaffEducationData data, Map<String, dynamic> json) {
 	if (json['StaffId'] != null) {
 		data.staffId = json['StaffId'].toString();
 	}
+	if (json['loading'] != null) {
+		data.loading = json['loading'];
+	}
 	return data;
 }
 
@@ -101,5 +104,6 @@ Map<String, dynamic> staffEducationDataToJson(StaffEducationData entity) {
 	data['Major'] = entity.major;
 	data['Score'] = entity.score;
 	data['StaffId'] = entity.staffId;
+	data['loading'] = entity.loading;
 	return data;
 }

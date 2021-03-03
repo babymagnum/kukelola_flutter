@@ -6,6 +6,7 @@ import 'package:kukelola_flutter/core/controller/common_controller.dart';
 import 'package:kukelola_flutter/core/helper/LocalesString.dart';
 import 'package:kukelola_flutter/core/helper/constant.dart';
 import 'package:kukelola_flutter/view/container_home/container_home_view.dart';
+import 'package:kukelola_flutter/view/home/home_controller.dart';
 import 'package:kukelola_flutter/view/login/login_view.dart';
 import 'package:kukelola_flutter/view/onboarding/onboarding_view.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
@@ -17,6 +18,7 @@ final globalNavigatorKey = GlobalKey<NavigatorState>();
 final firebaseMessaging = FirebaseMessaging();
 /// PLACE GLOBAL CONTROLLER HERE IF YOU WANT THE CONTROLLER PERSIST ///
 final commonController = Get.put(CommonController());
+final homeController = Get.put(HomeController());
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();

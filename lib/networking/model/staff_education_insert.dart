@@ -1,9 +1,10 @@
 import 'package:kukelola_flutter/generated/json/base/json_convert_content.dart';
 import 'package:kukelola_flutter/generated/json/base/json_field.dart';
+import 'package:kukelola_flutter/networking/model/staff_education.dart';
 
 class StaffEducationInsert with JsonConvert<StaffEducationInsert> {
 	@JSONField(name: "Data")
-	StaffEducationInsertData data;
+	StaffEducationData data;
 	@JSONField(name: "Total")
 	int total;
 	@JSONField(name: "Errors")
@@ -18,27 +19,4 @@ class StaffEducationInsert with JsonConvert<StaffEducationInsert> {
 	bool isSuperAdmin;
 	@JSONField(name: "IsFinance")
 	bool isFinance;
-}
-
-class StaffEducationInsertData with JsonConvert<StaffEducationInsertData> {
-	@JSONField(name: "Id")
-	String id;
-	@JSONField(name: "Name")
-	dynamic name;
-	@JSONField(name: "Description")
-	dynamic description;
-	@JSONField(name: "EducationStep")
-	String educationStep;
-	@JSONField(name: "StartYear")
-	int startYear;
-	@JSONField(name: "EndYear")
-	int endYear;
-	@JSONField(name: "Institution")
-	String institution;
-	@JSONField(name: "Major")
-	String major;
-	@JSONField(name: "Score")
-	String score;
-	@JSONField(name: "StaffId")
-	String staffId;
 }
