@@ -11,10 +11,22 @@ import 'package:kukelola_flutter/networking/model/user.dart';
 import 'package:kukelola_flutter/generated/json/user_helper.dart';
 import 'package:kukelola_flutter/networking/model/overtime_request_post.dart';
 import 'package:kukelola_flutter/generated/json/overtime_request_post_helper.dart';
+import 'package:kukelola_flutter/networking/model/staff_family.dart';
+import 'package:kukelola_flutter/generated/json/staff_family_helper.dart';
+import 'package:kukelola_flutter/networking/model/staff_education.dart';
+import 'package:kukelola_flutter/generated/json/staff_education_helper.dart';
+import 'package:kukelola_flutter/networking/model/staff_family_insert.dart';
+import 'package:kukelola_flutter/generated/json/staff_family_insert_helper.dart';
+import 'package:kukelola_flutter/networking/model/staff_education_insert.dart';
+import 'package:kukelola_flutter/generated/json/staff_education_insert_helper.dart';
 import 'package:kukelola_flutter/networking/model/staff.dart';
 import 'package:kukelola_flutter/generated/json/staff_helper.dart';
+import 'package:kukelola_flutter/networking/model/staff_experience_insert.dart';
+import 'package:kukelola_flutter/generated/json/staff_experience_insert_helper.dart';
 import 'package:kukelola_flutter/networking/model/special_leave_list.dart';
 import 'package:kukelola_flutter/generated/json/special_leave_list_helper.dart';
+import 'package:kukelola_flutter/networking/model/staff_experience.dart';
+import 'package:kukelola_flutter/generated/json/staff_experience_helper.dart';
 
 class JsonConvert<T> {
 	T fromJson(Map<String, dynamic> json) {
@@ -51,14 +63,38 @@ class JsonConvert<T> {
 				return overtimeRequestPostDataWorkflowFromJson(data as OvertimeRequestPostDataWorkflow, json) as T;
 			case OvertimeRequestPostDataWorkflowData:
 				return overtimeRequestPostDataWorkflowDataFromJson(data as OvertimeRequestPostDataWorkflowData, json) as T;
+			case StaffFamily:
+				return staffFamilyFromJson(data as StaffFamily, json) as T;
+			case StaffFamilyData:
+				return staffFamilyDataFromJson(data as StaffFamilyData, json) as T;
+			case StaffEducation:
+				return staffEducationFromJson(data as StaffEducation, json) as T;
+			case StaffEducationData:
+				return staffEducationDataFromJson(data as StaffEducationData, json) as T;
+			case StaffFamilyInsert:
+				return staffFamilyInsertFromJson(data as StaffFamilyInsert, json) as T;
+			case StaffFamilyInsertData:
+				return staffFamilyInsertDataFromJson(data as StaffFamilyInsertData, json) as T;
+			case StaffEducationInsert:
+				return staffEducationInsertFromJson(data as StaffEducationInsert, json) as T;
+			case StaffEducationInsertData:
+				return staffEducationInsertDataFromJson(data as StaffEducationInsertData, json) as T;
 			case Staff:
 				return staffFromJson(data as Staff, json) as T;
 			case StaffData:
 				return staffDataFromJson(data as StaffData, json) as T;
+			case StaffExperienceInsert:
+				return staffExperienceInsertFromJson(data as StaffExperienceInsert, json) as T;
+			case StaffExperienceInsertData:
+				return staffExperienceInsertDataFromJson(data as StaffExperienceInsertData, json) as T;
 			case SpecialLeaveList:
 				return specialLeaveListFromJson(data as SpecialLeaveList, json) as T;
 			case SpecialLeaveListData:
-				return specialLeaveListDataFromJson(data as SpecialLeaveListData, json) as T;    }
+				return specialLeaveListDataFromJson(data as SpecialLeaveListData, json) as T;
+			case StaffExperience:
+				return staffExperienceFromJson(data as StaffExperience, json) as T;
+			case StaffExperienceData:
+				return staffExperienceDataFromJson(data as StaffExperienceData, json) as T;    }
     return data as T;
   }
 
@@ -88,14 +124,38 @@ class JsonConvert<T> {
 				return overtimeRequestPostDataWorkflowToJson(data as OvertimeRequestPostDataWorkflow);
 			case OvertimeRequestPostDataWorkflowData:
 				return overtimeRequestPostDataWorkflowDataToJson(data as OvertimeRequestPostDataWorkflowData);
+			case StaffFamily:
+				return staffFamilyToJson(data as StaffFamily);
+			case StaffFamilyData:
+				return staffFamilyDataToJson(data as StaffFamilyData);
+			case StaffEducation:
+				return staffEducationToJson(data as StaffEducation);
+			case StaffEducationData:
+				return staffEducationDataToJson(data as StaffEducationData);
+			case StaffFamilyInsert:
+				return staffFamilyInsertToJson(data as StaffFamilyInsert);
+			case StaffFamilyInsertData:
+				return staffFamilyInsertDataToJson(data as StaffFamilyInsertData);
+			case StaffEducationInsert:
+				return staffEducationInsertToJson(data as StaffEducationInsert);
+			case StaffEducationInsertData:
+				return staffEducationInsertDataToJson(data as StaffEducationInsertData);
 			case Staff:
 				return staffToJson(data as Staff);
 			case StaffData:
 				return staffDataToJson(data as StaffData);
+			case StaffExperienceInsert:
+				return staffExperienceInsertToJson(data as StaffExperienceInsert);
+			case StaffExperienceInsertData:
+				return staffExperienceInsertDataToJson(data as StaffExperienceInsertData);
 			case SpecialLeaveList:
 				return specialLeaveListToJson(data as SpecialLeaveList);
 			case SpecialLeaveListData:
 				return specialLeaveListDataToJson(data as SpecialLeaveListData);
+			case StaffExperience:
+				return staffExperienceToJson(data as StaffExperience);
+			case StaffExperienceData:
+				return staffExperienceDataToJson(data as StaffExperienceData);
 			}
 			return data as T;
 		}
@@ -126,14 +186,38 @@ class JsonConvert<T> {
 			return OvertimeRequestPostDataWorkflow().fromJson(json);
 		}	else if(type == (OvertimeRequestPostDataWorkflowData).toString()){
 			return OvertimeRequestPostDataWorkflowData().fromJson(json);
+		}	else if(type == (StaffFamily).toString()){
+			return StaffFamily().fromJson(json);
+		}	else if(type == (StaffFamilyData).toString()){
+			return StaffFamilyData().fromJson(json);
+		}	else if(type == (StaffEducation).toString()){
+			return StaffEducation().fromJson(json);
+		}	else if(type == (StaffEducationData).toString()){
+			return StaffEducationData().fromJson(json);
+		}	else if(type == (StaffFamilyInsert).toString()){
+			return StaffFamilyInsert().fromJson(json);
+		}	else if(type == (StaffFamilyInsertData).toString()){
+			return StaffFamilyInsertData().fromJson(json);
+		}	else if(type == (StaffEducationInsert).toString()){
+			return StaffEducationInsert().fromJson(json);
+		}	else if(type == (StaffEducationInsertData).toString()){
+			return StaffEducationInsertData().fromJson(json);
 		}	else if(type == (Staff).toString()){
 			return Staff().fromJson(json);
 		}	else if(type == (StaffData).toString()){
 			return StaffData().fromJson(json);
+		}	else if(type == (StaffExperienceInsert).toString()){
+			return StaffExperienceInsert().fromJson(json);
+		}	else if(type == (StaffExperienceInsertData).toString()){
+			return StaffExperienceInsertData().fromJson(json);
 		}	else if(type == (SpecialLeaveList).toString()){
 			return SpecialLeaveList().fromJson(json);
 		}	else if(type == (SpecialLeaveListData).toString()){
 			return SpecialLeaveListData().fromJson(json);
+		}	else if(type == (StaffExperience).toString()){
+			return StaffExperience().fromJson(json);
+		}	else if(type == (StaffExperienceData).toString()){
+			return StaffExperienceData().fromJson(json);
 		}	
 		return null;
 	}
@@ -164,14 +248,38 @@ class JsonConvert<T> {
 			return data.map<OvertimeRequestPostDataWorkflow>((e) => OvertimeRequestPostDataWorkflow().fromJson(e)).toList() as M;
 		}	else if(List<OvertimeRequestPostDataWorkflowData>() is M){
 			return data.map<OvertimeRequestPostDataWorkflowData>((e) => OvertimeRequestPostDataWorkflowData().fromJson(e)).toList() as M;
+		}	else if(List<StaffFamily>() is M){
+			return data.map<StaffFamily>((e) => StaffFamily().fromJson(e)).toList() as M;
+		}	else if(List<StaffFamilyData>() is M){
+			return data.map<StaffFamilyData>((e) => StaffFamilyData().fromJson(e)).toList() as M;
+		}	else if(List<StaffEducation>() is M){
+			return data.map<StaffEducation>((e) => StaffEducation().fromJson(e)).toList() as M;
+		}	else if(List<StaffEducationData>() is M){
+			return data.map<StaffEducationData>((e) => StaffEducationData().fromJson(e)).toList() as M;
+		}	else if(List<StaffFamilyInsert>() is M){
+			return data.map<StaffFamilyInsert>((e) => StaffFamilyInsert().fromJson(e)).toList() as M;
+		}	else if(List<StaffFamilyInsertData>() is M){
+			return data.map<StaffFamilyInsertData>((e) => StaffFamilyInsertData().fromJson(e)).toList() as M;
+		}	else if(List<StaffEducationInsert>() is M){
+			return data.map<StaffEducationInsert>((e) => StaffEducationInsert().fromJson(e)).toList() as M;
+		}	else if(List<StaffEducationInsertData>() is M){
+			return data.map<StaffEducationInsertData>((e) => StaffEducationInsertData().fromJson(e)).toList() as M;
 		}	else if(List<Staff>() is M){
 			return data.map<Staff>((e) => Staff().fromJson(e)).toList() as M;
 		}	else if(List<StaffData>() is M){
 			return data.map<StaffData>((e) => StaffData().fromJson(e)).toList() as M;
+		}	else if(List<StaffExperienceInsert>() is M){
+			return data.map<StaffExperienceInsert>((e) => StaffExperienceInsert().fromJson(e)).toList() as M;
+		}	else if(List<StaffExperienceInsertData>() is M){
+			return data.map<StaffExperienceInsertData>((e) => StaffExperienceInsertData().fromJson(e)).toList() as M;
 		}	else if(List<SpecialLeaveList>() is M){
 			return data.map<SpecialLeaveList>((e) => SpecialLeaveList().fromJson(e)).toList() as M;
 		}	else if(List<SpecialLeaveListData>() is M){
 			return data.map<SpecialLeaveListData>((e) => SpecialLeaveListData().fromJson(e)).toList() as M;
+		}	else if(List<StaffExperience>() is M){
+			return data.map<StaffExperience>((e) => StaffExperience().fromJson(e)).toList() as M;
+		}	else if(List<StaffExperienceData>() is M){
+			return data.map<StaffExperienceData>((e) => StaffExperienceData().fromJson(e)).toList() as M;
 		}
 		return null;
 	}
