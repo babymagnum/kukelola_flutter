@@ -36,7 +36,10 @@ class _ProfileViewState extends State<ProfileView> with AutomaticKeepAliveClient
         SizedBox(height: context.mediaQueryPadding.top + 24.h,),
         Padding(
           padding: EdgeInsets.symmetric(horizontal: 24.w),
-          child: ButtonBack(label: 'Profile', onBack: () => _containerHomeCt.pageController.jumpToPage(0)),
+          child: ButtonBack(label: 'Profile', onBack: () {
+            _containerHomeCt.pageController.jumpToPage(0);
+            _containerHomeCt.setSelectedPage(0);
+          }),
         ),
         Expanded(
           child: Obx(() => homeController.loadingUser.value ?
@@ -72,7 +75,7 @@ class _ProfileViewState extends State<ProfileView> with AutomaticKeepAliveClient
                     SizedBox(height: 2.h,),
                     Text(homeController?.userData?.value?.jobTitle ?? '-', style: ThemeTextStyle.biryaniSemiBold.apply(fontSizeDelta: 12.ssp),),
                     SizedBox(height: 2.h,),
-                    Text('PT. App KuKelola ID', style: ThemeTextStyle.biryaniSemiBold.apply(fontSizeDelta: 11.ssp),),
+                    Text(homeController?.userData?.value?.clientName ?? '-', style: ThemeTextStyle.biryaniSemiBold.apply(fontSizeDelta: 11.ssp),),
                     SizedBox(height: 18.h,),
                     Align(
                       alignment: Alignment.centerLeft,

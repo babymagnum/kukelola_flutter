@@ -27,7 +27,10 @@ class _SummaryViewState extends State<SummaryView> with AutomaticKeepAliveClient
           child: Row(
             children: [
               Expanded(
-                child: ButtonBack(label: 'Summary', onBack: () => _containerHomeCt.pageController.jumpToPage(0)),
+                child: ButtonBack(label: 'Summary', onBack: () {
+                  _containerHomeCt.pageController.jumpToPage(0);
+                  _containerHomeCt.setSelectedPage(0);
+                }),
               ),
             ],
           ),

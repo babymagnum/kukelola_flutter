@@ -37,7 +37,10 @@ class _NotificationViewState extends State<NotificationView> with AutomaticKeepA
             child: Row(
               children: [
                 Expanded(
-                  child: ButtonBack(label: 'Notification', onBack: () => _containerHomeCt.pageController.jumpToPage(0)),
+                  child: ButtonBack(label: 'Notification', onBack: () {
+                    _containerHomeCt.pageController.jumpToPage(0);
+                    _containerHomeCt.setSelectedPage(0);
+                  }),
                 ),
                 SizedBox(width: 10.w,),
                 AccountImage(url: 'asdobs', size: Size(28.w, 28.w), boxFit: BoxFit.fill)
