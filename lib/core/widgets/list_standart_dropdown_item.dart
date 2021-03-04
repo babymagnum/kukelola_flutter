@@ -17,11 +17,11 @@ class ListStandartDropdownItem extends StatelessWidget {
       style: ParentStyle()..ripple(true),
       child: Center(
         child: Padding(
-          padding: EdgeInsets.symmetric(vertical: 10.h, horizontal: 16.w),
+          padding: EdgeInsets.symmetric(horizontal: 16.w),
           child: Row(
             children: [
               Expanded(
-                child: Text(content, maxLines: 1, overflow: TextOverflow.ellipsis, style: ThemeTextStyle.biryaniRegular.apply(fontSizeDelta: 16.ssp),),
+                child: Text(content, maxLines: 1, overflow: TextOverflow.ellipsis, style: ThemeTextStyle.biryaniRegular.apply(fontSizeDelta: 14.ssp),),
               )
             ],
           ),

@@ -2,20 +2,19 @@ import 'package:division/division.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:kukelola_flutter/core/model/static_model.dart';
 import 'package:kukelola_flutter/core/theme/theme_text_style.dart';
 import 'package:kukelola_flutter/core/widgets/button_loading.dart';
-import 'package:kukelola_flutter/view/education_data/education_data_controller.dart';
-import 'package:kukelola_flutter/view/families/families_controller.dart';
+import 'package:kukelola_flutter/networking/model/staff_family.dart';
+import 'package:kukelola_flutter/view/family_data/family_data_controller.dart';
 
-class ListFamiliesItem extends StatelessWidget {
+class ListFamilyItem extends StatelessWidget {
   
-  ListFamiliesItem({@required this.item, @required this.index});
+  ListFamilyItem({@required this.item, @required this.index});
   
-  final FamiliesItem item;
+  final StaffFamilyData item;
   final int index;
 
-  var _familiesCt = Get.find<FamiliesController>();
+  var _familiesCt = Get.find<FamilyDataController>();
   
   @override
   Widget build(BuildContext context) {

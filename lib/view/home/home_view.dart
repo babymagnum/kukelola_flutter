@@ -30,10 +30,10 @@ class _HomeViewState extends State<HomeView>  with AutomaticKeepAliveClientMixin
 
   @override
   void initState() {
+    super.initState();
+
     homeController.getUser();
     homeController.populateMenu();
-
-    super.initState();
   }
 
   @override
@@ -84,7 +84,7 @@ class _HomeViewState extends State<HomeView>  with AutomaticKeepAliveClientMixin
                       SizedBox(height: 2.h,),
                       Text(homeController.userData?.value?.jobTitle ?? '-', style: ThemeTextStyle.biryaniSemiBold.apply(fontSizeDelta: 12.ssp, color: Colors.white),),
                       SizedBox(height: 2.h,),
-                      Text('PT. App KuKelola ID', style: ThemeTextStyle.biryaniSemiBold.apply(fontSizeDelta: 11.ssp, color: Color(0xFF404040)),),
+                      Text(homeController.userData?.value?.clientName ?? '-', style: ThemeTextStyle.biryaniSemiBold.apply(fontSizeDelta: 11.ssp, color: Color(0xFF404040)),),
                       SizedBox(height: 18.h,),
                       Parent(
                         style: ParentStyle()..background.color(Color(0xFFF1F1F1))..borderRadius(all: 16)..width(Get.width)..margin(horizontal: 32.w),

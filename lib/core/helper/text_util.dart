@@ -59,8 +59,9 @@ class TextUtil {
     return finalFormat.format(dateTime);
   }
 
-  static int standartDateFormatToMillis(String dateString) {
-    DateFormat originFormat = DateFormat("yyyy-MM-dd'T'HH:mm:ss", commonController.language.value);
+  static int standartDateFormatToMillis(String dateString, String pattern) {
+    // DateFormat originFormat = DateFormat(pattern, commonController.language.value);
+    DateFormat originFormat = DateFormat(pattern);
     return originFormat.parse(dateString).millisecondsSinceEpoch;
   }
 

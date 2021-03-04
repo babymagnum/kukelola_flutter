@@ -21,7 +21,9 @@ class OvertimeRequest {
       ..add(MapEntry('EndHour', EndHour))
       ..add(MapEntry('Description', Description));
 
-    form.files..add(MapEntry('FileSatu', await MultipartFile.fromFile(FileSatu.path, filename: FileSatu.path.split('/').last)));
+    if (FileSatu.path != '') {
+      form.files..add(MapEntry('FileSatu', await MultipartFile.fromFile(FileSatu.path, filename: FileSatu.path.split('/').last)));
+    }
 
     return form;
   }

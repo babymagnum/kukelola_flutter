@@ -80,6 +80,7 @@ class _AddEducationViewState extends State<AddEducationView> {
                     ..background.color(Colors.white)..boxShadow(color: Colors.black.withOpacity(0.05), blur: 6, spread: 0, offset: Offset(0, 2)),
                   child: ListView.separated(
                     shrinkWrap: true,
+                    padding: EdgeInsets.symmetric(vertical: 10.h),
                     itemCount: list.length,
                     itemBuilder: (_, index) => ListStandartDropdownItem(
                       content: list[index].label,
@@ -88,7 +89,7 @@ class _AddEducationViewState extends State<AddEducationView> {
                         Navigator.pop(context);
                       },
                     ),
-                    separatorBuilder: (_, __) => Divider(color: Colors.transparent, height: 5.h,),
+                    separatorBuilder: (_, __) => Divider(color: Colors.transparent, height: 10.h,),
                   ),
                 ),
               ],
@@ -126,9 +127,8 @@ class _AddEducationViewState extends State<AddEducationView> {
                   disable: _addEducationCt.loadingSubmit.value || _disable(),
                   title: 'Submit',
                   loading: _addEducationCt.loadingSubmit.value,
-                  onTap: () async {
-                    await _addEducationCt.submitEducation();
-                    Get.back();
+                  onTap: () {
+                    _addEducationCt.submitEducation();
                   },
                   verticalPadding: 6.h,
                   horizontalPadding: 15.w,
@@ -189,7 +189,7 @@ class _AddEducationViewState extends State<AddEducationView> {
                         CustomInput(
                           textInputAction: TextInputAction.next,
                           focusNode: _intitutionFocus,
-                          hintText: '',
+                          hintText: 'e.g Universitas Gadjah Mada',
                           onChanged: (text) {
                             _addEducationCt.form.value.institution = text;
                             _addEducationCt.updateForm(_addEducationCt.form.value);
@@ -203,7 +203,7 @@ class _AddEducationViewState extends State<AddEducationView> {
                         CustomInput(
                           textInputAction: TextInputAction.next,
                           focusNode: _majorFocus,
-                          hintText: '',
+                          hintText: 'e.g Teknik Informatika',
                           onChanged: (text) {
                             _addEducationCt.form.value.major = text;
                             _addEducationCt.updateForm(_addEducationCt.form.value);
@@ -216,7 +216,7 @@ class _AddEducationViewState extends State<AddEducationView> {
                         CustomInput(
                           textInputAction: TextInputAction.done,
                           focusNode: _scoreFocus,
-                          hintText: '',
+                          hintText: 'e.g 3.45',
                           onChanged: (text) {
                             _addEducationCt.form.value.score = text;
                             _addEducationCt.updateForm(_addEducationCt.form.value);

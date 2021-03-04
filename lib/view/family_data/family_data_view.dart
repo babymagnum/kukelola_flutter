@@ -7,20 +7,20 @@ import 'package:kukelola_flutter/core/theme/theme_color.dart';
 import 'package:kukelola_flutter/core/widgets/button_back.dart';
 import 'package:kukelola_flutter/core/widgets/button_reload.dart';
 import 'package:kukelola_flutter/core/widgets/empty_text.dart';
-import 'package:kukelola_flutter/view/add_working_experience/add_working_experience_view.dart';
+import 'package:kukelola_flutter/view/add_family/add_family_view.dart';
 import 'package:kukelola_flutter/view/base_view.dart';
-import 'package:kukelola_flutter/view/working_experience/widget/list_working_experience_item.dart';
-import 'package:kukelola_flutter/view/working_experience/working_experience_controller.dart';
+import 'package:kukelola_flutter/view/family_data/family_data_controller.dart';
+import 'package:kukelola_flutter/view/family_data/widget/list_family_item.dart';
 
-class WorkingExperienceView extends StatelessWidget {
+class FamilyDataView extends StatelessWidget {
 
-  var _workingExperienceCt = Get.put(WorkingExperienceController());
+  var _familiesCt = Get.put(FamilyDataController());
 
   @override
   Widget build(BuildContext context) {
 
     Future.delayed(Duration.zero, () {
-      if (_workingExperienceCt.listWorkingExperience.length == 0) _workingExperienceCt.populateData();
+      if (_familiesCt.listFamily.length == 0) _familiesCt.populateData();
     });
 
     return BaseView(
@@ -36,7 +36,7 @@ class WorkingExperienceView extends StatelessWidget {
                   children: [
                     Expanded(
                       child: ButtonBack(
-                        label: 'Working Experience',
+                        label: 'Families',
                         onBack: () => Get.back(),
                       ),
                     ),
@@ -44,7 +44,7 @@ class WorkingExperienceView extends StatelessWidget {
                 ),
               ),
               Expanded(
-                child: Obx(() => _workingExperienceCt.loadingWorkingExperience.value?
+                child: Obx(() => _familiesCt.loadingFamily.value?
                   Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
@@ -54,30 +54,30 @@ class WorkingExperienceView extends StatelessWidget {
                       )
                     ],
                   ) :
-                  _workingExperienceCt.errorWorkingExperience.value ?
+                  _familiesCt.errorFamily.value ?
                   Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          ButtonReload(onTap: () => _workingExperienceCt.populateData()),
+                          ButtonReload(onTap: () => _familiesCt.populateData()),
                         ],
                       )
                     ],
                   ) :
-                  _workingExperienceCt.listWorkingExperience.length == 0 ?
+                  _familiesCt.listFamily.length == 0 ?
                   Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      EmptyText(text: 'Empty working experience', textSize: 14.ssp)
+                      EmptyText(text: 'Empty family', textSize: 16.ssp)
                     ],
                   ) :
                   ListView.separated(
-                    itemCount: _workingExperienceCt.listWorkingExperience.length,
+                    itemCount: _familiesCt.listFamily.length,
                     shrinkWrap: true,
                     padding: EdgeInsets.symmetric(horizontal: 24.w, vertical: 24.h),
-                    itemBuilder: (_, index) => ListWorkingExperienceItem(item: _workingExperienceCt.listWorkingExperience[index], index: index,),
+                    itemBuilder: (_, index) => ListFamilyItem(item: _familiesCt.listFamily[index], index: index,),
                     separatorBuilder: (BuildContext context, int index) => Divider(height: 16.h, color: Colors.transparent,),
                   )
                 ),
@@ -87,7 +87,7 @@ class WorkingExperienceView extends StatelessWidget {
           Positioned(
             bottom: 24.w, right: 24.w,
             child: Parent(
-              gesture: Gestures()..onTap(() => Get.to(AddWorkingExperienceView())),
+              gesture: Gestures()..onTap(() => Get.to(AddFamilyView())),
               style: ParentStyle()..borderRadius(all: 1000)..background.color(ThemeColor.primary)
                 ..height(56.w)..width(56.w)..ripple(true),
               child: Center(

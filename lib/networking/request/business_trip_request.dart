@@ -56,7 +56,9 @@ class BusinessTripRequest {
       ..add(MapEntry('OtherAmount', OtherAmount))
       ..add(MapEntry('OtherDescription', OtherDescription));
 
-    form.files..add(MapEntry('FileOne', await MultipartFile.fromFile(FileOne.path, filename: FileOne.path.split('/').last)));
+    if (FileOne.path != '') {
+      form.files..add(MapEntry('FileOne', await MultipartFile.fromFile(FileOne.path, filename: FileOne.path.split('/').last)));
+    }
 
     return form;
   }

@@ -1,4 +1,5 @@
 import 'package:get/get.dart';
+import 'package:kukelola_flutter/core/helper/common_function.dart';
 import 'package:kukelola_flutter/networking/model/staff_education.dart';
 import 'package:kukelola_flutter/networking/service/service.dart';
 
@@ -23,11 +24,19 @@ class EducationDataController extends GetxController {
   }
 
   removeData(int index) async {
-    var data = listEducation[index];
-    data.loading = true;
-    listEducation[index] = data;
-    await Future.delayed(Duration(seconds: 1), () {});
-    listEducation.removeAt(index);
+    var education = listEducation[index];
+    education.loading = true;
+    listEducation[index] = education;
+    final data = await Service().staffEducationDelete(education.id);
+
+    if (data?.isSuccess ?? false) {
+      listEducation.removeAt(index);
+      CommonFunction.standartSnackbar('Berhasil menghapus data pendidikan');
+    } else {
+      education.loading = false;
+      listEducation[index] = education;
+      CommonFunction.standartSnackbar('Gagal menghapus data pendidikan');
+    }
   }
 
   addData(StaffEducationData item) => listEducation.add(item);

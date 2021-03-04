@@ -86,7 +86,7 @@ class AttendanceRequestViewState extends State<AttendanceRequestView> {
   bool _disable() {
     final form = _attendanceRequestCt.form.value;
 
-    return form.reason == '' || form.attachment.path == '';
+    return form.reason == '';
   }
 
   _pickFile() async {

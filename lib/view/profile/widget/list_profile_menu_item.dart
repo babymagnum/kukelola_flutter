@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
-import 'package:kukelola_flutter/core/helper/constant.dart';
 import 'package:kukelola_flutter/core/model/static_model.dart';
 import 'package:kukelola_flutter/core/theme/theme_color.dart';
 import 'package:kukelola_flutter/core/theme/theme_text_style.dart';
@@ -11,8 +10,7 @@ import 'package:kukelola_flutter/main.dart';
 import 'package:kukelola_flutter/view/change_password/change_password_view.dart';
 import 'package:kukelola_flutter/view/container_home/container_home_controller.dart';
 import 'package:kukelola_flutter/view/education_data/education_data_view.dart';
-import 'package:kukelola_flutter/view/families/families_view.dart';
-import 'package:kukelola_flutter/view/login/login_view.dart';
+import 'package:kukelola_flutter/view/family_data/family_data_view.dart';
 import 'package:kukelola_flutter/view/personal_data/personal_data_view.dart';
 import 'package:kukelola_flutter/view/working_experience/working_experience_view.dart';
 
@@ -33,7 +31,7 @@ class ListProfileMenuItem extends StatelessWidget {
     } else if (index == 1) {
       Get.to(EducationDataView());
     } else if (index == 2) {
-      Get.to(FamiliesView());
+      Get.to(FamilyDataView());
     } else if (index == 3) {
       Get.to(WorkingExperienceView());
     } else if (index == 4) {

@@ -46,6 +46,7 @@ class _AddFamilyViewState extends State<AddFamilyView> {
             pickerModel: CustomDatePicker(
                 currentTime: TextUtil.convertStringToDateTime(selectedDate, 'dd/MM/yyyy'),
                 maxTime: DateTime(DateTime.now().year + 20, 12, 31),
+                minTime: DateTime(1940),
                 locale: commonController.language.value == Constant.INDONESIAN ? LocaleType.id : LocaleType.en
             ),
           );
@@ -104,7 +105,7 @@ class _AddFamilyViewState extends State<AddFamilyView> {
                         CustomInput(
                           textInputAction: TextInputAction.next,
                           focusNode: _nameFocus,
-                          hintText: '',
+                          hintText: 'e.g Arief Zainuri',
                           onChanged: (text) {
                             _addFamiliesCt.form.value.name = text;
                             _addFamiliesCt.updateForm(_addFamiliesCt.form.value);
@@ -118,7 +119,7 @@ class _AddFamilyViewState extends State<AddFamilyView> {
                         CustomInput(
                           textInputAction: TextInputAction.next,
                           focusNode: _relationFocus,
-                          hintText: '',
+                          hintText: 'e.g Saudara',
                           onChanged: (text) {
                             _addFamiliesCt.form.value.relation = text;
                             _addFamiliesCt.updateForm(_addFamiliesCt.form.value);
@@ -132,7 +133,7 @@ class _AddFamilyViewState extends State<AddFamilyView> {
                         CustomInput(
                           textInputAction: TextInputAction.next,
                           focusNode: _idFocus,
-                          hintText: '',
+                          hintText: 'e.g 3471129819282',
                           onChanged: (text) {
                             _addFamiliesCt.form.value.id = text;
                             _addFamiliesCt.updateForm(_addFamiliesCt.form.value);
@@ -146,7 +147,7 @@ class _AddFamilyViewState extends State<AddFamilyView> {
                         CustomInput(
                           textInputAction: TextInputAction.done,
                           focusNode: _occupationFocus,
-                          hintText: '',
+                          hintText: 'e.g Pegawai Swasta',
                           onChanged: (text) {
                             _addFamiliesCt.form.value.occupation = text;
                             _addFamiliesCt.updateForm(_addFamiliesCt.form.value);
@@ -159,7 +160,7 @@ class _AddFamilyViewState extends State<AddFamilyView> {
                         SizedBox(height: 24.h,),
                         InputTap(
                           labelText: 'DATE OF BIRTH',
-                          hintText: '',
+                          hintText: '20/05/1996',
                           onTap: () => _showDatePicker(context, _addFamiliesCt.form.value.dateOfBirth == '' ? TextUtil.getCurrentDate('dd/MM/yyyy') : _addFamiliesCt.form.value.dateOfBirth, (date) {
                             _addFamiliesCt.form.value.dateOfBirth = date;
                             _addFamiliesCt.updateForm(_addFamiliesCt.form.value);
@@ -173,7 +174,7 @@ class _AddFamilyViewState extends State<AddFamilyView> {
                         CustomInput(
                           textInputAction: TextInputAction.done,
                           focusNode: _phoneFocus,
-                          hintText: '',
+                          hintText: 'e.g 085792810654',
                           onChanged: (text) {
                             _addFamiliesCt.form.value.phone = text;
                             _addFamiliesCt.updateForm(_addFamiliesCt.form.value);

@@ -39,4 +39,5 @@ class StaffFamilyData with JsonConvert<StaffFamilyData> {
 	String phone;
 	@JSONField(name: "StaffId")
 	String staffId;
+	bool loading = false;
 }

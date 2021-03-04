@@ -5,6 +5,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:kukelola_flutter/core/theme/theme_color.dart';
 import 'package:kukelola_flutter/core/widgets/button_back.dart';
+import 'package:kukelola_flutter/core/widgets/button_reload.dart';
 import 'package:kukelola_flutter/core/widgets/empty_text.dart';
 import 'package:kukelola_flutter/view/add_education/add_education_view.dart';
 import 'package:kukelola_flutter/view/base_view.dart';
@@ -53,11 +54,23 @@ class EducationDataView extends StatelessWidget {
                       )
                     ],
                   ) :
+                  _educationDataCt.errorEducation.value ?
+                  Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          ButtonReload(onTap: () => _educationDataCt.populateData())
+                        ],
+                      )
+                    ],
+                  ) :
                   _educationDataCt.listEducation.length == 0 ?
                   Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      EmptyText(text: 'Empty education', textSize: 16.ssp)
+                      EmptyText(text: 'Empty education', textSize: 14.ssp)
                     ],
                   ) :
                   ListView.separated(

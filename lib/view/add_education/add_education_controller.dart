@@ -9,9 +9,15 @@ import 'package:kukelola_flutter/view/education_data/education_data_controller.d
 class AddEducationController extends GetxController {
   var _educationDataCt = Get.find<EducationDataController>();
   var listDegree = [
-    CommonType('University', 1),
-    CommonType('High School', 2),
-    CommonType('Middle School', 3),
+    CommonType('SD', 1),
+    CommonType('SMP', 2),
+    CommonType('SMA', 3),
+    CommonType('D3', 4),
+    CommonType('D4', 5),
+    CommonType('S1', 6),
+    CommonType('S2', 7),
+    CommonType('S3', 8),
+    CommonType('Other', 99),
   ];
   var form = EducationDataItem().obs;
   var loadingSubmit = false.obs;

@@ -24,7 +24,9 @@ class LeaveRequest {
 
     if (SpecialLeaveId != null) form.fields..add(MapEntry('SpecialLeaveId', SpecialLeaveId));
 
-    form.files..add(MapEntry('FileOne', await MultipartFile.fromFile(FileOne.path, filename: FileOne.path.split('/').last)));
+    if (FileOne.path != '') {
+      form.files..add(MapEntry('FileOne', await MultipartFile.fromFile(FileOne.path, filename: FileOne.path.split('/').last)));
+    }
 
     return form;
   }

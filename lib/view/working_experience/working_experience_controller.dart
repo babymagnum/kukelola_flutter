@@ -1,24 +1,43 @@
 import 'package:get/get.dart';
-import 'package:kukelola_flutter/core/model/static_model.dart';
+import 'package:kukelola_flutter/core/helper/common_function.dart';
+import 'package:kukelola_flutter/networking/model/staff_experience.dart';
+import 'package:kukelola_flutter/networking/service/service.dart';
 
 class WorkingExperienceController extends GetxController {
   var loadingWorkingExperience = false.obs;
-  var listWorkingExperience = List<WorkingExperienceItem>().obs;
+  var errorWorkingExperience = false.obs;
+  var listWorkingExperience = List<StaffExperienceData>().obs;
 
   populateData() async {
     loadingWorkingExperience.value = true;
-    await Future.delayed(Duration(seconds: 1), () {});
+    final data = await Service().staffExperience();
     loadingWorkingExperience.value = false;
+
+    if (data?.isSuccess ?? false) {
+      errorWorkingExperience.value = false;
+      listWorkingExperience.clear();
+      data.data.forEach((element) => listWorkingExperience.add(element));
+    } else {
+      errorWorkingExperience.value = true;
+    }
   }
 
   removeData(int index) async {
-    var data = listWorkingExperience[index];
-    data.loading = true;
-    listWorkingExperience[index] = data;
-    await Future.delayed(Duration(seconds: 1), () {});
-    listWorkingExperience.removeAt(index);
+    var experience = listWorkingExperience[index];
+    experience.loading = true;
+    listWorkingExperience[index] = experience;
+    final data = await Service().staffExperienceDelete(experience.id);
+
+    if (data?.isSuccess ?? false) {
+      listWorkingExperience.removeAt(index);
+      CommonFunction.standartSnackbar('Berhasil menghapus pengalaman kerja');
+    } else {
+      experience.loading = false;
+      listWorkingExperience[index] = experience;
+      CommonFunction.standartSnackbar('Gagal menghapus pengalaman kerja');
+    }
   }
 
-  addData(WorkingExperienceItem item) => listWorkingExperience.add(item);
+  addData(StaffExperienceData item) => listWorkingExperience.add(item);
 
 }

@@ -95,7 +95,7 @@ class _PersonalDataViewState extends State<PersonalDataView> {
             onChanged: (DateTime date) => temporaryDate = TextUtil.dateTimeToString(date, 'dd/MM/yyyy'),
             pickerModel: CustomDatePicker(
                 currentTime: TextUtil.convertStringToDateTime(selectedDate, 'dd/MM/yyyy'),
-                minTime: DateTime.now(),
+                minTime: DateTime(1940),
                 maxTime: DateTime(DateTime.now().year + 20, 12, 31),
                 locale: commonController.language.value == Constant.INDONESIAN ? LocaleType.id : LocaleType.en
             ),
@@ -122,9 +122,7 @@ class _PersonalDataViewState extends State<PersonalDataView> {
     super.initState();
 
     Future.delayed(Duration.zero, () async {
-      if (_personalDataCt.staff.value.firstName != '') return;
-
-      await _personalDataCt.getStaff();
+      if (_personalDataCt.staff.value.firstName == '') await _personalDataCt.getStaff();
 
       setState(() {
         _firstNameCt.text = _personalDataCt.staff.value.firstName;

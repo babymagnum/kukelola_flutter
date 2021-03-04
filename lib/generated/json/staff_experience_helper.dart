@@ -79,6 +79,9 @@ staffExperienceDataFromJson(StaffExperienceData data, Map<String, dynamic> json)
 	if (json['StaffId'] != null) {
 		data.staffId = json['StaffId'].toString();
 	}
+	if (json['loading'] != null) {
+		data.loading = json['loading'];
+	}
 	return data;
 }
 
@@ -93,5 +96,6 @@ Map<String, dynamic> staffExperienceDataToJson(StaffExperienceData entity) {
 	data['EndYear'] = entity.endYear;
 	data['Duration'] = entity.duration;
 	data['StaffId'] = entity.staffId;
+	data['loading'] = entity.loading;
 	return data;
 }

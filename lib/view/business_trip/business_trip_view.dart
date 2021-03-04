@@ -80,7 +80,7 @@ class BusinessTripViewState extends State<BusinessTripView> {
 
   bool _disable() {
     var form = _businessTripCt.form.value;
-    return form.destination == '' || form.startDate == '' || form.endDate == '' || form.purpose == '' || form.attachment.path == '';
+    return form.destination == '' || form.startDate == '' || form.endDate == '' || form.purpose == '';
   }
 
   @override

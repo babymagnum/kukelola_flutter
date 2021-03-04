@@ -104,7 +104,7 @@ class OvertimeRequestViewState extends State<OvertimeRequestView> {
 
   bool _disable() {
     var data = _overtimeRequestCt.form.value;
-    return data.attachment.path == '' || data.reason == '';
+    return data.reason == '';
   }
 
   @override

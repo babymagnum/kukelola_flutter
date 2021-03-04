@@ -1,8 +1,9 @@
 import 'package:kukelola_flutter/networking/model/staff_experience_insert.dart';
+import 'package:kukelola_flutter/networking/model/staff_experience.dart';
 
 staffExperienceInsertFromJson(StaffExperienceInsert data, Map<String, dynamic> json) {
 	if (json['Data'] != null) {
-		data.data = new StaffExperienceInsertData().fromJson(json['Data']);
+		data.data = new StaffExperienceData().fromJson(json['Data']);
 	}
 	if (json['Total'] != null) {
 		data.total = json['Total'] is String
@@ -45,50 +46,5 @@ Map<String, dynamic> staffExperienceInsertToJson(StaffExperienceInsert entity) {
 	data['IsAdmin'] = entity.isAdmin;
 	data['IsSuperAdmin'] = entity.isSuperAdmin;
 	data['IsFinance'] = entity.isFinance;
-	return data;
-}
-
-staffExperienceInsertDataFromJson(StaffExperienceInsertData data, Map<String, dynamic> json) {
-	if (json['Id'] != null) {
-		data.id = json['Id'].toString();
-	}
-	if (json['Name'] != null) {
-		data.name = json['Name'];
-	}
-	if (json['Description'] != null) {
-		data.description = json['Description'];
-	}
-	if (json['LastPosition'] != null) {
-		data.lastPosition = json['LastPosition'].toString();
-	}
-	if (json['Company'] != null) {
-		data.company = json['Company'].toString();
-	}
-	if (json['Location'] != null) {
-		data.location = json['Location'].toString();
-	}
-	if (json['EndYear'] != null) {
-		data.endYear = json['EndYear'].toString();
-	}
-	if (json['Duration'] != null) {
-		data.duration = json['Duration'].toString();
-	}
-	if (json['StaffId'] != null) {
-		data.staffId = json['StaffId'].toString();
-	}
-	return data;
-}
-
-Map<String, dynamic> staffExperienceInsertDataToJson(StaffExperienceInsertData entity) {
-	final Map<String, dynamic> data = new Map<String, dynamic>();
-	data['Id'] = entity.id;
-	data['Name'] = entity.name;
-	data['Description'] = entity.description;
-	data['LastPosition'] = entity.lastPosition;
-	data['Company'] = entity.company;
-	data['Location'] = entity.location;
-	data['EndYear'] = entity.endYear;
-	data['Duration'] = entity.duration;
-	data['StaffId'] = entity.staffId;
 	return data;
 }

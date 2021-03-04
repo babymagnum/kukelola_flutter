@@ -54,7 +54,7 @@ class _ReimbursmentRequestViewState extends State<ReimbursmentRequestView> {
 
   bool _disable() {
     var form = _reimbursmentRequestCt.form.value;
-    return form.reason == '' || form.listDetails.length == 0 || form.attachment.path == '';
+    return form.reason == '' || form.listDetails.length == 0;
   }
 
   @override

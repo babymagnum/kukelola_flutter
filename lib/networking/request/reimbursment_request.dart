@@ -17,7 +17,9 @@ class ReimbursmentRequest {
       ..add(MapEntry('UserId', UserId))
       ..add(MapEntry('Description', Description));
 
-    form.files..add(MapEntry('FileSatu', await MultipartFile.fromFile(FileSatu.path, filename: FileSatu.path.split('/').last)));
+    if (FileSatu.path != '') {
+      form.files..add(MapEntry('FileSatu', await MultipartFile.fromFile(FileSatu.path, filename: FileSatu.path.split('/').last)));
+    }
 
     if (listDetail.length > 0) {
       for (int i=0; i<listDetail.length; i++) {

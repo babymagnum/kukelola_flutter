@@ -39,4 +39,5 @@ class StaffExperienceData with JsonConvert<StaffExperienceData> {
 	String duration;
 	@JSONField(name: "StaffId")
 	String staffId;
+	bool loading = false;
 }

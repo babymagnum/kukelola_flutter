@@ -73,8 +73,6 @@ class JsonConvert<T> {
 				return staffEducationDataFromJson(data as StaffEducationData, json) as T;
 			case StaffFamilyInsert:
 				return staffFamilyInsertFromJson(data as StaffFamilyInsert, json) as T;
-			case StaffFamilyInsertData:
-				return staffFamilyInsertDataFromJson(data as StaffFamilyInsertData, json) as T;
 			case StaffEducationInsert:
 				return staffEducationInsertFromJson(data as StaffEducationInsert, json) as T;
 			case Staff:
@@ -83,8 +81,6 @@ class JsonConvert<T> {
 				return staffDataFromJson(data as StaffData, json) as T;
 			case StaffExperienceInsert:
 				return staffExperienceInsertFromJson(data as StaffExperienceInsert, json) as T;
-			case StaffExperienceInsertData:
-				return staffExperienceInsertDataFromJson(data as StaffExperienceInsertData, json) as T;
 			case SpecialLeaveList:
 				return specialLeaveListFromJson(data as SpecialLeaveList, json) as T;
 			case SpecialLeaveListData:
@@ -132,8 +128,6 @@ class JsonConvert<T> {
 				return staffEducationDataToJson(data as StaffEducationData);
 			case StaffFamilyInsert:
 				return staffFamilyInsertToJson(data as StaffFamilyInsert);
-			case StaffFamilyInsertData:
-				return staffFamilyInsertDataToJson(data as StaffFamilyInsertData);
 			case StaffEducationInsert:
 				return staffEducationInsertToJson(data as StaffEducationInsert);
 			case Staff:
@@ -142,8 +136,6 @@ class JsonConvert<T> {
 				return staffDataToJson(data as StaffData);
 			case StaffExperienceInsert:
 				return staffExperienceInsertToJson(data as StaffExperienceInsert);
-			case StaffExperienceInsertData:
-				return staffExperienceInsertDataToJson(data as StaffExperienceInsertData);
 			case SpecialLeaveList:
 				return specialLeaveListToJson(data as SpecialLeaveList);
 			case SpecialLeaveListData:
@@ -192,8 +184,6 @@ class JsonConvert<T> {
 			return StaffEducationData().fromJson(json);
 		}	else if(type == (StaffFamilyInsert).toString()){
 			return StaffFamilyInsert().fromJson(json);
-		}	else if(type == (StaffFamilyInsertData).toString()){
-			return StaffFamilyInsertData().fromJson(json);
 		}	else if(type == (StaffEducationInsert).toString()){
 			return StaffEducationInsert().fromJson(json);
 		}	else if(type == (Staff).toString()){
@@ -202,8 +192,6 @@ class JsonConvert<T> {
 			return StaffData().fromJson(json);
 		}	else if(type == (StaffExperienceInsert).toString()){
 			return StaffExperienceInsert().fromJson(json);
-		}	else if(type == (StaffExperienceInsertData).toString()){
-			return StaffExperienceInsertData().fromJson(json);
 		}	else if(type == (SpecialLeaveList).toString()){
 			return SpecialLeaveList().fromJson(json);
 		}	else if(type == (SpecialLeaveListData).toString()){
@@ -252,8 +240,6 @@ class JsonConvert<T> {
 			return data.map<StaffEducationData>((e) => StaffEducationData().fromJson(e)).toList() as M;
 		}	else if(List<StaffFamilyInsert>() is M){
 			return data.map<StaffFamilyInsert>((e) => StaffFamilyInsert().fromJson(e)).toList() as M;
-		}	else if(List<StaffFamilyInsertData>() is M){
-			return data.map<StaffFamilyInsertData>((e) => StaffFamilyInsertData().fromJson(e)).toList() as M;
 		}	else if(List<StaffEducationInsert>() is M){
 			return data.map<StaffEducationInsert>((e) => StaffEducationInsert().fromJson(e)).toList() as M;
 		}	else if(List<Staff>() is M){
@@ -262,8 +248,6 @@ class JsonConvert<T> {
 			return data.map<StaffData>((e) => StaffData().fromJson(e)).toList() as M;
 		}	else if(List<StaffExperienceInsert>() is M){
 			return data.map<StaffExperienceInsert>((e) => StaffExperienceInsert().fromJson(e)).toList() as M;
-		}	else if(List<StaffExperienceInsertData>() is M){
-			return data.map<StaffExperienceInsertData>((e) => StaffExperienceInsertData().fromJson(e)).toList() as M;
 		}	else if(List<SpecialLeaveList>() is M){
 			return data.map<SpecialLeaveList>((e) => SpecialLeaveList().fromJson(e)).toList() as M;
 		}	else if(List<SpecialLeaveListData>() is M){
