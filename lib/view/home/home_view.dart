@@ -99,7 +99,8 @@ class _HomeViewState extends State<HomeView>  with AutomaticKeepAliveClientMixin
                           mainAxisSpacing: 16.w,
                           crossAxisSpacing: 16.w,
                         ),
-                      )
+                      ),
+                      SizedBox(height: 24.h,)
                     ],
                   ),
                 ),

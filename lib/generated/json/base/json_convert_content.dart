@@ -25,6 +25,8 @@ import 'package:kukelola_flutter/networking/model/staff_experience_insert.dart';
 import 'package:kukelola_flutter/generated/json/staff_experience_insert_helper.dart';
 import 'package:kukelola_flutter/networking/model/special_leave_list.dart';
 import 'package:kukelola_flutter/generated/json/special_leave_list_helper.dart';
+import 'package:kukelola_flutter/networking/model/token.dart';
+import 'package:kukelola_flutter/generated/json/token_helper.dart';
 import 'package:kukelola_flutter/networking/model/staff_experience.dart';
 import 'package:kukelola_flutter/generated/json/staff_experience_helper.dart';
 
@@ -85,6 +87,8 @@ class JsonConvert<T> {
 				return specialLeaveListFromJson(data as SpecialLeaveList, json) as T;
 			case SpecialLeaveListData:
 				return specialLeaveListDataFromJson(data as SpecialLeaveListData, json) as T;
+			case Token:
+				return tokenFromJson(data as Token, json) as T;
 			case StaffExperience:
 				return staffExperienceFromJson(data as StaffExperience, json) as T;
 			case StaffExperienceData:
@@ -140,6 +144,8 @@ class JsonConvert<T> {
 				return specialLeaveListToJson(data as SpecialLeaveList);
 			case SpecialLeaveListData:
 				return specialLeaveListDataToJson(data as SpecialLeaveListData);
+			case Token:
+				return tokenToJson(data as Token);
 			case StaffExperience:
 				return staffExperienceToJson(data as StaffExperience);
 			case StaffExperienceData:
@@ -196,6 +202,8 @@ class JsonConvert<T> {
 			return SpecialLeaveList().fromJson(json);
 		}	else if(type == (SpecialLeaveListData).toString()){
 			return SpecialLeaveListData().fromJson(json);
+		}	else if(type == (Token).toString()){
+			return Token().fromJson(json);
 		}	else if(type == (StaffExperience).toString()){
 			return StaffExperience().fromJson(json);
 		}	else if(type == (StaffExperienceData).toString()){
@@ -252,6 +260,8 @@ class JsonConvert<T> {
 			return data.map<SpecialLeaveList>((e) => SpecialLeaveList().fromJson(e)).toList() as M;
 		}	else if(List<SpecialLeaveListData>() is M){
 			return data.map<SpecialLeaveListData>((e) => SpecialLeaveListData().fromJson(e)).toList() as M;
+		}	else if(List<Token>() is M){
+			return data.map<Token>((e) => Token().fromJson(e)).toList() as M;
 		}	else if(List<StaffExperience>() is M){
 			return data.map<StaffExperience>((e) => StaffExperience().fromJson(e)).toList() as M;
 		}	else if(List<StaffExperienceData>() is M){

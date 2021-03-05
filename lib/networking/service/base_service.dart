@@ -11,6 +11,7 @@ import 'package:kukelola_flutter/generated/json/staff_family_helper.dart';
 import 'package:kukelola_flutter/generated/json/staff_family_insert_helper.dart';
 import 'package:kukelola_flutter/generated/json/staff_helper.dart';
 import 'package:kukelola_flutter/generated/json/standart_helper.dart';
+import 'package:kukelola_flutter/generated/json/token_helper.dart';
 import 'package:kukelola_flutter/generated/json/user_helper.dart';
 import 'package:kukelola_flutter/main.dart';
 import 'package:kukelola_flutter/networking/model/corporate_calendar.dart';
@@ -203,7 +204,7 @@ class BaseService {
     if (json is Iterable) {
       return _fromJsonList<T>(json) as T;
     } else if (T == Token) {
-      return Token.fromJson(json) as T;
+      return tokenFromJson(Token(), json) as T;
     } else if (T == User) {
       return userFromJson(User(), json) as T;
     } else if (T == OvertimeRequestPost) {

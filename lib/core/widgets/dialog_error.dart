@@ -4,6 +4,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:kukelola_flutter/core/theme/theme_color.dart';
 import 'package:kukelola_flutter/core/theme/theme_text_style.dart';
 import 'package:kukelola_flutter/core/widgets/button_loading.dart';
+import 'package:kukelola_flutter/core/widgets/button_loading_bordered.dart';
 
 class DialogError extends StatelessWidget {
 
@@ -19,8 +20,6 @@ class DialogError extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
 
-    final size = MediaQuery.of(context).size;
-
     return Column(
       mainAxisSize: MainAxisSize.min,
       mainAxisAlignment: MainAxisAlignment.center,
@@ -33,24 +32,30 @@ class DialogError extends StatelessWidget {
               children: <Widget>[
                 Icon(icons == null ? Icons.error : icons, size: 70.w, color: Color(0xFF0D1522).withOpacity(0.6),),
                 SizedBox(height: 16.h,),
-                Text(error, textAlign: TextAlign.center, maxLines: 5, overflow: TextOverflow.ellipsis, style: ThemeTextStyle.robotoRegular.apply(color: Color(0xFF0D1522), fontSizeDelta: 14.ssp, decoration: TextDecoration.none),),
+                Text(error, textAlign: TextAlign.center, maxLines: 5, overflow: TextOverflow.ellipsis, style: ThemeTextStyle.biryaniRegular.apply(color: Color(0xFF0D1522), fontSizeDelta: 12.ssp, decoration: TextDecoration.none),),
                 SizedBox(height: 24.h,),
                 button2 == null ?
-                Parent(
-                  gesture: Gestures()..onTap(buttonClick),
-                  style: ParentStyle()..background.color(ThemeColor.primary)..borderRadius(all: 6)..padding(vertical: 15.h)..ripple(true)..width(size.width),
-                  child: Text(button, textAlign: TextAlign.center, style: ThemeTextStyle.robotoRegular.apply(color: Colors.white, fontSizeDelta: 14.ssp),),
+                ButtonLoading(
+                  backgroundColor: ThemeColor.primary,
+                  disable: false,
+                  title: button,
+                  loading: false,
+                  onTap: buttonClick,
+                  verticalPadding: 6.h,
+                  textStyle: ThemeTextStyle.biryaniBold.apply(color: Colors.white, fontSizeDelta: 14.ssp),
                 ) :
                 Row(
                   children: <Widget>[
                     Expanded(
-                      child: Parent(
-                        gesture: Gestures()..onTap(buttonClick),
-                        style: ParentStyle()..background.color(Colors.white)..borderRadius(all: 6)..ripple(true)..width(size.width)..height(48.h)
-                          ..border(all: 1, color: ThemeColor.primary),
-                        child: Center(
-                          child: Text(button, textAlign: TextAlign.center, style: ThemeTextStyle.robotoRegular.apply(color: ThemeColor.primary, fontSizeDelta: 14.ssp),),
-                        ),
+                      child: ButtonLoadingBordered(
+                        borderColor: ThemeColor.primary,
+                        disable: false,
+                        title: button,
+                        loading: false,
+                        onTap: buttonClick,
+                        verticalPadding: 6.h,
+                        textStyle: ThemeTextStyle.biryaniBold.apply(color: ThemeColor.primary, fontSizeDelta: 14.ssp),
+                        borderRadius: 6,
                       ),
                     ),
                     SizedBox(width: 10.w,),
@@ -60,7 +65,7 @@ class DialogError extends StatelessWidget {
                       title: button2,
                       loading: false,
                       onTap: button2Click,
-                      verticalPadding: 10.h,
+                      verticalPadding: 6.h,
                       textStyle: ThemeTextStyle.biryaniBold.apply(color: Colors.white, fontSizeDelta: 14.ssp),
                     )),
                   ],

@@ -27,16 +27,16 @@ class LoginController extends GetxController {
     final data = await Service().token(LoginRequest(form.value.username, form.value.password, otp, commonController.autoLogin.value ? 'true' : 'false'));
     loadingLogin.value = false;
 
-    if (data != null) {
+    if ((data?.accessToken ?? '') != '') {
       commonController.preferences.setString(Constant.EMAIL, form.value.username);
       commonController.preferences.setString(Constant.PASSWORD, form.value.password);
       commonController.preferences.setString(Constant.OTP, otp);
       commonController.preferences.setBool(Constant.IS_PASS_LOGIN, true);
-      commonController.preferences.setString(Constant.TOKEN, data.access_token);
+      commonController.preferences.setString(Constant.TOKEN, data.accessToken);
       Get.to(commonController.autoLogin.value ? ContainerHomeView() : VerificationCodeView());
       commonController.setAutoLogin(false);
     } else {
-      Get.dialog(DialogError(error: 'Failed to login', button: 'Ok', buttonClick: () => Get.back()));
+      Get.dialog(DialogError(error: data.errorDescription ?? 'Failed to login', button: 'Ok', buttonClick: () => Get.back()));
     }
   }
 }
