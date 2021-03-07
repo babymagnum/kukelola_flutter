@@ -47,7 +47,12 @@ class _HomeViewState extends State<HomeView>  with AutomaticKeepAliveClientMixin
       ) :
       homeController.errorUser.value ?
       Center(
-        child: ButtonReload(onTap: () => homeController.getUser())
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            ButtonReload(onTap: () => homeController.getUser()),
+          ],
+        )
       ) :
       Stack(
         children: [

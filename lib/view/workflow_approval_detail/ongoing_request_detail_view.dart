@@ -4,13 +4,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
-import 'package:kukelola_flutter/core/helper/text_util.dart';
-import 'package:kukelola_flutter/core/model/static_model.dart';
 import 'package:kukelola_flutter/core/theme/theme_text_style.dart';
 import 'package:kukelola_flutter/core/widgets/button_back.dart';
 import 'package:kukelola_flutter/core/widgets/button_loading.dart';
 import 'package:kukelola_flutter/core/widgets/dialog_cancel_leave_request.dart';
 import 'package:kukelola_flutter/core/widgets/summary_detail_status.dart';
+import 'package:kukelola_flutter/networking/model/workflow_grid.dart';
 import 'package:kukelola_flutter/view/base_view.dart';
 import 'package:kukelola_flutter/view/workflow_approval/controller/ongoing_request_controller.dart';
 import 'package:kukelola_flutter/view/workflow_approval/widget/dialog_reject_approval.dart';
@@ -19,12 +18,29 @@ class OngoingRequestDetailView extends StatelessWidget {
 
   OngoingRequestDetailView({@required this.index, @required this.item});
 
-  final WorkflowApprovalItem item;
+  final WorkflowGridData item;
   final int index;
 
   var _ongoingRequestCt = Get.find<OngoingRequestController>();
 
-  bool _isSpecialLeave() => item.leaveType == 'Special Leave';
+  // bool _isSpecialLeave() => item.leaveType == 'Special Leave';
+  bool _isSpecialLeave() => false;
+
+  Color _statusColor() {
+    if (item.workflowStatus == 99) return Color(0xFFC3C3C3);
+    else if (item.workflowStatus == 1) return Color(0xFF1AB394);
+    else if (item.workflowStatus == 3) return Color(0xFF4D4D4D);
+    else if (item.workflowStatus == 2) return Color(0xFFED5565);
+    else return Colors.transparent;
+  }
+
+  String _status() {
+    if (item.workflowStatus == 99) return 'PENDING';
+    else if (item.workflowStatus == 1) return 'APPROVED';
+    else if (item.workflowStatus == 3) return 'CANCELED';
+    else if (item.workflowStatus == 2) return 'REJECTED';
+    else return '-';
+  }
 
   Widget _content(String title, String content, bool isAttachment) {
     return Expanded(
@@ -60,19 +76,19 @@ class OngoingRequestDetailView extends StatelessWidget {
                         Obx(() => Row(
                             children: [
                               Flexible(
-                                child: Text(item.leaveType, style: ThemeTextStyle.biryaniBold.apply(color: Colors.white, fontSizeDelta: 18.ssp),),
+                                child: Text(item.name, style: ThemeTextStyle.biryaniBold.apply(color: Colors.white, fontSizeDelta: 18.ssp),),
                               ),
                               SizedBox(width: 4.w,),
-                              _ongoingRequestCt.listOngoingRequest[index].status == '' ?
+                              _status() == '' ?
                               Container() :
-                              SummaryDetailStatus(color: Color(0xFFC3C3C3), label: _ongoingRequestCt.listOngoingRequest[index].status),
+                              SummaryDetailStatus(color: _statusColor(), label: _status()),
                             ],
                           ),
                         ),
                         SizedBox(height: 4.h,),
-                        Text('${item.startDate} - ${item.endDate}', style: ThemeTextStyle.biryaniRegular.apply(color: Colors.white, fontSizeDelta: 12.ssp),),
+                        Text(item.createDate, style: ThemeTextStyle.biryaniRegular.apply(color: Colors.white, fontSizeDelta: 12.ssp),),
                         SizedBox(height: 16.h,),
-                        Text('Newt Salamander', style: ThemeTextStyle.biryaniRegular.apply(color: Colors.white, fontSizeDelta: 12.ssp),),
+                        Text(item.requestorName, style: ThemeTextStyle.biryaniRegular.apply(color: Colors.white, fontSizeDelta: 12.ssp),),
                         Text('K0090192', style: ThemeTextStyle.biryaniRegular.apply(color: Colors.white, fontSizeDelta: 12.ssp),),
                         SizedBox(height: 24.h,)
                       ],
@@ -97,9 +113,9 @@ class OngoingRequestDetailView extends StatelessWidget {
                       SizedBox(height: 24.h,),
                       Row(
                         children: [
-                          _content(_isSpecialLeave() ? 'SPECIAL LEAVE' : 'LEAVE TYPE', _isSpecialLeave() ? item.specialLeaveType : item.leaveType, false),
+                          _content(_isSpecialLeave() ? 'SPECIAL LEAVE' : 'LEAVE TYPE', '-', false),
                           SizedBox(width: 10.w,),
-                          _content('TOTAL DAYS', '${TextUtil.differenceDate(item.endDate, item.startDate, 'dd/MM/yyyy')}', false)
+                          _content('TOTAL DAYS', '-', false)
                         ],
                       ),
                       SizedBox(height: 24.h,),
@@ -113,13 +129,13 @@ class OngoingRequestDetailView extends StatelessWidget {
                         children: [
                           _content('APPROVAL DATE', '-', false),
                           SizedBox(width: 10.w,),
-                          _content('ATTACHMENT', item.attachment, true)
+                          _content('ATTACHMENT', '-', true)
                         ],
                       ),
-                      SizedBox(height: item.status == '' ? 24.h : 0,),
-                      item.status != '' ?
+                      SizedBox(height: _status() == '' ? 24.h : 0,),
+                      _status() != '' ?
                       Container() :
-                      item.forSuperior ?
+                      !item.isMyRequest ?
                       Row(
                         mainAxisAlignment: MainAxisAlignment.end,
                         children: [

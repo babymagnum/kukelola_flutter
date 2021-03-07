@@ -1,6 +1,13 @@
 import 'dart:io';
 import 'package:kukelola_flutter/core/helper/text_util.dart';
 
+class WorkflowApprovalFilterForm {
+  String keyword = '';
+  String periode = TextUtil.getCurrentDate('MM/yyyy');
+  CommonType route = CommonType('All Route', 0);
+  CommonType request = CommonType('All Request', 0);
+}
+
 class CommonType {
   String label;
   int id;

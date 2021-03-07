@@ -1,6 +1,7 @@
 import 'package:division/division.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:kukelola_flutter/core/theme/theme_color.dart';
 
 class ButtonLoading extends StatelessWidget {
@@ -8,7 +9,7 @@ class ButtonLoading extends StatelessWidget {
   ButtonLoading({Key key, @required this.backgroundColor, @required this.disable,
     @required this.title, @required this.loading, @required this.onTap, @required this.textStyle,
     this.verticalPadding = 13, this.horizontalPadding = 10, this.loadingSize = 17,
-    this.borderRadius = 6}): super(key: key);
+    this.borderRadius = 6, this.image = '', this.imageSize, this.imageMargin}): super(key: key);
 
   final String title;
   final bool loading;
@@ -20,6 +21,9 @@ class ButtonLoading extends StatelessWidget {
   final double loadingSize;
   final TextStyle textStyle;
   final double borderRadius;
+  final String image;
+  final Size imageSize;
+  final double imageMargin;
 
   @override
   Widget build(BuildContext context) {
@@ -56,7 +60,18 @@ class ButtonLoading extends StatelessWidget {
         ) :
         Padding(
           padding: EdgeInsets.only(top: 3.h),
-          child: Text(title, style: textStyle,),
+          child: image != '' ?
+          Row(
+            children: [
+              Padding(
+                padding: EdgeInsets.only(bottom: 3.h),
+                child: SvgPicture.asset(image, width: imageSize.width ?? 0, height: imageSize.height ?? 0, color: Colors.white,),
+              ),
+              SizedBox(width: imageMargin ?? 0,),
+              Text(title, style: textStyle,),
+            ],
+          ) :
+          Text(title, style: textStyle,),
         ),
       ),
     );

@@ -13,7 +13,7 @@ class SummaryDetailStatus extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Parent(
-      style: ParentStyle()..background.color(color)..padding(horizontal: 8.w, vertical: 4.h)..borderRadius(all: 1000),
+      style: ParentStyle()..background.color(color)..padding(horizontal: 8.w, top: 4.h, bottom: 2.h)..borderRadius(all: 1000),
       child: Text(label, style: ThemeTextStyle.biryaniSemiBold.apply(color: Colors.white, fontSizeDelta: 5.ssp),),
     );
   }

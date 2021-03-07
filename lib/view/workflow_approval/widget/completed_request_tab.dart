@@ -3,8 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:kukelola_flutter/core/theme/theme_color.dart';
+import 'package:kukelola_flutter/core/widgets/button_reload.dart';
 import 'package:kukelola_flutter/core/widgets/empty_text.dart';
 import 'package:kukelola_flutter/view/workflow_approval/controller/completed_request_controller.dart';
+import 'package:kukelola_flutter/view/workflow_approval/controller/workflow_approval_filter_controller.dart';
 import 'package:kukelola_flutter/view/workflow_approval/widget/list_completed_request_item.dart';
 
 class CompletedRequestTab extends StatefulWidget {
@@ -14,18 +16,19 @@ class CompletedRequestTab extends StatefulWidget {
 
 class _CompletedRequestTabState extends State<CompletedRequestTab> with AutomaticKeepAliveClientMixin {
 
-  var _completedRequestCt = Get.put(CompletedRequestController());
+  var _completedRequestCt = Get.find<CompletedRequestController>();
+  var _workflowApprovalFilterCt = Get.find<WorkflowApprovalFilterController>();
 
   @override
   void initState() {
     super.initState();
 
-    Future.delayed(Duration.zero, () => _completedRequestCt.getOngoingRequest());
+    Future.delayed(Duration.zero, () => _completedRequestCt.getCompletedRequest(_workflowApprovalFilterCt.form.value));
   }
 
   @override
   Widget build(BuildContext context) {
-    return Obx(() => _completedRequestCt.loading.value ?
+    return Obx(() => _completedRequestCt.loadingRequest.value ?
       Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
@@ -37,11 +40,18 @@ class _CompletedRequestTabState extends State<CompletedRequestTab> with Automati
           )
         ],
       ) :
+      _completedRequestCt.errorRequest.value ?
+      Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          ButtonReload(onTap: () => _completedRequestCt.getCompletedRequest(_workflowApprovalFilterCt.form.value))
+        ],
+      ) :
       _completedRequestCt.listCompletedRequest.length == 0 ?
       Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          EmptyText(text: 'Tidak ada ongoing request', textSize: 12.ssp),
+          EmptyText(text: 'Tidak ada ongoing request yg sudah selesai', textSize: 12.ssp),
         ],
       ) :
       ListView.separated(

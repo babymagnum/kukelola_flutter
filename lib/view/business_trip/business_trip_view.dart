@@ -22,7 +22,6 @@ import 'package:kukelola_flutter/main.dart';
 import 'package:kukelola_flutter/view/base_view.dart';
 import 'package:kukelola_flutter/view/business_trip/business_trip_controller.dart';
 import 'package:kukelola_flutter/view/business_trip_detail/business_trip_detail_view.dart';
-import 'package:kukelola_flutter/view/leave_summary/leave_summary_view.dart';
 
 class BusinessTripView extends StatefulWidget {
   @override
@@ -53,7 +52,7 @@ class BusinessTripViewState extends State<BusinessTripView> {
             onChanged: (DateTime date) => temporaryDate = TextUtil.dateTimeToString(date, 'dd/MM/yyyy'),
             pickerModel: CustomDatePicker(
                 currentTime: TextUtil.convertStringToDateTime(selectedDate, 'dd/MM/yyyy'),
-                minTime: DateTime.now(),
+                minTime: DateTime(DateTime.now().year - 1),
                 maxTime: DateTime(DateTime.now().year + 20, 12, 31),
                 locale: commonController.language.value == Constant.INDONESIAN ? LocaleType.id : LocaleType.en
             ),
@@ -121,7 +120,7 @@ class BusinessTripViewState extends State<BusinessTripView> {
                 ButtonLoading(
                   backgroundColor: ThemeColor.primary,
                   disable: _businessTripCt.loadingSubmit.value || _disable(),
-                  title: 'Save',
+                  title: 'Next',
                   loading: _businessTripCt.loadingSubmit.value,
                   onTap: () async {
                     await Get.to(BusinessTripDetailView());

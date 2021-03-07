@@ -12,6 +12,7 @@ import 'package:kukelola_flutter/networking/model/staff_family_insert.dart';
 import 'package:kukelola_flutter/networking/model/standart.dart';
 import 'package:kukelola_flutter/networking/model/token.dart';
 import 'package:kukelola_flutter/networking/model/user.dart';
+import 'package:kukelola_flutter/networking/model/workflow_grid.dart';
 import 'package:kukelola_flutter/networking/request/attendance_online_request.dart';
 import 'package:kukelola_flutter/networking/request/attendance_request.dart';
 import 'package:kukelola_flutter/networking/request/business_trip_request.dart';
@@ -24,6 +25,7 @@ import 'package:kukelola_flutter/networking/request/reject_request.dart';
 import 'package:kukelola_flutter/networking/request/staff_education_insert_request.dart';
 import 'package:kukelola_flutter/networking/request/staff_experience_insert_request.dart';
 import 'package:kukelola_flutter/networking/request/staff_family_insert_request.dart';
+import 'package:kukelola_flutter/networking/request/workflow_approval_request.dart';
 import 'package:kukelola_flutter/networking/service/base_service.dart';
 import 'package:kukelola_flutter/view/home/home_controller.dart';
 import '../../main.dart';
@@ -134,5 +136,9 @@ class Service extends BaseService {
 
   Future<Standart> staffFamilyDelete(String id) async {
     return await delete('${MyApp.BASE_API}api/StaffFamily/Delete?id=$id');
+  }
+
+  Future<WorkflowGrid> workFlowGrid(WorkflowApprovalRequest request) async {
+    return await postJsonBody('${MyApp.BASE_API}api/Workflow/WorkflowGrid', request.getBody());
   }
 }

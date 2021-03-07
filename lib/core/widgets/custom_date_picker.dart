@@ -456,7 +456,7 @@ class DateTimePickerState extends State<DateTimePickerComponent> {
         decoration: BoxDecoration(
             color: Colors.white,
             borderRadius: BorderRadius.only(
-                topLeft: Radius.circular(20), topRight: Radius.circular(20))),
+                topLeft: Radius.circular(6), topRight: Radius.circular(6))),
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: <Widget>[
@@ -549,7 +549,7 @@ class DateTimePickerState extends State<DateTimePickerComponent> {
                 disable: false,
                 title: 'Pick',
                 loading: false,
-                verticalPadding: 7.h,
+                verticalPadding: 5.h,
                 onTap: widget.onPick,
                 textStyle: ThemeTextStyle.biryaniBold.apply(color: Colors.white, fontSizeDelta: 16.ssp),
               ),

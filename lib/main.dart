@@ -13,12 +13,14 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:kukelola_flutter/view/verification_code/verification_code_view.dart';
+import 'package:kukelola_flutter/view/workflow_approval/controller/completed_request_controller.dart';
+import 'package:kukelola_flutter/view/workflow_approval/controller/workflow_approval_filter_controller.dart';
 
 final globalNavigatorKey = GlobalKey<NavigatorState>();
 final firebaseMessaging = FirebaseMessaging();
 /// PLACE GLOBAL CONTROLLER HERE IF YOU WANT THE CONTROLLER PERSIST ///
-final commonController = Get.put(CommonController());
-final homeController = Get.put(HomeController());
+final commonController = Get.put(CommonController(), permanent: true);
+final homeController = Get.put(HomeController(), permanent: true);
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();

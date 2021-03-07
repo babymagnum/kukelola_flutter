@@ -3,8 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:kukelola_flutter/core/theme/theme_color.dart';
+import 'package:kukelola_flutter/core/widgets/button_reload.dart';
 import 'package:kukelola_flutter/core/widgets/empty_text.dart';
 import 'package:kukelola_flutter/view/workflow_approval/controller/ongoing_request_controller.dart';
+import 'package:kukelola_flutter/view/workflow_approval/controller/workflow_approval_filter_controller.dart';
 import 'package:kukelola_flutter/view/workflow_approval/widget/list_ongoing_request_item.dart';
 
 class OngoingRequestTab extends StatefulWidget {
@@ -14,18 +16,19 @@ class OngoingRequestTab extends StatefulWidget {
 
 class _OngoingRequestTabState extends State<OngoingRequestTab> with AutomaticKeepAliveClientMixin {
 
-  var _ongoingRequestCt = Get.put(OngoingRequestController());
+  var _ongoingRequestCt = Get.find<OngoingRequestController>();
+  var _workflowApprovalFilterCt = Get.find<WorkflowApprovalFilterController>();
 
   @override
   void initState() {
     super.initState();
 
-    Future.delayed(Duration.zero, () => _ongoingRequestCt.getOngoingRequest());
+    Future.delayed(Duration.zero, () => _ongoingRequestCt.getOngoingRequest(_workflowApprovalFilterCt.form.value));
   }
 
   @override
   Widget build(BuildContext context) {
-    return Obx(() => _ongoingRequestCt.loading.value ?
+    return Obx(() => _ongoingRequestCt.loadingRequest.value ?
       Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
@@ -34,6 +37,18 @@ class _OngoingRequestTabState extends State<OngoingRequestTab> with AutomaticKee
             child: CircularProgressIndicator(
               valueColor: AlwaysStoppedAnimation<Color>(ThemeColor.primary),
             ),
+          )
+        ],
+      ) :
+      _ongoingRequestCt.errorRequest.value ?
+      Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              ButtonReload(onTap: () => _ongoingRequestCt.getOngoingRequest(_workflowApprovalFilterCt.form.value)),
+            ],
           )
         ],
       ) :

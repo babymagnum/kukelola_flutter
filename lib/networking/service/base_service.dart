@@ -13,6 +13,7 @@ import 'package:kukelola_flutter/generated/json/staff_helper.dart';
 import 'package:kukelola_flutter/generated/json/standart_helper.dart';
 import 'package:kukelola_flutter/generated/json/token_helper.dart';
 import 'package:kukelola_flutter/generated/json/user_helper.dart';
+import 'package:kukelola_flutter/generated/json/workflow_grid_helper.dart';
 import 'package:kukelola_flutter/main.dart';
 import 'package:kukelola_flutter/networking/model/corporate_calendar.dart';
 import 'package:kukelola_flutter/networking/model/overtime_request_post.dart';
@@ -28,6 +29,8 @@ import 'package:kukelola_flutter/networking/model/standart.dart';
 import 'package:kukelola_flutter/networking/model/token.dart';
 import 'package:kukelola_flutter/networking/model/user.dart';
 import 'dart:convert';
+
+import 'package:kukelola_flutter/networking/model/workflow_grid.dart';
 
 class BaseService {
 
@@ -227,6 +230,8 @@ class BaseService {
       return staffFamilyInsertFromJson(StaffFamilyInsert(), json) as T;
     } else if (T == StaffExperienceInsert) {
       return staffExperienceInsertFromJson(StaffExperienceInsert(), json) as T;
+    } else if (T == WorkflowGrid) {
+      return workflowGridFromJson(WorkflowGrid(), json) as T;
     } else if (T == StaffEducationInsert) {
       return staffEducationInsertFromJson(StaffEducationInsert(), json) as T;
     } else {

@@ -35,7 +35,7 @@ class DialogPayslip extends StatelessWidget {
             onChanged: (DateTime date) => temporaryDate = TextUtil.dateTimeToString(date, 'MM/yyyy'),
             pickerModel: CustomDatePicker(
                 currentTime: TextUtil.convertStringToDateTime(selectedDate, 'MM/yyyy'),
-                minTime: DateTime.now(),
+                minTime: DateTime(DateTime.now().year - 1),
                 maxTime: DateTime(DateTime.now().year + 20, 12, 31),
                 locale: commonController.language.value == Constant.INDONESIAN ? LocaleType.id : LocaleType.en
             ),
