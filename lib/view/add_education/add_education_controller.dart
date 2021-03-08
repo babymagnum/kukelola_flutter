@@ -26,7 +26,7 @@ class AddEducationController extends GetxController {
 
   submitEducation() async {
     loadingSubmit.value = true;
-    final data = await Service().staffEducationInsert(StaffEducationInsertRequest(homeController.userData.value.id, form.value.educationStep, int.parse(form.value.startYear), int.parse(form.value.endYear), form.value.institution, form.value.major, form.value.score));
+    final data = await Service().staffEducationInsert(StaffEducationInsertRequest(homeController.userData.value.staffId, form.value.educationStep, int.parse(form.value.startYear), int.parse(form.value.endYear), form.value.institution, form.value.major, form.value.score));
     loadingSubmit.value = false;
 
     if (data?.isSuccess ?? false) {

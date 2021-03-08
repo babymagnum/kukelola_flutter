@@ -61,7 +61,7 @@ class DialogPayslip extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Expanded(
-                      child: Text('Add Details', maxLines: 2, overflow: TextOverflow.ellipsis, style: ThemeTextStyle.biryaniBold.apply(fontSizeDelta: 18.ssp, decoration: TextDecoration.none),),
+                      child: Text('Payslip', maxLines: 2, overflow: TextOverflow.ellipsis, style: ThemeTextStyle.biryaniBold.apply(fontSizeDelta: 14.ssp, decoration: TextDecoration.none),),
                     ),
                     SizedBox(width: 10.w,),
                     Parent(
@@ -93,10 +93,9 @@ class DialogPayslip extends StatelessWidget {
                   loading: _dialogPayslipCt.loadingDownload.value,
                   onTap: () async {
                     await _dialogPayslipCt.downloadPayslip();
-                    Get.back();
                   },
-                  verticalPadding: 10.h,
-                  textStyle: ThemeTextStyle.biryaniBold.apply(color: Colors.white, fontSizeDelta: 14.ssp),
+                  verticalPadding: 5.h,
+                  textStyle: ThemeTextStyle.biryaniBold.apply(color: Colors.white, fontSizeDelta: 12.ssp),
                 ),
               ],
             )),

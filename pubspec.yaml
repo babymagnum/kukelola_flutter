@@ -39,6 +39,7 @@ dependencies:
   fluttertoast: ^7.1.8
   google_maps_flutter: ^1.2.0
   geolocator: ^6.2.1
+  open_file: ^3.0.3
   flutter:
     sdk: flutter
 

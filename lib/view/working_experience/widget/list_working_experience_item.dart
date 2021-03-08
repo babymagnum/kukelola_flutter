@@ -6,6 +6,7 @@ import 'package:kukelola_flutter/core/theme/theme_text_style.dart';
 import 'package:kukelola_flutter/core/widgets/button_loading.dart';
 import 'package:kukelola_flutter/networking/model/staff_experience.dart';
 import 'package:kukelola_flutter/view/family_data/family_data_controller.dart';
+import 'package:kukelola_flutter/view/working_experience/working_experience_controller.dart';
 
 class ListWorkingExperienceItem extends StatelessWidget {
   
@@ -14,8 +15,8 @@ class ListWorkingExperienceItem extends StatelessWidget {
   final StaffExperienceData item;
   final int index;
 
-  var _familiesCt = Get.find<FamilyDataController>();
-  
+  var _workingExperienceCt = Get.find<WorkingExperienceController>();
+
   @override
   Widget build(BuildContext context) {
     return Parent(
@@ -43,7 +44,7 @@ class ListWorkingExperienceItem extends StatelessWidget {
                 disable: item.loading,
                 title: 'Delete',
                 loading: item.loading,
-                onTap: () => _familiesCt.removeData(index),
+                onTap: () => _workingExperienceCt.removeData(index),
                 textStyle: ThemeTextStyle.biryaniSemiBold.apply(color: Colors.white, fontSizeDelta: 10.ssp),
                 verticalPadding: 5.h,
                 horizontalPadding: 17.w,

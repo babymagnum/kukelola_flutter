@@ -2,6 +2,7 @@ import 'package:dio/dio.dart';
 import 'package:kukelola_flutter/core/helper/constant.dart';
 import 'package:kukelola_flutter/generated/json/corporate_calendar_helper.dart';
 import 'package:kukelola_flutter/generated/json/overtime_request_post_helper.dart';
+import 'package:kukelola_flutter/generated/json/payslip_helper.dart';
 import 'package:kukelola_flutter/generated/json/special_leave_list_helper.dart';
 import 'package:kukelola_flutter/generated/json/staff_education_helper.dart';
 import 'package:kukelola_flutter/generated/json/staff_education_insert_helper.dart';
@@ -17,6 +18,7 @@ import 'package:kukelola_flutter/generated/json/workflow_grid_helper.dart';
 import 'package:kukelola_flutter/main.dart';
 import 'package:kukelola_flutter/networking/model/corporate_calendar.dart';
 import 'package:kukelola_flutter/networking/model/overtime_request_post.dart';
+import 'package:kukelola_flutter/networking/model/payslip.dart';
 import 'package:kukelola_flutter/networking/model/special_leave_list.dart';
 import 'package:kukelola_flutter/networking/model/staff.dart';
 import 'package:kukelola_flutter/networking/model/staff_education.dart';
@@ -157,13 +159,13 @@ class BaseService {
   }
 
   // TODO: PUT
-  Future<T> put<T>(String url) async {
+  Future<T> putJsonBody<T>(String url, dynamic body) async {
     T resultResponse;
 
     try {
       final dio = Dio();
       dio.interceptors.add(LogInterceptor(responseBody: true, requestBody: true));
-      var response = await dio.put(url, options: Options(headers: getHeaders()));
+      var response = await dio.put(url, data: body, options: Options(headers: getHeaders()));
 
       if (response.isRedirect) {
         commonController.standartLogout();
@@ -232,6 +234,8 @@ class BaseService {
       return staffExperienceInsertFromJson(StaffExperienceInsert(), json) as T;
     } else if (T == WorkflowGrid) {
       return workflowGridFromJson(WorkflowGrid(), json) as T;
+    } else if (T == Payslip) {
+      return payslipFromJson(Payslip(), json) as T;
     } else if (T == StaffEducationInsert) {
       return staffEducationInsertFromJson(StaffEducationInsert(), json) as T;
     } else {

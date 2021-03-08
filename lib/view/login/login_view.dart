@@ -32,7 +32,7 @@ class _LoginViewState extends State<LoginView> {
     super.initState();
 
     if (commonController.autoLogin.value) {
-      if (commonController?.preferences?.getString(Constant.EMAIL) ?? '' != '') {
+      if ((commonController?.preferences?.getString(Constant.EMAIL) ?? '') != '') {
         _loginCt.form.value.username = commonController?.preferences?.getString(Constant.EMAIL) ?? '';
         _loginCt.form.value.password = commonController?.preferences?.getString(Constant.PASSWORD) ?? '';
         _loginCt.setForm(_loginCt.form.value);

@@ -1,4 +1,5 @@
 import 'package:get/get.dart';
+import 'package:kukelola_flutter/core/helper/common_function.dart';
 import 'package:kukelola_flutter/core/model/static_model.dart';
 import 'package:kukelola_flutter/networking/model/staff.dart';
 import 'package:kukelola_flutter/networking/service/service.dart';
@@ -10,13 +11,16 @@ class PersonalDataController extends GetxController {
   ];
   var listReligion = [
     CommonType('Islam', 1),
-    CommonType('Katolik', 2),
-    CommonType('Kristen', 3),
-    CommonType('Budha', 3),
+    CommonType('Catholic', 2),
+    CommonType('Protestant', 3),
+    CommonType('Hinduism', 4),
+    CommonType('Buddhism', 5),
+    CommonType('Confucius', 6),
+    CommonType('Other', 99),
   ];
   var listMarital = [
-    CommonType('Single', 1),
-    CommonType('Married', 2)
+    CommonType('Maried', 1),
+    CommonType('Single', 2)
   ];
   var staff = StaffData().obs;
   var loadingSave = false.obs;
@@ -27,8 +31,14 @@ class PersonalDataController extends GetxController {
 
   saveChange() async {
     loadingSave.value = true;
-    await Future.delayed(Duration(seconds: 1), () {});
+    final data = await Service().updateStaff(staff.value.getJsonBody());
     loadingSave.value = false;
+
+    if (data?.isSuccess ?? false) {
+      CommonFunction.standartSnackbar('Berhasil memperbarui data profile');
+    } else {
+      CommonFunction.standartSnackbar('Gagal memperbarui data profile');
+    }
   }
 
   getStaff() async {

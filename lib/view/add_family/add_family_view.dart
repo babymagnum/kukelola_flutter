@@ -27,6 +27,8 @@ class _AddFamilyViewState extends State<AddFamilyView> {
   var _addFamiliesCt = Get.put(AddFamilyController());
   var _nameFocus = FocusNode(), _relationFocus = FocusNode(), _idFocus = FocusNode(),
       _occupationFocus = FocusNode(), _phoneFocus = FocusNode();
+  var _nameCt = TextEditingController(), _relationCt = TextEditingController(), _idCt = TextEditingController(),
+      _occupationCt = TextEditingController(), _phoneCt = TextEditingController();
 
   _showDatePicker(BuildContext context, String selectedDate, Function (String date) onPick) {
 
@@ -83,7 +85,15 @@ class _AddFamilyViewState extends State<AddFamilyView> {
                   loading: _addFamiliesCt.loadingSubmit.value,
                   onTap: () async {
                     await _addFamiliesCt.submitEducation();
-                    Get.back();
+
+                    if (_addFamiliesCt.form.value.name == '') {
+                      _nameCt.text = '';
+                      _relationCt.text = '';
+                      _idCt.text = '';
+                      _occupationCt.text = '';
+                      _phoneCt.text = '';
+                      setState(() {});
+                    }
                   },
                   verticalPadding: 6.h,
                   horizontalPadding: 15.w,
@@ -105,10 +115,12 @@ class _AddFamilyViewState extends State<AddFamilyView> {
                         CustomInput(
                           textInputAction: TextInputAction.next,
                           focusNode: _nameFocus,
+                          controller: _nameCt,
                           hintText: 'e.g Arief Zainuri',
                           onChanged: (text) {
                             _addFamiliesCt.form.value.name = text;
                             _addFamiliesCt.updateForm(_addFamiliesCt.form.value);
+                            setState(() {});
                           },
                           inputType: TextInputType.name,
                           onEditingComplete: () => setState(() => _relationFocus.requestFocus()),
@@ -119,10 +131,12 @@ class _AddFamilyViewState extends State<AddFamilyView> {
                         CustomInput(
                           textInputAction: TextInputAction.next,
                           focusNode: _relationFocus,
+                          controller: _relationCt,
                           hintText: 'e.g Saudara',
                           onChanged: (text) {
                             _addFamiliesCt.form.value.relation = text;
                             _addFamiliesCt.updateForm(_addFamiliesCt.form.value);
+                            setState(() {});
                           },
                           inputType: TextInputType.name,
                           onEditingComplete: () => setState(() => _idFocus.requestFocus()),
@@ -133,10 +147,12 @@ class _AddFamilyViewState extends State<AddFamilyView> {
                         CustomInput(
                           textInputAction: TextInputAction.next,
                           focusNode: _idFocus,
+                          controller: _idCt,
                           hintText: 'e.g 3471129819282',
                           onChanged: (text) {
                             _addFamiliesCt.form.value.id = text;
                             _addFamiliesCt.updateForm(_addFamiliesCt.form.value);
+                            setState(() {});
                           },
                           inputType: TextInputType.number,
                           onEditingComplete: () => _occupationFocus.requestFocus(),
@@ -147,10 +163,12 @@ class _AddFamilyViewState extends State<AddFamilyView> {
                         CustomInput(
                           textInputAction: TextInputAction.done,
                           focusNode: _occupationFocus,
+                          controller: _occupationCt,
                           hintText: 'e.g Pegawai Swasta',
                           onChanged: (text) {
                             _addFamiliesCt.form.value.occupation = text;
                             _addFamiliesCt.updateForm(_addFamiliesCt.form.value);
+                            setState(() {});
                           },
                           inputType: TextInputType.name,
                           onEditingComplete: () => FocusScope.of(context).requestFocus(FocusNode()),
@@ -164,6 +182,7 @@ class _AddFamilyViewState extends State<AddFamilyView> {
                           onTap: () => _showDatePicker(context, _addFamiliesCt.form.value.dateOfBirth == '' ? TextUtil.getCurrentDate('dd/MM/yyyy') : _addFamiliesCt.form.value.dateOfBirth, (date) {
                             _addFamiliesCt.form.value.dateOfBirth = date;
                             _addFamiliesCt.updateForm(_addFamiliesCt.form.value);
+                            setState(() {});
                           }),
                           rightIcon: '',
                           leftSize: Size(14.w, 16.h),
@@ -174,10 +193,12 @@ class _AddFamilyViewState extends State<AddFamilyView> {
                         CustomInput(
                           textInputAction: TextInputAction.done,
                           focusNode: _phoneFocus,
+                          controller: _phoneCt,
                           hintText: 'e.g 085792810654',
                           onChanged: (text) {
                             _addFamiliesCt.form.value.phone = text;
                             _addFamiliesCt.updateForm(_addFamiliesCt.form.value);
+                            setState(() {});
                           },
                           inputType: TextInputType.phone,
                           onEditingComplete: () => FocusScope.of(context).requestFocus(FocusNode()),

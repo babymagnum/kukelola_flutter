@@ -16,11 +16,12 @@ class AddWorkingExperienceController extends GetxController {
 
   submitEducation() async {
     loadingSubmit.value = true;
-    final data = await Service().staffExperienceInsert(StaffExperienceInsertRequest(homeController.userData.value.id, form.value.lastPosition, form.value.company, form.value.location, int.parse(form.value.endYear), form.value.duration));
+    final data = await Service().staffExperienceInsert(StaffExperienceInsertRequest(homeController.userData.value.staffId, form.value.lastPosition, form.value.company, form.value.location, int.parse(form.value.endYear), form.value.duration));
     loadingSubmit.value = false;
 
     if (data?.isSuccess ?? false) {
       _workingExperienceCt.addData(data.data);
+      updateForm(WorkingExperienceItem());
       CommonFunction.standartSnackbar('Berhasil menambahkan pengalaman kerja');
     } else {
       CommonFunction.standartSnackbar('Gagal menambahkan pengalaman kerja');

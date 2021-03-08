@@ -31,6 +31,7 @@ class _AddEducationViewState extends State<AddEducationView> {
   var _addEducationCt = Get.put(AddEducationController());
   var _degreeKey = GlobalKey();
   var _intitutionFocus = FocusNode(), _majorFocus = FocusNode(), _scoreFocus = FocusNode();
+  var _intitutionCt = TextEditingController(), _majorCt = TextEditingController(), _scoreCt = TextEditingController();
 
   _showDatePicker(BuildContext context, String selectedDate, Function (String date) onPick) {
 
@@ -127,8 +128,15 @@ class _AddEducationViewState extends State<AddEducationView> {
                   disable: _addEducationCt.loadingSubmit.value || _disable(),
                   title: 'Submit',
                   loading: _addEducationCt.loadingSubmit.value,
-                  onTap: () {
-                    _addEducationCt.submitEducation();
+                  onTap: () async {
+                    await _addEducationCt.submitEducation();
+
+                    if (_addEducationCt.form.value.institution == '') {
+                      _intitutionCt.text = '';
+                      _majorCt.text = '';
+                      _scoreCt.text = '';
+                      setState(() {});
+                    }
                   },
                   verticalPadding: 6.h,
                   horizontalPadding: 15.w,
@@ -189,10 +197,12 @@ class _AddEducationViewState extends State<AddEducationView> {
                         CustomInput(
                           textInputAction: TextInputAction.next,
                           focusNode: _intitutionFocus,
+                          controller: _intitutionCt,
                           hintText: 'e.g Universitas Gadjah Mada',
                           onChanged: (text) {
                             _addEducationCt.form.value.institution = text;
                             _addEducationCt.updateForm(_addEducationCt.form.value);
+                            setState(() {});
                           },
                           inputType: TextInputType.name,
                           onEditingComplete: () => setState(() => _majorFocus.requestFocus()),
@@ -203,10 +213,12 @@ class _AddEducationViewState extends State<AddEducationView> {
                         CustomInput(
                           textInputAction: TextInputAction.next,
                           focusNode: _majorFocus,
+                          controller: _majorCt,
                           hintText: 'e.g Teknik Informatika',
                           onChanged: (text) {
                             _addEducationCt.form.value.major = text;
                             _addEducationCt.updateForm(_addEducationCt.form.value);
+                            setState(() {});
                           },
                           inputType: TextInputType.name,
                           onEditingComplete: () => setState(() => _scoreFocus.requestFocus()),
@@ -216,10 +228,12 @@ class _AddEducationViewState extends State<AddEducationView> {
                         CustomInput(
                           textInputAction: TextInputAction.done,
                           focusNode: _scoreFocus,
+                          controller: _scoreCt,
                           hintText: 'e.g 3.45',
                           onChanged: (text) {
                             _addEducationCt.form.value.score = text;
                             _addEducationCt.updateForm(_addEducationCt.form.value);
+                            setState(() {});
                           },
                           inputType: TextInputType.number,
                           onEditingComplete: () => FocusScope.of(context).requestFocus(FocusNode()),

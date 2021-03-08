@@ -64,7 +64,7 @@ class _PersonalDataViewState extends State<PersonalDataView> {
                       content: list[index].label,
                       onClick: () {
                         onSelect(list[index].id);
-                        Navigator.pop(context);
+                        Get.back();
                       },
                     ),
                     separatorBuilder: (_, __) => Divider(color: Colors.transparent, height: 5.h,),

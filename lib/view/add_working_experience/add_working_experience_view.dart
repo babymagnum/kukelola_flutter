@@ -28,6 +28,8 @@ class _AddWorkingExperienceViewState extends State<AddWorkingExperienceView> {
   var _addWorkingExperienceCt = Get.put(AddWorkingExperienceController());
   var _lastPositionFocus = FocusNode(), _companyFocus = FocusNode(), _locationFocus = FocusNode(),
       _durationFocus = FocusNode();
+  var _lastPositionCt = TextEditingController(), _companyCt = TextEditingController(), _locationCt = TextEditingController(),
+      _durationCt = TextEditingController();
 
   _showDatePicker(BuildContext context, String selectedDate, Function (String date) onPick) {
 
@@ -83,7 +85,14 @@ class _AddWorkingExperienceViewState extends State<AddWorkingExperienceView> {
                   loading: _addWorkingExperienceCt.loadingSubmit.value,
                   onTap: () async {
                     await _addWorkingExperienceCt.submitEducation();
-                    Get.back();
+
+                    if (_addWorkingExperienceCt.form.value.lastPosition == '') {
+                      _lastPositionCt.text = '';
+                      _companyCt.text = '';
+                      _locationCt.text = '';
+                      _durationCt.text = '';
+                      setState(() {});
+                    }
                   },
                   verticalPadding: 6.h,
                   horizontalPadding: 15.w,
@@ -105,7 +114,8 @@ class _AddWorkingExperienceViewState extends State<AddWorkingExperienceView> {
                         CustomInput(
                           textInputAction: TextInputAction.next,
                           focusNode: _lastPositionFocus,
-                          hintText: '',
+                          controller: _lastPositionCt,
+                          hintText: 'e.g Programmer',
                           onChanged: (text) {
                             _addWorkingExperienceCt.form.value.lastPosition = text;
                             _addWorkingExperienceCt.updateForm(_addWorkingExperienceCt.form.value);
@@ -113,13 +123,14 @@ class _AddWorkingExperienceViewState extends State<AddWorkingExperienceView> {
                           inputType: TextInputType.name,
                           onEditingComplete: () => setState(() => _companyFocus.requestFocus()),
                           onTap: () => setState(() => _lastPositionFocus.requestFocus()),
-                          labelText: 'LSAT POSITION',
+                          labelText: 'LAST POSITION',
                         ),
                         SizedBox(height: 24.h,),
                         CustomInput(
                           textInputAction: TextInputAction.next,
                           focusNode: _companyFocus,
-                          hintText: '',
+                          controller: _companyCt,
+                          hintText: 'e.g Tokopedia',
                           onChanged: (text) {
                             _addWorkingExperienceCt.form.value.company = text;
                             _addWorkingExperienceCt.updateForm(_addWorkingExperienceCt.form.value);
@@ -133,7 +144,8 @@ class _AddWorkingExperienceViewState extends State<AddWorkingExperienceView> {
                         CustomInput(
                           textInputAction: TextInputAction.done,
                           focusNode: _locationFocus,
-                          hintText: '',
+                          controller: _locationCt,
+                          hintText: 'e.g Jakarta',
                           onChanged: (text) {
                             _addWorkingExperienceCt.form.value.location = text;
                             _addWorkingExperienceCt.updateForm(_addWorkingExperienceCt.form.value);
@@ -146,7 +158,7 @@ class _AddWorkingExperienceViewState extends State<AddWorkingExperienceView> {
                         SizedBox(height: 24.h,),
                         InputTap(
                           labelText: 'END YEAR',
-                          hintText: '',
+                          hintText: 'e.g ${TextUtil.getCurrentDate('yyyy')}',
                           onTap: () => _showDatePicker(context, _addWorkingExperienceCt.form.value.endYear == '' ? TextUtil.getCurrentDate('dd/MM/yyyy') : _addWorkingExperienceCt.form.value.endYear, (date) {
                             _addWorkingExperienceCt.form.value.endYear = date;
                             _addWorkingExperienceCt.updateForm(_addWorkingExperienceCt.form.value);
@@ -160,7 +172,8 @@ class _AddWorkingExperienceViewState extends State<AddWorkingExperienceView> {
                         CustomInput(
                           textInputAction: TextInputAction.done,
                           focusNode: _durationFocus,
-                          hintText: '',
+                          controller: _durationCt,
+                          hintText: 'e.g 2 years',
                           onChanged: (text) {
                             _addWorkingExperienceCt.form.value.duration = text;
                             _addWorkingExperienceCt.updateForm(_addWorkingExperienceCt.form.value);

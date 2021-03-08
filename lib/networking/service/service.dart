@@ -1,6 +1,6 @@
-import 'package:get/get.dart';
 import 'package:kukelola_flutter/networking/model/corporate_calendar.dart';
 import 'package:kukelola_flutter/networking/model/overtime_request_post.dart';
+import 'package:kukelola_flutter/networking/model/payslip.dart';
 import 'package:kukelola_flutter/networking/model/special_leave_list.dart';
 import 'package:kukelola_flutter/networking/model/staff.dart';
 import 'package:kukelola_flutter/networking/model/staff_education.dart';
@@ -20,6 +20,7 @@ import 'package:kukelola_flutter/networking/request/change_password_request.dart
 import 'package:kukelola_flutter/networking/request/leave_request.dart';
 import 'package:kukelola_flutter/networking/request/login_request.dart';
 import 'package:kukelola_flutter/networking/request/overtime_request.dart';
+import 'package:kukelola_flutter/networking/request/payslip_request.dart';
 import 'package:kukelola_flutter/networking/request/reimbursment_request.dart';
 import 'package:kukelola_flutter/networking/request/reject_request.dart';
 import 'package:kukelola_flutter/networking/request/staff_education_insert_request.dart';
@@ -27,7 +28,6 @@ import 'package:kukelola_flutter/networking/request/staff_experience_insert_requ
 import 'package:kukelola_flutter/networking/request/staff_family_insert_request.dart';
 import 'package:kukelola_flutter/networking/request/workflow_approval_request.dart';
 import 'package:kukelola_flutter/networking/service/base_service.dart';
-import 'package:kukelola_flutter/view/home/home_controller.dart';
 import '../../main.dart';
 
 class Service extends BaseService {
@@ -99,11 +99,15 @@ class Service extends BaseService {
   }
   
   Future<Staff> staff() async {
-    return await get('${MyApp.BASE_API}api/Staff/${homeController.userData.value.id}');
+    return await get('${MyApp.BASE_API}api/Staff/${homeController.userData.value.staffId}');
+  }
+
+  Future<Standart> updateStaff(dynamic body) async {
+    return await putJsonBody('${MyApp.BASE_API}api/Staff', body);
   }
 
   Future<StaffEducation> staffEducation() async {
-    return await get('${MyApp.BASE_API}api/StaffEducation/EducationList?StaffId=${homeController.userData.value.id}');
+    return await get('${MyApp.BASE_API}api/StaffEducation/EducationList?StaffId=${homeController.userData.value.staffId}');
   }
 
   Future<StaffEducationInsert> staffEducationInsert(StaffEducationInsertRequest request) async {
@@ -115,7 +119,7 @@ class Service extends BaseService {
   }
 
   Future<StaffExperience> staffExperience() async {
-    return await get('${MyApp.BASE_API}api/StaffExperience/ExperienceList?StaffId=${homeController.userData.value.id}');
+    return await get('${MyApp.BASE_API}api/StaffExperience/ExperienceList?StaffId=${homeController.userData.value.staffId}');
   }
 
   Future<StaffExperienceInsert> staffExperienceInsert(StaffExperienceInsertRequest request) async {
@@ -127,7 +131,7 @@ class Service extends BaseService {
   }
 
   Future<StaffFamily> staffFamily() async {
-    return await get('${MyApp.BASE_API}api/StaffFamily/FamilyList?StaffId=${homeController.userData.value.id}');
+    return await get('${MyApp.BASE_API}api/StaffFamily/FamilyList?StaffId=${homeController.userData.value.staffId}');
   }
 
   Future<StaffFamilyInsert> staffFamilyInsert(StaffFamilyInsertRequest request) async {
@@ -140,5 +144,9 @@ class Service extends BaseService {
 
   Future<WorkflowGrid> workFlowGrid(WorkflowApprovalRequest request) async {
     return await postJsonBody('${MyApp.BASE_API}api/Workflow/WorkflowGrid', request.getBody());
+  }
+
+  Future<Payslip> payslip(PayslipRequest request) async {
+    return await postJsonBody('${MyApp.BASE_API}api/Salary/PaySlip', request.getBody());
   }
 }

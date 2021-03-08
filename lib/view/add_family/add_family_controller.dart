@@ -16,11 +16,12 @@ class AddFamilyController extends GetxController {
 
   submitEducation() async {
     loadingSubmit.value = true;
-    final data = await Service().staffFamilyInsert(StaffFamilyInsertRequest(homeController.userData.value.id, form.value.name, form.value.relation, form.value.id, form.value.occupation, form.value.dateOfBirth, form.value.phone));
+    final data = await Service().staffFamilyInsert(StaffFamilyInsertRequest(homeController.userData.value.staffId, form.value.name, form.value.relation, form.value.id, form.value.occupation, form.value.dateOfBirth, form.value.phone));
     loadingSubmit.value = false;
     
     if (data?.isSuccess ?? false) {
       _familiesCt.addData(data.data);
+      updateForm(FamiliesItem());
       CommonFunction.standartSnackbar('Berhasil menambahkan keluarga');
     } else {
       CommonFunction.standartSnackbar('Gagal menambahkan keluarga');

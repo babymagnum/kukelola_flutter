@@ -25,6 +25,8 @@ import 'package:kukelola_flutter/networking/model/staff.dart';
 import 'package:kukelola_flutter/generated/json/staff_helper.dart';
 import 'package:kukelola_flutter/networking/model/staff_experience_insert.dart';
 import 'package:kukelola_flutter/generated/json/staff_experience_insert_helper.dart';
+import 'package:kukelola_flutter/networking/model/payslip.dart';
+import 'package:kukelola_flutter/generated/json/payslip_helper.dart';
 import 'package:kukelola_flutter/networking/model/special_leave_list.dart';
 import 'package:kukelola_flutter/generated/json/special_leave_list_helper.dart';
 import 'package:kukelola_flutter/networking/model/token.dart';
@@ -89,6 +91,8 @@ class JsonConvert<T> {
 				return staffDataFromJson(data as StaffData, json) as T;
 			case StaffExperienceInsert:
 				return staffExperienceInsertFromJson(data as StaffExperienceInsert, json) as T;
+			case Payslip:
+				return payslipFromJson(data as Payslip, json) as T;
 			case SpecialLeaveList:
 				return specialLeaveListFromJson(data as SpecialLeaveList, json) as T;
 			case SpecialLeaveListData:
@@ -150,6 +154,8 @@ class JsonConvert<T> {
 				return staffDataToJson(data as StaffData);
 			case StaffExperienceInsert:
 				return staffExperienceInsertToJson(data as StaffExperienceInsert);
+			case Payslip:
+				return payslipToJson(data as Payslip);
 			case SpecialLeaveList:
 				return specialLeaveListToJson(data as SpecialLeaveList);
 			case SpecialLeaveListData:
@@ -212,6 +218,8 @@ class JsonConvert<T> {
 			return StaffData().fromJson(json);
 		}	else if(type == (StaffExperienceInsert).toString()){
 			return StaffExperienceInsert().fromJson(json);
+		}	else if(type == (Payslip).toString()){
+			return Payslip().fromJson(json);
 		}	else if(type == (SpecialLeaveList).toString()){
 			return SpecialLeaveList().fromJson(json);
 		}	else if(type == (SpecialLeaveListData).toString()){
@@ -274,6 +282,8 @@ class JsonConvert<T> {
 			return data.map<StaffData>((e) => StaffData().fromJson(e)).toList() as M;
 		}	else if(List<StaffExperienceInsert>() is M){
 			return data.map<StaffExperienceInsert>((e) => StaffExperienceInsert().fromJson(e)).toList() as M;
+		}	else if(List<Payslip>() is M){
+			return data.map<Payslip>((e) => Payslip().fromJson(e)).toList() as M;
 		}	else if(List<SpecialLeaveList>() is M){
 			return data.map<SpecialLeaveList>((e) => SpecialLeaveList().fromJson(e)).toList() as M;
 		}	else if(List<SpecialLeaveListData>() is M){

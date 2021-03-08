@@ -67,7 +67,7 @@ class CustomInput extends StatelessWidget {
               child: isObsecure != null ?
               GestureDetector(
                 onTap: onObsecureClick,
-                child: SvgPicture.asset(isObsecure ? 'assets/images/invisible.svg' : 'assets/images/visibility.svg', width: 18.w, height: 18.w, color: Color(0xFFC4C4C4)),
+                child: SvgPicture.asset(isObsecure ? 'assets/images/visibility.svg' : 'assets/images/invisible.svg', width: 18.w, height: 18.w, color: Color(0xFFC4C4C4)),
               ) :
               Container(),
             )
