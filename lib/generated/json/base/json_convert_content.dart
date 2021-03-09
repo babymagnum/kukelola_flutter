@@ -25,6 +25,10 @@ import 'package:kukelola_flutter/networking/model/staff.dart';
 import 'package:kukelola_flutter/generated/json/staff_helper.dart';
 import 'package:kukelola_flutter/networking/model/staff_experience_insert.dart';
 import 'package:kukelola_flutter/generated/json/staff_experience_insert_helper.dart';
+import 'package:kukelola_flutter/networking/model/overtime_summary_grid.dart';
+import 'package:kukelola_flutter/generated/json/overtime_summary_grid_helper.dart';
+import 'package:kukelola_flutter/networking/model/leave_summary_grid.dart';
+import 'package:kukelola_flutter/generated/json/leave_summary_grid_helper.dart';
 import 'package:kukelola_flutter/networking/model/payslip.dart';
 import 'package:kukelola_flutter/generated/json/payslip_helper.dart';
 import 'package:kukelola_flutter/networking/model/special_leave_list.dart';
@@ -91,6 +95,14 @@ class JsonConvert<T> {
 				return staffDataFromJson(data as StaffData, json) as T;
 			case StaffExperienceInsert:
 				return staffExperienceInsertFromJson(data as StaffExperienceInsert, json) as T;
+			case OvertimeSummaryGrid:
+				return overtimeSummaryGridFromJson(data as OvertimeSummaryGrid, json) as T;
+			case OvertimeSummaryGridData:
+				return overtimeSummaryGridDataFromJson(data as OvertimeSummaryGridData, json) as T;
+			case LeaveSummaryGrid:
+				return leaveSummaryGridFromJson(data as LeaveSummaryGrid, json) as T;
+			case LeaveSummaryGridData:
+				return leaveSummaryGridDataFromJson(data as LeaveSummaryGridData, json) as T;
 			case Payslip:
 				return payslipFromJson(data as Payslip, json) as T;
 			case SpecialLeaveList:
@@ -154,6 +166,14 @@ class JsonConvert<T> {
 				return staffDataToJson(data as StaffData);
 			case StaffExperienceInsert:
 				return staffExperienceInsertToJson(data as StaffExperienceInsert);
+			case OvertimeSummaryGrid:
+				return overtimeSummaryGridToJson(data as OvertimeSummaryGrid);
+			case OvertimeSummaryGridData:
+				return overtimeSummaryGridDataToJson(data as OvertimeSummaryGridData);
+			case LeaveSummaryGrid:
+				return leaveSummaryGridToJson(data as LeaveSummaryGrid);
+			case LeaveSummaryGridData:
+				return leaveSummaryGridDataToJson(data as LeaveSummaryGridData);
 			case Payslip:
 				return payslipToJson(data as Payslip);
 			case SpecialLeaveList:
@@ -218,6 +238,14 @@ class JsonConvert<T> {
 			return StaffData().fromJson(json);
 		}	else if(type == (StaffExperienceInsert).toString()){
 			return StaffExperienceInsert().fromJson(json);
+		}	else if(type == (OvertimeSummaryGrid).toString()){
+			return OvertimeSummaryGrid().fromJson(json);
+		}	else if(type == (OvertimeSummaryGridData).toString()){
+			return OvertimeSummaryGridData().fromJson(json);
+		}	else if(type == (LeaveSummaryGrid).toString()){
+			return LeaveSummaryGrid().fromJson(json);
+		}	else if(type == (LeaveSummaryGridData).toString()){
+			return LeaveSummaryGridData().fromJson(json);
 		}	else if(type == (Payslip).toString()){
 			return Payslip().fromJson(json);
 		}	else if(type == (SpecialLeaveList).toString()){
@@ -282,6 +310,14 @@ class JsonConvert<T> {
 			return data.map<StaffData>((e) => StaffData().fromJson(e)).toList() as M;
 		}	else if(List<StaffExperienceInsert>() is M){
 			return data.map<StaffExperienceInsert>((e) => StaffExperienceInsert().fromJson(e)).toList() as M;
+		}	else if(List<OvertimeSummaryGrid>() is M){
+			return data.map<OvertimeSummaryGrid>((e) => OvertimeSummaryGrid().fromJson(e)).toList() as M;
+		}	else if(List<OvertimeSummaryGridData>() is M){
+			return data.map<OvertimeSummaryGridData>((e) => OvertimeSummaryGridData().fromJson(e)).toList() as M;
+		}	else if(List<LeaveSummaryGrid>() is M){
+			return data.map<LeaveSummaryGrid>((e) => LeaveSummaryGrid().fromJson(e)).toList() as M;
+		}	else if(List<LeaveSummaryGridData>() is M){
+			return data.map<LeaveSummaryGridData>((e) => LeaveSummaryGridData().fromJson(e)).toList() as M;
 		}	else if(List<Payslip>() is M){
 			return data.map<Payslip>((e) => Payslip().fromJson(e)).toList() as M;
 		}	else if(List<SpecialLeaveList>() is M){

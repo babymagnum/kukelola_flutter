@@ -14,14 +14,12 @@ import 'package:kukelola_flutter/view/education_data/widget/list_education_data_
 
 class EducationDataView extends StatelessWidget {
 
-  var _educationDataCt = Get.put(EducationDataController(), permanent: true);
+  var _educationDataCt = Get.put(EducationDataController());
 
   @override
   Widget build(BuildContext context) {
 
-    Future.delayed(Duration.zero, () {
-      if (_educationDataCt.listEducation.length == 0) _educationDataCt.populateData();
-    });
+    _educationDataCt.populateData();
 
     return BaseView(
       body: Stack(

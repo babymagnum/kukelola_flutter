@@ -1,5 +1,7 @@
 import 'package:kukelola_flutter/networking/model/corporate_calendar.dart';
+import 'package:kukelola_flutter/networking/model/leave_summary_grid.dart';
 import 'package:kukelola_flutter/networking/model/overtime_request_post.dart';
+import 'package:kukelola_flutter/networking/model/overtime_summary_grid.dart';
 import 'package:kukelola_flutter/networking/model/payslip.dart';
 import 'package:kukelola_flutter/networking/model/special_leave_list.dart';
 import 'package:kukelola_flutter/networking/model/staff.dart';
@@ -18,6 +20,7 @@ import 'package:kukelola_flutter/networking/request/attendance_request.dart';
 import 'package:kukelola_flutter/networking/request/business_trip_request.dart';
 import 'package:kukelola_flutter/networking/request/change_password_request.dart';
 import 'package:kukelola_flutter/networking/request/leave_request.dart';
+import 'package:kukelola_flutter/networking/request/summary_grid_request.dart';
 import 'package:kukelola_flutter/networking/request/login_request.dart';
 import 'package:kukelola_flutter/networking/request/overtime_request.dart';
 import 'package:kukelola_flutter/networking/request/payslip_request.dart';
@@ -41,7 +44,7 @@ class Service extends BaseService {
   }
 
   Future<Standart> changePassword(ChangePasswordRequest request) async {
-    return await postFormData('${MyApp.BASE_API}api/User/ChangePassword', request.body());
+    return await postJsonBody('${MyApp.BASE_API}api/User/ChangePassword', request.body());
   }
 
   Future<OvertimeRequestPost> submitAttendanceRequest(AttendanceRequest request) async {
@@ -148,5 +151,13 @@ class Service extends BaseService {
 
   Future<Payslip> payslip(PayslipRequest request) async {
     return await postJsonBody('${MyApp.BASE_API}api/Salary/PaySlip', request.getBody());
+  }
+
+  Future<LeaveSummaryGrid> leaveSummaryGrid(SummaryGridRequest request) async {
+    return await postJsonBody('${MyApp.BASE_API}api/LeaveRequest/SummaryGrid', request.body());
+  }
+
+  Future<OvertimeSummaryGrid> overtimeSummaryGrid(SummaryGridRequest request) async {
+    return await postJsonBody('${MyApp.BASE_API}api/OvertimeRequest/SummaryGrid', request.body());
   }
 }

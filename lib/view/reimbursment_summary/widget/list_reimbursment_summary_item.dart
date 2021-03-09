@@ -7,9 +7,9 @@ import 'package:kukelola_flutter/core/theme/theme_text_style.dart';
 import 'package:kukelola_flutter/core/widgets/button_loading.dart';
 import 'package:kukelola_flutter/view/leave_summary/leave_summary_controller.dart';
 import 'package:kukelola_flutter/core/widgets/dialog_cancel_leave_request.dart';
-import 'package:kukelola_flutter/view/leave_summary_detail/leave_summary_detail_view.dart';
+import 'package:kukelola_flutter/view/leave_summary/leave_summary_detail_view.dart';
 import 'package:kukelola_flutter/view/overtime_summary/overtime_summary_controller.dart';
-import 'package:kukelola_flutter/view/overtime_summary_detail/overtime_summary_detail_view.dart';
+import 'package:kukelola_flutter/view/overtime_summary/overtime_summary_detail_view.dart';
 import 'package:kukelola_flutter/view/reimbursment_summary/reimbursment_summary_controller.dart';
 import 'package:kukelola_flutter/view/reimbursment_summary_detail/reimbursment_summary_detail_view.dart';
 

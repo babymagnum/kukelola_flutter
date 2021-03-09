@@ -19,9 +19,7 @@ class WorkingExperienceView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
 
-    Future.delayed(Duration.zero, () {
-      if (_workingExperienceCt.listWorkingExperience.length == 0) _workingExperienceCt.populateData();
-    });
+    _workingExperienceCt.populateData();
 
     return BaseView(
       body: Stack(

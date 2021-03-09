@@ -1,3 +1,6 @@
+import 'dart:io';
+import 'package:division/division.dart';
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -8,14 +11,7 @@ import 'package:kukelola_flutter/core/widgets/account_image.dart';
 import 'package:kukelola_flutter/core/widgets/button_back.dart';
 import 'package:kukelola_flutter/core/widgets/button_reload.dart';
 import 'package:kukelola_flutter/main.dart';
-import 'package:kukelola_flutter/main.dart';
-import 'package:kukelola_flutter/main.dart';
-import 'package:kukelola_flutter/main.dart';
-import 'package:kukelola_flutter/main.dart';
-import 'package:kukelola_flutter/main.dart';
-import 'package:kukelola_flutter/main.dart';
 import 'package:kukelola_flutter/view/container_home/container_home_controller.dart';
-import 'package:kukelola_flutter/view/home/home_controller.dart';
 import 'package:kukelola_flutter/view/profile/profile_controller.dart';
 import 'package:kukelola_flutter/view/profile/widget/list_profile_menu_item.dart';
 
@@ -28,6 +24,18 @@ class _ProfileViewState extends State<ProfileView> with AutomaticKeepAliveClient
 
   var _profileCt = Get.put(ProfileController());
   var _containerHomeCt = Get.find<ContainerHomeController>();
+
+  _ubahFotoProfil() async {
+    _profileCt.setLoadingProfileFoto(true);
+    FilePicker.platform.pickFiles(
+      type: FileType.custom,
+      allowedExtensions: ['jpg', 'png'],
+    ).then((value) async {
+      _profileCt.setProfileFoto(File(value.files.single.path));
+      _profileCt.setLoadingProfileFoto(false);
+    }, onError: (error) => _profileCt.setLoadingProfileFoto(false))
+        .whenComplete(() => _profileCt.setLoadingProfileFoto(false));
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -69,7 +77,37 @@ class _ProfileViewState extends State<ProfileView> with AutomaticKeepAliveClient
                 child: Column(
                   children: [
                     SizedBox(height: 14.h,),
-                    AccountImage(url: homeController?.userData?.value?.profilePicture?.file ?? '', size: Size(64.w, 64.w), boxFit: BoxFit.fill),
+                    Parent(
+                      style: ParentStyle()..borderRadius(all: 1000)..width(64.w)..height(64.w),
+                      child: Obx(() => Stack(
+                        children: [
+                          _profileCt.profileFoto.value.path == '' ?
+                          AccountImage(url: homeController?.userData?.value?.profilePicture?.file ?? '', size: Size(64.w, 64.w), boxFit: BoxFit.fill) :
+                          AccountImage(url: '', size: Size(64.w, 64.w), boxFit: BoxFit.fill, imageFile: _profileCt.profileFoto.value,),
+                          Positioned(
+                            bottom: 2, left: 2, right: 2,
+                            child: Parent(
+                              gesture: Gestures()..onTap(() => _ubahFotoProfil()),
+                              style: ParentStyle()..borderRadius(bottomRight: 1000, bottomLeft: 1000)..width(64.w)..height(32.w)..background.color(Colors.black.withOpacity(0.35))
+                                ..ripple(true),
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Icon(Icons.camera_alt, size: 18.w, color: Colors.white,),
+                                ],
+                              ),
+                            ),
+                          ),
+                          _profileCt.loadingProfileFoto.value ?
+                          Align(
+                            alignment: Alignment.center,
+                            child: SizedBox(height: 20.w, width: 20.w, child: CircularProgressIndicator()),
+                          ) :
+                          Container()
+                        ],
+                      ),
+                      ),
+                    ),
                     SizedBox(height: 14.h,),
                     Text(homeController?.userData?.value?.fullName ?? '-', style: ThemeTextStyle.biryaniRegular.apply(fontSizeDelta: 20.ssp),),
                     SizedBox(height: 2.h,),

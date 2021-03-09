@@ -2,6 +2,8 @@ import 'package:division/division.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:kukelola_flutter/core/theme/theme_text_style.dart';
+import 'package:kukelola_flutter/core/widgets/measure_size.dart';
+import 'package:kukelola_flutter/main.dart';
 
 class ListStandartDropdownItem extends StatelessWidget {
 
@@ -21,7 +23,10 @@ class ListStandartDropdownItem extends StatelessWidget {
           child: Row(
             children: [
               Expanded(
-                child: Text(content, maxLines: 1, overflow: TextOverflow.ellipsis, style: ThemeTextStyle.biryaniRegular.apply(fontSizeDelta: 14.ssp),),
+                child: MeasureSize(
+                  onChange: (Size size) => commonController.setStandartDropdownItemSize(size),
+                  child: Text(content, maxLines: 1, overflow: TextOverflow.ellipsis, style: ThemeTextStyle.biryaniRegular.apply(fontSizeDelta: 14.ssp),),
+                ),
               )
             ],
           ),

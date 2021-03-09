@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import 'package:kukelola_flutter/core/theme/theme_text_style.dart';
 import 'package:kukelola_flutter/core/widgets/button_loading.dart';
 import 'package:kukelola_flutter/core/widgets/dialog_cancel_leave_request.dart';
+import 'package:kukelola_flutter/main.dart';
 import 'package:kukelola_flutter/networking/model/workflow_grid.dart';
 import 'package:kukelola_flutter/view/workflow_approval/controller/ongoing_request_controller.dart';
 import 'package:kukelola_flutter/view/workflow_approval/widget/dialog_reject_approval.dart';
@@ -51,7 +52,15 @@ class ListOngoingRequestItem extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(item.name, style: ThemeTextStyle.biryaniBold.apply(color: Color(0xFF158AC9), fontSizeDelta: 14.ssp),),
-                    Text(item.createDate, style: ThemeTextStyle.biryaniRegular.apply(color: Color(0xFF6D6D6D), fontSizeDelta: 10.ssp),),
+                    Text(item.description, style: ThemeTextStyle.biryaniRegular.apply(color: Color(0xFF6D6D6D), fontSizeDelta: 10.ssp),),
+                    SizedBox(height: 3.h,),
+                    Row(
+                      children: [
+                        Text(item.createDate, style: ThemeTextStyle.biryaniRegular.apply(color: Color(0xFF6D6D6D), fontSizeDelta: 10.ssp),),
+                        SizedBox(width: 20.w,),
+                        Text(item.createTime, style: ThemeTextStyle.biryaniRegular.apply(color: Color(0xFF6D6D6D), fontSizeDelta: 10.ssp),),
+                      ],
+                    ),
                   ],
                 ),
               ),
@@ -61,10 +70,26 @@ class ListOngoingRequestItem extends StatelessWidget {
           ),
           SizedBox(height: 16.h,),
           Text(item.requestorName, style: ThemeTextStyle.biryaniRegular.apply(color: Color(0xFF6D6D6D), fontSizeDelta: 10.ssp),),
-          SizedBox(height: _status() == '' ? 8.h : 0,),
-          _status() != '' ?
-          Container() :
-          !item.isMyRequest ?
+          SizedBox(height: 8.h),
+          item.isMyRequest && item.workflowStatus == 99 ?
+          Row(
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: [
+              ButtonLoading(
+                backgroundColor: Color(0xFFF85C58),
+                disable: item.loadingCancel,
+                title: 'Cancel',
+                loading: item.loadingCancel,
+                onTap: () => Get.dialog(DialogCancelLeaveRequest(action2Click: () => _ongoingRequestCt.cancelRequest(index))),
+                textStyle: ThemeTextStyle.biryaniSemiBold.apply(color: Colors.white, fontSizeDelta: 10.ssp),
+                verticalPadding: 5.h,
+                horizontalPadding: 17.w,
+                borderRadius: 4,
+                loadingSize: 10.w,
+              ),
+            ],
+          ) :
+          (item.levelProgress == 1 || item.levelProgress == 2) && item.approverId == homeController.userData.value.id ?
           Row(
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
@@ -95,23 +120,7 @@ class ListOngoingRequestItem extends StatelessWidget {
               )
             ],
           ) :
-          Row(
-            mainAxisAlignment: MainAxisAlignment.end,
-            children: [
-              ButtonLoading(
-                backgroundColor: Color(0xFFF85C58),
-                disable: item.loadingCancel,
-                title: 'Cancel',
-                loading: item.loadingCancel,
-                onTap: () => Get.dialog(DialogCancelLeaveRequest(action2Click: () => _ongoingRequestCt.cancelRequest(index))),
-                textStyle: ThemeTextStyle.biryaniSemiBold.apply(color: Colors.white, fontSizeDelta: 10.ssp),
-                verticalPadding: 5.h,
-                horizontalPadding: 17.w,
-                borderRadius: 4,
-                loadingSize: 10.w,
-              ),
-            ],
-          ),
+          Container()
         ],
       ),
     );

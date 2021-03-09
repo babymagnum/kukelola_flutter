@@ -2,52 +2,32 @@ import 'dart:io';
 import 'package:get/get.dart';
 import 'package:kukelola_flutter/core/helper/common_function.dart';
 import 'package:kukelola_flutter/core/model/static_model.dart';
+import 'package:kukelola_flutter/main.dart';
+import 'package:kukelola_flutter/networking/model/leave_summary_grid.dart';
+import 'package:kukelola_flutter/networking/request/summary_grid_request.dart';
+import 'package:kukelola_flutter/networking/service/service.dart';
+import 'package:kukelola_flutter/view/leave_summary/view/leave_summary_filter_controller.dart';
+import 'package:kukelola_flutter/view/workflow_approval/controller/ongoing_request_controller.dart';
+import 'package:kukelola_flutter/view/workflow_approval/controller/workflow_approval_controller.dart';
 
 class LeaveSummaryController extends GetxController {
   var loadingSummary = false.obs;
-  var listSummary = List<LeaveRequestForm>().obs;
+  var errorSummary = false.obs;
+  var listSummary = List<LeaveSummaryGridData>().obs;
 
   populateData() async {
+    final leaveSummaryFilterCt = Get.find<LeaveSummaryFilterController>();
+
     loadingSummary.value = true;
-    await Future.delayed(Duration(seconds: 1), () {});
+    final data = await Service().leaveSummaryGrid(SummaryGridRequest(homeController.userData.value.id, leaveSummaryFilterCt.startDate.value, leaveSummaryFilterCt.endDate.value));
     loadingSummary.value = false;
 
-    var leave1 = LeaveRequestForm();
-    leave1.leaveType = LeaveTypeItem('Special Leave', '1');
-    leave1.startDate = '11/01/2021';
-    leave1.endDate = '13/01/2021';
-    leave1.attachment = File('mantap1.png');
-    leave1.reason = 'Pingin liburan sepertinya bos.';
-    leave1.status = 'PENDING';
-
-    var leave2 = LeaveRequestForm();
-    leave2.leaveType = LeaveTypeItem('Unpaid Leave', '2');
-    leave2.startDate = '11/01/2021';
-    leave2.endDate = '12/01/2021';
-    leave2.attachment = File('mantap2.png');
-    leave2.reason = 'Hmmmm';
-    leave2.status = 'APPROVED';
-
-    listSummary.clear();
-    listSummary.addAll([leave1, leave2]);
-  }
-
-  addLeave(LeaveRequestForm item) => listSummary.add(item);
-
-  cancelLeave(int index) async {
-    var data = listSummary[index];
-    data.loading = true;
-    listSummary[index] = data;
-    await Future.delayed(Duration(seconds: 1), () {});
-    data.loading = false;
-    data.status = 'CANCELED';
-    listSummary[index] = data;
-    CommonFunction.standartSnackbar('Request cancelled succesfully');
-  }
-
-  changeStatusToCanceled(int index) {
-    var data = listSummary[index];
-    data.status = 'CANCELED';
-    listSummary[index] = data;
+    if (data?.data != null) {
+      errorSummary.value = false;
+      listSummary.clear();
+      listSummary.addAll(data.data);
+    } else {
+      errorSummary.value = true;
+    }
   }
 }

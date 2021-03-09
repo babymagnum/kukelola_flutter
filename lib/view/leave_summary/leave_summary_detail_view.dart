@@ -4,23 +4,19 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
-import 'package:kukelola_flutter/core/model/static_model.dart';
-import 'package:kukelola_flutter/core/theme/theme_color.dart';
 import 'package:kukelola_flutter/core/theme/theme_text_style.dart';
 import 'package:kukelola_flutter/core/widgets/button_back.dart';
-import 'package:kukelola_flutter/core/widgets/button_loading.dart';
 import 'package:kukelola_flutter/core/widgets/summary_detail_status.dart';
+import 'package:kukelola_flutter/networking/model/leave_summary_grid.dart';
 import 'package:kukelola_flutter/view/base_view.dart';
-import 'package:kukelola_flutter/view/overtime_summary_detail/overtime_summary_detail_controller.dart';
 
-class OvertimeSummaryDetailView extends StatelessWidget {
+class LeaveSummaryDetailView extends StatelessWidget {
 
-  OvertimeSummaryDetailView({@required this.index, @required this.item});
+  LeaveSummaryDetailView({@required this.item});
 
-  final OvertimeRequestFormObject item;
-  final int index;
+  final LeaveSummaryGridData item;
 
-  var _overtimeSummaryDetailCt = Get.put(OvertimeSummaryDetailController());
+  bool _isSpecialLeave() => item.specialLeave != '';
 
   Widget _content(String title, String content, bool isAttachment) {
     return Expanded(
@@ -56,17 +52,17 @@ class OvertimeSummaryDetailView extends StatelessWidget {
                         Row(
                           children: [
                             Flexible(
-                              child: Text('Overtime', style: ThemeTextStyle.biryaniBold.apply(color: Colors.white, fontSizeDelta: 18.ssp),),
+                              child: Text(item.leaveType, style: ThemeTextStyle.biryaniBold.apply(color: Colors.white, fontSizeDelta: 18.ssp),),
                             ),
                             SizedBox(width: 4.w,),
-                            SummaryDetailStatus(color: Color(0xFFC3C3C3), label: item.status),
+                            SummaryDetailStatus(color: Color(0xFF1AB394), label: 'APPROVED'),
                           ],
                         ),
                         SizedBox(height: 4.h,),
-                        Text('${item.overtimeDate} ${item.startHour} - ${item.endHour}', style: ThemeTextStyle.biryaniRegular.apply(color: Colors.white, fontSizeDelta: 12.ssp),),
+                        Text('${item.startDate} - ${item.endDate}', style: ThemeTextStyle.biryaniRegular.apply(color: Colors.white, fontSizeDelta: 12.ssp),),
                         SizedBox(height: 16.h,),
-                        Text('Newt Salamander / Field Officer', style: ThemeTextStyle.biryaniRegular.apply(color: Colors.white, fontSizeDelta: 12.ssp),),
-                        Text('K0090192', style: ThemeTextStyle.biryaniRegular.apply(color: Colors.white, fontSizeDelta: 12.ssp),),
+                        Text('${item.employeeName} / ${item.jobTitle}', style: ThemeTextStyle.biryaniRegular.apply(color: Colors.white, fontSizeDelta: 12.ssp),),
+                        Text(item.nip, style: ThemeTextStyle.biryaniRegular.apply(color: Colors.white, fontSizeDelta: 12.ssp),),
                         SizedBox(height: 24.h,)
                       ],
                     ),
@@ -90,38 +86,25 @@ class OvertimeSummaryDetailView extends StatelessWidget {
                       SizedBox(height: 24.h,),
                       Row(
                         children: [
-                          _content('START', item.startHour, false),
+                          _content(_isSpecialLeave() ? 'SPECIAL LEAVE' : 'LEAVE TYPE', _isSpecialLeave() ? item.specialLeave : item.leaveType, false),
                           SizedBox(width: 10.w,),
-                          _content('END', item.endHour, false)
+                          _content('TOTAL DAYS', '${item.totalDays}', false)
                         ],
                       ),
                       SizedBox(height: 24.h,),
                       Row(
                         children: [
-                          _content('DESCRIPTION', item.reason, false)
+                          _content('DESCRIPTION', item.description, false)
                         ],
                       ),
                       SizedBox(height: 24.h,),
                       Row(
                         children: [
-                          _content('APPROVAL DATE', '-', false),
+                          _content('APPROVAL DATE', item.approvalDate, false),
                           SizedBox(width: 10.w,),
-                          _content('ATTACHMENT', item.attachment.path, true)
+                          _content('ATTACHMENT', '-', true)
                         ],
                       ),
-                      SizedBox(height: item.status == 'PENDING' ? 24.h : 0,),
-                      item.status == 'PENDING' ?
-                      Obx(() => ButtonLoading(
-                          backgroundColor: ThemeColor.primary,
-                          disable: _overtimeSummaryDetailCt.loadingCancel.value,
-                          title: 'Cancel',
-                          loading: _overtimeSummaryDetailCt.loadingCancel.value,
-                          onTap: () => _overtimeSummaryDetailCt.cancelLeave(index),
-                          verticalPadding: 14.h,
-                          textStyle: ThemeTextStyle.biryaniBold.apply(color: Colors.white, fontSizeDelta: 14.ssp),
-                        ),
-                      ) :
-                      Container(),
                       SizedBox(height: 24.h,)
                     ],
                   ),

@@ -19,9 +19,7 @@ class FamilyDataView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
 
-    Future.delayed(Duration.zero, () {
-      if (_familiesCt.listFamily.length == 0) _familiesCt.populateData();
-    });
+    _familiesCt.populateData();
 
     return BaseView(
       body: Stack(

@@ -17,8 +17,10 @@ class CommonController extends GetxController {
   var inputTapHeight = (0.0).obs;
   var loadingLogout = false.obs;
   var autoLogin = false.obs;
+  var standartDropdownItemSize = Size(0, 0).obs;
   SharedPreferences preferences;
 
+  setStandartDropdownItemSize(value) => standartDropdownItemSize.value = value;
   setAutoLogin(bool value) => autoLogin.value = value;
   setCloseapps(value) => closeApps.value = value;
   setNotConnected(value) => notConnected.value = value;

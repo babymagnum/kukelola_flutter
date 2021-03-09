@@ -42,6 +42,7 @@ class _PersonalDataViewState extends State<PersonalDataView> {
 
     final RenderBox renderBoxRed = key.currentContext.findRenderObject();
     final position = renderBoxRed.localToGlobal(Offset.zero);
+    final parentHeight = ((commonController.standartDropdownItemSize.value.height + 5.h) * list.length) + 10.h;
 
     showDialog(
       context: context,
@@ -51,23 +52,26 @@ class _PersonalDataViewState extends State<PersonalDataView> {
           Container(width: Get.width, height: Get.height,),
           Positioned(
             left: 24.w, right: 24.w,
-            top: position.dy > Get.height - 150.h ? Get.height / 2 : position.dy + context.mediaQueryPadding.top,
+            top: position.dy > Get.height - parentHeight - context.mediaQueryPadding.top ? Get.height - parentHeight - context.mediaQueryPadding.top : position.dy,
             child: Column(
               children: [
                 Parent(
-                  style: ParentStyle()..width(Get.width)..maxHeight(150.h)..borderRadius(bottomLeft: 6, bottomRight: 6)
+                  style: ParentStyle()..width(Get.width)..maxHeight(150.h)..borderRadius(all: 6)
                     ..background.color(Colors.white)..boxShadow(color: Colors.black.withOpacity(0.05), blur: 6, spread: 0, offset: Offset(0, 2)),
-                  child: ListView.separated(
-                    shrinkWrap: true,
-                    itemCount: list.length,
-                    itemBuilder: (_, index) => ListStandartDropdownItem(
-                      content: list[index].label,
-                      onClick: () {
-                        onSelect(list[index].id);
-                        Get.back();
-                      },
+                  child: CupertinoScrollbar(
+                    child: ListView.separated(
+                      shrinkWrap: true,
+                      padding: EdgeInsets.symmetric(vertical: 5.h),
+                      itemCount: list.length,
+                      itemBuilder: (_, index) => ListStandartDropdownItem(
+                        content: list[index].label,
+                        onClick: () {
+                          onSelect(list[index].id);
+                          Get.back();
+                        },
+                      ),
+                      separatorBuilder: (_, __) => Divider(color: Colors.transparent, height: 5.h,),
                     ),
-                    separatorBuilder: (_, __) => Divider(color: Colors.transparent, height: 5.h,),
                   ),
                 ),
               ],

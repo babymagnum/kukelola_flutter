@@ -79,18 +79,20 @@ class _AddEducationViewState extends State<AddEducationView> {
                 Parent(
                   style: ParentStyle()..width(Get.width)..maxHeight(150.h)..borderRadius(bottomLeft: 6, bottomRight: 6)
                     ..background.color(Colors.white)..boxShadow(color: Colors.black.withOpacity(0.05), blur: 6, spread: 0, offset: Offset(0, 2)),
-                  child: ListView.separated(
-                    shrinkWrap: true,
-                    padding: EdgeInsets.symmetric(vertical: 10.h),
-                    itemCount: list.length,
-                    itemBuilder: (_, index) => ListStandartDropdownItem(
-                      content: list[index].label,
-                      onClick: () {
-                        onSelect(list[index].id);
-                        Navigator.pop(context);
-                      },
+                  child: CupertinoScrollbar(
+                    child: ListView.separated(
+                      shrinkWrap: true,
+                      padding: EdgeInsets.symmetric(vertical: 10.h),
+                      itemCount: list.length,
+                      itemBuilder: (_, index) => ListStandartDropdownItem(
+                        content: list[index].label,
+                        onClick: () {
+                          onSelect(list[index].id);
+                          Navigator.pop(context);
+                        },
+                      ),
+                      separatorBuilder: (_, __) => Divider(color: Colors.transparent, height: 10.h,),
                     ),
-                    separatorBuilder: (_, __) => Divider(color: Colors.transparent, height: 10.h,),
                   ),
                 ),
               ],
