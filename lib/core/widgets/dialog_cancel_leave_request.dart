@@ -8,11 +8,12 @@ import 'package:kukelola_flutter/core/widgets/button_loading_bordered.dart';
 
 class DialogCancelLeaveRequest extends StatelessWidget {
 
-  DialogCancelLeaveRequest({@required this.action2Click, this.action2Content = 'Yes', this.description = "Are you sure you want to cancel request? You can't undo this action."});
+  DialogCancelLeaveRequest({this.color = const Color(0xFFED5565), @required this.action2Click, this.action2Content = 'Yes', this.description = "Are you sure you want to Cancel the request? You can't undo this action."});
 
   final Function action2Click;
   final String description;
   final String action2Content;
+  final Color color;
 
   @override
   Widget build(BuildContext context) {
@@ -32,20 +33,20 @@ class DialogCancelLeaveRequest extends StatelessWidget {
                   children: <Widget>[
                     Expanded(
                       child: ButtonLoadingBordered(
-                        borderColor: Color(0xFFED5565),
+                        borderColor: color,
                         disable: false,
                         title: 'No',
                         loading: false,
                         onTap: () => Get.back(),
                         borderRadius: 6,
                         verticalPadding: 6.h,
-                        textStyle: ThemeTextStyle.biryaniBold.apply(color: Color(0xFFED5565), fontSizeDelta: 12.ssp),
+                        textStyle: ThemeTextStyle.biryaniBold.apply(color: color, fontSizeDelta: 12.ssp),
                       ),
                     ),
                     SizedBox(width: 10.w,),
                     Expanded(
                       child: ButtonLoading(
-                        backgroundColor: Color(0xFFED5565),
+                        backgroundColor: color,
                         disable: false,
                         title: action2Content,
                         loading: false,

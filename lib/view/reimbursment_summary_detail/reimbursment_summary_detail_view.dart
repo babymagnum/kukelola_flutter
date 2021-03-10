@@ -4,24 +4,17 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
-import 'package:kukelola_flutter/core/model/static_model.dart';
-import 'package:kukelola_flutter/core/theme/theme_color.dart';
 import 'package:kukelola_flutter/core/theme/theme_text_style.dart';
 import 'package:kukelola_flutter/core/widgets/button_back.dart';
-import 'package:kukelola_flutter/core/widgets/button_loading.dart';
 import 'package:kukelola_flutter/core/widgets/summary_detail_status.dart';
+import 'package:kukelola_flutter/networking/model/reimbursment_summary_grid.dart';
 import 'package:kukelola_flutter/view/base_view.dart';
-import 'package:kukelola_flutter/view/reimbursment_summary_detail/reimbursment_summary_detail_controller.dart';
-import 'package:kukelola_flutter/view/reimbursment_summary_detail/widget/list_reimbursment_summary_detail_item.dart';
 
 class ReimbursmentSummaryDetailView extends StatelessWidget {
 
-  ReimbursmentSummaryDetailView({@required this.index, @required this.item});
+  ReimbursmentSummaryDetailView({@required this.item});
 
-  final ReimbursmentRequestForm item;
-  final int index;
-
-  var _reimbursmentSummaryDetailCt = Get.put(ReimbursmentSummaryDetailController());
+  final ReimbursmentSummaryGridData item;
 
   Widget _content(String title, String content, bool isAttachment) {
     return Expanded(
@@ -60,14 +53,14 @@ class ReimbursmentSummaryDetailView extends StatelessWidget {
                               child: Text('Reimbursment', style: ThemeTextStyle.biryaniBold.apply(color: Colors.white, fontSizeDelta: 18.ssp),),
                             ),
                             SizedBox(width: 4.w,),
-                            SummaryDetailStatus(color: Color(0xFFC3C3C3), label: item.status),
+                            SummaryDetailStatus(color: Color(0xFF1AB394), label: 'APPROVED'),
                           ],
                         ),
                         SizedBox(height: 4.h,),
                         Text('11/01/2021 19:00', style: ThemeTextStyle.biryaniRegular.apply(color: Colors.white, fontSizeDelta: 12.ssp),),
                         SizedBox(height: 16.h,),
-                        Text('Newt Salamander / Field Officer', style: ThemeTextStyle.biryaniRegular.apply(color: Colors.white, fontSizeDelta: 12.ssp),),
-                        Text('K0090192', style: ThemeTextStyle.biryaniRegular.apply(color: Colors.white, fontSizeDelta: 12.ssp),),
+                        Text('${item.name} / ${item.jobTitle}', style: ThemeTextStyle.biryaniRegular.apply(color: Colors.white, fontSizeDelta: 12.ssp),),
+                        Text(item.nip, style: ThemeTextStyle.biryaniRegular.apply(color: Colors.white, fontSizeDelta: 12.ssp),),
                         SizedBox(height: 24.h,)
                       ],
                     ),
@@ -91,51 +84,38 @@ class ReimbursmentSummaryDetailView extends StatelessWidget {
                       SizedBox(height: 24.h,),
                       Row(
                         children: [
-                          _content('DESCRIPTION', item.reason, false)
+                          _content('DESCRIPTION', item.description, false)
                         ],
                       ),
                       SizedBox(height: 24.h,),
+                      // Row(
+                      //   children: [
+                      //     Expanded(
+                      //       child: Text('ITEM DESCRIPTION', style: ThemeTextStyle.biryaniBold.apply(color: Color(0xFFC4C4C4), fontSizeDelta: 10.ssp),),
+                      //     ),
+                      //     SizedBox(width: 10.w,),
+                      //     Expanded(
+                      //       child: Text('ITEM COST', style: ThemeTextStyle.biryaniBold.apply(color: Color(0xFFC4C4C4), fontSizeDelta: 10.ssp),),
+                      //     ),
+                      //   ],
+                      // ),
+                      // SizedBox(height: 8.h,),
+                      // Parent(style: ParentStyle()..height(1)..background.color(Color(0xFFC4C4C4))..width(Get.width),),
+                      // ListView.separated(
+                      //   padding: EdgeInsets.only(top: 16.h, bottom: 16.h),
+                      //   shrinkWrap: true,
+                      //   physics: NeverScrollableScrollPhysics(),
+                      //   itemBuilder: (_, index) => ListReimbursmentSummaryDetailItem(item: item.listDetails[index]),
+                      //   separatorBuilder: (_, __) => Divider(height: 16.h, color: Colors.transparent,),
+                      //   itemCount: item.listDetails.length,
+                      // ),
                       Row(
                         children: [
-                          Expanded(
-                            child: Text('ITEM DESCRIPTION', style: ThemeTextStyle.biryaniBold.apply(color: Color(0xFFC4C4C4), fontSizeDelta: 10.ssp),),
-                          ),
+                          _content('APPROVAL DATE', item.approvalDate, false),
                           SizedBox(width: 10.w,),
-                          Expanded(
-                            child: Text('ITEM COST', style: ThemeTextStyle.biryaniBold.apply(color: Color(0xFFC4C4C4), fontSizeDelta: 10.ssp),),
-                          ),
+                          _content('ATTACHMENT', '-', true)
                         ],
                       ),
-                      SizedBox(height: 8.h,),
-                      Parent(style: ParentStyle()..height(1)..background.color(Color(0xFFC4C4C4))..width(Get.width),),
-                      ListView.separated(
-                        padding: EdgeInsets.only(top: 16.h, bottom: 16.h),
-                        shrinkWrap: true,
-                        physics: NeverScrollableScrollPhysics(),
-                        itemBuilder: (_, index) => ListReimbursmentSummaryDetailItem(item: item.listDetails[index]),
-                        separatorBuilder: (_, __) => Divider(height: 16.h, color: Colors.transparent,),
-                        itemCount: item.listDetails.length,
-                      ),
-                      Row(
-                        children: [
-                          _content('APPROVAL DATE', '-', false),
-                          SizedBox(width: 10.w,),
-                          _content('ATTACHMENT', item.attachment.path, true)
-                        ],
-                      ),
-                      SizedBox(height: item.status == 'PENDING' ? 24.h : 0,),
-                      item.status == 'PENDING' ?
-                      Obx(() => ButtonLoading(
-                          backgroundColor: ThemeColor.primary,
-                          disable: _reimbursmentSummaryDetailCt.loadingCancel.value,
-                          title: 'Cancel',
-                          loading: _reimbursmentSummaryDetailCt.loadingCancel.value,
-                          onTap: () => _reimbursmentSummaryDetailCt.cancelLeave(index),
-                          verticalPadding: 14.h,
-                          textStyle: ThemeTextStyle.biryaniBold.apply(color: Colors.white, fontSizeDelta: 14.ssp),
-                        ),
-                      ) :
-                      Container(),
                       SizedBox(height: 24.h,)
                     ],
                   ),

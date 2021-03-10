@@ -17,13 +17,12 @@ class CompletedRequestTab extends StatefulWidget {
 class _CompletedRequestTabState extends State<CompletedRequestTab> with AutomaticKeepAliveClientMixin {
 
   var _completedRequestCt = Get.find<CompletedRequestController>();
-  var _workflowApprovalFilterCt = Get.find<WorkflowApprovalFilterController>();
 
   @override
   void initState() {
     super.initState();
 
-    Future.delayed(Duration.zero, () => _completedRequestCt.getCompletedRequest(_workflowApprovalFilterCt.form.value));
+    Future.delayed(Duration.zero, () => _completedRequestCt.getCompletedRequest());
   }
 
   @override
@@ -44,7 +43,7 @@ class _CompletedRequestTabState extends State<CompletedRequestTab> with Automati
       Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          ButtonReload(onTap: () => _completedRequestCt.getCompletedRequest(_workflowApprovalFilterCt.form.value))
+          ButtonReload(onTap: () => _completedRequestCt.getCompletedRequest())
         ],
       ) :
       _completedRequestCt.listCompletedRequest.length == 0 ?

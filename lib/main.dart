@@ -1,5 +1,7 @@
 import 'dart:async';
+import 'dart:io';
 import 'package:connectivity/connectivity.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:kukelola_flutter/core/controller/common_controller.dart';
@@ -7,14 +9,15 @@ import 'package:kukelola_flutter/core/helper/LocalesString.dart';
 import 'package:kukelola_flutter/core/helper/constant.dart';
 import 'package:kukelola_flutter/view/container_home/container_home_view.dart';
 import 'package:kukelola_flutter/view/home/home_controller.dart';
+import 'package:kukelola_flutter/view/leave_summary/leave_summary_view.dart';
 import 'package:kukelola_flutter/view/login/login_view.dart';
 import 'package:kukelola_flutter/view/onboarding/onboarding_view.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:kukelola_flutter/view/verification_code/verification_code_view.dart';
-import 'package:kukelola_flutter/view/workflow_approval/controller/completed_request_controller.dart';
-import 'package:kukelola_flutter/view/workflow_approval/controller/workflow_approval_filter_controller.dart';
+
+import 'core/helper/text_util.dart';
 
 final globalNavigatorKey = GlobalKey<NavigatorState>();
 final firebaseMessaging = FirebaseMessaging();
@@ -32,7 +35,7 @@ void main() async {
 class MyApp extends StatefulWidget {
 
   // Don't forget to change BASE_API to Constant.API_PRODUCTION when building apk / when testing live server //
-  static const BASE_API = Constant.API_PRODUCTION;
+  static const BASE_API = Constant.API_DEVELOPMENT;
 
   @override
   _MyAppState createState() => _MyAppState();
@@ -40,7 +43,7 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
 
-  StreamSubscription _connection;
+  StreamSubscription _connection, _fcmRefreshToken;
 
   _connectivityResult(ConnectivityResult result) {
     if (result == ConnectivityResult.mobile) {
@@ -50,6 +53,95 @@ class _MyAppState extends State<MyApp> {
     } else {
       commonController.setNotConnected(true);
     }
+  }
+
+  _navigateTo(String redirect) {
+    if (redirect == 'main') {
+      Get.to(LeaveSummaryView());
+    }
+  }
+
+  _redirectTo(Map<String, dynamic> message) async {
+    final redirect = Platform.isAndroid ? message['data']['type'].toString() ?? '' : message['type'].toString() ?? '';
+
+    _navigateTo(redirect);
+  }
+
+  _onSelectNotification(Map<String, dynamic> message) async {
+    final redirect = Platform.isAndroid ? message['data']['type'].toString() ?? '' : message['type'].toString() ?? '';
+    final showForegroundNotification = commonController.preferences.getBool(Constant.SHOW_FOREGROUND_NOTIFICATION) ?? false;
+
+    if (showForegroundNotification) _navigateTo(redirect);
+  }
+
+  _showAndroidNotification(Map<String, dynamic> message) async {
+    var androidSetting = AndroidInitializationSettings('kukelola_logo');
+    var iosSetting = IOSInitializationSettings();
+    var initializationSettings = InitializationSettings(android: androidSetting, iOS: iosSetting);
+    FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
+    flutterLocalNotificationsPlugin.initialize(initializationSettings, onSelectNotification: (_) => _onSelectNotification(message));
+
+    String title = message['notification']['title'];
+    String body = message['notification']['body'];
+
+    var androidPlatformChannelSpecifics = AndroidNotificationDetails(
+        'com.netika.kukelola', 'com.netika.kukelola', 'com.netika.kukelola',
+        importance: Importance.max, priority: Priority.high);
+    var iOSPlatformChannelSpecifics = IOSNotificationDetails();
+    var platformChannelSpecifics = NotificationDetails(android: androidPlatformChannelSpecifics, iOS: iOSPlatformChannelSpecifics);
+    await flutterLocalNotificationsPlugin.show(TextUtil.randomInt(0, 1000), title, body, platformChannelSpecifics);
+  }
+
+  _fcmListener() {
+    firebaseMessaging.configure(
+      /// Android : For now fired when apps is in foreground
+      onMessage: (Map<String, dynamic> message) async {
+        await commonController.preferences.setBool(Constant.SHOW_FOREGROUND_NOTIFICATION, false);
+        if (Platform.isAndroid) await _showAndroidNotification(message);
+        print("onMessage: $message");
+
+        // below code is use only in android platform to prevent onmessage called when notification is not clicked
+        Future.delayed(Duration(milliseconds: 500), () async => await commonController.preferences.setBool(Constant.SHOW_FOREGROUND_NOTIFICATION, true));
+
+        return Future.value(true);
+      },
+      /// Android : Fired when notification clicked and the apps is killed
+      onLaunch: (Map<String, dynamic> message) async {
+        String title = message['notification']['title'] ?? '';
+
+        if (Platform.isAndroid && title != '') await _showAndroidNotification(message);
+        print("onLaunch: $message");
+        _redirectTo(message);
+        return Future.value(true);
+      },
+      /// Fired when notification clicked and apps is in background
+      onResume: (Map<String, dynamic> message) async {
+        String title = message['notification']['title'] ?? '';
+
+        if (Platform.isAndroid && title != '') await _showAndroidNotification(message);
+        print("onResume: $message");
+        _redirectTo(message);
+        return Future.value(true);
+      },
+    );
+  }
+
+  _initFCM() async {
+    firebaseMessaging.requestNotificationPermissions(IosNotificationSettings(sound: true, badge: true, alert: true, provisional: true));
+    await _getFcmToken();
+    _fcmListener();
+  }
+
+  _getFcmToken() async {
+    firebaseMessaging.getToken().then((String token) async {
+      assert(token != null);
+      print("FCM_TOKEN $token");
+      await commonController.preferences.setString(Constant.FCM_TOKEN, token);
+    });
+    _fcmRefreshToken = firebaseMessaging.onTokenRefresh.listen((newToken) {
+      print("NEW_FCM_TOKEN $newToken");
+      if (newToken != commonController.preferences.getString(Constant.FCM_TOKEN)) commonController.preferences.setString(Constant.FCM_TOKEN, newToken);
+    });
   }
 
   Widget _initView() {
@@ -71,6 +163,7 @@ class _MyAppState extends State<MyApp> {
   @override
   void dispose() {
     _connection?.cancel();
+    _fcmRefreshToken?.cancel();
 
     super.dispose();
   }
@@ -78,6 +171,8 @@ class _MyAppState extends State<MyApp> {
   @override
   void initState() {
     super.initState();
+
+    _initFCM();
 
     Connectivity().checkConnectivity().then((result) => _connectivityResult(result));
 

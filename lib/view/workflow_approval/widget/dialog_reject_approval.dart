@@ -93,7 +93,7 @@ class _DialogRejectApprovalState extends State<DialogRejectApproval> {
                     _ongoingRequestCt.rejectRequest(widget.index);
                     Get.back();
                   },
-                  verticalPadding: 10.h,
+                  verticalPadding: 7.h,
                   textStyle: ThemeTextStyle.biryaniBold.apply(color: Colors.white, fontSizeDelta: 14.ssp),
                 ),
               ],

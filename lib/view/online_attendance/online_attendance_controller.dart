@@ -34,7 +34,7 @@ class OnlineAttendanceController extends GetxController {
 
   submit() async {
     loadingSubmit.value = true;
-    final data = await Service().attendanceOnline(AttendanceOnlineRequest(clock.value.split(' ')[0], clock.value.split(' ')[1], isIn.value ? 1 : 2, latLng.value.latitude, latLng.value.longitude));
+    final data = await Service().attendanceOnline(AttendanceOnlineRequest(clock.value.split(' ')[0], clock.value.split(' ')[1].substring(0, clock.value.split(' ')[1].length - 3), isIn.value ? 1 : 2, latLng.value.latitude, latLng.value.longitude));
     loadingSubmit.value = false;
 
     if (data?.isSuccess ?? false) {

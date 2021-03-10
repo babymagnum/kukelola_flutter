@@ -1,8 +1,10 @@
+import 'package:kukelola_flutter/networking/model/attendance_summary_grid.dart';
 import 'package:kukelola_flutter/networking/model/corporate_calendar.dart';
 import 'package:kukelola_flutter/networking/model/leave_summary_grid.dart';
 import 'package:kukelola_flutter/networking/model/overtime_request_post.dart';
 import 'package:kukelola_flutter/networking/model/overtime_summary_grid.dart';
 import 'package:kukelola_flutter/networking/model/payslip.dart';
+import 'package:kukelola_flutter/networking/model/reimbursment_summary_grid.dart';
 import 'package:kukelola_flutter/networking/model/special_leave_list.dart';
 import 'package:kukelola_flutter/networking/model/staff.dart';
 import 'package:kukelola_flutter/networking/model/staff_education.dart';
@@ -159,5 +161,16 @@ class Service extends BaseService {
 
   Future<OvertimeSummaryGrid> overtimeSummaryGrid(SummaryGridRequest request) async {
     return await postJsonBody('${MyApp.BASE_API}api/OvertimeRequest/SummaryGrid', request.body());
+  }
+
+  Future<ReimbursmentSummaryGrid> reimbursmentSummaryGrid(SummaryGridRequest request) async {
+    return await postJsonBody('${MyApp.BASE_API}api/ReimbursementRequest/SummaryGrid', request.body());
+  }
+
+  Future<AttendanceSummaryGrid> attendanceSummaryGrid(String startDate) async {
+    return await postJsonBody('${MyApp.BASE_API}api/AttendanceRequest/SummaryGrid', {
+      "UserId": homeController.userData.value.id,
+      "StartDate": startDate
+    });
   }
 }

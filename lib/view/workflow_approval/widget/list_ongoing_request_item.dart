@@ -80,7 +80,7 @@ class ListOngoingRequestItem extends StatelessWidget {
                 disable: item.loadingCancel,
                 title: 'Cancel',
                 loading: item.loadingCancel,
-                onTap: () => Get.dialog(DialogCancelLeaveRequest(action2Click: () => _ongoingRequestCt.cancelRequest(index))),
+                onTap: () => Get.dialog(DialogCancelLeaveRequest(color: Color(0xFFF85C58), action2Click: () => _ongoingRequestCt.cancelRequest(index))),
                 textStyle: ThemeTextStyle.biryaniSemiBold.apply(color: Colors.white, fontSizeDelta: 10.ssp),
                 verticalPadding: 5.h,
                 horizontalPadding: 17.w,
@@ -98,7 +98,7 @@ class ListOngoingRequestItem extends StatelessWidget {
                 disable: item.loadingApprove,
                 title: 'Approve',
                 loading: item.loadingApprove,
-                onTap: () => Get.dialog(DialogCancelLeaveRequest(action2Click: () => _ongoingRequestCt.approveRequest(index))),
+                onTap: () => Get.dialog(DialogCancelLeaveRequest(color: Color(0xFF158AC9), description: "Are you sure you want to Approve the request? You can't undo this action.", action2Click: () => _ongoingRequestCt.approveRequest(index))),
                 textStyle: ThemeTextStyle.biryaniSemiBold.apply(color: Colors.white, fontSizeDelta: 10.ssp),
                 verticalPadding: 5.h,
                 horizontalPadding: 17.w,
@@ -120,7 +120,7 @@ class ListOngoingRequestItem extends StatelessWidget {
               )
             ],
           ) :
-          Container()
+          Container(),
         ],
       ),
     );

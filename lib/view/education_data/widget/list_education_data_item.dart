@@ -29,17 +29,23 @@ class ListEducationDataItem extends StatelessWidget {
           Row(
             children: [
               Expanded(
-                child: RichText(
-                  text: TextSpan(
-                    text: (item.major ?? '') == '' ? 'No Major' : item.major,
-                    style: ThemeTextStyle.biryaniRegular.apply(color: Color(0xFF6D6D6D), fontSizeDelta: 10.ssp),
-                    children: [
-                      TextSpan(
-                          text: '- ${item.score}',
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(item.institution, style: ThemeTextStyle.biryaniRegular.apply(color: Color(0xFF6D6D6D), fontSizeDelta: 10.ssp),),
+                    RichText(
+                      text: TextSpan(
+                          text: (item.major ?? '') == '' ? 'No Major' : item.major,
                           style: ThemeTextStyle.biryaniRegular.apply(color: Color(0xFF6D6D6D), fontSizeDelta: 10.ssp),
-                      )
-                    ]
-                  ),
+                          children: [
+                            TextSpan(
+                              text: '- ${item.score}',
+                              style: ThemeTextStyle.biryaniRegular.apply(color: Color(0xFF6D6D6D), fontSizeDelta: 10.ssp),
+                            )
+                          ]
+                      ),
+                    )
+                  ],
                 ),
               ),
               SizedBox(width: 10.w,),

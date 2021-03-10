@@ -1,10 +1,12 @@
 import 'package:dio/dio.dart';
 import 'package:kukelola_flutter/core/helper/constant.dart';
+import 'package:kukelola_flutter/generated/json/attendance_summary_grid_helper.dart';
 import 'package:kukelola_flutter/generated/json/corporate_calendar_helper.dart';
 import 'package:kukelola_flutter/generated/json/leave_summary_grid_helper.dart';
 import 'package:kukelola_flutter/generated/json/overtime_request_post_helper.dart';
 import 'package:kukelola_flutter/generated/json/overtime_summary_grid_helper.dart';
 import 'package:kukelola_flutter/generated/json/payslip_helper.dart';
+import 'package:kukelola_flutter/generated/json/reimbursment_summary_grid_helper.dart';
 import 'package:kukelola_flutter/generated/json/special_leave_list_helper.dart';
 import 'package:kukelola_flutter/generated/json/staff_education_helper.dart';
 import 'package:kukelola_flutter/generated/json/staff_education_insert_helper.dart';
@@ -18,11 +20,13 @@ import 'package:kukelola_flutter/generated/json/token_helper.dart';
 import 'package:kukelola_flutter/generated/json/user_helper.dart';
 import 'package:kukelola_flutter/generated/json/workflow_grid_helper.dart';
 import 'package:kukelola_flutter/main.dart';
+import 'package:kukelola_flutter/networking/model/attendance_summary_grid.dart';
 import 'package:kukelola_flutter/networking/model/corporate_calendar.dart';
 import 'package:kukelola_flutter/networking/model/leave_summary_grid.dart';
 import 'package:kukelola_flutter/networking/model/overtime_request_post.dart';
 import 'package:kukelola_flutter/networking/model/overtime_summary_grid.dart';
 import 'package:kukelola_flutter/networking/model/payslip.dart';
+import 'package:kukelola_flutter/networking/model/reimbursment_summary_grid.dart';
 import 'package:kukelola_flutter/networking/model/special_leave_list.dart';
 import 'package:kukelola_flutter/networking/model/staff.dart';
 import 'package:kukelola_flutter/networking/model/staff_education.dart';
@@ -246,6 +250,10 @@ class BaseService {
       return leaveSummaryGridFromJson(LeaveSummaryGrid(), json) as T;
     } else if (T == OvertimeSummaryGrid) {
       return overtimeSummaryGridFromJson(OvertimeSummaryGrid(), json) as T;
+    } else if (T == ReimbursmentSummaryGrid) {
+      return reimbursmentSummaryGridFromJson(ReimbursmentSummaryGrid(), json) as T;
+    } else if (T == AttendanceSummaryGrid) {
+      return attendanceSummaryGridFromJson(AttendanceSummaryGrid(), json) as T;
     } else {
       // if this print statement occured, this means that you're not register the model class in here
       print('Unknown class, dont forget to add your model in BaseService.dart to parse the json');

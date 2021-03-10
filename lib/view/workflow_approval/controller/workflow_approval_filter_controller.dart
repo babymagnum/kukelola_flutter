@@ -32,10 +32,10 @@ class WorkflowApprovalFilterController extends GetxController {
     Get.back();
 
     if (_workflowApprovalCt.currentPage.value == 0) {
-      await _ongoingRequestCt.getOngoingRequest(form.value);
+      await _ongoingRequestCt.getOngoingRequest();
       if (!_ongoingRequestCt.errorRequest.value) setForm(WorkflowApprovalFilterForm());
     } else {
-      await _completedRequestCt.getCompletedRequest(form.value);
+      await _completedRequestCt.getCompletedRequest();
       if (!_completedRequestCt.errorRequest.value) setForm(WorkflowApprovalFilterForm());
     }
   }

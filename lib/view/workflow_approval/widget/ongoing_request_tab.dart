@@ -17,13 +17,12 @@ class OngoingRequestTab extends StatefulWidget {
 class _OngoingRequestTabState extends State<OngoingRequestTab> with AutomaticKeepAliveClientMixin {
 
   var _ongoingRequestCt = Get.find<OngoingRequestController>();
-  var _workflowApprovalFilterCt = Get.find<WorkflowApprovalFilterController>();
 
   @override
   void initState() {
     super.initState();
 
-    Future.delayed(Duration.zero, () => _ongoingRequestCt.getOngoingRequest(_workflowApprovalFilterCt.form.value));
+    Future.delayed(Duration.zero, () => _ongoingRequestCt.getOngoingRequest());
   }
 
   @override
@@ -47,7 +46,7 @@ class _OngoingRequestTabState extends State<OngoingRequestTab> with AutomaticKee
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              ButtonReload(onTap: () => _ongoingRequestCt.getOngoingRequest(_workflowApprovalFilterCt.form.value)),
+              ButtonReload(onTap: () => _ongoingRequestCt.getOngoingRequest()),
             ],
           )
         ],

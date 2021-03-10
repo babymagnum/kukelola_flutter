@@ -1,10 +1,11 @@
 import 'package:get/get.dart';
 import 'package:kukelola_flutter/core/helper/common_function.dart';
-import 'package:kukelola_flutter/core/model/static_model.dart';
 import 'package:kukelola_flutter/networking/model/workflow_grid.dart';
 import 'package:kukelola_flutter/networking/request/reject_request.dart';
 import 'package:kukelola_flutter/networking/request/workflow_approval_request.dart';
 import 'package:kukelola_flutter/networking/service/service.dart';
+import 'package:kukelola_flutter/view/workflow_approval/controller/completed_request_controller.dart';
+import 'package:kukelola_flutter/view/workflow_approval/controller/workflow_approval_filter_controller.dart';
 
 class OngoingRequestController extends GetxController {
   var rejectReason = ''.obs;
@@ -15,7 +16,10 @@ class OngoingRequestController extends GetxController {
 
   setRejectReason(String value) => rejectReason.value = value;
 
-  getOngoingRequest(WorkflowApprovalFilterForm form) async {
+  getOngoingRequest() async {
+    final _workflowApprovalFilterCt = Get.find<WorkflowApprovalFilterController>();
+    final form = _workflowApprovalFilterCt.form.value;
+
     loadingRequest.value = true;
     final data = await Service().workFlowGrid(WorkflowApprovalRequest(form.keyword, true, int.parse(form.periode.split('/')[0]), form.request.id, form.route.id, int.parse(form.periode.split('/')[1])));
     loadingRequest.value = false;
@@ -30,6 +34,8 @@ class OngoingRequestController extends GetxController {
   }
 
   cancelRequest(int index) async {
+    final _completedRequestCt = Get.find<CompletedRequestController>();
+
     var item = listOngoingRequest[index];
     item.loadingCancel = true;
     listOngoingRequest[index] = item;
@@ -37,16 +43,18 @@ class OngoingRequestController extends GetxController {
     item.loadingCancel = false;
 
     if (data?.isSuccess ?? false) {
-      item.workflowStatus = 3;
+      listOngoingRequest.removeAt(index);
+      _completedRequestCt.getCompletedRequest();
       CommonFunction.standartSnackbar('Request cancelled succesfully');
     } else {
+      listOngoingRequest[index] = item;
       CommonFunction.standartSnackbar('Request cancelled fail');
     }
-
-    listOngoingRequest[index] = item;
   }
 
   approveRequest(int index) async {
+    final _completedRequestCt = Get.find<CompletedRequestController>();
+
     var item = listOngoingRequest[index];
     item.loadingApprove = true;
     listOngoingRequest[index] = item;
@@ -54,16 +62,18 @@ class OngoingRequestController extends GetxController {
     item.loadingApprove = false;
 
     if (data?.isSuccess ?? false) {
-      item.workflowStatus = 1;
+      listOngoingRequest.removeAt(index);
+      _completedRequestCt.getCompletedRequest();
       CommonFunction.standartSnackbar('Request approved succesfully');
     } else {
+      listOngoingRequest[index] = item;
       CommonFunction.standartSnackbar('Request approved fail');
     }
-
-    listOngoingRequest[index] = item;
   }
 
   rejectRequest(int index) async {
+    final _completedRequestCt = Get.find<CompletedRequestController>();
+
     var item = listOngoingRequest[index];
     item.loadingReject = true;
     listOngoingRequest[index] = item;
@@ -71,13 +81,13 @@ class OngoingRequestController extends GetxController {
     item.loadingReject = false;
 
     if (data?.isSuccess ?? false) {
-      item.workflowStatus = 2;
+      listOngoingRequest.removeAt(index);
+      _completedRequestCt.getCompletedRequest();
       CommonFunction.standartSnackbar('Request rejected succesfully');
     } else {
+      listOngoingRequest[index] = item;
       CommonFunction.standartSnackbar('Request rejected fail');
     }
-
-    listOngoingRequest[index] = item;
   }
 
   changeStatus(int index, int status) {

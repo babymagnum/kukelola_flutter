@@ -149,6 +149,7 @@ class _OnlineAttendanceViewState extends State<OnlineAttendanceView> {
                       title: 'Submit',
                       loading: _onlineAttendanceCt.loadingSubmit.value,
                       onTap: () => _onlineAttendanceCt.submit(),
+                      verticalPadding: 10.h,
                       textStyle: ThemeTextStyle.biryaniBold.apply(color: Color(0xFFF9F7F7), fontSizeDelta: 14.ssp),
                     ),
                     SizedBox(height: 21.h,)

@@ -24,13 +24,6 @@ class _AttendanceSummaryViewState extends State<AttendanceSummaryView> with Tick
   AnimationController _animationCt;
   var _attendanceSummaryCt = Get.put(AttendanceSummaryController());
 
-  Color _statusColor() {
-    if (_attendanceSummaryCt.selectedSummary.value.status == 'PENDING') return Color(0xFFC3C3C3);
-    else if (_attendanceSummaryCt.selectedSummary.value.status == 'APPROVED') return Color(0xFF1AB394);
-    else if (_attendanceSummaryCt.selectedSummary.value.status == 'CANCELLED') return Color(0xFF4D4D4D);
-    else return Color(0xFF6D6D6D);
-  }
-
   Widget _content(String title, String content, bool isAttachment) {
     return Expanded(
       child: Column(
@@ -66,9 +59,9 @@ class _AttendanceSummaryViewState extends State<AttendanceSummaryView> with Tick
               SizedBox(height: 24.h,),
               Row(
                 children: [
-                  _content('START (HOUR)', _attendanceSummaryCt.selectedSummary.value.startHour, false),
+                  _content('START (HOUR)', _attendanceSummaryCt?.selectedSummary?.value?.startHour ?? '-', false),
                   SizedBox(width: 10.w,),
-                  _content('END (HOUR)', _attendanceSummaryCt.selectedSummary.value.endHour, false),
+                  _content('END (HOUR)', _attendanceSummaryCt?.selectedSummary?.value?.endHour ?? '-', false),
                 ],
               ),
               SizedBox(height: 24.h,),
@@ -87,13 +80,13 @@ class _AttendanceSummaryViewState extends State<AttendanceSummaryView> with Tick
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Text('Unpaid Leave', style: ThemeTextStyle.biryaniBold.apply(color: Color(0xFF158AC9), fontSizeDelta: 14.ssp),),
-                              Text('${_attendanceSummaryCt.selectedSummary.value.startDate} - ${_attendanceSummaryCt.selectedSummary.value.endDate}', style: ThemeTextStyle.biryaniRegular.apply(color: Color(0xFF6D6D6D), fontSizeDelta: 10.ssp),),
+                              Text(_attendanceSummaryCt?.selectedSummary?.value?.name ?? '-', style: ThemeTextStyle.biryaniBold.apply(color: Color(0xFF158AC9), fontSizeDelta: 14.ssp),),
+                              Text('${_attendanceSummaryCt.selectedSummary.value.startDate} - ${_attendanceSummaryCt?.selectedSummary?.value?.endDate ?? 'no data'}', style: ThemeTextStyle.biryaniRegular.apply(color: Color(0xFF6D6D6D), fontSizeDelta: 10.ssp),),
                             ],
                           ),
                         ),
                         SizedBox(width: 10.w,),
-                        Text(_attendanceSummaryCt.selectedSummary.value.status, style: ThemeTextStyle.biryaniExtraBold.apply(color: _statusColor(), fontSizeDelta: 12.ssp),)
+                        Text('APPROVED', style: ThemeTextStyle.biryaniExtraBold.apply(color: Color(0xFF1AB394), fontSizeDelta: 12.ssp),)
                       ],
                     ),
                     SizedBox(height: 24.h,),
@@ -126,9 +119,8 @@ class _AttendanceSummaryViewState extends State<AttendanceSummaryView> with Tick
 
     _animationCt.forward();
 
-    Future.delayed(Duration.zero, () async {
-      await _attendanceSummaryCt.populateSummary();
-      _attendanceSummaryCt.setSelectedDay(TextUtil.getCurrentDate('dd/MM/yyyy'));
+    Future.delayed(Duration.zero, () {
+      _attendanceSummaryCt.getSummary();
     });
   }
 
@@ -217,9 +209,6 @@ class _AttendanceSummaryViewState extends State<AttendanceSummaryView> with Tick
                             weekdayStyle: ThemeTextStyle.biryaniBold.apply(color: Colors.white, fontSizeDelta: 10.ssp),
                             weekendStyle: ThemeTextStyle.biryaniBold.apply(color: Colors.white, fontSizeDelta: 10.ssp)
                           ),
-                          onUnavailableDaySelected: () {
-                            print('onunavailable clickobs');
-                          },
                           calendarStyle: CalendarStyle(
                             todayColor: Colors.transparent,
                             // selectedColor: ThemeColor.secondary,
