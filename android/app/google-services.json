@@ -7,12 +7,36 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:103484181816:android:771054c057e24920dc05cd",
+        "mobilesdk_app_id": "1:103484181816:android:710f18fe35be37cfdc05cd",
         "android_client_info": {
           "package_name": "com.netika.kukelola"
         }
       },
       "oauth_client": [
+        {
+          "client_id": "103484181816-81i7supchgari9nvi3oemgsd5ve98trn.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.netika.kukelola",
+            "certificate_hash": "6d4e23904873ccad46d5f2db471c49f56d038bae"
+          }
+        },
+        {
+          "client_id": "103484181816-p7hemjed337o2ksfi3j0hna3faijeok3.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.netika.kukelola",
+            "certificate_hash": "c22c9637323171e048b055dccc20a7578148598b"
+          }
+        },
+        {
+          "client_id": "103484181816-qej500ampbtea19un6sqne97lsc77t87.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.netika.kukelola",
+            "certificate_hash": "d861446581750fb62c378a959baff86ec6ad9958"
+          }
+        },
         {
           "client_id": "103484181816-l87q2p61ga46uspcd4k0f8bnpq57ae97.apps.googleusercontent.com",
           "client_type": 3
@@ -20,7 +44,7 @@
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyBqmHwnKihWKCj1q5bZEUEDoDkLaIoNJbg"
+          "current_key": "AIzaSyCJTmEk5NOGoDjeg68z7va_xhtBKHNwbSM"
         }
       ],
       "services": {
@@ -29,6 +53,13 @@
             {
               "client_id": "103484181816-l87q2p61ga46uspcd4k0f8bnpq57ae97.apps.googleusercontent.com",
               "client_type": 3
+            },
+            {
+              "client_id": "103484181816-clrdu5l7oevnpefbev4jo0d1f7o3dvnh.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.netika.kukelola"
+              }
             }
           ]
         }

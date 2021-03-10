@@ -16,6 +16,7 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:kukelola_flutter/view/verification_code/verification_code_view.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import 'core/helper/text_util.dart';
 
@@ -35,7 +36,7 @@ void main() async {
 class MyApp extends StatefulWidget {
 
   // Don't forget to change BASE_API to Constant.API_PRODUCTION when building apk / when testing live server //
-  static const BASE_API = Constant.API_DEVELOPMENT;
+  static const BASE_API = Constant.API_PRODUCTION;
 
   @override
   _MyAppState createState() => _MyAppState();
@@ -128,19 +129,24 @@ class _MyAppState extends State<MyApp> {
 
   _initFCM() async {
     firebaseMessaging.requestNotificationPermissions(IosNotificationSettings(sound: true, badge: true, alert: true, provisional: true));
+    firebaseMessaging.onIosSettingsRegistered.listen((IosNotificationSettings settings) {
+      print("Settings registered: $settings");
+    });
     await _getFcmToken();
     _fcmListener();
   }
 
   _getFcmToken() async {
-    firebaseMessaging.getToken().then((String token) async {
+    final preference = await SharedPreferences.getInstance();
+
+    FirebaseMessaging().getToken().then((String token) async {
       assert(token != null);
       print("FCM_TOKEN $token");
-      await commonController.preferences.setString(Constant.FCM_TOKEN, token);
+      await preference.setString(Constant.FCM_TOKEN, token);
     });
-    _fcmRefreshToken = firebaseMessaging.onTokenRefresh.listen((newToken) {
+    _fcmRefreshToken = FirebaseMessaging().onTokenRefresh.listen((newToken) {
       print("NEW_FCM_TOKEN $newToken");
-      if (newToken != commonController.preferences.getString(Constant.FCM_TOKEN)) commonController.preferences.setString(Constant.FCM_TOKEN, newToken);
+      if (newToken != preference.getString(Constant.FCM_TOKEN)) preference.setString(Constant.FCM_TOKEN, newToken);
     });
   }
 
