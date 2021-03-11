@@ -7,6 +7,7 @@ import 'package:kukelola_flutter/networking/request/payslip_request.dart';
 import 'package:kukelola_flutter/networking/service/service.dart';
 import 'dart:convert';
 import 'package:open_file/open_file.dart';
+import 'package:path_provider/path_provider.dart' as syspaths;
 
 class DialogPayslipController extends GetxController {
   var loadingDownload = false.obs;
@@ -18,16 +19,14 @@ class DialogPayslipController extends GetxController {
 
   downloadPayslip() async {
     loadingDownload.value = true;
-    final data = await Service().payslip(PayslipRequest(homeController.userData.value.id, int.parse(date.split('/')[0]), int.parse(date.split('/')[1])));
+    final data = await Service().payslip(PayslipRequest(homeController.userData.value.userId, int.parse(date.split('/')[0]), int.parse(date.split('/')[1])));
     loadingDownload.value = false;
 
     if (data?.data != null) {
-      final decoded = utf8.encode(data.data);
-      print('list byte $decoded');
-      final file = File.fromRawPath(decoded);
+      final decoded = base64.decode(data.data);
+      final appDir = await syspaths.getTemporaryDirectory();
+      final file = await File('${appDir.path}/PaySlip-${homeController.userData.value.fullName}.pdf').writeAsBytes(decoded);
       final length = await file.length();
-      print('file size $length');
-      print('file path ${file.path}');
       OpenFile.open(file.path);
       downloadSuccess.value = true;
     } else {

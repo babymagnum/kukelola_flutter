@@ -37,7 +37,7 @@ class LeaveRequestController extends GetxController {
 
   submitLeaveRequest() async {
     loadingSubmit.value = true;
-    final data = await Service().submitLeaveRequest(LeaveRequest(homeController.userData.value.id, form.value.startDate, form.value.reason, form.value.endDate, form.value.attachment, form.value.leaveType.id));
+    final data = await Service().submitLeaveRequest(LeaveRequest(homeController.userData.value.userId, form.value.startDate, form.value.reason, form.value.endDate, form.value.attachment, form.value.leaveType.id));
     loadingSubmit.value = false;
 
     if (data?.isSuccess ?? false) {

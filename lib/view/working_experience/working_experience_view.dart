@@ -12,15 +12,23 @@ import 'package:kukelola_flutter/view/base_view.dart';
 import 'package:kukelola_flutter/view/working_experience/widget/list_working_experience_item.dart';
 import 'package:kukelola_flutter/view/working_experience/working_experience_controller.dart';
 
-class WorkingExperienceView extends StatelessWidget {
+class WorkingExperienceView extends StatefulWidget {
+  @override
+  _WorkingExperienceViewState createState() => _WorkingExperienceViewState();
+}
 
+class _WorkingExperienceViewState extends State<WorkingExperienceView> {
   var _workingExperienceCt = Get.put(WorkingExperienceController());
 
   @override
-  Widget build(BuildContext context) {
+  void initState() {
+    super.initState();
 
     _workingExperienceCt.populateData();
+  }
 
+  @override
+  Widget build(BuildContext context) {
     return BaseView(
       body: Stack(
         children: [

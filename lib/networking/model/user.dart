@@ -9,7 +9,7 @@ class User with JsonConvert<User> {
 	@JSONField(name: "Errors")
 	List<dynamic> errors;
 	@JSONField(name: "Message")
-	String message;
+	dynamic message;
 	@JSONField(name: "IsSuccess")
 	bool isSuccess;
 	@JSONField(name: "IsAdmin")
@@ -37,10 +37,18 @@ class UserData with JsonConvert<UserData> {
 	String jobTitle;
 	@JSONField(name: "Email")
 	String email;
+	@JSONField(name: "OldPassword")
+	dynamic oldPassword;
+	@JSONField(name: "NewPassword")
+	dynamic newPassword;
 	@JSONField(name: "IsMailNotification")
 	bool isMailNotification;
+	@JSONField(name: "ProfilePictureId")
+	dynamic profilePictureId;
 	@JSONField(name: "ProfilePicture")
 	UserDataProfilePicture profilePicture;
+	@JSONField(name: "Attachment")
+	dynamic attachment;
 	@JSONField(name: "Id")
 	String id;
 	@JSONField(name: "ClientId")

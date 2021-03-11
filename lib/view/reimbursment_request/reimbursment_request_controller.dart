@@ -15,7 +15,7 @@ class ReimbursmentRequestController extends GetxController {
 
   submitReimbursment() async {
     loadingSubmit.value = true;
-    final data = await Service().submitReimbursmentRequest(ReimbursmentRequest(homeController.userData.value.id, form.value.reason, form.value.attachment, form.value.listDetails));
+    final data = await Service().submitReimbursmentRequest(ReimbursmentRequest(homeController.userData.value.userId, form.value.reason, form.value.attachment, form.value.listDetails));
     loadingSubmit.value = false;
 
     if (data?.isSuccess ?? false) {

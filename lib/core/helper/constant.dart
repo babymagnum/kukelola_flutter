@@ -1,13 +1,14 @@
 class Constant {
 
   // SHARED PREFERENCE //
+  static const FCM_TOKEN = 'FCM_TOKEN';
   static const TOKEN = 'TOKEN';
+  static const OBJECT_TOKEN = 'OBJECT_TOKEN';
   static const IS_LOGIN = 'IS_LOGIN';
   static const EMAIL = 'EMAIL';
   static const PASSWORD = 'PASSWORD';
   static const IS_PASS_LOGIN = 'IS_PASS_LOGIN';
   static const IS_ONBOARDING = 'IS_ONBOARDING';
-  static const FCM_TOKEN = 'FCM_TOKEN';
   static const OTP = 'OTP';
   static const LANGUANGE_CODE = 'LANGUANGE_CODE';
   static const SHOW_FOREGROUND_NOTIFICATION = 'SHOW_FOREGROUND_NOTIFICATION';

@@ -112,87 +112,86 @@ class OngoingRequestDetailView extends StatelessWidget {
               child: SingleChildScrollView(
                 child: Padding(
                   padding: EdgeInsets.symmetric(horizontal: 24.w),
-                  child: Obx(() => Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        SizedBox(height: 24.h,),
-                        Row(
-                          children: [
-                            _content(_isSpecialLeave() ? 'SPECIAL LEAVE' : 'LEAVE TYPE', '-', false),
-                            SizedBox(width: 10.w,),
-                            _content('TOTAL DAYS', '-', false)
-                          ],
-                        ),
-                        SizedBox(height: 24.h,),
-                        Row(
-                          children: [
-                            _content('DESCRIPTION', item.description, false)
-                          ],
-                        ),
-                        SizedBox(height: 24.h,),
-                        Row(
-                          children: [
-                            _content('APPROVAL DATE', '-', false),
-                            SizedBox(width: 10.w,),
-                            _content('ATTACHMENT', '-', true)
-                          ],
-                        ),
-                        SizedBox(height: _status() == '' ? 24.h : 0,),
-                        _status() != '' ?
-                        Container() :
-                        item.isMyRequest && item.workflowStatus == 99 ?
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.end,
-                          children: [
-                            ButtonLoading(
-                              backgroundColor: Color(0xFFF85C58),
-                              disable: _ongoingRequestCt.listOngoingRequest[index].loadingCancel,
-                              title: 'Cancel',
-                              loading: _ongoingRequestCt.listOngoingRequest[index].loadingCancel,
-                              onTap: () => Get.dialog(DialogCancelLeaveRequest(color: Color(0xFFF85C58), action2Click: () => _ongoingRequestCt.cancelRequest(index))),
-                              textStyle: ThemeTextStyle.biryaniSemiBold.apply(color: Colors.white, fontSizeDelta: 10.ssp),
-                              verticalPadding: 5.h,
-                              horizontalPadding: 17.w,
-                              borderRadius: 4,
-                              loadingSize: 10.w,
-                            ),
-                          ],
-                        ) :
-                        (item.levelProgress == 1 || item.levelProgress == 2) && item.approverId == homeController.userData.value.id ?
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.end,
-                          children: [
-                            ButtonLoading(
-                              backgroundColor: Color(0xFF158AC9),
-                              disable: _ongoingRequestCt.listOngoingRequest[index].loadingApprove,
-                              title: 'Approve',
-                              loading: _ongoingRequestCt.listOngoingRequest[index].loadingApprove,
-                              onTap: () => Get.dialog(DialogCancelLeaveRequest(color: Color(0xFF158AC9), description: "Are you sure you want to Approve the request? You can't undo this action.", action2Click: () => _ongoingRequestCt.approveRequest(index))),
-                              textStyle: ThemeTextStyle.biryaniSemiBold.apply(color: Colors.white, fontSizeDelta: 10.ssp),
-                              verticalPadding: 5.h,
-                              horizontalPadding: 17.w,
-                              borderRadius: 4,
-                              loadingSize: 10.w,
-                            ),
-                            SizedBox(width: 8.h,),
-                            ButtonLoading(
-                              backgroundColor: Color(0xFFED5565),
-                              disable: _ongoingRequestCt.listOngoingRequest[index].loadingReject,
-                              title: 'Reject',
-                              loading: _ongoingRequestCt.listOngoingRequest[index].loadingReject,
-                              onTap: () => Get.dialog(DialogRejectApproval(index: index)),
-                              textStyle: ThemeTextStyle.biryaniSemiBold.apply(color: Colors.white, fontSizeDelta: 10.ssp),
-                              verticalPadding: 5.h,
-                              horizontalPadding: 17.w,
-                              borderRadius: 4,
-                              loadingSize: 10.w,
-                            )
-                          ],
-                        ) :
-                        Container(),
-                        SizedBox(height: 24.h,)
-                      ],
-                    ),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      SizedBox(height: 24.h,),
+                      Row(
+                        children: [
+                          _content(_isSpecialLeave() ? 'SPECIAL LEAVE' : 'LEAVE TYPE', '-', false),
+                          SizedBox(width: 10.w,),
+                          _content('TOTAL DAYS', '-', false)
+                        ],
+                      ),
+                      SizedBox(height: 24.h,),
+                      Row(
+                        children: [
+                          _content('DESCRIPTION', item.description, false)
+                        ],
+                      ),
+                      SizedBox(height: 24.h,),
+                      Row(
+                        children: [
+                          _content('APPROVAL DATE', '-', false),
+                          SizedBox(width: 10.w,),
+                          _content('ATTACHMENT', '-', true)
+                        ],
+                      ),
+                      SizedBox(height: _status() == '' ? 24.h : 0,),
+                      _status() != '' ?
+                      Container() :
+                      item.isMyRequest && item.workflowStatus == 99 ?
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: [
+                          ButtonLoading(
+                            backgroundColor: Color(0xFFF85C58),
+                            disable: _ongoingRequestCt.listOngoingRequest[index].loadingCancel,
+                            title: 'Cancel',
+                            loading: _ongoingRequestCt.listOngoingRequest[index].loadingCancel,
+                            onTap: () => Get.dialog(DialogCancelLeaveRequest(color: Color(0xFFF85C58), action2Click: () => _ongoingRequestCt.cancelRequest(index))),
+                            textStyle: ThemeTextStyle.biryaniSemiBold.apply(color: Colors.white, fontSizeDelta: 10.ssp),
+                            verticalPadding: 5.h,
+                            horizontalPadding: 17.w,
+                            borderRadius: 4,
+                            loadingSize: 10.w,
+                          ),
+                        ],
+                      ) :
+                      (item.levelProgress == 1 || item.levelProgress == 2) && item.approverId == homeController.userData.value.userId ?
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: [
+                          ButtonLoading(
+                            backgroundColor: Color(0xFF158AC9),
+                            disable: _ongoingRequestCt.listOngoingRequest[index].loadingApprove,
+                            title: 'Approve',
+                            loading: _ongoingRequestCt.listOngoingRequest[index].loadingApprove,
+                            onTap: () => Get.dialog(DialogCancelLeaveRequest(color: Color(0xFF158AC9), description: "Are you sure you want to Approve the request? You can't undo this action.", action2Click: () => _ongoingRequestCt.approveRequest(index))),
+                            textStyle: ThemeTextStyle.biryaniSemiBold.apply(color: Colors.white, fontSizeDelta: 10.ssp),
+                            verticalPadding: 5.h,
+                            horizontalPadding: 17.w,
+                            borderRadius: 4,
+                            loadingSize: 10.w,
+                          ),
+                          SizedBox(width: 8.h,),
+                          ButtonLoading(
+                            backgroundColor: Color(0xFFED5565),
+                            disable: _ongoingRequestCt.listOngoingRequest[index].loadingReject,
+                            title: 'Reject',
+                            loading: _ongoingRequestCt.listOngoingRequest[index].loadingReject,
+                            onTap: () => Get.dialog(DialogRejectApproval(index: index)),
+                            textStyle: ThemeTextStyle.biryaniSemiBold.apply(color: Colors.white, fontSizeDelta: 10.ssp),
+                            verticalPadding: 5.h,
+                            horizontalPadding: 17.w,
+                            borderRadius: 4,
+                            loadingSize: 10.w,
+                          )
+                        ],
+                      ) :
+                      Container(),
+                      SizedBox(height: 24.h,)
+                    ],
                   ),
                 ),
               ),

@@ -1,6 +1,9 @@
+import 'package:kukelola_flutter/core/helper/constant.dart';
 import 'package:kukelola_flutter/networking/model/attendance_summary_grid.dart';
 import 'package:kukelola_flutter/networking/model/corporate_calendar.dart';
+import 'package:kukelola_flutter/networking/model/file_attachment.dart';
 import 'package:kukelola_flutter/networking/model/leave_summary_grid.dart';
+import 'package:kukelola_flutter/networking/model/notification.dart';
 import 'package:kukelola_flutter/networking/model/overtime_request_post.dart';
 import 'package:kukelola_flutter/networking/model/overtime_summary_grid.dart';
 import 'package:kukelola_flutter/networking/model/payslip.dart';
@@ -15,6 +18,7 @@ import 'package:kukelola_flutter/networking/model/staff_family.dart';
 import 'package:kukelola_flutter/networking/model/staff_family_insert.dart';
 import 'package:kukelola_flutter/networking/model/standart.dart';
 import 'package:kukelola_flutter/networking/model/token.dart';
+import 'package:kukelola_flutter/networking/model/total_workflow.dart';
 import 'package:kukelola_flutter/networking/model/user.dart';
 import 'package:kukelola_flutter/networking/model/workflow_grid.dart';
 import 'package:kukelola_flutter/networking/request/attendance_online_request.dart';
@@ -22,6 +26,8 @@ import 'package:kukelola_flutter/networking/request/attendance_request.dart';
 import 'package:kukelola_flutter/networking/request/business_trip_request.dart';
 import 'package:kukelola_flutter/networking/request/change_password_request.dart';
 import 'package:kukelola_flutter/networking/request/leave_request.dart';
+import 'package:kukelola_flutter/networking/request/notification_request.dart';
+import 'package:kukelola_flutter/networking/request/profile_picture_request.dart';
 import 'package:kukelola_flutter/networking/request/summary_grid_request.dart';
 import 'package:kukelola_flutter/networking/request/login_request.dart';
 import 'package:kukelola_flutter/networking/request/overtime_request.dart';
@@ -38,7 +44,7 @@ import '../../main.dart';
 class Service extends BaseService {
 
   Future<Token> token(LoginRequest request) async {
-    return await postUrlEncoded('${MyApp.BASE_API}token', request.getBody());
+    return await postUrlEncoded('${MyApp.BASE_API}token', request.getBody(), true);
   }
 
   Future<User> account() async {
@@ -167,10 +173,28 @@ class Service extends BaseService {
     return await postJsonBody('${MyApp.BASE_API}api/ReimbursementRequest/SummaryGrid', request.body());
   }
 
+  Future<TotalWorkflow> totalWorkflow() async {
+    return await postJsonBody('${MyApp.BASE_API}api/workflow/totalincoming', {
+      "UserId": homeController.userData.value.userId
+    });
+  }
+
   Future<AttendanceSummaryGrid> attendanceSummaryGrid(String startDate) async {
     return await postJsonBody('${MyApp.BASE_API}api/AttendanceRequest/SummaryGrid', {
-      "UserId": homeController.userData.value.id,
+      "UserId": homeController.userData.value.userId,
       "StartDate": startDate
     });
+  }
+  
+  Future<Standart> profilePicture(ProfilePictureRequest request) async {
+    return await postFormData('${MyApp.BASE_API}api/User/ChangeProfilePicture', await request.body());
+  }
+  
+  Future<Notification> notification(NotificationRequest request) async {
+    return await postJsonBody('${MyApp.BASE_API}api/Workflow/Notification', request.body());
+  }
+  
+  Future<FileAttachment> fileAttachment(String id) async {
+    return await get('${MyApp.BASE_API}api/Attachment?Id=$id');
   }
 }

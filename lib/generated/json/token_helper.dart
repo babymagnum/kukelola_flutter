@@ -12,8 +12,44 @@ tokenFromJson(Token data, Map<String, dynamic> json) {
 				? int.tryParse(json['expires_in'])
 				: json['expires_in'].toInt();
 	}
-	if (json['error'] != null) {
-		data.error = json['error'].toString();
+	if (json['UserId'] != null) {
+		data.userId = json['UserId'].toString();
+	}
+	if (json['ClientId'] != null) {
+		data.clientId = json['ClientId'].toString();
+	}
+	if (json['StaffId'] != null) {
+		data.staffId = json['StaffId'].toString();
+	}
+	if (json['ClientName'] != null) {
+		data.clientName = json['ClientName'].toString();
+	}
+	if (json['FirstName'] != null) {
+		data.firstName = json['FirstName'].toString();
+	}
+	if (json['MiddleName'] != null) {
+		data.middleName = json['MiddleName'].toString();
+	}
+	if (json['LastName'] != null) {
+		data.lastName = json['LastName'].toString();
+	}
+	if (json['FullName'] != null) {
+		data.fullName = json['FullName'].toString();
+	}
+	if (json['UserName'] != null) {
+		data.userName = json['UserName'].toString();
+	}
+	if (json['Email'] != null) {
+		data.email = json['Email'].toString();
+	}
+	if (json['Nip'] != null) {
+		data.nip = json['Nip'].toString();
+	}
+	if (json['JobTitle'] != null) {
+		data.jobTitle = json['JobTitle'].toString();
+	}
+	if (json['ProfilePictureId'] != null) {
+		data.profilePictureId = json['ProfilePictureId'];
 	}
 	if (json['error_description'] != null) {
 		data.errorDescription = json['error_description'].toString();
@@ -26,7 +62,19 @@ Map<String, dynamic> tokenToJson(Token entity) {
 	data['access_token'] = entity.accessToken;
 	data['token_type'] = entity.tokenType;
 	data['expires_in'] = entity.expiresIn;
-	data['error'] = entity.error;
+	data['UserId'] = entity.userId;
+	data['ClientId'] = entity.clientId;
+	data['StaffId'] = entity.staffId;
+	data['ClientName'] = entity.clientName;
+	data['FirstName'] = entity.firstName;
+	data['MiddleName'] = entity.middleName;
+	data['LastName'] = entity.lastName;
+	data['FullName'] = entity.fullName;
+	data['UserName'] = entity.userName;
+	data['Email'] = entity.email;
+	data['Nip'] = entity.nip;
+	data['JobTitle'] = entity.jobTitle;
+	data['ProfilePictureId'] = entity.profilePictureId;
 	data['error_description'] = entity.errorDescription;
 	return data;
 }

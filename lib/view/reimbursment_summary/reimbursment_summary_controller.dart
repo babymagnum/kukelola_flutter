@@ -1,6 +1,4 @@
-import 'dart:io';
 import 'package:get/get.dart';
-import 'package:kukelola_flutter/core/model/static_model.dart';
 import 'package:kukelola_flutter/main.dart';
 import 'package:kukelola_flutter/networking/model/reimbursment_summary_grid.dart';
 import 'package:kukelola_flutter/networking/request/summary_grid_request.dart';
@@ -16,7 +14,7 @@ class ReimbursmentSummaryController extends GetxController {
     final reimbursmentSummaryFilterCt = Get.find<ReimbursmentSummaryFilterController>();
 
     loadingSummary.value = true;
-    final data = await Service().reimbursmentSummaryGrid(SummaryGridRequest(homeController.userData.value.id, reimbursmentSummaryFilterCt.startDate.value, reimbursmentSummaryFilterCt.endDate.value));
+    final data = await Service().reimbursmentSummaryGrid(SummaryGridRequest(homeController.userData.value.userId, reimbursmentSummaryFilterCt.startDate.value, reimbursmentSummaryFilterCt.endDate.value));
     loadingSummary.value = false;
 
     if (data?.data != null) {

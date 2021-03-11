@@ -1,6 +1,13 @@
+import 'dart:convert';
 import 'dart:io';
+import 'dart:ui';
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:kukelola_flutter/core/helper/common_function.dart';
 import 'package:kukelola_flutter/core/model/static_model.dart';
+import 'package:kukelola_flutter/networking/request/profile_picture_request.dart';
+import 'package:kukelola_flutter/networking/service/service.dart';
 
 class ProfileController extends GetxController {
   var loadingProfileFoto = false.obs;
@@ -16,5 +23,31 @@ class ProfileController extends GetxController {
   ];
 
   setLoadingProfileFoto(bool value) => loadingProfileFoto.value = value;
-  setProfileFoto(File value) => profileFoto.value = value;
+
+  setProfileFoto(File value) async {
+    var decodedImage = await decodeImageFromList(value.readAsBytesSync());
+
+    loadingProfileFoto.value = true;
+    final data = await Service().profilePicture(ProfilePictureRequest({
+      'x': 0,
+      'y': 0,
+      'width': decodedImage.width,
+      'height': decodedImage.height
+    }, value));
+    loadingProfileFoto.value = false;
+
+    if (data?.isSuccess ?? false) {
+      profileFoto.value = value;
+      CommonFunction.standartSnackbar('Success update profile picture');
+    } else {
+      CommonFunction.standartSnackbar('Failed update profile picture');
+    }
+  }
+
+  image(String data) async {
+    final decoded = utf8.encode(data);
+    print('list byte $decoded');
+    // final codec = await instantiateImageCodec(decoded);
+    // final frameInfo = await codec.getNextFrame();
+  }
 }

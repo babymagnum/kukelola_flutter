@@ -8,7 +8,32 @@ class Token with JsonConvert<Token> {
 	String tokenType;
 	@JSONField(name: "expires_in")
 	int expiresIn;
-	String error;
+	@JSONField(name: "UserId")
+	String userId;
+	@JSONField(name: "ClientId")
+	String clientId;
+	@JSONField(name: "StaffId")
+	String staffId;
+	@JSONField(name: "ClientName")
+	String clientName;
+	@JSONField(name: "FirstName")
+	String firstName;
+	@JSONField(name: "MiddleName")
+	String middleName;
+	@JSONField(name: "LastName")
+	String lastName;
+	@JSONField(name: "FullName")
+	String fullName;
+	@JSONField(name: "UserName")
+	String userName;
+	@JSONField(name: "Email")
+	String email;
+	@JSONField(name: "Nip")
+	String nip;
+	@JSONField(name: "JobTitle")
+	String jobTitle;
+	@JSONField(name: "ProfilePictureId")
+	dynamic profilePictureId;
 	@JSONField(name: "error_description")
 	String errorDescription;
 }

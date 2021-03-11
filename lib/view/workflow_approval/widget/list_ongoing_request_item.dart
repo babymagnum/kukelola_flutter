@@ -89,7 +89,7 @@ class ListOngoingRequestItem extends StatelessWidget {
               ),
             ],
           ) :
-          (item.levelProgress == 1 || item.levelProgress == 2) && item.approverId == homeController.userData.value.id ?
+          (item.levelProgress == 1 || item.levelProgress == 2) && item.approverId == homeController.userData.value.userId ?
           Row(
             mainAxisAlignment: MainAxisAlignment.end,
             children: [

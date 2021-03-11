@@ -2,7 +2,9 @@ import 'package:dio/dio.dart';
 import 'package:kukelola_flutter/core/helper/constant.dart';
 import 'package:kukelola_flutter/generated/json/attendance_summary_grid_helper.dart';
 import 'package:kukelola_flutter/generated/json/corporate_calendar_helper.dart';
+import 'package:kukelola_flutter/generated/json/file_attachment_helper.dart';
 import 'package:kukelola_flutter/generated/json/leave_summary_grid_helper.dart';
+import 'package:kukelola_flutter/generated/json/notification_helper.dart';
 import 'package:kukelola_flutter/generated/json/overtime_request_post_helper.dart';
 import 'package:kukelola_flutter/generated/json/overtime_summary_grid_helper.dart';
 import 'package:kukelola_flutter/generated/json/payslip_helper.dart';
@@ -17,12 +19,15 @@ import 'package:kukelola_flutter/generated/json/staff_family_insert_helper.dart'
 import 'package:kukelola_flutter/generated/json/staff_helper.dart';
 import 'package:kukelola_flutter/generated/json/standart_helper.dart';
 import 'package:kukelola_flutter/generated/json/token_helper.dart';
+import 'package:kukelola_flutter/generated/json/total_workflow_helper.dart';
 import 'package:kukelola_flutter/generated/json/user_helper.dart';
 import 'package:kukelola_flutter/generated/json/workflow_grid_helper.dart';
 import 'package:kukelola_flutter/main.dart';
 import 'package:kukelola_flutter/networking/model/attendance_summary_grid.dart';
 import 'package:kukelola_flutter/networking/model/corporate_calendar.dart';
+import 'package:kukelola_flutter/networking/model/file_attachment.dart';
 import 'package:kukelola_flutter/networking/model/leave_summary_grid.dart';
+import 'package:kukelola_flutter/networking/model/notification.dart';
 import 'package:kukelola_flutter/networking/model/overtime_request_post.dart';
 import 'package:kukelola_flutter/networking/model/overtime_summary_grid.dart';
 import 'package:kukelola_flutter/networking/model/payslip.dart';
@@ -37,6 +42,7 @@ import 'package:kukelola_flutter/networking/model/staff_family.dart';
 import 'package:kukelola_flutter/networking/model/staff_family_insert.dart';
 import 'package:kukelola_flutter/networking/model/standart.dart';
 import 'package:kukelola_flutter/networking/model/token.dart';
+import 'package:kukelola_flutter/networking/model/total_workflow.dart';
 import 'package:kukelola_flutter/networking/model/user.dart';
 import 'dart:convert';
 
@@ -74,7 +80,7 @@ class BaseService {
   }
 
   // TODO: POST
-  Future<T> postUrlEncoded<T>(String url, dynamic body) async {
+  Future<T> postUrlEncoded<T>(String url, dynamic body, bool isLoadToken) async {
     T resultResponse;
 
     try {
@@ -87,6 +93,12 @@ class BaseService {
       if (response.isRedirect) {
         commonController.standartLogout();
       } else {
+        if (isLoadToken) {
+          Map decode = jsonDecode(response.toString());
+          String token = jsonEncode(tokenFromJson(Token(), decode));
+          await commonController.preferences.setString(Constant.OBJECT_TOKEN, token);
+        }
+
         var responseMap = jsonDecode(response.toString());
         resultResponse = fromJson<T>(responseMap);
       }
@@ -254,6 +266,12 @@ class BaseService {
       return reimbursmentSummaryGridFromJson(ReimbursmentSummaryGrid(), json) as T;
     } else if (T == AttendanceSummaryGrid) {
       return attendanceSummaryGridFromJson(AttendanceSummaryGrid(), json) as T;
+    } else if (T == TotalWorkflow) {
+      return totalWorkflowFromJson(TotalWorkflow(), json) as T;
+    } else if (T == Notification) {
+      return notificationFromJson(Notification(), json) as T;
+    } else if (T == FileAttachment) {
+      return fileAttachmentFromJson(FileAttachment(), json) as T;
     } else {
       // if this print statement occured, this means that you're not register the model class in here
       print('Unknown class, dont forget to add your model in BaseService.dart to parse the json');

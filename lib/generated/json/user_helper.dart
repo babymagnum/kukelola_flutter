@@ -14,7 +14,7 @@ userFromJson(User data, Map<String, dynamic> json) {
 		data.errors.addAll(json['Errors']);
 	}
 	if (json['Message'] != null) {
-		data.message = json['Message'].toString();
+		data.message = json['Message'];
 	}
 	if (json['IsSuccess'] != null) {
 		data.isSuccess = json['IsSuccess'];
@@ -73,11 +73,23 @@ userDataFromJson(UserData data, Map<String, dynamic> json) {
 	if (json['Email'] != null) {
 		data.email = json['Email'].toString();
 	}
+	if (json['OldPassword'] != null) {
+		data.oldPassword = json['OldPassword'];
+	}
+	if (json['NewPassword'] != null) {
+		data.newPassword = json['NewPassword'];
+	}
 	if (json['IsMailNotification'] != null) {
 		data.isMailNotification = json['IsMailNotification'];
 	}
+	if (json['ProfilePictureId'] != null) {
+		data.profilePictureId = json['ProfilePictureId'];
+	}
 	if (json['ProfilePicture'] != null) {
 		data.profilePicture = new UserDataProfilePicture().fromJson(json['ProfilePicture']);
+	}
+	if (json['Attachment'] != null) {
+		data.attachment = json['Attachment'];
 	}
 	if (json['Id'] != null) {
 		data.id = json['Id'].toString();
@@ -109,10 +121,14 @@ Map<String, dynamic> userDataToJson(UserData entity) {
 	data['Nip'] = entity.nip;
 	data['JobTitle'] = entity.jobTitle;
 	data['Email'] = entity.email;
+	data['OldPassword'] = entity.oldPassword;
+	data['NewPassword'] = entity.newPassword;
 	data['IsMailNotification'] = entity.isMailNotification;
+	data['ProfilePictureId'] = entity.profilePictureId;
 	if (entity.profilePicture != null) {
 		data['ProfilePicture'] = entity.profilePicture.toJson();
 	}
+	data['Attachment'] = entity.attachment;
 	data['Id'] = entity.id;
 	data['ClientId'] = entity.clientId;
 	data['ClientName'] = entity.clientName;

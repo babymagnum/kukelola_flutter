@@ -79,7 +79,7 @@ class ListHomeMenuItem extends StatelessWidget {
                   child: Center(
                     child: Padding(
                       padding: EdgeInsets.only(top: 1.h),
-                      child: Text('1', style: ThemeTextStyle.biryaniSemiBold.apply(color: Colors.white, fontSizeDelta: 8.ssp),),
+                      child: Text('${item.count}', style: ThemeTextStyle.biryaniSemiBold.apply(color: Colors.white, fontSizeDelta: 8.ssp),),
                     ),
                   ),
                 ),

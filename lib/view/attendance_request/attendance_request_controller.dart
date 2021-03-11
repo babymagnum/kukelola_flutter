@@ -16,7 +16,7 @@ class AttendanceRequestController extends GetxController {
 
   submitLeaveRequest() async {
     loadingSubmit.value = true;
-    final data = await Service().submitAttendanceRequest(AttendanceRequest(homeController.userData.value.id, form.value.startDate, form.value.endDate, form.value.reason, form.value.startHour, form.value.endHour, form.value.attachment));
+    final data = await Service().submitAttendanceRequest(AttendanceRequest(homeController.userData.value.userId, form.value.startDate, form.value.endDate, form.value.reason, form.value.startHour, form.value.endHour, form.value.attachment));
     loadingSubmit.value = false;
 
     if (data?.isSuccess ?? false) {

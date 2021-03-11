@@ -9,16 +9,6 @@ import 'package:kukelola_flutter/core/theme/theme_text_style.dart';
 import 'package:kukelola_flutter/core/widgets/account_image.dart';
 import 'package:kukelola_flutter/core/widgets/button_reload.dart';
 import 'package:kukelola_flutter/main.dart';
-import 'package:kukelola_flutter/main.dart';
-import 'package:kukelola_flutter/main.dart';
-import 'package:kukelola_flutter/main.dart';
-import 'package:kukelola_flutter/main.dart';
-import 'package:kukelola_flutter/main.dart';
-import 'package:kukelola_flutter/main.dart';
-import 'package:kukelola_flutter/main.dart';
-import 'package:kukelola_flutter/main.dart';
-import 'package:kukelola_flutter/main.dart';
-import 'package:kukelola_flutter/view/home/home_controller.dart';
 import 'package:kukelola_flutter/view/home/widget/list_home_menu_item.dart';
 
 class HomeView extends StatefulWidget {
@@ -33,6 +23,7 @@ class _HomeViewState extends State<HomeView>  with AutomaticKeepAliveClientMixin
     super.initState();
 
     homeController.getUser();
+    homeController.getTotalWorkflow();
     homeController.populateMenu();
   }
 
@@ -82,7 +73,16 @@ class _HomeViewState extends State<HomeView>  with AutomaticKeepAliveClientMixin
                       SizedBox(height: context.mediaQueryPadding.top + 35.h,),
                       Align(
                         alignment: Alignment.center,
-                        child: AccountImage(url: homeController.userData?.value?.profilePicture?.file ?? '-', size: Size(64.w, 64.w), boxFit: BoxFit.fill),
+                        child: AccountImage(
+                          url: homeController.profilePicture.value,
+                          size: Size(64.w, 64.w),
+                          onError: () => homeController.getProfilePicture(),
+                          error: homeController.errorProfilePicture.value,
+                          boxFit: BoxFit.contain,
+                          loading: homeController.loadingProfilePicture.value,
+                          loadingSize: Size(12.w, 12.w),
+                          loadingColor: Colors.white,
+                        ),
                       ),
                       SizedBox(height: 14.h,),
                       Text(homeController.userData?.value?.fullName ?? '-', style: ThemeTextStyle.biryaniSemiBold.apply(fontSizeDelta: 20.ssp, color: Color(0xFF404040)),),

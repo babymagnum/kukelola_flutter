@@ -6,6 +6,7 @@ import 'package:get/get.dart';
 import 'package:kukelola_flutter/core/model/static_model.dart';
 import 'package:kukelola_flutter/core/theme/theme_color.dart';
 import 'package:kukelola_flutter/core/theme/theme_text_style.dart';
+import 'package:kukelola_flutter/core/widgets/dialog_error.dart';
 import 'package:kukelola_flutter/main.dart';
 import 'package:kukelola_flutter/view/change_password/change_password_view.dart';
 import 'package:kukelola_flutter/view/container_home/container_home_controller.dart';
@@ -37,8 +38,19 @@ class ListProfileMenuItem extends StatelessWidget {
     } else if (index == 4) {
       Get.to(ChangePasswordView());
     } else {
-      _containerHomeCt.setSelectedPage(0);
-      commonController.logout();
+      Get.dialog(
+        DialogError(
+          error: 'Are you sure want to logout?',
+          button: 'Cancel',
+          buttonClick: () => Get.back(),
+          button2: 'Logout',
+          button2Click: () {
+            Get.back();
+            _containerHomeCt.setSelectedPage(0);
+            commonController.logout();
+          },
+        ),
+      );
     }
   }
 

@@ -1,3 +1,6 @@
+import 'package:kukelola_flutter/core/helper/constant.dart';
+import 'package:kukelola_flutter/main.dart';
+
 class LoginRequest {
   String grant_type = 'password';
   String username;
@@ -14,6 +17,7 @@ class LoginRequest {
       'password': password,
       'otp': otp,
       'autologin': autologin,
+      'firebase_token': commonController.preferences.getString(Constant.FCM_TOKEN)
     };
   }
 }

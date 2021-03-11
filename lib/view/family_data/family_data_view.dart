@@ -12,15 +12,23 @@ import 'package:kukelola_flutter/view/base_view.dart';
 import 'package:kukelola_flutter/view/family_data/family_data_controller.dart';
 import 'package:kukelola_flutter/view/family_data/widget/list_family_item.dart';
 
-class FamilyDataView extends StatelessWidget {
+class FamilyDataView extends StatefulWidget {
+  @override
+  _FamilyDataViewState createState() => _FamilyDataViewState();
+}
 
+class _FamilyDataViewState extends State<FamilyDataView> {
   var _familiesCt = Get.put(FamilyDataController());
 
   @override
-  Widget build(BuildContext context) {
+  void initState() {
+    super.initState();
 
     _familiesCt.populateData();
+  }
 
+  @override
+  Widget build(BuildContext context) {
     return BaseView(
       body: Stack(
         children: [

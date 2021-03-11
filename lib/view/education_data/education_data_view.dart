@@ -12,15 +12,23 @@ import 'package:kukelola_flutter/view/base_view.dart';
 import 'package:kukelola_flutter/view/education_data/education_data_controller.dart';
 import 'package:kukelola_flutter/view/education_data/widget/list_education_data_item.dart';
 
-class EducationDataView extends StatelessWidget {
+class EducationDataView extends StatefulWidget {
+  @override
+  _EducationDataViewState createState() => _EducationDataViewState();
+}
 
+class _EducationDataViewState extends State<EducationDataView> {
   var _educationDataCt = Get.put(EducationDataController());
 
   @override
-  Widget build(BuildContext context) {
+  void initState() {
+    super.initState();
 
     _educationDataCt.populateData();
+  }
 
+  @override
+  Widget build(BuildContext context) {
     return BaseView(
       body: Stack(
         children: [

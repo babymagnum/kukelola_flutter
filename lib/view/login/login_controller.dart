@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:get/get.dart';
 import 'package:kukelola_flutter/core/helper/constant.dart';
 import 'package:kukelola_flutter/core/helper/text_util.dart';
@@ -28,11 +30,11 @@ class LoginController extends GetxController {
     loadingLogin.value = false;
 
     if ((data?.accessToken ?? '') != '') {
-      commonController.preferences.setString(Constant.EMAIL, form.value.username);
-      commonController.preferences.setString(Constant.PASSWORD, form.value.password);
-      commonController.preferences.setString(Constant.OTP, otp);
-      commonController.preferences.setBool(Constant.IS_PASS_LOGIN, true);
-      commonController.preferences.setString(Constant.TOKEN, data.accessToken);
+      await commonController.preferences.setString(Constant.EMAIL, form.value.username);
+      await commonController.preferences.setString(Constant.PASSWORD, form.value.password);
+      await commonController.preferences.setBool(Constant.IS_PASS_LOGIN, true);
+      await commonController.preferences.setString(Constant.OTP, otp);
+      await commonController.preferences.setString(Constant.TOKEN, data.accessToken);
       Get.to(commonController.autoLogin.value ? ContainerHomeView() : VerificationCodeView());
       commonController.setAutoLogin(false);
     } else {

@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:io';
 import 'package:division/division.dart';
 import 'package:file_picker/file_picker.dart';
@@ -32,7 +33,6 @@ class _ProfileViewState extends State<ProfileView> with AutomaticKeepAliveClient
       allowedExtensions: ['jpg', 'png'],
     ).then((value) async {
       _profileCt.setProfileFoto(File(value.files.single.path));
-      _profileCt.setLoadingProfileFoto(false);
     }, onError: (error) => _profileCt.setLoadingProfileFoto(false))
         .whenComplete(() => _profileCt.setLoadingProfileFoto(false));
   }
@@ -81,9 +81,16 @@ class _ProfileViewState extends State<ProfileView> with AutomaticKeepAliveClient
                       style: ParentStyle()..borderRadius(all: 1000)..width(64.w)..height(64.w),
                       child: Obx(() => Stack(
                         children: [
-                          _profileCt.profileFoto.value.path == '' ?
-                          AccountImage(url: homeController?.userData?.value?.profilePicture?.file ?? '', size: Size(64.w, 64.w), boxFit: BoxFit.fill) :
-                          AccountImage(url: '', size: Size(64.w, 64.w), boxFit: BoxFit.fill, imageFile: _profileCt.profileFoto.value,),
+                          AccountImage(
+                            url: homeController.profilePicture.value,
+                            size: Size(64.w, 64.w),
+                            onError: () => homeController.getProfilePicture(),
+                            error: homeController.errorProfilePicture.value,
+                            boxFit: BoxFit.contain,
+                            loading: homeController.loadingProfilePicture.value,
+                            loadingSize: Size(12.w, 12.w),
+                            imageFile: _profileCt.profileFoto.value.path == '' ? null : _profileCt.profileFoto.value,
+                          ),
                           Positioned(
                             bottom: 2, left: 2, right: 2,
                             child: Parent(

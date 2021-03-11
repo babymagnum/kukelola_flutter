@@ -91,9 +91,8 @@ class DialogPayslip extends StatelessWidget {
                   disable: _dialogPayslipCt.loadingDownload.value,
                   title: 'Download Payslip',
                   loading: _dialogPayslipCt.loadingDownload.value,
-                  onTap: () async {
-                    await _dialogPayslipCt.downloadPayslip();
-                  },
+                  onTap: () => _dialogPayslipCt.downloadPayslip(),
+                  loadingSize: 10.w,
                   verticalPadding: 5.h,
                   textStyle: ThemeTextStyle.biryaniBold.apply(color: Colors.white, fontSizeDelta: 12.ssp),
                 ),

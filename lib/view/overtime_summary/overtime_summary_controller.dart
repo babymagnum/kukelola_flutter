@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'package:get/get.dart';
 import 'package:kukelola_flutter/core/helper/common_function.dart';
+import 'package:kukelola_flutter/core/helper/constant.dart';
 import 'package:kukelola_flutter/core/model/static_model.dart';
 import 'package:kukelola_flutter/main.dart';
 import 'package:kukelola_flutter/networking/model/overtime_summary_grid.dart';
@@ -17,7 +18,7 @@ class OvertimeSummaryController extends GetxController {
     final overtimeSummaryFilterCt = Get.find<OvertimeSummaryFilterController>();
 
     loadingSummary.value = true;
-    final data = await Service().overtimeSummaryGrid(SummaryGridRequest(homeController.userData.value.id, overtimeSummaryFilterCt.startDate.value, overtimeSummaryFilterCt.endDate.value));
+    final data = await Service().overtimeSummaryGrid(SummaryGridRequest(homeController.userData.value.userId, overtimeSummaryFilterCt.startDate.value, overtimeSummaryFilterCt.endDate.value));
     loadingSummary.value = false;
 
     if (data?.data != null) {
