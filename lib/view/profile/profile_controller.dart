@@ -6,12 +6,12 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:kukelola_flutter/core/helper/common_function.dart';
 import 'package:kukelola_flutter/core/model/static_model.dart';
+import 'package:kukelola_flutter/main.dart';
 import 'package:kukelola_flutter/networking/request/profile_picture_request.dart';
 import 'package:kukelola_flutter/networking/service/service.dart';
 
 class ProfileController extends GetxController {
   var loadingProfileFoto = false.obs;
-  var profileFoto = File('').obs;
 
   var listProfileMenu = [
     ProfileMenuItem('assets/images/profile_personal_data 1.png', 'Personal Data', false),
@@ -37,7 +37,7 @@ class ProfileController extends GetxController {
     loadingProfileFoto.value = false;
 
     if (data?.isSuccess ?? false) {
-      profileFoto.value = value;
+      homeController.getProfilePicture();
       CommonFunction.standartSnackbar('Success update profile picture');
     } else {
       CommonFunction.standartSnackbar('Failed update profile picture');

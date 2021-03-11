@@ -89,7 +89,6 @@ class _ProfileViewState extends State<ProfileView> with AutomaticKeepAliveClient
                             boxFit: BoxFit.contain,
                             loading: homeController.loadingProfilePicture.value,
                             loadingSize: Size(12.w, 12.w),
-                            imageFile: _profileCt.profileFoto.value.path == '' ? null : _profileCt.profileFoto.value,
                           ),
                           Positioned(
                             bottom: 2, left: 2, right: 2,
@@ -108,7 +107,9 @@ class _ProfileViewState extends State<ProfileView> with AutomaticKeepAliveClient
                           _profileCt.loadingProfileFoto.value ?
                           Align(
                             alignment: Alignment.center,
-                            child: SizedBox(height: 20.w, width: 20.w, child: CircularProgressIndicator()),
+                            child: SizedBox(height: 20.w, width: 20.w, child: CircularProgressIndicator(
+                              valueColor: AlwaysStoppedAnimation<Color>(ThemeColor.primary),
+                            )),
                           ) :
                           Container()
                         ],
