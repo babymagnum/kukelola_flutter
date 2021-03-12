@@ -22,7 +22,7 @@ import UserNotifications
             application.registerUserNotificationSettings(settings)
         }
 
-    GMSServices.provideAPIKey("AIzaSyDsGqWGWyaBm3RvZVjD5L2VNkkf53gcyQU")
+    GMSServices.provideAPIKey("AIzaSyDg8jdwtdbQQPjbwOk_C0EI2vhQqZe-BzA")
     GeneratedPluginRegistrant.register(with: self)
     return super.application(application, didFinishLaunchingWithOptions: launchOptions)
   }
