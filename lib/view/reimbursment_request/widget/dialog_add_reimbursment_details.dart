@@ -1,18 +1,19 @@
 import 'dart:async';
-
 import 'package:division/division.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
-import 'package:flutter_masked_text/flutter_masked_text.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 import 'package:kukelola_flutter/core/model/static_model.dart';
 import 'package:kukelola_flutter/core/theme/theme_color.dart';
 import 'package:kukelola_flutter/core/theme/theme_text_style.dart';
 import 'package:kukelola_flutter/core/widgets/button_loading.dart';
 import 'package:kukelola_flutter/core/widgets/custom_input.dart';
 import 'package:kukelola_flutter/view/reimbursment_request/reimbursment_request_controller.dart';
+
+import '../../../main.dart';
 
 class DialogAddReimbursmentDetails extends StatefulWidget {
 
@@ -25,10 +26,10 @@ class DialogAddReimbursmentDetails extends StatefulWidget {
 }
 
 class _DialogAddReimbursmentDetailsState extends State<DialogAddReimbursmentDetails> {
-
+  String _formatNumber(String s) => NumberFormat.decimalPattern('en').format(int.parse(s));
   var _reimbursmentRequestCt = Get.put(ReimbursmentRequestController());
   var _descriptionFocus = FocusNode(), _costFocus = FocusNode();
-  var _descriptionCt = TextEditingController(), _costCt = MoneyMaskedTextController(initialValue: 0, decimalSeparator: '', thousandSeparator: '.', precision: 0, leftSymbol: 'Rp ');
+  var _descriptionCt = TextEditingController(), _costCt = TextEditingController();
   StreamSubscription _keyboardStream;
 
   @override
@@ -107,10 +108,18 @@ class _DialogAddReimbursmentDetailsState extends State<DialogAddReimbursmentDeta
                 textInputAction: TextInputAction.done,
                 focusNode: _costFocus,
                 controller: _costCt,
-                hintText: 'type cost...',
+                hintText: '5,000',
+                prefix: 'Rp ',
                 inputType: TextInputType.number,
                 onEditingComplete: () => FocusScope.of(context).requestFocus(FocusNode()),
-                onChanged: (_) => setState(() {}),
+                onChanged: (text) {
+                  text = '${_formatNumber(text.replaceAll(',', ''))}';
+                  _costCt.value = TextEditingValue(
+                    text: text,
+                    selection: TextSelection.collapsed(offset: text.length),
+                  );
+                  setState(() {});
+                },
                 onTap: () => setState(() => _costFocus.requestFocus()),
                 labelText: 'ITEM COST',
               ),
@@ -121,7 +130,7 @@ class _DialogAddReimbursmentDetailsState extends State<DialogAddReimbursmentDeta
                 title: 'Add Details',
                 loading: false,
                 onTap: () {
-                  _reimbursmentRequestCt.addReimbursmentDetail(ReimbursmentDetailItem(_descriptionCt.text.trim(), _costCt.text.trim().replaceAll('Rp', '').replaceAll('.', '')));
+                  _reimbursmentRequestCt.addReimbursmentDetail(ReimbursmentDetailItem(_descriptionCt.text.trim(), _costCt.text.trim().replaceAll(',', '')));
                   Get.back();
                 },
                 verticalPadding: 9.h,

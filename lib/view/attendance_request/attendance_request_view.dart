@@ -4,8 +4,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
+import 'package:kukelola_flutter/core/helper/common_function.dart';
 import 'package:kukelola_flutter/core/helper/constant.dart';
 import 'package:kukelola_flutter/core/helper/text_util.dart';
 import 'package:kukelola_flutter/core/theme/theme_color.dart';
@@ -101,7 +101,7 @@ class AttendanceRequestViewState extends State<AttendanceRequestView> {
       _attendanceRequestCt.updateForm(_attendanceRequestCt.form.value);
       setState(() {});
     } else {
-      Fluttertoast.showToast(msg: 'Canceled the picker.', backgroundColor: Colors.black.withOpacity(0.6));
+      CommonFunction.standartSnackbar('Canceled the picker.');
     }
   }
 

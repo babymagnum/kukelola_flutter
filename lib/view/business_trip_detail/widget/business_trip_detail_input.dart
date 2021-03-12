@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_masked_text/flutter_masked_text.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:intl/intl.dart';
 import 'package:kukelola_flutter/core/theme/theme_text_style.dart';
 import 'package:kukelola_flutter/core/widgets/custom_input.dart';
+import 'package:kukelola_flutter/main.dart';
 
 class BusinessTripDetailInput extends StatefulWidget {
   final String title;
@@ -17,15 +18,21 @@ class BusinessTripDetailInput extends StatefulWidget {
 }
 
 class _BusinessTripDetailInputState extends State<BusinessTripDetailInput> {
-  var _costCt = MoneyMaskedTextController(initialValue: 0, decimalSeparator: '', thousandSeparator: '.', precision: 0, leftSymbol: 'Rp ');
-
+  String _formatNumber(String s) => NumberFormat.decimalPattern(commonController.language.value).format(int.parse(s));
+  var _amountCt = TextEditingController();
+  // String get _currency => NumberFormat.compactSimpleCurrency(locale: commonController.language.value).currencySymbol;
   var _amountFocus = FocusNode(), _descriptionFocus = FocusNode();
+
+  @override
+  void dispose() {
+    _amountCt.dispose();
+
+    super.dispose();
+  }
 
   @override
   void initState() {
     super.initState();
-
-    _costCt.text = '';
   }
 
   @override
@@ -45,11 +52,21 @@ class _BusinessTripDetailInputState extends State<BusinessTripDetailInput> {
         CustomInput(
           textInputAction: TextInputAction.done,
           focusNode: _amountFocus,
-          controller: _costCt,
-          hintText: 'type amount...',
+          controller: _amountCt,
+          prefix: 'Rp ',
+          hintText: '5,000',
           inputType: TextInputType.number,
           onEditingComplete: () => FocusScope.of(context).requestFocus(FocusNode()),
-          onChanged: (_) => widget.onAmountChange(_.replaceAll('Rp', '').replaceAll('.', '')),
+          // onChanged: (_) => widget.onAmountChange(_.replaceAll('Rp', '').replaceAll('.', '')),
+          onChanged: (text) {
+            text = '${_formatNumber(text.replaceAll(',', ''))}';
+            _amountCt.value = TextEditingValue(
+              text: text,
+              selection: TextSelection.collapsed(offset: text.length),
+            );
+
+            widget.onAmountChange(_amountCt.text.trim().replaceAll(',', ''));
+          },
           onTap: () => setState(() => _amountFocus.requestFocus()),
           labelText: 'AMOUNT',
         ),

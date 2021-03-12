@@ -1,5 +1,6 @@
 import 'package:division/division.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_svg/svg.dart';
@@ -13,7 +14,7 @@ class CustomInput extends StatelessWidget {
     @required this.focusNode, @required this.hintText, @required this.inputType,
     this.isObsecure = null, @required this.onEditingComplete,
     this.onChanged, this.onObsecureClick, @required this.onTap,
-    this.maxLines = 1, @required this.labelText}): super(key: key);
+    this.maxLines = 1, @required this.labelText, this.listFormatter, this.prefix}): super(key: key);
 
   final TextEditingController controller;
   final FocusNode focusNode;
@@ -27,6 +28,8 @@ class CustomInput extends StatelessWidget {
   final Function onObsecureClick;
   final Function onTap;
   final int maxLines;
+  final List<TextInputFormatter> listFormatter;
+  final String prefix;
 
   @override
   Widget build(BuildContext context) {
@@ -38,6 +41,7 @@ class CustomInput extends StatelessWidget {
         Stack(
           children: [
             TextField(
+              inputFormatters: listFormatter,
               onTap: onTap,
               onChanged: onChanged,
               autocorrect: false,
@@ -51,6 +55,8 @@ class CustomInput extends StatelessWidget {
               style: ThemeTextStyle.biryaniRegular.apply(fontSizeDelta: 14.ssp),
               obscureText: isObsecure == null ? false : isObsecure,
               decoration: InputDecoration(
+                prefixText: focusNode.hasFocus ? prefix : null,
+                prefixStyle: ThemeTextStyle.biryaniRegular.apply(fontSizeDelta: 14.ssp, color: Color(0xFFC4C4C4)),
                 floatingLabelBehavior: FloatingLabelBehavior.always,
                 isDense: true,
                 hintText: hintText,
