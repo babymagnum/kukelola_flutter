@@ -1,5 +1,7 @@
 import UIKit
 import Flutter
+import GoogleMaps
+import UserNotifications
 
 @UIApplicationMain
 @objc class AppDelegate: FlutterAppDelegate {

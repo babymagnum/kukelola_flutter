@@ -25,7 +25,7 @@ dependencies:
   flutter_staggered_grid_view:
   cached_network_image:
   division:
-  firebase_messaging:
+  firebase_messaging: ^7.0.3
   flutter_local_notifications:
   auto_size_text: ^2.1.0
   flutter_screenutil: ^4.0.3+2
