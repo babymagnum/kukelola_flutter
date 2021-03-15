@@ -26,7 +26,6 @@ class DialogPayslipController extends GetxController {
       final decoded = base64.decode(data.data);
       final appDir = await syspaths.getTemporaryDirectory();
       final file = await File('${appDir.path}/PaySlip-${homeController.userData.value.fullName}.pdf').writeAsBytes(decoded);
-      final length = await file.length();
       OpenFile.open(file.path);
       downloadSuccess.value = true;
     } else {

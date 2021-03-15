@@ -1,18 +1,24 @@
+import 'dart:convert';
 import 'dart:io';
 import 'package:get/get.dart';
-import 'package:kukelola_flutter/core/helper/common_function.dart';
-import 'package:kukelola_flutter/core/helper/constant.dart';
-import 'package:kukelola_flutter/core/model/static_model.dart';
 import 'package:kukelola_flutter/main.dart';
+import 'package:kukelola_flutter/networking/model/file_attachment.dart';
 import 'package:kukelola_flutter/networking/model/overtime_summary_grid.dart';
 import 'package:kukelola_flutter/networking/request/summary_grid_request.dart';
 import 'package:kukelola_flutter/networking/service/service.dart';
 import 'package:kukelola_flutter/view/overtime_summary/view/overtime_summary_filter_controller.dart';
+import 'package:open_file/open_file.dart';
+import 'package:path_provider/path_provider.dart' as syspaths;
 
 class OvertimeSummaryController extends GetxController {
   var loadingSummary = false.obs;
   var errorSummary = false.obs;
   var listSummary = List<OvertimeSummaryGridData>().obs;
+  var loadingAttachment = false.obs;
+  var errorAttachment = false.obs;
+  var attachmentData = FileAttachmentData().obs;
+
+  setAttachmentData(FileAttachmentData value) => attachmentData.value = value;
 
   populateData() async {
     final overtimeSummaryFilterCt = Get.find<OvertimeSummaryFilterController>();
@@ -28,5 +34,27 @@ class OvertimeSummaryController extends GetxController {
     } else {
       errorSummary.value = true;
     }
+  }
+
+  getAttachment(String attachmentId) async {
+    loadingAttachment.value = true;
+    final data = await Service().fileAttachment(attachmentId);
+    loadingAttachment.value = false;
+
+    if (data?.data != null) {
+      errorAttachment.value = false;
+      attachmentData.value = data.data;
+    } else {
+      errorAttachment.value = true;
+    }
+  }
+
+  openAttachment() async {
+    if ((attachmentData.value.fileName ?? '') == '') return;
+
+    final decoded = base64.decode(attachmentData.value.file);
+    final appDir = await syspaths.getTemporaryDirectory();
+    final file = await File('${appDir.path}/${attachmentData.value.fileName}').writeAsBytes(decoded);
+    OpenFile.open(file.path);
   }
 }

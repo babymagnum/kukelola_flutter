@@ -76,9 +76,10 @@ class _MyAppState extends State<MyApp> {
   }
 
   _showAndroidNotification(Map<String, dynamic> message) async {
-    var androidSetting = AndroidInitializationSettings('kukelola_logo');
-    var iosSetting = IOSInitializationSettings();
-    var initializationSettings = InitializationSettings(android: androidSetting, iOS: iosSetting);
+    var initializationSettings = InitializationSettings(
+      android: AndroidInitializationSettings('kukelola_logo_bw'),
+      iOS: IOSInitializationSettings(),
+    );
     FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
     flutterLocalNotificationsPlugin.initialize(initializationSettings, onSelectNotification: (_) => _onSelectNotification(message));
 

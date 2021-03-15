@@ -4,32 +4,66 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import 'package:kukelola_flutter/core/theme/theme_color.dart';
 import 'package:kukelola_flutter/core/theme/theme_text_style.dart';
 import 'package:kukelola_flutter/core/widgets/button_back.dart';
 import 'package:kukelola_flutter/core/widgets/summary_detail_status.dart';
+import 'package:kukelola_flutter/networking/model/file_attachment.dart';
 import 'package:kukelola_flutter/networking/model/leave_summary_grid.dart';
 import 'package:kukelola_flutter/view/base_view.dart';
+import 'package:kukelola_flutter/view/leave_summary/leave_summary_controller.dart';
 
-class LeaveSummaryDetailView extends StatelessWidget {
+class LeaveSummaryDetailView extends StatefulWidget {
 
   LeaveSummaryDetailView({@required this.item});
 
   final LeaveSummaryGridData item;
 
-  bool _isSpecialLeave() => item.specialLeave != '';
+  @override
+  _LeaveSummaryDetailViewState createState() => _LeaveSummaryDetailViewState();
+}
 
-  Widget _content(String title, String content, bool isAttachment) {
+class _LeaveSummaryDetailViewState extends State<LeaveSummaryDetailView> {
+  bool _isSpecialLeave() => widget.item.specialLeave != '';
+  var _leaveSummmaryCt = Get.find<LeaveSummaryController>();
+
+  Widget _content(String title, String content, bool isAttachment, bool loading, Function onTap) {
     return Expanded(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(title, style: ThemeTextStyle.biryaniBold.apply(color: Color(0xFFC4C4C4), fontSizeDelta: 10.ssp),),
-          Text(content, style: ThemeTextStyle.biryaniRegular.apply(fontSizeDelta: 14.ssp, color: isAttachment ? Color(0xFF158AC9) : Color(0xFF181921), decoration: isAttachment ? TextDecoration.underline : null),),
+          loading ?
+          Padding(
+            padding: EdgeInsets.only(top: 5.h),
+            child: SizedBox(
+              width: 12.w, height: 12.w,
+              child: CircularProgressIndicator(
+                valueColor: AlwaysStoppedAnimation<Color>(ThemeColor.primary),
+              ),
+            ),
+          ) :
+          GestureDetector(
+            onTap: onTap,
+            child: Text(content, style: ThemeTextStyle.biryaniRegular.apply(fontSizeDelta: 14.ssp, color: isAttachment ? Color(0xFF158AC9) : Color(0xFF181921), decoration: isAttachment ? TextDecoration.underline : null),),
+          ),
         ],
       ),
     );
   }
-  
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+
+    if (widget.item.attachmentId != null) {
+      _leaveSummmaryCt.getAttachment(widget.item.attachmentId);
+    } else {
+      _leaveSummmaryCt.setAttachmentData(FileAttachmentData());
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return BaseView(
@@ -52,17 +86,17 @@ class LeaveSummaryDetailView extends StatelessWidget {
                         Row(
                           children: [
                             Flexible(
-                              child: Text(item.leaveType, style: ThemeTextStyle.biryaniBold.apply(color: Colors.white, fontSizeDelta: 18.ssp),),
+                              child: Text(widget.item.leaveType, style: ThemeTextStyle.biryaniBold.apply(color: Colors.white, fontSizeDelta: 18.ssp),),
                             ),
                             SizedBox(width: 4.w,),
                             SummaryDetailStatus(color: Color(0xFF1AB394), label: 'APPROVED'),
                           ],
                         ),
                         SizedBox(height: 4.h,),
-                        Text('${item.startDate} - ${item.endDate}', style: ThemeTextStyle.biryaniRegular.apply(color: Colors.white, fontSizeDelta: 12.ssp),),
+                        Text('${widget.item.startDate} - ${widget.item.endDate}', style: ThemeTextStyle.biryaniRegular.apply(color: Colors.white, fontSizeDelta: 12.ssp),),
                         SizedBox(height: 16.h,),
-                        Text('${item.employeeName} / ${item.jobTitle}', style: ThemeTextStyle.biryaniRegular.apply(color: Colors.white, fontSizeDelta: 12.ssp),),
-                        Text(item.nip, style: ThemeTextStyle.biryaniRegular.apply(color: Colors.white, fontSizeDelta: 12.ssp),),
+                        Text('${widget.item.employeeName} / ${widget.item.jobTitle}', style: ThemeTextStyle.biryaniRegular.apply(color: Colors.white, fontSizeDelta: 12.ssp),),
+                        Text(widget.item.nip, style: ThemeTextStyle.biryaniRegular.apply(color: Colors.white, fontSizeDelta: 12.ssp),),
                         SizedBox(height: 24.h,)
                       ],
                     ),
@@ -80,33 +114,41 @@ class LeaveSummaryDetailView extends StatelessWidget {
               child: SingleChildScrollView(
                 child: Padding(
                   padding: EdgeInsets.symmetric(horizontal: 24.w),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      SizedBox(height: 24.h,),
-                      Row(
-                        children: [
-                          _content(_isSpecialLeave() ? 'SPECIAL LEAVE' : 'LEAVE TYPE', _isSpecialLeave() ? item.specialLeave : item.leaveType, false),
-                          SizedBox(width: 10.w,),
-                          _content('TOTAL DAYS', '${item.totalDays}', false)
-                        ],
-                      ),
-                      SizedBox(height: 24.h,),
-                      Row(
-                        children: [
-                          _content('DESCRIPTION', item.description, false)
-                        ],
-                      ),
-                      SizedBox(height: 24.h,),
-                      Row(
-                        children: [
-                          _content('APPROVAL DATE', item.approvalDate, false),
-                          SizedBox(width: 10.w,),
-                          _content('ATTACHMENT', '-', true)
-                        ],
-                      ),
-                      SizedBox(height: 24.h,)
-                    ],
+                  child: Obx(() => Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        SizedBox(height: 24.h,),
+                        Row(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            _content(_isSpecialLeave() ? 'SPECIAL LEAVE' : 'LEAVE TYPE', _isSpecialLeave() ? widget.item.specialLeave : widget.item.leaveType, false, false, () {}),
+                            SizedBox(width: 10.w,),
+                            _content('TOTAL DAYS', '${widget.item.totalDays}', false, false, () {})
+                          ],
+                        ),
+                        SizedBox(height: 24.h,),
+                        Row(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            _content('DESCRIPTION', widget.item.description, false, false, () {})
+                          ],
+                        ),
+                        SizedBox(height: 24.h,),
+                        Row(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            _content('APPROVAL DATE', widget.item.approvalDate, false, false, () {}),
+                            SizedBox(width: 10.w,),
+                            _content(
+                              'ATTACHMENT',
+                              (_leaveSummmaryCt.attachmentData.value.fileName ?? '') == '' ? 'No attachment' : _leaveSummmaryCt.attachmentData.value.fileName,
+                              (_leaveSummmaryCt.attachmentData.value.fileName ?? '') != '', _leaveSummmaryCt.loadingAttachment.value, () => _leaveSummmaryCt.openAttachment(),
+                            )
+                          ],
+                        ),
+                        SizedBox(height: 24.h,)
+                      ],
+                    ),
                   ),
                 ),
               ),

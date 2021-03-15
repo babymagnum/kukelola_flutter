@@ -1,11 +1,8 @@
-import 'dart:convert';
-
 import 'package:get/get.dart';
 import 'package:kukelola_flutter/core/helper/common_function.dart';
 import 'package:kukelola_flutter/core/helper/constant.dart';
 import 'package:kukelola_flutter/core/helper/text_util.dart';
 import 'package:kukelola_flutter/core/model/static_model.dart';
-import 'package:kukelola_flutter/core/widgets/dialog_error.dart';
 import 'package:kukelola_flutter/main.dart';
 import 'package:kukelola_flutter/networking/request/login_request.dart';
 import 'package:kukelola_flutter/networking/service/service.dart';

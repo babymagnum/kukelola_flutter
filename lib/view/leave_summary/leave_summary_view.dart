@@ -13,17 +13,26 @@ import 'package:kukelola_flutter/view/leave_summary/view/leave_summary_filter.da
 import 'package:kukelola_flutter/view/leave_summary/view/leave_summary_filter_controller.dart';
 import 'package:kukelola_flutter/view/leave_summary/widget/list_leave_summary_item.dart';
 
-class LeaveSummaryView extends StatelessWidget {
+class LeaveSummaryView extends StatefulWidget {
 
+  @override
+  _LeaveSummaryViewState createState() => _LeaveSummaryViewState();
+}
+
+class _LeaveSummaryViewState extends State<LeaveSummaryView> {
   var _leaveSummaryCt = Get.put(LeaveSummaryController());
 
   @override
-  Widget build(BuildContext context) {
+  void initState() {
+    // TODO: implement initState
+    super.initState();
 
-    Future.delayed(Duration.zero, () {
-      Get.put(LeaveSummaryFilterController());
-      _leaveSummaryCt.populateData();
-    });
+    Get.put(LeaveSummaryFilterController());
+    _leaveSummaryCt.populateData();
+  }
+
+  @override
+  Widget build(BuildContext context) {
 
     return BaseView(
       body: Column(
