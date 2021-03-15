@@ -15,8 +15,6 @@ import 'package:kukelola_flutter/networking/model/file_attachment.dart';
 import 'package:kukelola_flutter/generated/json/file_attachment_helper.dart';
 import 'package:kukelola_flutter/networking/model/standart.dart';
 import 'package:kukelola_flutter/generated/json/standart_helper.dart';
-import 'package:kukelola_flutter/networking/model/leave_summary_grid.dart';
-import 'package:kukelola_flutter/generated/json/leave_summary_grid_helper.dart';
 import 'package:kukelola_flutter/networking/model/attendance_summary_grid.dart';
 import 'package:kukelola_flutter/generated/json/attendance_summary_grid_helper.dart';
 import 'package:kukelola_flutter/networking/model/staff_education.dart';
@@ -31,8 +29,6 @@ import 'package:kukelola_flutter/networking/model/special_leave_list.dart';
 import 'package:kukelola_flutter/generated/json/special_leave_list_helper.dart';
 import 'package:kukelola_flutter/networking/model/staff_education_insert.dart';
 import 'package:kukelola_flutter/generated/json/staff_education_insert_helper.dart';
-import 'package:kukelola_flutter/networking/model/staff.dart';
-import 'package:kukelola_flutter/generated/json/staff_helper.dart';
 import 'package:kukelola_flutter/networking/model/staff_experience_insert.dart';
 import 'package:kukelola_flutter/generated/json/staff_experience_insert_helper.dart';
 import 'package:kukelola_flutter/networking/model/payslip.dart';
@@ -41,12 +37,16 @@ import 'package:kukelola_flutter/networking/model/notification.dart';
 import 'package:kukelola_flutter/generated/json/notification_helper.dart';
 import 'package:kukelola_flutter/networking/model/staff_family_insert.dart';
 import 'package:kukelola_flutter/generated/json/staff_family_insert_helper.dart';
+import 'package:kukelola_flutter/networking/model/leave_summary_grid.dart';
+import 'package:kukelola_flutter/generated/json/leave_summary_grid_helper.dart';
 import 'package:kukelola_flutter/networking/model/token.dart';
 import 'package:kukelola_flutter/generated/json/token_helper.dart';
 import 'package:kukelola_flutter/networking/model/staff_experience.dart';
 import 'package:kukelola_flutter/generated/json/staff_experience_helper.dart';
 import 'package:kukelola_flutter/networking/model/reimbursment_summary_grid.dart';
 import 'package:kukelola_flutter/generated/json/reimbursment_summary_grid_helper.dart';
+import 'package:kukelola_flutter/networking/model/staff.dart';
+import 'package:kukelola_flutter/generated/json/staff_helper.dart';
 
 class JsonConvert<T> {
 	T fromJson(Map<String, dynamic> json) {
@@ -79,10 +79,6 @@ class JsonConvert<T> {
 				return fileAttachmentDataFromJson(data as FileAttachmentData, json) as T;
 			case Standart:
 				return standartFromJson(data as Standart, json) as T;
-			case LeaveSummaryGrid:
-				return leaveSummaryGridFromJson(data as LeaveSummaryGrid, json) as T;
-			case LeaveSummaryGridData:
-				return leaveSummaryGridDataFromJson(data as LeaveSummaryGridData, json) as T;
 			case AttendanceSummaryGrid:
 				return attendanceSummaryGridFromJson(data as AttendanceSummaryGrid, json) as T;
 			case AttendanceSummaryGridData:
@@ -119,10 +115,6 @@ class JsonConvert<T> {
 				return specialLeaveListDataFromJson(data as SpecialLeaveListData, json) as T;
 			case StaffEducationInsert:
 				return staffEducationInsertFromJson(data as StaffEducationInsert, json) as T;
-			case Staff:
-				return staffFromJson(data as Staff, json) as T;
-			case StaffData:
-				return staffDataFromJson(data as StaffData, json) as T;
 			case StaffExperienceInsert:
 				return staffExperienceInsertFromJson(data as StaffExperienceInsert, json) as T;
 			case Payslip:
@@ -133,6 +125,10 @@ class JsonConvert<T> {
 				return notificationDataFromJson(data as NotificationData, json) as T;
 			case StaffFamilyInsert:
 				return staffFamilyInsertFromJson(data as StaffFamilyInsert, json) as T;
+			case LeaveSummaryGrid:
+				return leaveSummaryGridFromJson(data as LeaveSummaryGrid, json) as T;
+			case LeaveSummaryGridData:
+				return leaveSummaryGridDataFromJson(data as LeaveSummaryGridData, json) as T;
 			case Token:
 				return tokenFromJson(data as Token, json) as T;
 			case StaffExperience:
@@ -142,7 +138,11 @@ class JsonConvert<T> {
 			case ReimbursmentSummaryGrid:
 				return reimbursmentSummaryGridFromJson(data as ReimbursmentSummaryGrid, json) as T;
 			case ReimbursmentSummaryGridData:
-				return reimbursmentSummaryGridDataFromJson(data as ReimbursmentSummaryGridData, json) as T;    }
+				return reimbursmentSummaryGridDataFromJson(data as ReimbursmentSummaryGridData, json) as T;
+			case Staff:
+				return staffFromJson(data as Staff, json) as T;
+			case StaffData:
+				return staffDataFromJson(data as StaffData, json) as T;    }
     return data as T;
   }
 
@@ -168,10 +168,6 @@ class JsonConvert<T> {
 				return fileAttachmentDataToJson(data as FileAttachmentData);
 			case Standart:
 				return standartToJson(data as Standart);
-			case LeaveSummaryGrid:
-				return leaveSummaryGridToJson(data as LeaveSummaryGrid);
-			case LeaveSummaryGridData:
-				return leaveSummaryGridDataToJson(data as LeaveSummaryGridData);
 			case AttendanceSummaryGrid:
 				return attendanceSummaryGridToJson(data as AttendanceSummaryGrid);
 			case AttendanceSummaryGridData:
@@ -208,10 +204,6 @@ class JsonConvert<T> {
 				return specialLeaveListDataToJson(data as SpecialLeaveListData);
 			case StaffEducationInsert:
 				return staffEducationInsertToJson(data as StaffEducationInsert);
-			case Staff:
-				return staffToJson(data as Staff);
-			case StaffData:
-				return staffDataToJson(data as StaffData);
 			case StaffExperienceInsert:
 				return staffExperienceInsertToJson(data as StaffExperienceInsert);
 			case Payslip:
@@ -222,6 +214,10 @@ class JsonConvert<T> {
 				return notificationDataToJson(data as NotificationData);
 			case StaffFamilyInsert:
 				return staffFamilyInsertToJson(data as StaffFamilyInsert);
+			case LeaveSummaryGrid:
+				return leaveSummaryGridToJson(data as LeaveSummaryGrid);
+			case LeaveSummaryGridData:
+				return leaveSummaryGridDataToJson(data as LeaveSummaryGridData);
 			case Token:
 				return tokenToJson(data as Token);
 			case StaffExperience:
@@ -232,6 +228,10 @@ class JsonConvert<T> {
 				return reimbursmentSummaryGridToJson(data as ReimbursmentSummaryGrid);
 			case ReimbursmentSummaryGridData:
 				return reimbursmentSummaryGridDataToJson(data as ReimbursmentSummaryGridData);
+			case Staff:
+				return staffToJson(data as Staff);
+			case StaffData:
+				return staffDataToJson(data as StaffData);
 			}
 			return data as T;
 		}
@@ -258,10 +258,6 @@ class JsonConvert<T> {
 			return FileAttachmentData().fromJson(json);
 		}	else if(type == (Standart).toString()){
 			return Standart().fromJson(json);
-		}	else if(type == (LeaveSummaryGrid).toString()){
-			return LeaveSummaryGrid().fromJson(json);
-		}	else if(type == (LeaveSummaryGridData).toString()){
-			return LeaveSummaryGridData().fromJson(json);
 		}	else if(type == (AttendanceSummaryGrid).toString()){
 			return AttendanceSummaryGrid().fromJson(json);
 		}	else if(type == (AttendanceSummaryGridData).toString()){
@@ -298,10 +294,6 @@ class JsonConvert<T> {
 			return SpecialLeaveListData().fromJson(json);
 		}	else if(type == (StaffEducationInsert).toString()){
 			return StaffEducationInsert().fromJson(json);
-		}	else if(type == (Staff).toString()){
-			return Staff().fromJson(json);
-		}	else if(type == (StaffData).toString()){
-			return StaffData().fromJson(json);
 		}	else if(type == (StaffExperienceInsert).toString()){
 			return StaffExperienceInsert().fromJson(json);
 		}	else if(type == (Payslip).toString()){
@@ -312,6 +304,10 @@ class JsonConvert<T> {
 			return NotificationData().fromJson(json);
 		}	else if(type == (StaffFamilyInsert).toString()){
 			return StaffFamilyInsert().fromJson(json);
+		}	else if(type == (LeaveSummaryGrid).toString()){
+			return LeaveSummaryGrid().fromJson(json);
+		}	else if(type == (LeaveSummaryGridData).toString()){
+			return LeaveSummaryGridData().fromJson(json);
 		}	else if(type == (Token).toString()){
 			return Token().fromJson(json);
 		}	else if(type == (StaffExperience).toString()){
@@ -322,6 +318,10 @@ class JsonConvert<T> {
 			return ReimbursmentSummaryGrid().fromJson(json);
 		}	else if(type == (ReimbursmentSummaryGridData).toString()){
 			return ReimbursmentSummaryGridData().fromJson(json);
+		}	else if(type == (Staff).toString()){
+			return Staff().fromJson(json);
+		}	else if(type == (StaffData).toString()){
+			return StaffData().fromJson(json);
 		}	
 		return null;
 	}
@@ -348,10 +348,6 @@ class JsonConvert<T> {
 			return data.map<FileAttachmentData>((e) => FileAttachmentData().fromJson(e)).toList() as M;
 		}	else if(List<Standart>() is M){
 			return data.map<Standart>((e) => Standart().fromJson(e)).toList() as M;
-		}	else if(List<LeaveSummaryGrid>() is M){
-			return data.map<LeaveSummaryGrid>((e) => LeaveSummaryGrid().fromJson(e)).toList() as M;
-		}	else if(List<LeaveSummaryGridData>() is M){
-			return data.map<LeaveSummaryGridData>((e) => LeaveSummaryGridData().fromJson(e)).toList() as M;
 		}	else if(List<AttendanceSummaryGrid>() is M){
 			return data.map<AttendanceSummaryGrid>((e) => AttendanceSummaryGrid().fromJson(e)).toList() as M;
 		}	else if(List<AttendanceSummaryGridData>() is M){
@@ -388,10 +384,6 @@ class JsonConvert<T> {
 			return data.map<SpecialLeaveListData>((e) => SpecialLeaveListData().fromJson(e)).toList() as M;
 		}	else if(List<StaffEducationInsert>() is M){
 			return data.map<StaffEducationInsert>((e) => StaffEducationInsert().fromJson(e)).toList() as M;
-		}	else if(List<Staff>() is M){
-			return data.map<Staff>((e) => Staff().fromJson(e)).toList() as M;
-		}	else if(List<StaffData>() is M){
-			return data.map<StaffData>((e) => StaffData().fromJson(e)).toList() as M;
 		}	else if(List<StaffExperienceInsert>() is M){
 			return data.map<StaffExperienceInsert>((e) => StaffExperienceInsert().fromJson(e)).toList() as M;
 		}	else if(List<Payslip>() is M){
@@ -402,6 +394,10 @@ class JsonConvert<T> {
 			return data.map<NotificationData>((e) => NotificationData().fromJson(e)).toList() as M;
 		}	else if(List<StaffFamilyInsert>() is M){
 			return data.map<StaffFamilyInsert>((e) => StaffFamilyInsert().fromJson(e)).toList() as M;
+		}	else if(List<LeaveSummaryGrid>() is M){
+			return data.map<LeaveSummaryGrid>((e) => LeaveSummaryGrid().fromJson(e)).toList() as M;
+		}	else if(List<LeaveSummaryGridData>() is M){
+			return data.map<LeaveSummaryGridData>((e) => LeaveSummaryGridData().fromJson(e)).toList() as M;
 		}	else if(List<Token>() is M){
 			return data.map<Token>((e) => Token().fromJson(e)).toList() as M;
 		}	else if(List<StaffExperience>() is M){
@@ -412,6 +408,10 @@ class JsonConvert<T> {
 			return data.map<ReimbursmentSummaryGrid>((e) => ReimbursmentSummaryGrid().fromJson(e)).toList() as M;
 		}	else if(List<ReimbursmentSummaryGridData>() is M){
 			return data.map<ReimbursmentSummaryGridData>((e) => ReimbursmentSummaryGridData().fromJson(e)).toList() as M;
+		}	else if(List<Staff>() is M){
+			return data.map<Staff>((e) => Staff().fromJson(e)).toList() as M;
+		}	else if(List<StaffData>() is M){
+			return data.map<StaffData>((e) => StaffData().fromJson(e)).toList() as M;
 		}
 		return null;
 	}

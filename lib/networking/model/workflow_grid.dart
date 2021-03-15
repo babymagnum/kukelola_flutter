@@ -18,6 +18,7 @@ class WorkflowGrid with JsonConvert<WorkflowGrid> {
 	bool isSuperAdmin;
 	@JSONField(name: "IsFinance")
 	bool isFinance;
+	String errorMessage;
 }
 
 class WorkflowGridData with JsonConvert<WorkflowGridData> {

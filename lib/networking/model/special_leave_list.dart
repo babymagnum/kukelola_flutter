@@ -6,6 +6,7 @@ class SpecialLeaveList with JsonConvert<SpecialLeaveList> {
 	List<SpecialLeaveListData> data;
 	@JSONField(name: "Total")
 	int total;
+	String errorMessage;
 }
 
 class SpecialLeaveListData with JsonConvert<SpecialLeaveListData> {

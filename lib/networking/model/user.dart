@@ -18,6 +18,7 @@ class User with JsonConvert<User> {
 	bool isSuperAdmin;
 	@JSONField(name: "IsFinance")
 	bool isFinance;
+	String errorMessage;
 }
 
 class UserData with JsonConvert<UserData> {

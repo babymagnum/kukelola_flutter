@@ -18,6 +18,7 @@ class OvertimeSummaryGrid with JsonConvert<OvertimeSummaryGrid> {
 	bool isSuperAdmin;
 	@JSONField(name: "IsFinance")
 	bool isFinance;
+	String errorMessage;
 }
 
 class OvertimeSummaryGridData with JsonConvert<OvertimeSummaryGridData> {

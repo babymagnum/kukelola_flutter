@@ -18,6 +18,7 @@ class LeaveSummaryGrid with JsonConvert<LeaveSummaryGrid> {
 	bool isSuperAdmin;
 	@JSONField(name: "IsFinance")
 	bool isFinance;
+	String errorMessage;
 }
 
 class LeaveSummaryGridData with JsonConvert<LeaveSummaryGridData> {

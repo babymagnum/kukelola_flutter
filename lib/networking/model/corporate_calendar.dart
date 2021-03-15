@@ -6,6 +6,7 @@ class CorporateCalendar with JsonConvert<CorporateCalendar> {
 	List<CorporateCalendarData> data;
 	@JSONField(name: "Total")
 	int total;
+	String errorMessage;
 }
 
 class CorporateCalendarData with JsonConvert<CorporateCalendarData> {

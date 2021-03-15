@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:get/get.dart';
+import 'package:kukelola_flutter/core/helper/common_function.dart';
 import 'package:kukelola_flutter/core/helper/constant.dart';
 import 'package:kukelola_flutter/core/helper/text_util.dart';
 import 'package:kukelola_flutter/core/model/static_model.dart';
@@ -29,7 +30,7 @@ class LoginController extends GetxController {
     final data = await Service().token(LoginRequest(form.value.username, form.value.password, otp, commonController.autoLogin.value ? 'true' : 'false'));
     loadingLogin.value = false;
 
-    if ((data?.accessToken ?? '') != '') {
+    if (data != null) {
       await commonController.preferences.setString(Constant.EMAIL, form.value.username);
       await commonController.preferences.setString(Constant.PASSWORD, form.value.password);
       await commonController.preferences.setBool(Constant.IS_PASS_LOGIN, true);
@@ -38,7 +39,7 @@ class LoginController extends GetxController {
       Get.to(commonController.autoLogin.value ? ContainerHomeView() : VerificationCodeView());
       commonController.setAutoLogin(false);
     } else {
-      Get.dialog(DialogError(error: data.errorDescription ?? 'Failed to login', button: 'Ok', buttonClick: () => Get.back()));
+      CommonFunction.standartSnackbar(data.errorMessage);
     }
   }
 }

@@ -18,6 +18,7 @@ class FileAttachment with JsonConvert<FileAttachment> {
 	bool isSuperAdmin;
 	@JSONField(name: "IsFinance")
 	bool isFinance;
+	String errorMessage;
 }
 
 class FileAttachmentData with JsonConvert<FileAttachmentData> {

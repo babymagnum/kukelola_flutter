@@ -18,4 +18,5 @@ class TotalWorkflow with JsonConvert<TotalWorkflow> {
 	bool isSuperAdmin;
 	@JSONField(name: "IsFinance")
 	bool isFinance;
+	String errorMessage;
 }

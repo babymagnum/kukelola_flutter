@@ -28,6 +28,9 @@ overtimeRequestPostFromJson(OvertimeRequestPost data, Map<String, dynamic> json)
 	if (json['IsFinance'] != null) {
 		data.isFinance = json['IsFinance'];
 	}
+	if (json['errorMessage'] != null) {
+		data.errorMessage = json['errorMessage'].toString();
+	}
 	return data;
 }
 
@@ -45,6 +48,7 @@ Map<String, dynamic> overtimeRequestPostToJson(OvertimeRequestPost entity) {
 	data['IsAdmin'] = entity.isAdmin;
 	data['IsSuperAdmin'] = entity.isSuperAdmin;
 	data['IsFinance'] = entity.isFinance;
+	data['errorMessage'] = entity.errorMessage;
 	return data;
 }
 

@@ -18,6 +18,7 @@ class AttendanceSummaryGrid with JsonConvert<AttendanceSummaryGrid> {
 	bool isSuperAdmin;
 	@JSONField(name: "IsFinance")
 	bool isFinance;
+	String errorMessage;
 }
 
 class AttendanceSummaryGridData with JsonConvert<AttendanceSummaryGridData> {

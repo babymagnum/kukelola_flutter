@@ -19,4 +19,5 @@ class StaffEducationInsert with JsonConvert<StaffEducationInsert> {
 	bool isSuperAdmin;
 	@JSONField(name: "IsFinance")
 	bool isFinance;
+	String errorMessage;
 }

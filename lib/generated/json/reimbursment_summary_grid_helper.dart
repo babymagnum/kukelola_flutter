@@ -31,6 +31,9 @@ reimbursmentSummaryGridFromJson(ReimbursmentSummaryGrid data, Map<String, dynami
 	if (json['IsFinance'] != null) {
 		data.isFinance = json['IsFinance'];
 	}
+	if (json['errorMessage'] != null) {
+		data.errorMessage = json['errorMessage'].toString();
+	}
 	return data;
 }
 
@@ -48,6 +51,7 @@ Map<String, dynamic> reimbursmentSummaryGridToJson(ReimbursmentSummaryGrid entit
 	data['IsAdmin'] = entity.isAdmin;
 	data['IsSuperAdmin'] = entity.isSuperAdmin;
 	data['IsFinance'] = entity.isFinance;
+	data['errorMessage'] = entity.errorMessage;
 	return data;
 }
 

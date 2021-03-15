@@ -18,6 +18,7 @@ class ReimbursmentSummaryGrid with JsonConvert<ReimbursmentSummaryGrid> {
 	bool isSuperAdmin;
 	@JSONField(name: "IsFinance")
 	bool isFinance;
+	String errorMessage;
 }
 
 class ReimbursmentSummaryGridData with JsonConvert<ReimbursmentSummaryGridData> {

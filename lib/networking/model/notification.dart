@@ -18,6 +18,7 @@ class Notification with JsonConvert<Notification> {
 	bool isSuperAdmin;
 	@JSONField(name: "IsFinance")
 	bool isFinance;
+	String errorMessage;
 }
 
 class NotificationData with JsonConvert<NotificationData> {

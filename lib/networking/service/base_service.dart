@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:kukelola_flutter/core/helper/common_function.dart';
 import 'package:kukelola_flutter/core/helper/constant.dart';
 import 'package:kukelola_flutter/generated/json/attendance_summary_grid_helper.dart';
 import 'package:kukelola_flutter/generated/json/corporate_calendar_helper.dart';
@@ -56,6 +57,12 @@ class BaseService {
     return maps;
   }
 
+  dynamic _errorResponse() {
+    return {
+      'errorMessage': '500 Internal server error, Please try again!',
+    };
+  }
+
   // TODO: POST WITH FORM DATA
   Future<T> postFormData<T>(String url, FormData body) async {
     T resultResponse;
@@ -67,13 +74,14 @@ class BaseService {
 
       if (response.isRedirect) {
         commonController.standartLogout();
+      } else if (response.statusCode == 500) {
+        resultResponse = fromJson<T>(_errorResponse());
       } else {
         var responseMap = jsonDecode(response.toString());
         resultResponse = fromJson<T>(responseMap);
       }
     } on DioError catch (e) {
-      var responseMap = jsonDecode(e.response.toString());
-      resultResponse = fromJson<T>(responseMap);
+      resultResponse = fromJson<T>(_errorResponse());
     }
 
     return resultResponse;
@@ -92,6 +100,9 @@ class BaseService {
 
       if (response.isRedirect) {
         commonController.standartLogout();
+      } else if (response.statusCode == 500) {
+        resultResponse = fromJson<T>(_errorResponse());
+        print('status code 500 bro');
       } else {
         if (isLoadToken) {
           Map decode = jsonDecode(response.toString());
@@ -103,9 +114,9 @@ class BaseService {
         resultResponse = fromJson<T>(responseMap);
       }
     } on DioError catch (e) {
-      var responseMap = jsonDecode(e.response.toString());
-      resultResponse = fromJson<T>(responseMap);
+      resultResponse = fromJson<T>(_errorResponse());
     }
+
     return resultResponse;
   }
 
@@ -120,14 +131,16 @@ class BaseService {
 
       if (response.isRedirect) {
         commonController.standartLogout();
+      } else if (response.statusCode == 500) {
+        resultResponse = fromJson<T>(_errorResponse());
       } else {
         var responseMap = jsonDecode(response.toString());
         resultResponse = fromJson<T>(responseMap);
       }
     } on DioError catch (e) {
-      var responseMap = jsonDecode(e.response.toString());
-      resultResponse = fromJson<T>(responseMap);
+      resultResponse = fromJson<T>(_errorResponse());
     }
+
     return resultResponse;
   }
 
@@ -142,13 +155,14 @@ class BaseService {
 
       if (response.isRedirect) {
         commonController.standartLogout();
+      } else if (response.statusCode == 500) {
+        resultResponse = fromJson<T>(_errorResponse());
       } else {
         var responseMap = jsonDecode(response.toString());
         resultResponse = fromJson<T>(responseMap);
       }
     } on DioError catch (e) {
-      var responseMap = jsonDecode(e.response.toString());
-      resultResponse = fromJson<T>(responseMap);
+      resultResponse = fromJson<T>(_errorResponse());
     }
 
     return resultResponse;
@@ -166,13 +180,14 @@ class BaseService {
 
       if (response.isRedirect) {
         commonController.standartLogout();
+      } else if (response.statusCode == 500) {
+        resultResponse = fromJson<T>(_errorResponse());
       } else {
         var responseMap = jsonDecode(response.toString());
         resultResponse = fromJson<T>(responseMap);
       }
     } on DioError catch (e) {
-      var responseMap = jsonDecode(e.response.toString());
-      resultResponse = fromJson<T>(responseMap);
+      resultResponse = fromJson<T>(_errorResponse());
     }
 
     return resultResponse;
@@ -189,13 +204,14 @@ class BaseService {
 
       if (response.isRedirect) {
         commonController.standartLogout();
+      } else if (response.statusCode == 500) {
+        resultResponse = fromJson<T>(_errorResponse());
       } else {
         var responseMap = jsonDecode(response.toString());
         resultResponse = fromJson<T>(responseMap);
       }
     } on DioError catch (e) {
-      var responseMap = jsonDecode(e.response.toString());
-      resultResponse = fromJson<T>(responseMap);
+      resultResponse = fromJson<T>(_errorResponse());
     }
 
     return resultResponse;
@@ -212,13 +228,14 @@ class BaseService {
 
       if (response.isRedirect) {
         commonController.standartLogout();
+      } else if (response.statusCode == 500) {
+        resultResponse = fromJson<T>(_errorResponse());
       } else {
         var responseMap = jsonDecode(response.toString());
         resultResponse = fromJson<T>(responseMap);
       }
     } on DioError catch (e) {
-      var responseMap = jsonDecode(e.response.toString());
-      resultResponse = fromJson<T>(responseMap);
+      resultResponse = fromJson<T>(_errorResponse());
     }
 
     return resultResponse;
@@ -274,7 +291,7 @@ class BaseService {
       return fileAttachmentFromJson(FileAttachment(), json) as T;
     } else {
       // if this print statement occured, this means that you're not register the model class in here
-      print('Unknown class, dont forget to add your model in BaseService.dart to parse the json');
+      CommonFunction.standartSnackbar('Error: Model class not registered yet in base_service.dart');
       throw Exception('Unknown class');
     }
   }

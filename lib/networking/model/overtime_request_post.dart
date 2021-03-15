@@ -18,6 +18,7 @@ class OvertimeRequestPost with JsonConvert<OvertimeRequestPost> {
 	bool isSuperAdmin;
 	@JSONField(name: "IsFinance")
 	bool isFinance;
+	String errorMessage;
 }
 
 class OvertimeRequestPostData with JsonConvert<OvertimeRequestPostData> {

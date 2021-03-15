@@ -12,6 +12,9 @@ corporateCalendarFromJson(CorporateCalendar data, Map<String, dynamic> json) {
 				? int.tryParse(json['Total'])
 				: json['Total'].toInt();
 	}
+	if (json['errorMessage'] != null) {
+		data.errorMessage = json['errorMessage'].toString();
+	}
 	return data;
 }
 
@@ -21,6 +24,7 @@ Map<String, dynamic> corporateCalendarToJson(CorporateCalendar entity) {
 		data['Data'] =  entity.data.map((v) => v.toJson()).toList();
 	}
 	data['Total'] = entity.total;
+	data['errorMessage'] = entity.errorMessage;
 	return data;
 }
 

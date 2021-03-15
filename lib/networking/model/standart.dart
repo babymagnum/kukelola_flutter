@@ -6,4 +6,5 @@ class Standart with JsonConvert<Standart> {
 	String message;
 	@JSONField(name: "IsSuccess")
 	bool isSuccess;
+	String errorMessage;
 }

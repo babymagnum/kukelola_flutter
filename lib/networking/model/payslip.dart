@@ -18,4 +18,5 @@ class Payslip with JsonConvert<Payslip> {
 	bool isSuperAdmin;
 	@JSONField(name: "IsFinance")
 	bool isFinance;
+	String errorMessage;
 }
