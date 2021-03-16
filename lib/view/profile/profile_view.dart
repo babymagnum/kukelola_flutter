@@ -88,7 +88,7 @@ class _ProfileViewState extends State<ProfileView> with AutomaticKeepAliveClient
                             error: homeController.errorProfilePicture.value,
                             boxFit: BoxFit.contain,
                             loading: homeController.loadingProfilePicture.value,
-                            loadingSize: Size(12.w, 12.w),
+                            loadingSize: Size(16.w, 16.w),
                           ),
                           Positioned(
                             bottom: 2, left: 2, right: 2,

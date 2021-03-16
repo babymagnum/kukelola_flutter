@@ -7,7 +7,7 @@ class AttendanceSummaryController extends GetxController {
   var loadingSummary = false.obs;
   var errorSummary = false.obs;
   var selectedDay = TextUtil.getCurrentDate('dd/MM/yyyy').obs;
-  var visibleMonth = TextUtil.getCurrentDate('MMMM').obs;
+  var visibleMonth = TextUtil.getCurrentDate('MMMM yyyy').obs;
   var listSummary = List<AttendanceSummaryGridData>().obs;
   var selectedSummary = AttendanceSummaryGridData().obs;
 

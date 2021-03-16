@@ -34,6 +34,9 @@ class LoginController extends GetxController {
       await commonController.preferences.setString(Constant.OTP, otp);
       await commonController.preferences.setString(Constant.TOKEN, data.accessToken);
       Get.to(commonController.autoLogin.value ? ContainerHomeView() : VerificationCodeView());
+
+      if (commonController.autoLogin.value) await commonController.preferences.setBool(Constant.IS_LOGIN, true);
+
       commonController.setAutoLogin(false);
     } else {
       CommonFunction.standartSnackbar(data.errorMessage);

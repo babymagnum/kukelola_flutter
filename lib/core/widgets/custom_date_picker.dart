@@ -403,12 +403,17 @@ class CustomDatePicker extends CommonPickerModel {
   }
 }
 
+enum DateTimePickerType {
+  dayMonthYear, monthYear, year, hourMinuteSecond, hourMinute
+}
+
 class DateTimePickerComponent extends StatefulWidget {
-  DateTimePickerComponent({Key key, this.onChanged, this.pickerModel, this.onPick});
+  DateTimePickerComponent({Key key, this.onChanged, this.pickerModel, this.onPick, this.pickerType});
 
   final DateChangedCallback onChanged;
   final BasePickerModel pickerModel;
   final Function onPick;
+  final DateTimePickerType pickerType;
 
   @override
   State<StatefulWidget> createState() {
@@ -449,6 +454,92 @@ class DateTimePickerState extends State<DateTimePickerComponent> {
     }
   }
 
+  Widget _leftColumn(DatePickerTheme theme) {
+    return _renderColumnView(
+        ValueKey(widget.pickerModel.currentLeftIndex()),
+        theme,
+        widget.pickerModel.leftStringAtIndex,
+        leftScrollCtrl, (index) {
+      widget.pickerModel.setLeftIndex(index);
+    }, (index) {
+      setState(() {
+        refreshScrollOffset();
+        _notifyDateChanged();
+      });
+    });
+  }
+
+  Widget _midColumn(DatePickerTheme theme) {
+    return _renderColumnView(
+        ValueKey(widget.pickerModel.currentLeftIndex()),
+        theme,
+        widget.pickerModel.middleStringAtIndex,
+        middleScrollCtrl, (index) {
+      widget.pickerModel.setMiddleIndex(index);
+    }, (index) {
+      setState(() {
+        refreshScrollOffset();
+        _notifyDateChanged();
+      });
+    });
+  }
+
+  Widget _rightColumn(DatePickerTheme theme) {
+    return _renderColumnView(
+        ValueKey(widget.pickerModel.currentMiddleIndex() +
+            widget.pickerModel.currentLeftIndex()),
+        theme,
+        widget.pickerModel.rightStringAtIndex,
+        rightScrollCtrl, (index) {
+      widget.pickerModel.setRightIndex(index);
+    }, (index) {
+      setState(() {
+        refreshScrollOffset();
+        _notifyDateChanged();
+      });
+    });
+  }
+
+  Widget _rowPicker(DatePickerTheme theme) {
+    if (widget.pickerType == DateTimePickerType.dayMonthYear) {
+      return Row(
+        children: <Widget>[
+          _leftColumn(theme),
+          _midColumn(theme),
+          _rightColumn(theme),
+        ],
+      );
+    } else if (widget.pickerType == DateTimePickerType.monthYear) {
+      return Row(
+        children: <Widget>[
+          _midColumn(theme),
+          _rightColumn(theme),
+        ],
+      );
+    } else if (widget.pickerType == DateTimePickerType.hourMinuteSecond) {
+      return Row(
+        children: <Widget>[
+          _leftColumn(theme),
+          _midColumn(theme),
+          _rightColumn(theme),
+        ],
+      );
+    } else if (widget.pickerType == DateTimePickerType.hourMinute) {
+      return Row(
+        children: <Widget>[
+          _leftColumn(theme),
+          _midColumn(theme),
+        ],
+      );
+    } else {
+      return Row(
+        children: <Widget>[
+          _rightColumn(theme)
+        ],
+      );
+    }
+  }
+
   Widget _renderItemView(DatePickerTheme theme) {
     return Container(
       color: Color(0xFF737373),
@@ -476,47 +567,7 @@ class DateTimePickerState extends State<DateTimePickerComponent> {
                   height: 230,
                   alignment: Alignment.center,
                 ),
-                Row(
-                  children: <Widget>[
-                    _renderColumnView(
-                        ValueKey(widget.pickerModel.currentLeftIndex()),
-                        theme,
-                        widget.pickerModel.leftStringAtIndex,
-                        leftScrollCtrl, (index) {
-                      widget.pickerModel.setLeftIndex(index);
-                    }, (index) {
-                      setState(() {
-                        refreshScrollOffset();
-                        _notifyDateChanged();
-                      });
-                    }),
-                    _renderColumnView(
-                        ValueKey(widget.pickerModel.currentLeftIndex()),
-                        theme,
-                        widget.pickerModel.middleStringAtIndex,
-                        middleScrollCtrl, (index) {
-                      widget.pickerModel.setMiddleIndex(index);
-                    }, (index) {
-                      setState(() {
-                        refreshScrollOffset();
-                        _notifyDateChanged();
-                      });
-                    }),
-                    _renderColumnView(
-                        ValueKey(widget.pickerModel.currentMiddleIndex() +
-                            widget.pickerModel.currentLeftIndex()),
-                        theme,
-                        widget.pickerModel.rightStringAtIndex,
-                        rightScrollCtrl, (index) {
-                      widget.pickerModel.setRightIndex(index);
-                    }, (index) {
-                      setState(() {
-                        refreshScrollOffset();
-                        _notifyDateChanged();
-                      });
-                    }),
-                  ],
-                ),
+                _rowPicker(theme),
                 IgnorePointer(
                   child: Container(
                     height: 230,

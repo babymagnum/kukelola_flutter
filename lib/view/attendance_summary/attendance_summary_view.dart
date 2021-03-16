@@ -1,13 +1,16 @@
 import 'package:division/division.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import 'package:kukelola_flutter/core/helper/constant.dart';
 import 'package:kukelola_flutter/core/helper/text_util.dart';
 import 'package:kukelola_flutter/core/theme/theme_color.dart';
 import 'package:kukelola_flutter/core/theme/theme_text_style.dart';
 import 'package:kukelola_flutter/core/widgets/button_back.dart';
+import 'package:kukelola_flutter/core/widgets/custom_date_picker.dart';
 import 'package:kukelola_flutter/core/widgets/empty_text.dart';
 import 'package:kukelola_flutter/main.dart';
 import 'package:kukelola_flutter/view/attendance_summary/attendance_summary_controller.dart';
@@ -23,6 +26,33 @@ class _AttendanceSummaryViewState extends State<AttendanceSummaryView> with Tick
   var _calendarCt = CalendarController();
   AnimationController _animationCt;
   var _attendanceSummaryCt = Get.put(AttendanceSummaryController());
+
+  _showDatePicker(BuildContext context, String selectedDate, Function (String date) onPick) {
+
+    FocusScope.of(context).requestFocus(FocusNode());
+
+    var temporaryDate = '';
+
+    showModalBottomSheet(
+        context: context,
+        builder: (BuildContext context) {
+          return DateTimePickerComponent(
+            onPick: () {
+              onPick(temporaryDate);
+              _calendarCt.setFocusedDay(TextUtil.convertStringToDateTime(temporaryDate, 'MMMM yyyy'));
+              Get.back();
+            },
+            pickerType: DateTimePickerType.monthYear,
+            onChanged: (DateTime date) => temporaryDate = TextUtil.dateTimeToString(date, 'MMMM yyyy'),
+            pickerModel: CustomDatePicker(
+                currentTime: TextUtil.convertStringToDateTime(selectedDate, 'MMMM yyyy'),
+                maxTime: DateTime(DateTime.now().year + 20, 12, 31),
+                locale: commonController.language.value == Constant.INDONESIAN ? LocaleType.id : LocaleType.en
+            ),
+          );
+        }
+    );
+  }
 
   Widget _content(String title, String content, bool isAttachment) {
     return Expanded(
@@ -59,9 +89,9 @@ class _AttendanceSummaryViewState extends State<AttendanceSummaryView> with Tick
               SizedBox(height: 24.h,),
               Row(
                 children: [
-                  _content('START (HOUR)', _attendanceSummaryCt?.selectedSummary?.value?.startHour ?? '-', false),
+                  _content('START (HOUR)', (_attendanceSummaryCt?.selectedSummary?.value?.startHour ?? '') == '' ? '-' : _attendanceSummaryCt?.selectedSummary?.value?.startHour ?? '-', false),
                   SizedBox(width: 10.w,),
-                  _content('END (HOUR)', _attendanceSummaryCt?.selectedSummary?.value?.endHour ?? '-', false),
+                  _content('END (HOUR)', (_attendanceSummaryCt?.selectedSummary?.value?.endHour ?? '') == '' ? '-' : _attendanceSummaryCt?.selectedSummary?.value?.endHour ?? '-', false),
                 ],
               ),
               SizedBox(height: 24.h,),
@@ -69,31 +99,9 @@ class _AttendanceSummaryViewState extends State<AttendanceSummaryView> with Tick
               SizedBox(height: 8.h,),
               Parent(
                 gesture: Gestures()..onTap(() {}),
-                style: ParentStyle()..background.color(Color(0xFFE9EAEA))..borderRadius(all: 8)..padding(horizontal: 16, vertical: 18),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Row(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Expanded(
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(_attendanceSummaryCt?.selectedSummary?.value?.name ?? '-', style: ThemeTextStyle.biryaniBold.apply(color: Color(0xFF158AC9), fontSizeDelta: 14.ssp),),
-                              Text('${_attendanceSummaryCt.selectedSummary.value.startDate} - ${_attendanceSummaryCt?.selectedSummary?.value?.endDate ?? 'no data'}', style: ThemeTextStyle.biryaniRegular.apply(color: Color(0xFF6D6D6D), fontSizeDelta: 10.ssp),),
-                            ],
-                          ),
-                        ),
-                        SizedBox(width: 10.w,),
-                        Text('APPROVED', style: ThemeTextStyle.biryaniExtraBold.apply(color: Color(0xFF1AB394), fontSizeDelta: 12.ssp),)
-                      ],
-                    ),
-                    SizedBox(height: 24.h,),
-                    Text('Newt Salamander', style: ThemeTextStyle.biryaniRegular.apply(color: Color(0xFF6D6D6D), fontSizeDelta: 10.ssp),),
-                    Text('K00937', style: ThemeTextStyle.biryaniRegular.apply(color: Color(0xFF6D6D6D), fontSizeDelta: 10.ssp),),
-                  ],
-                ),
+                style: ParentStyle()..background.color(Color(0xFFE9EAEA))..borderRadius(all: 8)..padding(horizontal: 16, vertical: 18)
+                    ..width(Get.width),
+                child: Text((_attendanceSummaryCt?.selectedSummary?.value?.description ?? '') == '' ? 'No description' : _attendanceSummaryCt?.selectedSummary?.value?.description ?? '-', style: ThemeTextStyle.biryaniRegular.apply(fontSizeDelta: 14.ssp, color: Color(0xFF181921)),)
               )
             ],
           ),
@@ -155,15 +163,20 @@ class _AttendanceSummaryViewState extends State<AttendanceSummaryView> with Tick
                   child: Obx(() => Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Padding(
-                          padding: EdgeInsets.symmetric(horizontal: 24.w),
-                          child: Row(
-                            children: [
-                              Flexible(
-                                child: Text(_attendanceSummaryCt.visibleMonth.value, style: ThemeTextStyle.biryaniBold.apply(color: Colors.white, fontSizeDelta: 18.ssp),),
-                              ),
-                              Icon(Icons.arrow_drop_down, color: Colors.white, size: 24.w,)
-                            ],
+                        GestureDetector(
+                          onTap: () => _showDatePicker(context, _attendanceSummaryCt.visibleMonth.value, (date) {
+                            _attendanceSummaryCt.setVisibleMonth(date);
+                          }),
+                          child: Padding(
+                            padding: EdgeInsets.symmetric(horizontal: 24.w),
+                            child: Row(
+                              children: [
+                                Flexible(
+                                  child: Text(_attendanceSummaryCt.visibleMonth.value, style: ThemeTextStyle.biryaniBold.apply(color: Colors.white, fontSizeDelta: 18.ssp),),
+                                ),
+                                Icon(Icons.arrow_drop_down, color: Colors.white, size: 24.w,)
+                              ],
+                            ),
                           ),
                         ),
                         SizedBox(height: 24.h,),
@@ -181,7 +194,7 @@ class _AttendanceSummaryViewState extends State<AttendanceSummaryView> with Tick
                             _animationCt.reset();
                             _animationCt.forward();
                           },
-                          onVisibleDaysChanged: (dateFirst, _, __) => _attendanceSummaryCt.setVisibleMonth(TextUtil.dateTimeToString(dateFirst, 'MMMM')),
+                          onVisibleDaysChanged: (dateFirst, _, __) => _attendanceSummaryCt.setVisibleMonth(TextUtil.dateTimeToString(dateFirst, 'MMMM yyyy')),
                           initialSelectedDay: DateTime.now(),
                           headerVisible: false,
                           builders: CalendarBuilders(

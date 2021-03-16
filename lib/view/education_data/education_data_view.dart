@@ -1,4 +1,5 @@
 import 'package:division/division.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -79,12 +80,14 @@ class _EducationDataViewState extends State<EducationDataView> {
                       EmptyText(text: 'Empty education', textSize: 14.ssp)
                     ],
                   ) :
-                  ListView.separated(
-                    itemCount: _educationDataCt.listEducation.length,
-                    shrinkWrap: true,
-                    padding: EdgeInsets.symmetric(horizontal: 24.w, vertical: 24.h),
-                    itemBuilder: (_, index) => ListEducationDataItem(item: _educationDataCt.listEducation[index], index: index,),
-                    separatorBuilder: (BuildContext context, int index) => Divider(height: 16.h, color: Colors.transparent,),
+                  CupertinoScrollbar(
+                    child: ListView.separated(
+                      itemCount: _educationDataCt.listEducation.length,
+                      shrinkWrap: true,
+                      padding: EdgeInsets.symmetric(horizontal: 24.w, vertical: 24.h),
+                      itemBuilder: (_, index) => ListEducationDataItem(item: _educationDataCt.listEducation[index], index: index,),
+                      separatorBuilder: (BuildContext context, int index) => Divider(height: 16.h, color: Colors.transparent,),
+                    ),
                   )
                 ),
               )

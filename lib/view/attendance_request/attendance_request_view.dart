@@ -45,6 +45,7 @@ class AttendanceRequestViewState extends State<AttendanceRequestView> {
               onPick(temporaryDate);
               Get.back();
             },
+            pickerType: DateTimePickerType.dayMonthYear,
             onChanged: (DateTime date) => temporaryDate = TextUtil.dateTimeToString(date, 'dd/MM/yyyy'),
             pickerModel: CustomDatePicker(
                 currentTime: TextUtil.convertStringToDateTime(selectedDate, 'dd/MM/yyyy'),
@@ -72,6 +73,7 @@ class AttendanceRequestViewState extends State<AttendanceRequestView> {
               onPick(temporaryDate);
               Navigator.pop(context);
             },
+            pickerType: DateTimePickerType.hourMinute,
             onChanged: (DateTime date) => temporaryDate = TextUtil.dateTimeToString(date, 'HH:mm'),
             pickerModel: CustomTimePicker(
               currentTime: TextUtil.convertStringToDateTime(selectedTime, 'HH:mm'),

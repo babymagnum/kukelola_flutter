@@ -48,6 +48,7 @@ class OvertimeRequestViewState extends State<OvertimeRequestView> {
               onPick(temporaryDate);
               Navigator.pop(context);
             },
+            pickerType: DateTimePickerType.dayMonthYear,
             onChanged: (DateTime date) => temporaryDate = TextUtil.dateTimeToString(date, 'dd/MM/yyyy'),
             pickerModel: CustomDatePicker(
                 currentTime: TextUtil.convertStringToDateTime(selectedDate, 'dd/MM/yyyy'),
@@ -74,6 +75,7 @@ class OvertimeRequestViewState extends State<OvertimeRequestView> {
               onPick(temporaryDate);
               Navigator.pop(context);
             },
+            pickerType: DateTimePickerType.hourMinute,
             onChanged: (DateTime date) => temporaryDate = TextUtil.dateTimeToString(date, 'HH:mm'),
             pickerModel: CustomTimePicker(
               currentTime: TextUtil.convertStringToDateTime(selectedTime, 'HH:mm'),

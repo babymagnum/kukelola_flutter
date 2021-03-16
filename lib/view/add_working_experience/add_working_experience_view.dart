@@ -45,6 +45,7 @@ class _AddWorkingExperienceViewState extends State<AddWorkingExperienceView> {
               onPick(temporaryDate);
               Navigator.pop(context);
             },
+            pickerType: DateTimePickerType.year,
             onChanged: (DateTime date) => temporaryDate = TextUtil.dateTimeToString(date, 'yyyy'),
             pickerModel: CustomDatePicker(
                 currentTime: TextUtil.convertStringToDateTime(selectedDate, 'yyyy'),

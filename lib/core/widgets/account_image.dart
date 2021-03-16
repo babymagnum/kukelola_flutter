@@ -28,7 +28,7 @@ class AccountImage extends StatelessWidget {
       child: Center(
         child: loading ?
         SizedBox(
-          width: 20.w, height: 20.w,
+          width: loadingSize.width, height: loadingSize.height,
           child: CircularProgressIndicator(
             valueColor: AlwaysStoppedAnimation<Color>(loadingColor),
           ),

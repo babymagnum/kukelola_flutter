@@ -43,6 +43,7 @@ class _WorkflowApprovalFilterState extends State<WorkflowApprovalFilter> {
               onPick(temporaryDate);
               Navigator.pop(context);
             },
+            pickerType: DateTimePickerType.monthYear,
             onChanged: (DateTime date) => temporaryDate = TextUtil.dateTimeToString(date, 'MM/yyyy'),
             pickerModel: CustomDatePicker(
                 currentTime: TextUtil.convertStringToDateTime(selectedDate, 'MM/yyyy'),

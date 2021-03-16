@@ -72,7 +72,7 @@ class _NotificationViewState extends State<NotificationView> with AutomaticKeepA
                   error: homeController.errorProfilePicture.value,
                   boxFit: BoxFit.contain,
                   loading: homeController.loadingProfilePicture.value,
-                  loadingSize: Size(8.w, 8.w),
+                  loadingSize: Size(11.w, 11.w),
                 )
               ],
             ),

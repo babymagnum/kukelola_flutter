@@ -47,6 +47,7 @@ class _AddEducationViewState extends State<AddEducationView> {
               onPick(temporaryDate);
               Navigator.pop(context);
             },
+            pickerType: DateTimePickerType.year,
             onChanged: (DateTime date) => temporaryDate = TextUtil.dateTimeToString(date, 'yyyy'),
             pickerModel: CustomDatePicker(
                 currentTime: TextUtil.convertStringToDateTime(selectedDate, 'yyyy'),

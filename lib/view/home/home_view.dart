@@ -80,7 +80,7 @@ class _HomeViewState extends State<HomeView>  with AutomaticKeepAliveClientMixin
                           error: homeController.errorProfilePicture.value,
                           boxFit: BoxFit.contain,
                           loading: homeController.loadingProfilePicture.value,
-                          loadingSize: Size(12.w, 12.w),
+                          loadingSize: Size(16.w, 16.w),
                           loadingColor: Colors.white,
                         ),
                       ),
