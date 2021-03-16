@@ -18,9 +18,8 @@ class BusinessTripDetailInput extends StatefulWidget {
 }
 
 class _BusinessTripDetailInputState extends State<BusinessTripDetailInput> {
-  String _formatNumber(String s) => NumberFormat.decimalPattern(commonController.language.value).format(int.parse(s));
+  String _formatNumber(String s) => NumberFormat.decimalPattern('en').format(int.parse(s));
   var _amountCt = TextEditingController();
-  // String get _currency => NumberFormat.compactSimpleCurrency(locale: commonController.language.value).currencySymbol;
   var _amountFocus = FocusNode(), _descriptionFocus = FocusNode();
 
   @override

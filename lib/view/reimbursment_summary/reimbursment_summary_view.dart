@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -35,7 +36,7 @@ class ReimbursmentSummaryView extends StatelessWidget {
               children: [
                 Expanded(
                   child: ButtonBack(
-                    label: 'Reimbursment Summary',
+                    label: 'Reimbursement Summary',
                     onBack: () => Get.back(),
                   ),
                 ),
@@ -82,15 +83,17 @@ class ReimbursmentSummaryView extends StatelessWidget {
               Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  EmptyText(text: 'Empty reimbursment summary', textSize: 16.ssp)
+                  EmptyText(text: 'Empty reimbursement summary', textSize: 16.ssp)
                 ],
               ) :
-              ListView.separated(
-                itemCount: _reimbursmentSummaryCt.listSummary.length,
-                shrinkWrap: true,
-                padding: EdgeInsets.symmetric(horizontal: 24.w, vertical: 24.h),
-                itemBuilder: (_, index) => ListReimbursmentSummaryItem(item: _reimbursmentSummaryCt.listSummary[index],),
-                separatorBuilder: (BuildContext context, int index) => Divider(height: 16.h, color: Colors.transparent,),
+              CupertinoScrollbar(
+                child: ListView.separated(
+                  itemCount: _reimbursmentSummaryCt.listSummary.length,
+                  shrinkWrap: true,
+                  padding: EdgeInsets.symmetric(horizontal: 24.w, vertical: 24.h),
+                  itemBuilder: (_, index) => ListReimbursmentSummaryItem(item: _reimbursmentSummaryCt.listSummary[index],),
+                  separatorBuilder: (BuildContext context, int index) => Divider(height: 16.h, color: Colors.transparent,),
+                ),
               )
             ),
           )

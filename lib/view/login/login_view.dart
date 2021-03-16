@@ -94,6 +94,7 @@ class _LoginViewState extends State<LoginView> {
                           onChanged: (text) {
                             _loginCt.form.value.password = text.trim();
                             _loginCt.setForm(_loginCt.form.value);
+                            setState(() {});
                           },
                           inputType: TextInputType.emailAddress,
                           onEditingComplete: () => FocusScope.of(context).requestFocus(FocusNode()),

@@ -49,7 +49,7 @@ tokenFromJson(Token data, Map<String, dynamic> json) {
 		data.jobTitle = json['JobTitle'].toString();
 	}
 	if (json['ProfilePictureId'] != null) {
-		data.profilePictureId = json['ProfilePictureId'];
+		data.profilePictureId = json['ProfilePictureId'].toString();
 	}
 	if (json['error_description'] != null) {
 		data.errorDescription = json['error_description'].toString();

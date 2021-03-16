@@ -66,7 +66,9 @@ class _NotificationViewState extends State<NotificationView> with AutomaticKeepA
                 ),
                 SizedBox(width: 10.w,),
                 AccountImage(
+                  errorSize: 16.w,
                   url: homeController.profilePicture.value,
+                  imageNull: homeController.userData.value.profilePictureId == null,
                   size: Size(28.w, 28.w),
                   onError: () => homeController.getProfilePicture(),
                   error: homeController.errorProfilePicture.value,

@@ -531,10 +531,18 @@ class DateTimePickerState extends State<DateTimePickerComponent> {
           _midColumn(theme),
         ],
       );
-    } else {
+    } else if(widget.pickerType == DateTimePickerType.year) {
       return Row(
         children: <Widget>[
           _rightColumn(theme)
+        ],
+      );
+    } else {
+      return Row(
+        children: <Widget>[
+          _leftColumn(theme),
+          _midColumn(theme),
+          _rightColumn(theme),
         ],
       );
     }

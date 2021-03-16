@@ -24,10 +24,11 @@ class LoginController extends GetxController {
   login() async {
     var otp = _random4Digit();
     loadingLogin.value = true;
+    print('Current time hit api token ${TextUtil.getCurrentDate('dd-MMMM-yyyy HH:mm:ss')}');
     final data = await Service().token(LoginRequest(form.value.username, form.value.password, otp, commonController.autoLogin.value ? 'true' : 'false'));
     loadingLogin.value = false;
 
-    if (data != null) {
+    if (data?.accessToken != null) {
       await commonController.preferences.setString(Constant.EMAIL, form.value.username);
       await commonController.preferences.setString(Constant.PASSWORD, form.value.password);
       await commonController.preferences.setBool(Constant.IS_PASS_LOGIN, true);
@@ -39,7 +40,7 @@ class LoginController extends GetxController {
 
       commonController.setAutoLogin(false);
     } else {
-      CommonFunction.standartSnackbar(data.errorMessage);
+      CommonFunction.standartSnackbar(data.errorDescription ?? data.errorMessage);
     }
   }
 }

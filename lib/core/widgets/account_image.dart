@@ -8,8 +8,8 @@ import 'package:kukelola_flutter/core/theme/theme_color.dart';
 class AccountImage extends StatelessWidget {
 
   AccountImage({@required this.url, @required this.size, @required this.onError,
-    @required this.error, @required this.boxFit, @required this.loadingSize,
-    this.imageFile, @required this.loading, this.loadingColor = ThemeColor.primary});
+    @required this.error, @required this.boxFit, @required this.loadingSize, @required this.imageNull,
+    this.imageFile, @required this.loading, this.loadingColor = ThemeColor.primary, @required this.errorSize});
 
   final String url;
   final Size size;
@@ -17,8 +17,10 @@ class AccountImage extends StatelessWidget {
   final File imageFile;
   final bool loading;
   final bool error;
+  final bool imageNull;
   final Color loadingColor;
   final Size loadingSize;
+  final double errorSize;
   final Function onError;
 
   @override
@@ -36,7 +38,7 @@ class AccountImage extends StatelessWidget {
         error ?
         GestureDetector(
           onTap: onError,
-          child: Icon(Icons.refresh, size: size.width,),
+          child: Icon(imageNull != null ? Icons.broken_image : Icons.refresh, size: errorSize,),
         ) :
         ClipRRect(
           borderRadius: BorderRadius.all(Radius.circular(1000)),

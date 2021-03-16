@@ -38,7 +38,7 @@ class ListReimbursmentSummaryItem extends StatelessWidget {
             ],
           ),
           SizedBox(height: 24.h,),
-          Text('${item.name} / ${item.jobTitle}', style: ThemeTextStyle.biryaniRegular.apply(color: Color(0xFF6D6D6D), fontSizeDelta: 10.ssp),),
+          Text('${item.employeeName} / ${item.jobTitle}', style: ThemeTextStyle.biryaniRegular.apply(color: Color(0xFF6D6D6D), fontSizeDelta: 10.ssp),),
           Text(item.nip, style: ThemeTextStyle.biryaniRegular.apply(color: Color(0xFF6D6D6D), fontSizeDelta: 10.ssp),),
         ],
       ),

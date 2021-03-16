@@ -84,6 +84,8 @@ class _ProfileViewState extends State<ProfileView> with AutomaticKeepAliveClient
                           AccountImage(
                             url: homeController.profilePicture.value,
                             size: Size(64.w, 64.w),
+                            errorSize: 32.w,
+                            imageNull: homeController.userData.value.profilePictureId == null,
                             onError: () => homeController.getProfilePicture(),
                             error: homeController.errorProfilePicture.value,
                             boxFit: BoxFit.contain,

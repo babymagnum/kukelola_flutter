@@ -126,7 +126,7 @@ class _PersonalDataViewState extends State<PersonalDataView> {
     super.initState();
 
     Future.delayed(Duration.zero, () async {
-      if (_personalDataCt.staff.value.firstName == '') await _personalDataCt.getStaff();
+      await _personalDataCt.getStaff();
 
       setState(() {
         _firstNameCt.text = _personalDataCt.staff.value.firstName;
@@ -164,7 +164,7 @@ class _PersonalDataViewState extends State<PersonalDataView> {
                   title: 'Save',
                   loading: _personalDataCt.loadingSave.value,
                   onTap: () => _personalDataCt.saveChange(),
-                  verticalPadding: 6.h,
+                  verticalPadding: 4.h,
                   horizontalPadding: 15.w,
                   loadingSize: 12.w,
                   textStyle: ThemeTextStyle.biryaniSemiBold.apply(color: Colors.white, fontSizeDelta: 12.ssp),

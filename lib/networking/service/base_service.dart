@@ -1,6 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:kukelola_flutter/core/helper/common_function.dart';
 import 'package:kukelola_flutter/core/helper/constant.dart';
+import 'package:kukelola_flutter/core/helper/text_util.dart';
 import 'package:kukelola_flutter/generated/json/attendance_summary_grid_helper.dart';
 import 'package:kukelola_flutter/generated/json/corporate_calendar_helper.dart';
 import 'package:kukelola_flutter/generated/json/file_attachment_helper.dart';
@@ -81,7 +82,8 @@ class BaseService {
         resultResponse = fromJson<T>(responseMap);
       }
     } on DioError catch (e) {
-      resultResponse = fromJson<T>(_errorResponse());
+      var responseMap = jsonDecode(e.response.toString());
+      resultResponse = fromJson<T>(TextUtil.containsHtml(responseMap.toString()) ? _errorResponse() : responseMap);
     }
 
     return resultResponse;
@@ -102,7 +104,6 @@ class BaseService {
         commonController.standartLogout();
       } else if (response.statusCode == 500) {
         resultResponse = fromJson<T>(_errorResponse());
-        print('status code 500 bro');
       } else {
         if (isLoadToken) {
           Map decode = jsonDecode(response.toString());
@@ -114,7 +115,8 @@ class BaseService {
         resultResponse = fromJson<T>(responseMap);
       }
     } on DioError catch (e) {
-      resultResponse = fromJson<T>(_errorResponse());
+      var responseMap = jsonDecode(e.response.toString());
+      resultResponse = fromJson<T>(TextUtil.containsHtml(responseMap.toString()) ? _errorResponse() : responseMap);
     }
 
     return resultResponse;
@@ -138,7 +140,8 @@ class BaseService {
         resultResponse = fromJson<T>(responseMap);
       }
     } on DioError catch (e) {
-      resultResponse = fromJson<T>(_errorResponse());
+      var responseMap = jsonDecode(e.response.toString());
+      resultResponse = fromJson<T>(TextUtil.containsHtml(responseMap.toString()) ? _errorResponse() : responseMap);
     }
 
     return resultResponse;
@@ -162,7 +165,8 @@ class BaseService {
         resultResponse = fromJson<T>(responseMap);
       }
     } on DioError catch (e) {
-      resultResponse = fromJson<T>(_errorResponse());
+      var responseMap = jsonDecode(e.response.toString());
+      resultResponse = fromJson<T>(TextUtil.containsHtml(responseMap.toString()) ? _errorResponse() : responseMap);
     }
 
     return resultResponse;
@@ -187,7 +191,8 @@ class BaseService {
         resultResponse = fromJson<T>(responseMap);
       }
     } on DioError catch (e) {
-      resultResponse = fromJson<T>(_errorResponse());
+      var responseMap = jsonDecode(e.response.toString());
+      resultResponse = fromJson<T>(TextUtil.containsHtml(responseMap.toString()) ? _errorResponse() : responseMap);
     }
 
     return resultResponse;
@@ -211,7 +216,8 @@ class BaseService {
         resultResponse = fromJson<T>(responseMap);
       }
     } on DioError catch (e) {
-      resultResponse = fromJson<T>(_errorResponse());
+      var responseMap = jsonDecode(e.response.toString());
+      resultResponse = fromJson<T>(TextUtil.containsHtml(responseMap.toString()) ? _errorResponse() : responseMap);
     }
 
     return resultResponse;
@@ -235,7 +241,8 @@ class BaseService {
         resultResponse = fromJson<T>(responseMap);
       }
     } on DioError catch (e) {
-      resultResponse = fromJson<T>(_errorResponse());
+      var responseMap = jsonDecode(e.response.toString());
+      resultResponse = fromJson<T>(TextUtil.containsHtml(responseMap.toString()) ? _errorResponse() : responseMap);
     }
 
     return resultResponse;

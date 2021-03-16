@@ -1,5 +1,6 @@
 import 'package:get/get.dart';
 import 'package:kukelola_flutter/core/helper/common_function.dart';
+import 'package:kukelola_flutter/core/helper/text_util.dart';
 import 'package:kukelola_flutter/core/model/static_model.dart';
 import 'package:kukelola_flutter/networking/model/staff.dart';
 import 'package:kukelola_flutter/networking/service/service.dart';
@@ -43,6 +44,7 @@ class PersonalDataController extends GetxController {
 
   getStaff() async {
     loadingStaff.value = true;
+    print('Current time hit api staff ${TextUtil.getCurrentDate('dd-MMMM-yyyy HH:mm:ss')}');
     final data = await Service().staff();
     loadingStaff.value = false;
 

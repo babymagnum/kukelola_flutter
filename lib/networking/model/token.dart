@@ -33,7 +33,7 @@ class Token with JsonConvert<Token> {
 	@JSONField(name: "JobTitle")
 	String jobTitle;
 	@JSONField(name: "ProfilePictureId")
-	dynamic profilePictureId;
+	String profilePictureId;
 	@JSONField(name: "error_description")
 	String errorDescription;
 	String errorMessage;

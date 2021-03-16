@@ -128,4 +128,9 @@ class TextUtil {
 
     return htmlText.replaceAll(exp, '');
   }
+
+  static bool containsHtml(String text) {
+    RegExp exp = RegExp(r"<[^>]*>", multiLine: true, caseSensitive: true);
+    return text.contains(exp);
+  }
 }

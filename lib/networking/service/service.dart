@@ -1,4 +1,3 @@
-import 'package:kukelola_flutter/core/helper/constant.dart';
 import 'package:kukelola_flutter/networking/model/attendance_summary_grid.dart';
 import 'package:kukelola_flutter/networking/model/corporate_calendar.dart';
 import 'package:kukelola_flutter/networking/model/file_attachment.dart';
