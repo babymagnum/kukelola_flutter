@@ -5,6 +5,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:kukelola_flutter/core/helper/constant.dart';
 import 'package:kukelola_flutter/core/helper/text_util.dart';
+import 'package:kukelola_flutter/core/model/static_model.dart';
 import 'package:kukelola_flutter/core/theme/theme_color.dart';
 import 'package:kukelola_flutter/core/theme/theme_text_style.dart';
 import 'package:kukelola_flutter/core/widgets/button_back.dart';
@@ -12,6 +13,7 @@ import 'package:kukelola_flutter/core/widgets/button_loading.dart';
 import 'package:kukelola_flutter/core/widgets/custom_date_picker.dart';
 import 'package:kukelola_flutter/core/widgets/custom_input.dart';
 import 'package:kukelola_flutter/core/widgets/input_tap.dart';
+import 'package:kukelola_flutter/networking/model/staff_experience.dart';
 import 'package:kukelola_flutter/view/add_family/add_family_controller.dart';
 import 'package:kukelola_flutter/view/add_working_experience/add_working_experience_controller.dart';
 import 'package:kukelola_flutter/view/base_view.dart';
@@ -19,6 +21,12 @@ import 'package:kukelola_flutter/view/base_view.dart';
 import '../../main.dart';
 
 class AddWorkingExperienceView extends StatefulWidget {
+
+  final StaffExperienceData item;
+  final int index;
+
+  AddWorkingExperienceView({@required this.item, @required this.index});
+
   @override
   _AddWorkingExperienceViewState createState() => _AddWorkingExperienceViewState();
 }
@@ -63,6 +71,31 @@ class _AddWorkingExperienceViewState extends State<AddWorkingExperienceView> {
   }
 
   @override
+  void initState() {
+    super.initState();
+
+    if (widget.item != null) {
+      _addWorkingExperienceCt.updateForm(WorkingExperienceItem.updateData(widget.item.lastPosition, widget.item.company, widget.item.location, widget.item.endYear, widget.item.duration));
+
+      _lastPositionCt.text = widget.item.lastPosition;
+      _companyCt.text = widget.item.company;
+      _locationCt.text = widget.item.location;
+      _durationCt.text = widget.item.duration;
+      setState(() {});
+    }
+  }
+
+  @override
+  void dispose() {
+    _lastPositionCt.dispose();
+    _companyCt.dispose();
+    _locationCt.dispose();
+    _durationCt.dispose();
+
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return BaseView(
       body: Column(
@@ -82,17 +115,24 @@ class _AddWorkingExperienceViewState extends State<AddWorkingExperienceView> {
                 ButtonLoading(
                   backgroundColor: ThemeColor.primary,
                   disable: _addWorkingExperienceCt.loadingSubmit.value || _disable(),
-                  title: 'Save',
+                  title: widget.item == null ? 'Save' : 'Update',
                   loading: _addWorkingExperienceCt.loadingSubmit.value,
                   onTap: () async {
-                    await _addWorkingExperienceCt.submitEducation();
+                    FocusScope.of(context).requestFocus(FocusNode());
+                    setState(() {});
 
-                    if (_addWorkingExperienceCt.form.value.lastPosition == '') {
-                      _lastPositionCt.text = '';
-                      _companyCt.text = '';
-                      _locationCt.text = '';
-                      _durationCt.text = '';
-                      setState(() {});
+                    if (widget.item == null) {
+                      await _addWorkingExperienceCt.submitExperience();
+
+                      if (_addWorkingExperienceCt.form.value.lastPosition == '') {
+                        _lastPositionCt.text = '';
+                        _companyCt.text = '';
+                        _locationCt.text = '';
+                        _durationCt.text = '';
+                        setState(() {});
+                      }
+                    } else {
+                      _addWorkingExperienceCt.updateExperience(widget.item.id, widget.index);
                     }
                   },
                   verticalPadding: 6.h,
@@ -120,8 +160,9 @@ class _AddWorkingExperienceViewState extends State<AddWorkingExperienceView> {
                           onChanged: (text) {
                             _addWorkingExperienceCt.form.value.lastPosition = text;
                             _addWorkingExperienceCt.updateForm(_addWorkingExperienceCt.form.value);
+                            setState(() {});
                           },
-                          inputType: TextInputType.name,
+                          inputType: TextInputType.text,
                           onEditingComplete: () => setState(() => _companyFocus.requestFocus()),
                           onTap: () => setState(() => _lastPositionFocus.requestFocus()),
                           labelText: 'LAST POSITION',
@@ -135,8 +176,9 @@ class _AddWorkingExperienceViewState extends State<AddWorkingExperienceView> {
                           onChanged: (text) {
                             _addWorkingExperienceCt.form.value.company = text;
                             _addWorkingExperienceCt.updateForm(_addWorkingExperienceCt.form.value);
+                            setState(() {});
                           },
-                          inputType: TextInputType.name,
+                          inputType: TextInputType.text,
                           onEditingComplete: () => setState(() => _locationFocus.requestFocus()),
                           onTap: () => setState(() => _companyFocus.requestFocus()),
                           labelText: 'COMPANY',
@@ -150,8 +192,9 @@ class _AddWorkingExperienceViewState extends State<AddWorkingExperienceView> {
                           onChanged: (text) {
                             _addWorkingExperienceCt.form.value.location = text;
                             _addWorkingExperienceCt.updateForm(_addWorkingExperienceCt.form.value);
+                            setState(() {});
                           },
-                          inputType: TextInputType.number,
+                          inputType: TextInputType.text,
                           onEditingComplete: () => FocusScope.of(context).requestFocus(FocusNode()),
                           onTap: () => setState(() => _locationFocus.requestFocus()),
                           labelText: 'LOCATION',
@@ -178,8 +221,9 @@ class _AddWorkingExperienceViewState extends State<AddWorkingExperienceView> {
                           onChanged: (text) {
                             _addWorkingExperienceCt.form.value.duration = text;
                             _addWorkingExperienceCt.updateForm(_addWorkingExperienceCt.form.value);
+                            setState(() {});
                           },
-                          inputType: TextInputType.name,
+                          inputType: TextInputType.text,
                           onEditingComplete: () => FocusScope.of(context).requestFocus(FocusNode()),
                           onTap: () => setState(() => _durationFocus.requestFocus()),
                           labelText: 'DURATION',

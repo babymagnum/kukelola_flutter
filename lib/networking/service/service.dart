@@ -27,6 +27,9 @@ import 'package:kukelola_flutter/networking/request/change_password_request.dart
 import 'package:kukelola_flutter/networking/request/leave_request.dart';
 import 'package:kukelola_flutter/networking/request/notification_request.dart';
 import 'package:kukelola_flutter/networking/request/profile_picture_request.dart';
+import 'package:kukelola_flutter/networking/request/staff_education_update_request.dart';
+import 'package:kukelola_flutter/networking/request/staff_experience_update_request.dart';
+import 'package:kukelola_flutter/networking/request/staff_family_update_request.dart';
 import 'package:kukelola_flutter/networking/request/summary_grid_request.dart';
 import 'package:kukelola_flutter/networking/request/login_request.dart';
 import 'package:kukelola_flutter/networking/request/overtime_request.dart';
@@ -205,5 +208,17 @@ class Service extends BaseService {
   
   Future<FileAttachment> fileAttachment(String id) async {
     return await get('${MyApp.BASE_API}api/Attachment?Id=$id');
+  }
+  
+  Future<StaffExperienceInsert> staffExperienceUpdate(StaffExperienceUpdateRequest request) async {
+    return await putJsonBody('${MyApp.BASE_API}api/StaffExperience', request.getBody());
+  }
+
+  Future<StaffFamilyInsert> staffFamilyUpdate(StaffFamilyUpdateRequest request) async {
+    return await putJsonBody('${MyApp.BASE_API}api/StaffFamily', request.getBody());
+  }
+
+  Future<StaffEducationInsert> staffEducationUpdate(StaffEducationUpdateRequest request) async {
+    return await putJsonBody('${MyApp.BASE_API}api/StaffEducation', request.getBody());
   }
 }

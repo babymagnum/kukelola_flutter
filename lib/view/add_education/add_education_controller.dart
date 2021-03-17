@@ -3,6 +3,7 @@ import 'package:kukelola_flutter/core/helper/common_function.dart';
 import 'package:kukelola_flutter/core/model/static_model.dart';
 import 'package:kukelola_flutter/main.dart';
 import 'package:kukelola_flutter/networking/request/staff_education_insert_request.dart';
+import 'package:kukelola_flutter/networking/request/staff_education_update_request.dart';
 import 'package:kukelola_flutter/networking/service/service.dart';
 import 'package:kukelola_flutter/view/education_data/education_data_controller.dart';
 
@@ -35,6 +36,19 @@ class AddEducationController extends GetxController {
       _educationDataCt.addData(data.data);
     } else {
       CommonFunction.standartSnackbar('Gagal submit education');
+    }
+  }
+
+  updateEducation(String id, int index) async {
+    loadingSubmit.value = true;
+    final data = await Service().staffEducationUpdate(StaffEducationUpdateRequest(id, homeController.userData.value.staffId, form.value.educationStep, int.parse(form.value.startYear), int.parse(form.value.endYear), form.value.institution, form.value.major, form.value.score));
+    loadingSubmit.value = false;
+
+    if (data?.isSuccess ?? false) {
+      CommonFunction.standartSnackbar('Berhasil memperbarui education');
+      _educationDataCt.updateData(data.data, index);
+    } else {
+      CommonFunction.standartSnackbar('Gagal memperbarui education');
     }
   }
 }

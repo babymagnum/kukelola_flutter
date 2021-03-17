@@ -15,13 +15,18 @@ import 'package:kukelola_flutter/core/widgets/custom_date_picker.dart';
 import 'package:kukelola_flutter/core/widgets/custom_input.dart';
 import 'package:kukelola_flutter/core/widgets/input_tap.dart';
 import 'package:kukelola_flutter/core/widgets/list_standart_dropdown_item.dart';
+import 'package:kukelola_flutter/networking/model/staff_education.dart';
 import 'package:kukelola_flutter/view/add_education/add_education_controller.dart';
 import 'package:kukelola_flutter/view/base_view.dart';
-import 'package:kukelola_flutter/view/education_data/education_data_controller.dart';
-
 import '../../main.dart';
 
 class AddEducationView extends StatefulWidget {
+
+  final StaffEducationData item;
+  final int index;
+
+  AddEducationView({@required this.item, @required this.index});
+
   @override
   _AddEducationViewState createState() => _AddEducationViewState();
 }
@@ -30,8 +35,8 @@ class _AddEducationViewState extends State<AddEducationView> {
 
   var _addEducationCt = Get.put(AddEducationController());
   var _degreeKey = GlobalKey();
-  var _intitutionFocus = FocusNode(), _majorFocus = FocusNode(), _scoreFocus = FocusNode();
-  var _intitutionCt = TextEditingController(), _majorCt = TextEditingController(), _scoreCt = TextEditingController();
+  var _institutionFocus = FocusNode(), _majorFocus = FocusNode(), _scoreFocus = FocusNode();
+  var _institutionCt = TextEditingController(), _majorCt = TextEditingController(), _scoreCt = TextEditingController();
 
   _showDatePicker(BuildContext context, String selectedDate, Function (String date) onPick) {
 
@@ -109,6 +114,25 @@ class _AddEducationViewState extends State<AddEducationView> {
     return form.educationStep == 0 || form.endYear == '' || form.startYear == '' || form.institution == '' || form.major == '' || form.score == '';
   }
 
+  int _educationStep() {
+    return _addEducationCt.listDegree.any((element) => element.label == widget.item.educationStep) ?
+        _addEducationCt.listDegree.singleWhere((element) => element.label == widget.item.educationStep).id : 99;
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+
+    if (widget.item != null) {
+      _addEducationCt.updateForm(EducationDataItem.updateData(_educationStep(), '${widget.item.startYear}', '${widget.item.endYear}', widget.item.institution, widget.item.major, widget.item.score));
+      _institutionCt.text = widget.item.institution;
+      _majorCt.text = widget.item.major;
+      _scoreCt.text = widget.item.score;
+      setState(() {});
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return BaseView(
@@ -129,16 +153,23 @@ class _AddEducationViewState extends State<AddEducationView> {
                 ButtonLoading(
                   backgroundColor: ThemeColor.primary,
                   disable: _addEducationCt.loadingSubmit.value || _disable(),
-                  title: 'Submit',
+                  title: widget.item == null ? 'Submit' : 'Update',
                   loading: _addEducationCt.loadingSubmit.value,
                   onTap: () async {
-                    await _addEducationCt.submitEducation();
+                    FocusScope.of(context).requestFocus(FocusNode());
+                    setState(() {});
 
-                    if (_addEducationCt.form.value.institution == '') {
-                      _intitutionCt.text = '';
-                      _majorCt.text = '';
-                      _scoreCt.text = '';
-                      setState(() {});
+                    if (widget.item == null) {
+                      await _addEducationCt.submitEducation();
+
+                      if (_addEducationCt.form.value.institution == '') {
+                        _institutionCt.text = '';
+                        _majorCt.text = '';
+                        _scoreCt.text = '';
+                        setState(() {});
+                      }
+                    } else {
+                      _addEducationCt.updateEducation(widget.item.id, widget.index);
                     }
                   },
                   verticalPadding: 6.h,
@@ -199,8 +230,8 @@ class _AddEducationViewState extends State<AddEducationView> {
                         SizedBox(height: 24.h,),
                         CustomInput(
                           textInputAction: TextInputAction.next,
-                          focusNode: _intitutionFocus,
-                          controller: _intitutionCt,
+                          focusNode: _institutionFocus,
+                          controller: _institutionCt,
                           hintText: 'e.g Universitas Gadjah Mada',
                           onChanged: (text) {
                             _addEducationCt.form.value.institution = text;
@@ -209,7 +240,7 @@ class _AddEducationViewState extends State<AddEducationView> {
                           },
                           inputType: TextInputType.name,
                           onEditingComplete: () => setState(() => _majorFocus.requestFocus()),
-                          onTap: () => setState(() => _intitutionFocus.requestFocus()),
+                          onTap: () => setState(() => _institutionFocus.requestFocus()),
                           labelText: 'INSTITUTION',
                         ),
                         SizedBox(height: 24.h,),

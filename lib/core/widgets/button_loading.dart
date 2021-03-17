@@ -39,7 +39,7 @@ class ButtonLoading extends StatelessWidget {
               opacity: 0,
               child: Padding(
                 padding: EdgeInsets.only(top: 3.h),
-                child: Text(title, style: textStyle,),
+                child: Text(title, style: textStyle, maxLines: 1,),
               ),
             ),
             Positioned(
@@ -68,7 +68,7 @@ class ButtonLoading extends StatelessWidget {
                 child: SvgPicture.asset(image, width: imageSize.width ?? 0, height: imageSize.height ?? 0, color: Colors.white,),
               ),
               SizedBox(width: imageMargin ?? 0,),
-              Text(title, style: textStyle,),
+              Text(title, style: textStyle, maxLines: 1,),
             ],
           ) :
           Text(title, style: textStyle,),

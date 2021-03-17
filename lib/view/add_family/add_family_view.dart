@@ -5,6 +5,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:kukelola_flutter/core/helper/constant.dart';
 import 'package:kukelola_flutter/core/helper/text_util.dart';
+import 'package:kukelola_flutter/core/model/static_model.dart';
 import 'package:kukelola_flutter/core/theme/theme_color.dart';
 import 'package:kukelola_flutter/core/theme/theme_text_style.dart';
 import 'package:kukelola_flutter/core/widgets/button_back.dart';
@@ -12,12 +13,19 @@ import 'package:kukelola_flutter/core/widgets/button_loading.dart';
 import 'package:kukelola_flutter/core/widgets/custom_date_picker.dart';
 import 'package:kukelola_flutter/core/widgets/custom_input.dart';
 import 'package:kukelola_flutter/core/widgets/input_tap.dart';
+import 'package:kukelola_flutter/networking/model/staff_family.dart';
 import 'package:kukelola_flutter/view/add_family/add_family_controller.dart';
 import 'package:kukelola_flutter/view/base_view.dart';
 
 import '../../main.dart';
 
 class AddFamilyView extends StatefulWidget {
+
+  final StaffFamilyData item;
+  final int index;
+
+  AddFamilyView({@required this.item, @required this.index});
+
   @override
   _AddFamilyViewState createState() => _AddFamilyViewState();
 }
@@ -62,6 +70,34 @@ class _AddFamilyViewState extends State<AddFamilyView> {
   }
 
   @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    
+    if (widget.item != null) {
+      _addFamiliesCt.updateForm(FamiliesItem.updateData(widget.item.name, widget.item.relation, widget.item.identificationNumber, widget.item.occupation, widget.item.dateOfBirth, widget.item.phone));
+
+      _nameCt.text = widget.item.name;
+      _relationCt.text = widget.item.relation;
+      _idCt.text = widget.item.identificationNumber;
+      _occupationCt.text = widget.item.occupation;
+      _phoneCt.text = widget.item.phone;
+      setState(() {});
+    }
+  }
+
+  @override
+  void dispose() {
+    _nameCt.dispose();
+    _relationCt.dispose();
+    _idCt.dispose();
+    _occupationCt.dispose();
+    _phoneCt.dispose();
+
+    super.dispose();
+  }
+  
+  @override
   Widget build(BuildContext context) {
     return BaseView(
       body: Column(
@@ -81,18 +117,25 @@ class _AddFamilyViewState extends State<AddFamilyView> {
                 ButtonLoading(
                   backgroundColor: ThemeColor.primary,
                   disable: _addFamiliesCt.loadingSubmit.value || _disable(),
-                  title: 'Save',
+                  title: widget.item == null ? 'Save' : 'Update',
                   loading: _addFamiliesCt.loadingSubmit.value,
                   onTap: () async {
-                    await _addFamiliesCt.submitEducation();
+                    FocusScope.of(context).requestFocus(FocusNode());
+                    setState(() {});
 
-                    if (_addFamiliesCt.form.value.name == '') {
-                      _nameCt.text = '';
-                      _relationCt.text = '';
-                      _idCt.text = '';
-                      _occupationCt.text = '';
-                      _phoneCt.text = '';
-                      setState(() {});
+                    if (widget.item == null) {
+                      await _addFamiliesCt.submitFamily();
+
+                      if (_addFamiliesCt.form.value.name == '') {
+                        _nameCt.text = '';
+                        _relationCt.text = '';
+                        _idCt.text = '';
+                        _occupationCt.text = '';
+                        _phoneCt.text = '';
+                        setState(() {});
+                      }
+                    } else {
+                      _addFamiliesCt.updateFamily(widget.item.id, widget.index);
                     }
                   },
                   verticalPadding: 6.h,

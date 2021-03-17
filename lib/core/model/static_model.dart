@@ -39,7 +39,16 @@ class WorkingExperienceItem {
   String location = '';
   String endYear = '';
   String duration = '';
-  bool loading = false;
+
+  WorkingExperienceItem();
+
+  WorkingExperienceItem.updateData(String lastPosition, String company, String location, String endYear, String duration) {
+    this.lastPosition = lastPosition;
+    this.company = company;
+    this.location = location;
+    this.endYear = endYear;
+    this.duration = duration;
+  }
 }
 
 class WorkflowApprovalItem {
@@ -68,7 +77,17 @@ class FamiliesItem {
   String occupation = '';
   String dateOfBirth = '';
   String phone = '';
-  bool loading = false;
+
+  FamiliesItem();
+
+  FamiliesItem.updateData(String name, String relation, String id, String occupation, String dateOfBirth, String phone) {
+    this.name = name;
+    this.relation = relation;
+    this.id = id;
+    this.occupation = occupation;
+    this.dateOfBirth = dateOfBirth;
+    this.phone = phone;
+  }
 }
 
 class BusinessTripDetailForm {
@@ -103,7 +122,17 @@ class EducationDataItem {
   String institution = '';
   String major = '';
   String score = '';
-  bool loading = false;
+
+  EducationDataItem();
+
+  EducationDataItem.updateData(int educationStep, String startYear, String endYear, String institution, String major, String score) {
+    this.educationStep = educationStep;
+    this.startYear = startYear;
+    this.endYear = endYear;
+    this.institution = institution;
+    this.major = major;
+    this.score = score;
+  }
 }
 
 class PersonalDataForm {

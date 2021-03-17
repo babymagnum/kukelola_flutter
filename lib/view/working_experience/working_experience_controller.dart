@@ -39,5 +39,5 @@ class WorkingExperienceController extends GetxController {
   }
 
   addData(StaffExperienceData item) => listWorkingExperience.add(item);
-
+  updateData(StaffExperienceData item, int index) => listWorkingExperience[index] = item;
 }

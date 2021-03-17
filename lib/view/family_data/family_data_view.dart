@@ -1,4 +1,5 @@
 import 'package:division/division.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -79,12 +80,14 @@ class _FamilyDataViewState extends State<FamilyDataView> {
                       EmptyText(text: 'Empty family')
                     ],
                   ) :
-                  ListView.separated(
-                    itemCount: _familiesCt.listFamily.length,
-                    shrinkWrap: true,
-                    padding: EdgeInsets.symmetric(horizontal: 24.w, vertical: 24.h),
-                    itemBuilder: (_, index) => ListFamilyItem(item: _familiesCt.listFamily[index], index: index,),
-                    separatorBuilder: (BuildContext context, int index) => Divider(height: 16.h, color: Colors.transparent,),
+                  CupertinoScrollbar(
+                    child: ListView.separated(
+                      itemCount: _familiesCt.listFamily.length,
+                      shrinkWrap: true,
+                      padding: EdgeInsets.symmetric(horizontal: 24.w, vertical: 24.h),
+                      itemBuilder: (_, index) => ListFamilyItem(item: _familiesCt.listFamily[index], index: index,),
+                      separatorBuilder: (BuildContext context, int index) => Divider(height: 16.h, color: Colors.transparent,),
+                    ),
                   )
                 ),
               )
@@ -93,7 +96,7 @@ class _FamilyDataViewState extends State<FamilyDataView> {
           Positioned(
             bottom: 24.w, right: 24.w,
             child: Parent(
-              gesture: Gestures()..onTap(() => Get.to(AddFamilyView())),
+              gesture: Gestures()..onTap(() => Get.to(AddFamilyView(item: null, index: null,))),
               style: ParentStyle()..borderRadius(all: 1000)..background.color(ThemeColor.primary)
                 ..height(56.w)..width(56.w)..ripple(true),
               child: Center(

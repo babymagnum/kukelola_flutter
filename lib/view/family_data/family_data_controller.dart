@@ -40,4 +40,5 @@ class FamilyDataController extends GetxController {
 
   addData(StaffFamilyData item) => listFamily.add(item);
 
+  updateData(StaffFamilyData item, int index) => listFamily[index] = item;
 }

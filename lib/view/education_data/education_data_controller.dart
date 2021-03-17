@@ -40,4 +40,6 @@ class EducationDataController extends GetxController {
   }
 
   addData(StaffEducationData item) => listEducation.add(item);
+
+  updateData(StaffEducationData item, int index) => listEducation[index] = item;
 }
