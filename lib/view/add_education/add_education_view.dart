@@ -37,7 +37,7 @@ class _AddEducationViewState extends State<AddEducationView> {
 
     FocusScope.of(context).requestFocus(FocusNode());
 
-    var temporaryDate = '';
+    var temporaryDate = selectedDate == '' ? TextUtil.getCurrentDate('yyyy') : selectedDate;
 
     showModalBottomSheet(
         context: context,

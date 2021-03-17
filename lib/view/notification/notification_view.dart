@@ -108,7 +108,7 @@ class _NotificationViewState extends State<NotificationView> with AutomaticKeepA
             Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                EmptyText(text: 'Empty notification', textSize: 16.ssp)
+                EmptyText(text: 'Empty notification')
               ],
             ) :
             CupertinoScrollbar(

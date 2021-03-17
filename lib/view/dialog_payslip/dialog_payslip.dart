@@ -12,17 +12,16 @@ import 'package:kukelola_flutter/core/widgets/button_loading.dart';
 import 'package:kukelola_flutter/core/widgets/custom_date_picker.dart';
 import 'package:kukelola_flutter/core/widgets/input_tap.dart';
 import 'package:kukelola_flutter/view/dialog_payslip/dialog_payslip_controller.dart';
-
 import '../../main.dart';
 
 class DialogPayslip extends StatelessWidget {
-  var _dialogPayslipCt = Get.find<DialogPayslipController>();
+  var _dialogPayslipCt = Get.put(DialogPayslipController());
 
   _showDatePicker(BuildContext context, String selectedDate, Function (String date) onPick) {
 
     FocusScope.of(context).requestFocus(FocusNode());
 
-    var temporaryDate = '';
+    var temporaryDate = selectedDate == '' ? TextUtil.getCurrentDate('MM/yyyy') : selectedDate;
 
     showModalBottomSheet(
         context: context,

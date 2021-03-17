@@ -42,6 +42,14 @@ import '../../main.dart';
 
 class Service extends BaseService {
 
+  static final Service _instance = Service._internal();
+
+  Service._internal();
+
+  factory Service() {
+    return _instance;
+  }
+
   Future<Token> token(LoginRequest request) async {
     return await postUrlEncoded('${MyApp.BASE_API}token', request.getBody());
   }

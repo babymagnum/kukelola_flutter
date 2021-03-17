@@ -39,7 +39,7 @@ class BusinessTripViewState extends State<BusinessTripView> {
 
     FocusScope.of(context).requestFocus(FocusNode());
 
-    var temporaryDate = '';
+    var temporaryDate = selectedDate == '' ? TextUtil.getCurrentDate('dd/MM/yyyy') : selectedDate;
 
     showModalBottomSheet(
         context: context,

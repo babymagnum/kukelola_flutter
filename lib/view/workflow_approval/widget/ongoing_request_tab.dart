@@ -55,7 +55,7 @@ class _OngoingRequestTabState extends State<OngoingRequestTab> with AutomaticKee
       Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          EmptyText(text: 'Tidak ada ongoing request', textSize: 12.ssp),
+          EmptyText(text: 'Tidak ada ongoing request'),
         ],
       ) :
       CupertinoScrollbar(

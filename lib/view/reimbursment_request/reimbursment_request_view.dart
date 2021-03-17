@@ -164,7 +164,7 @@ class _ReimbursmentRequestViewState extends State<ReimbursmentRequestView> {
                         _reimbursmentRequestCt.listDetails.length == 0 ?
                         Padding(
                           padding: EdgeInsets.only(top: 16.h),
-                          child: EmptyText(text: 'Reimbursement Detail is empty, tap "Add Details" button to add.', textSize: 14.ssp),
+                          child: EmptyText(text: 'Reimbursement Detail is empty, tap "Add Details" button to add.'),
                         ) :
                         ListView.separated(
                           padding: EdgeInsets.only(top: 16.h),

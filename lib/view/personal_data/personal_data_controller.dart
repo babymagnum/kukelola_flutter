@@ -23,6 +23,7 @@ class PersonalDataController extends GetxController {
     CommonType('Maried', 1),
     CommonType('Single', 2)
   ];
+  var errorMessage = ''.obs;
   var staff = StaffData().obs;
   var loadingSave = false.obs;
   var loadingStaff = false.obs;
@@ -52,6 +53,9 @@ class PersonalDataController extends GetxController {
       staff.value = data.data;
     } else {
       errorStaff.value = true;
+
+      if (data.errors.length > 0) errorMessage.value = data.errors[0];
+      else errorMessage.value = data.errorMessage;
     }
   }
 }

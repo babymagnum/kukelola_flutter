@@ -76,7 +76,7 @@ class _WorkingExperienceViewState extends State<WorkingExperienceView> {
                   Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      EmptyText(text: 'Empty working experience', textSize: 14.ssp)
+                      EmptyText(text: 'Empty working experience')
                     ],
                   ) :
                   ListView.separated(

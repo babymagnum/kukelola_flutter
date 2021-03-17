@@ -58,7 +58,7 @@ class CalendarView extends StatelessWidget {
               Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  EmptyText(text: 'Empty event', textSize: 16.ssp)
+                  EmptyText(text: 'Empty event')
                 ],
               ) :
               ListView.separated(

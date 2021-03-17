@@ -31,7 +31,7 @@ class _AttendanceSummaryViewState extends State<AttendanceSummaryView> with Tick
 
     FocusScope.of(context).requestFocus(FocusNode());
 
-    var temporaryDate = '';
+    var temporaryDate = selectedDate == '' ? TextUtil.getCurrentDate('MMMM yyyy') : selectedDate;
 
     showModalBottomSheet(
         context: context,
@@ -111,7 +111,7 @@ class _AttendanceSummaryViewState extends State<AttendanceSummaryView> with Tick
     Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        EmptyText(text: 'Empty attendance request', textSize: 12.ssp),
+        EmptyText(text: 'Empty attendance request'),
       ],
     );
   }

@@ -44,7 +44,7 @@ class _LeaveRequestViewState extends State<LeaveRequestView> {
 
     FocusScope.of(context).requestFocus(FocusNode());
 
-    var temporaryDate = '';
+    var temporaryDate = selectedDate == '' ? TextUtil.getCurrentDate('dd/MM/yyyy') : selectedDate;
 
     showModalBottomSheet(
         context: context,

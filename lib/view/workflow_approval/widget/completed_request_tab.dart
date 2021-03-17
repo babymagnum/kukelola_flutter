@@ -50,7 +50,7 @@ class _CompletedRequestTabState extends State<CompletedRequestTab> with Automati
       Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          EmptyText(text: 'Tidak ada ongoing request yg sudah selesai', textSize: 12.ssp),
+          EmptyText(text: 'Tidak ada ongoing request yg sudah selesai'),
         ],
       ) :
       ListView.separated(

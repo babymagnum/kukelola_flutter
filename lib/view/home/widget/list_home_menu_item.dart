@@ -22,8 +22,6 @@ class ListHomeMenuItem extends StatelessWidget {
   final HomeMenuItem item;
   final int index;
 
-  var _dialogPayslipCt = Get.put(DialogPayslipController(), permanent: true);
-  
   _onClick() {
     if (index == 0) {
       Get.to(OnlineAttendanceView());
@@ -38,10 +36,7 @@ class ListHomeMenuItem extends StatelessWidget {
     } else if (index == 5) {
       Get.to(ReimbursmentRequestView());
     } else if (index == 6) {
-      Get.dialog(DialogPayslip()).then((_) {
-        if (_dialogPayslipCt.downloadSuccess.value) CommonFunction.standartSnackbar('payslip download successfully');
-        _dialogPayslipCt.setDownloadSuccess(false);
-      });
+      Get.dialog(DialogPayslip());
     } else if (index == 7) {
       Get.to(WorkflowApprovalView());
     } else {

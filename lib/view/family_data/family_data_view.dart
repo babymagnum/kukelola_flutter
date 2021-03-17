@@ -76,7 +76,7 @@ class _FamilyDataViewState extends State<FamilyDataView> {
                   Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      EmptyText(text: 'Empty family', textSize: 16.ssp)
+                      EmptyText(text: 'Empty family')
                     ],
                   ) :
                   ListView.separated(

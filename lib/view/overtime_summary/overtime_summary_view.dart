@@ -82,7 +82,7 @@ class OvertimeSummaryView extends StatelessWidget {
               Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  EmptyText(text: 'Empty overtime summary', textSize: 16.ssp)
+                  EmptyText(text: 'Empty overtime summary')
                 ],
               ) :
               ListView.separated(

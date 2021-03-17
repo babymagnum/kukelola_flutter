@@ -33,7 +33,7 @@ class _WorkflowApprovalFilterState extends State<WorkflowApprovalFilter> {
 
     FocusScope.of(context).requestFocus(FocusNode());
 
-    var temporaryDate = '';
+    var temporaryDate = selectedDate == '' ? TextUtil.getCurrentDate('MM/yyyy') : selectedDate;
 
     showModalBottomSheet(
         context: context,

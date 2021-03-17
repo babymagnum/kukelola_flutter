@@ -38,7 +38,7 @@ class OvertimeRequestViewState extends State<OvertimeRequestView> {
 
     FocusScope.of(context).requestFocus(FocusNode());
 
-    var temporaryDate = '';
+    var temporaryDate = selectedDate == '' ? TextUtil.getCurrentDate('dd/MM/yyyy') : selectedDate;
 
     showModalBottomSheet(
         context: context,
@@ -65,7 +65,7 @@ class OvertimeRequestViewState extends State<OvertimeRequestView> {
 
     FocusScope.of(context).requestFocus(FocusNode());
 
-    var temporaryDate = '';
+    var temporaryDate = selectedTime == '' ? TextUtil.getCurrentDate('HH:mm') : selectedTime;
 
     showModalBottomSheet(
         context: context,

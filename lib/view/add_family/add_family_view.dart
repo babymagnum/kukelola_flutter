@@ -34,7 +34,7 @@ class _AddFamilyViewState extends State<AddFamilyView> {
 
     FocusScope.of(context).requestFocus(FocusNode());
 
-    var temporaryDate = '';
+    var temporaryDate = selectedDate == '' ? TextUtil.getCurrentDate('dd/MM/yyyy') : selectedDate;
 
     showModalBottomSheet(
         context: context,

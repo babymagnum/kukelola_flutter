@@ -27,7 +27,7 @@ class PersonalDataView extends StatefulWidget {
 
 class _PersonalDataViewState extends State<PersonalDataView> {
 
-  var _personalDataCt = Get.put(PersonalDataController(), permanent: true);
+  var _personalDataCt = Get.put(PersonalDataController());
   var _genderKey = GlobalKey(), _religionKey = GlobalKey(), _maritalStatusKey = GlobalKey();
   var _firstNameCt = TextEditingController(), _middleNameCt = TextEditingController(), _lastNameCt = TextEditingController(),
       _cityOfBirthCt = TextEditingController(), _emailCt = TextEditingController(), _phoneCt = TextEditingController(),
@@ -86,7 +86,7 @@ class _PersonalDataViewState extends State<PersonalDataView> {
 
     FocusScope.of(context).requestFocus(FocusNode());
 
-    var temporaryDate = '';
+    var temporaryDate = selectedDate == '' ? TextUtil.getCurrentDate('dd/MM/yyyy') : selectedDate;
 
     showModalBottomSheet(
         context: context,
@@ -190,7 +190,9 @@ class _PersonalDataViewState extends State<PersonalDataView> {
                 children: [
                   Row(
                     children: [
-                      ButtonReload(onTap: () => _personalDataCt.getStaff()),
+                      Expanded(
+                        child: ButtonReload(onTap: () => _personalDataCt.getStaff(), error: _personalDataCt.errorMessage.value == '' ? null : _personalDataCt.errorMessage.value,),
+                      ),
                     ],
                     mainAxisAlignment: MainAxisAlignment.center,
                   )

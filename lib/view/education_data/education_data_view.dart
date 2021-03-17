@@ -77,7 +77,7 @@ class _EducationDataViewState extends State<EducationDataView> {
                   Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      EmptyText(text: 'Empty education', textSize: 14.ssp)
+                      EmptyText(text: 'Empty education')
                     ],
                   ) :
                   CupertinoScrollbar(

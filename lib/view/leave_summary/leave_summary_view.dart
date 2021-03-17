@@ -91,7 +91,7 @@ class _LeaveSummaryViewState extends State<LeaveSummaryView> {
               Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  EmptyText(text: 'Empty leave summary', textSize: 16.ssp)
+                  EmptyText(text: 'Empty leave summary')
                 ],
               ) :
               ListView.separated(

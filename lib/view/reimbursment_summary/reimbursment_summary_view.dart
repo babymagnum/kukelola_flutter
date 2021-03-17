@@ -83,7 +83,7 @@ class ReimbursmentSummaryView extends StatelessWidget {
               Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  EmptyText(text: 'Empty reimbursement summary', textSize: 16.ssp)
+                  EmptyText(text: 'Empty reimbursement summary')
                 ],
               ) :
               CupertinoScrollbar(
