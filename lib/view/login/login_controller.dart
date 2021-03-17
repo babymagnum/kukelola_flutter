@@ -1,9 +1,13 @@
+import 'dart:convert';
+
 import 'package:get/get.dart';
 import 'package:kukelola_flutter/core/helper/common_function.dart';
 import 'package:kukelola_flutter/core/helper/constant.dart';
 import 'package:kukelola_flutter/core/helper/text_util.dart';
 import 'package:kukelola_flutter/core/model/static_model.dart';
+import 'package:kukelola_flutter/generated/json/token_helper.dart';
 import 'package:kukelola_flutter/main.dart';
+import 'package:kukelola_flutter/networking/model/token.dart';
 import 'package:kukelola_flutter/networking/request/login_request.dart';
 import 'package:kukelola_flutter/networking/service/service.dart';
 import 'package:kukelola_flutter/view/container_home/container_home_view.dart';
@@ -24,7 +28,6 @@ class LoginController extends GetxController {
   login() async {
     var otp = _random4Digit();
     loadingLogin.value = true;
-    print('Current time hit api token ${TextUtil.getCurrentDate('dd-MMMM-yyyy HH:mm:ss')}');
     final data = await Service().token(LoginRequest(form.value.username, form.value.password, otp, commonController.autoLogin.value ? 'true' : 'false'));
     loadingLogin.value = false;
 
@@ -34,6 +37,9 @@ class LoginController extends GetxController {
       await commonController.preferences.setBool(Constant.IS_PASS_LOGIN, true);
       await commonController.preferences.setString(Constant.OTP, otp);
       await commonController.preferences.setString(Constant.TOKEN, data.accessToken);
+      String token = jsonEncode(tokenFromJson(Token(), data.toJson()));
+      await commonController.preferences.setString(Constant.OBJECT_TOKEN, token);
+
       Get.to(commonController.autoLogin.value ? ContainerHomeView() : VerificationCodeView());
 
       if (commonController.autoLogin.value) await commonController.preferences.setBool(Constant.IS_LOGIN, true);

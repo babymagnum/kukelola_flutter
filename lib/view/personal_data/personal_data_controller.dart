@@ -44,7 +44,6 @@ class PersonalDataController extends GetxController {
 
   getStaff() async {
     loadingStaff.value = true;
-    print('Current time hit api staff ${TextUtil.getCurrentDate('dd-MMMM-yyyy HH:mm:ss')}');
     final data = await Service().staff();
     loadingStaff.value = false;
 

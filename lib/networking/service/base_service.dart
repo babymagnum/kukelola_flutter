@@ -90,7 +90,7 @@ class BaseService {
   }
 
   // TODO: POST
-  Future<T> postUrlEncoded<T>(String url, dynamic body, bool isLoadToken) async {
+  Future<T> postUrlEncoded<T>(String url, dynamic body) async {
     T resultResponse;
 
     try {
@@ -105,12 +105,6 @@ class BaseService {
       } else if (response.statusCode == 500) {
         resultResponse = fromJson<T>(_errorResponse());
       } else {
-        if (isLoadToken) {
-          Map decode = jsonDecode(response.toString());
-          String token = jsonEncode(tokenFromJson(Token(), decode));
-          await commonController.preferences.setString(Constant.OBJECT_TOKEN, token);
-        }
-
         var responseMap = jsonDecode(response.toString());
         resultResponse = fromJson<T>(responseMap);
       }
