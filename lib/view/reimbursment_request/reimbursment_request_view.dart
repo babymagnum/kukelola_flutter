@@ -54,7 +54,7 @@ class _ReimbursmentRequestViewState extends State<ReimbursmentRequestView> {
 
   bool _disable() {
     var form = _reimbursmentRequestCt.form.value;
-    return form.reason == '' || form.listDetails.length == 0;
+    return form.reason == '' || _reimbursmentRequestCt.listDetails.length == 0;
   }
 
   @override
@@ -86,7 +86,7 @@ class _ReimbursmentRequestViewState extends State<ReimbursmentRequestView> {
               children: [
                 Expanded(
                   child: ButtonBack(
-                    label: 'Reimbursment Request',
+                    label: 'Reimbursement Request',
                     onBack: () => Get.back(),
                   ),
                 ),
@@ -143,7 +143,10 @@ class _ReimbursmentRequestViewState extends State<ReimbursmentRequestView> {
                           disable: false,
                           title: 'Add Details',
                           loading: false,
-                          onTap: () => Get.dialog(DialogAddReimbursmentDetails(item: null,)),
+                          onTap: () async {
+                            await Get.dialog(DialogAddReimbursmentDetails(item: null, index: null,));
+                            setState(() {});
+                          },
                           verticalPadding: 9.h,
                           textStyle: ThemeTextStyle.biryaniBold.apply(color: Colors.white, fontSizeDelta: 14.ssp),
                         ),
@@ -158,18 +161,18 @@ class _ReimbursmentRequestViewState extends State<ReimbursmentRequestView> {
                         ),
                         SizedBox(height: 8.h,),
                         Parent(style: ParentStyle()..background.color(Color(0xFFC4C4C4))..height(1)..width(Get.width),),
-                        _reimbursmentRequestCt.form.value.listDetails.length == 0 ?
+                        _reimbursmentRequestCt.listDetails.length == 0 ?
                         Padding(
                           padding: EdgeInsets.only(top: 16.h),
-                          child: EmptyText(text: 'Reimbursment Detail is empty, tap the button to add.', textSize: 14.ssp),
+                          child: EmptyText(text: 'Reimbursement Detail is empty, tap "Add Details" button to add.', textSize: 14.ssp),
                         ) :
                         ListView.separated(
                           padding: EdgeInsets.only(top: 16.h),
                           shrinkWrap: true,
                           physics: NeverScrollableScrollPhysics(),
-                          itemBuilder: (_, index) => ListReimbursmentDetailItem(item: _reimbursmentRequestCt.form.value.listDetails[index], index: index,),
+                          itemBuilder: (_, index) => ListReimbursmentDetailItem(item: _reimbursmentRequestCt.listDetails[index], index: index,),
                           separatorBuilder: (_, __) => Divider(height: 10.h, color: Colors.transparent,),
-                          itemCount: _reimbursmentRequestCt.form.value.listDetails.length,
+                          itemCount: _reimbursmentRequestCt.listDetails.length,
                         ),
                         SizedBox(height: 24.h,),
                         InputAttachment(

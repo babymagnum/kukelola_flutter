@@ -107,9 +107,11 @@ class Service extends BaseService {
   Future<Standart> logout() async {
     return await post('${MyApp.BASE_API}api/User/Logout');
   }
-  
+
   Future<Staff> staff() async {
-    return await get('${MyApp.BASE_API}api/Staff/${homeController.userData.value.staffId}');
+    return await postJsonBody('${MyApp.BASE_API}api/staff/getstaff', {
+      'Id': homeController.userData.value.staffId
+    });
   }
 
   Future<Standart> updateStaff(dynamic body) async {

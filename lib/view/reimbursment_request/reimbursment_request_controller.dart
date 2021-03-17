@@ -9,13 +9,14 @@ class ReimbursmentRequestController extends GetxController {
   var loadingSubmit = false.obs;
   var loadingAttachment = false.obs;
   var form = ReimbursmentRequestForm().obs;
+  var listDetails = List<ReimbursmentDetailItem>().obs;
 
   setLoadingAttachment(value) => loadingAttachment.value = value;
   updateForm(ReimbursmentRequestForm value) => form.value = value;
 
   submitReimbursment() async {
     loadingSubmit.value = true;
-    final data = await Service().submitReimbursmentRequest(ReimbursmentRequest(homeController.userData.value.userId, form.value.reason, form.value.attachment, form.value.listDetails));
+    final data = await Service().submitReimbursmentRequest(ReimbursmentRequest(homeController.userData.value.userId, form.value.reason, form.value.attachment, listDetails));
     loadingSubmit.value = false;
 
     if (data?.isSuccess ?? false) {
@@ -27,17 +28,14 @@ class ReimbursmentRequestController extends GetxController {
   }
 
   addReimbursmentDetail(ReimbursmentDetailItem item) {
-    form.value.listDetails.add(item);
-    updateForm(form.value);
+    listDetails.add(item);
   }
 
   removeReimbursmentDetail(int index) {
-    form.value.listDetails.removeAt(index);
-    updateForm(form.value);
+    listDetails.removeAt(index);
   }
 
   updateReimbursmentDetail(int index, ReimbursmentDetailItem item) {
-    form.value.listDetails[index] = item;
-    updateForm(form.value);
+    listDetails[index] = item;
   }
 }

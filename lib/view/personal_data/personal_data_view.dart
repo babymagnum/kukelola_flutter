@@ -330,7 +330,7 @@ class _PersonalDataViewState extends State<PersonalDataView> {
                         CustomInput(
                           textInputAction: TextInputAction.newline,
                           focusNode: _addressFocus,
-                          hintText: '',
+                          hintText: 'e.g Jl. Kolonel Sugiono Yogyakarta',
                           maxLines: null,
                           inputType: TextInputType.multiline,
                           onEditingComplete: () {},

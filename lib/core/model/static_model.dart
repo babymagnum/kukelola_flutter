@@ -143,7 +143,6 @@ class AttendanceRequestForm {
 class ReimbursmentRequestForm {
   String reason = '';
   File attachment = File('');
-  List<ReimbursmentDetailItem> listDetails = [];
   String status = '';
   bool loading = false;
 }

@@ -33,7 +33,7 @@ class ListReimbursmentDetailItem extends StatelessWidget {
             children: [
               GestureDetector(
                 child: SvgPicture.asset('assets/images/fa-solid_edit.svg', width: 18.w, height: 16.h,),
-                onTap: () => Get.dialog(DialogAddReimbursmentDetails(item: item)),
+                onTap: () => Get.dialog(DialogAddReimbursmentDetails(item: item, index: index,)),
               ),
               SizedBox(width: 10.w,),
               GestureDetector(

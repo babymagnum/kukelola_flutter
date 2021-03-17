@@ -17,9 +17,10 @@ import '../../../main.dart';
 
 class DialogAddReimbursmentDetails extends StatefulWidget {
 
-  DialogAddReimbursmentDetails({@required this.item});
+  DialogAddReimbursmentDetails({@required this.item, @required this.index});
 
   final ReimbursmentDetailItem item;
+  final int index;
 
   @override
   _DialogAddReimbursmentDetailsState createState() => _DialogAddReimbursmentDetailsState();
@@ -79,7 +80,7 @@ class _DialogAddReimbursmentDetailsState extends State<DialogAddReimbursmentDeta
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Expanded(
-                    child: Text('Add Details', maxLines: 2, overflow: TextOverflow.ellipsis, style: ThemeTextStyle.biryaniBold.apply(fontSizeDelta: 18.ssp, decoration: TextDecoration.none),),
+                    child: Text(widget.item == null ? 'Add Details' : 'Update Details', maxLines: 2, overflow: TextOverflow.ellipsis, style: ThemeTextStyle.biryaniBold.apply(fontSizeDelta: 18.ssp, decoration: TextDecoration.none),),
                   ),
                   SizedBox(width: 10.w,),
                   Parent(
@@ -127,10 +128,15 @@ class _DialogAddReimbursmentDetailsState extends State<DialogAddReimbursmentDeta
               ButtonLoading(
                 backgroundColor: ThemeColor.secondary,
                 disable: _disable(),
-                title: 'Add Details',
+                title: widget.item == null ? 'Add Details' : 'Update Details',
                 loading: false,
                 onTap: () {
-                  _reimbursmentRequestCt.addReimbursmentDetail(ReimbursmentDetailItem(_descriptionCt.text.trim(), _costCt.text.trim().replaceAll(',', '')));
+                  if (widget.item == null) {
+                    _reimbursmentRequestCt.addReimbursmentDetail(ReimbursmentDetailItem(_descriptionCt.text.trim(), _costCt.text.trim().replaceAll(',', '')));
+                  } else {
+                    _reimbursmentRequestCt.updateReimbursmentDetail(widget.index, ReimbursmentDetailItem(_descriptionCt.text.trim(), _costCt.text.trim().replaceAll(',', '')));
+                  }
+
                   Get.back();
                 },
                 verticalPadding: 9.h,
