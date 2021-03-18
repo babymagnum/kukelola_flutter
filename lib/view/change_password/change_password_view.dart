@@ -52,7 +52,7 @@ class _ChangePasswordViewState extends State<ChangePasswordView> {
                     title: 'Save',
                     loading: _changePasswordCt.loadingChangePassword.value,
                     onTap: () => _changePasswordCt.changePassword(context),
-                    verticalPadding: 6.h,
+                    verticalPadding: 4.h,
                     horizontalPadding: 22.w,
                     loadingSize: 12.w,
                     textStyle: ThemeTextStyle.biryaniSemiBold.apply(color: Colors.white, fontSizeDelta: 12.ssp),

@@ -5,10 +5,6 @@ import 'package:kukelola_flutter/networking/model/leave_summary_grid.dart';
 import 'package:kukelola_flutter/networking/request/summary_grid_request.dart';
 import 'package:kukelola_flutter/networking/service/service.dart';
 import 'package:kukelola_flutter/view/leave_summary/view/leave_summary_filter_controller.dart';
-import 'dart:convert';
-import 'dart:io';
-import 'package:open_file/open_file.dart';
-import 'package:path_provider/path_provider.dart' as syspaths;
 
 class LeaveSummaryController extends GetxController {
   var loadingSummary = false.obs;
@@ -49,12 +45,4 @@ class LeaveSummaryController extends GetxController {
     }
   }
 
-  openAttachment() async {
-    if ((attachmentData.value.fileName ?? '') == '') return;
-
-    final decoded = base64.decode(attachmentData.value.file);
-    final appDir = await syspaths.getTemporaryDirectory();
-    final file = await File('${appDir.path}/${attachmentData.value.fileName}').writeAsBytes(decoded);
-    OpenFile.open(file.path);
-  }
 }

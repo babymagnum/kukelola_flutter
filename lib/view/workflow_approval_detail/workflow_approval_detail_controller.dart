@@ -25,13 +25,4 @@ class WorkflowApprovalDetailController extends GetxController {
       errorAttachment.value = true;
     }
   }
-
-  openAttachment() async {
-    if ((attachmentData.value.fileName ?? '') == '') return;
-
-    final decoded = base64.decode(attachmentData.value.file);
-    final appDir = await syspaths.getTemporaryDirectory();
-    final file = await File('${appDir.path}/${attachmentData.value.fileName}').writeAsBytes(decoded);
-    OpenFile.open(file.path);
-  }
 }

@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import 'package:kukelola_flutter/core/helper/common_function.dart';
 import 'package:kukelola_flutter/core/theme/theme_color.dart';
 import 'package:kukelola_flutter/core/theme/theme_text_style.dart';
 import 'package:kukelola_flutter/core/widgets/button_back.dart';
@@ -142,7 +143,7 @@ class _LeaveSummaryDetailViewState extends State<LeaveSummaryDetailView> {
                             _content(
                               'ATTACHMENT',
                               (_leaveSummmaryCt.attachmentData.value.fileName ?? '') == '' ? 'No attachment' : _leaveSummmaryCt.attachmentData.value.fileName,
-                              (_leaveSummmaryCt.attachmentData.value.fileName ?? '') != '', _leaveSummmaryCt.loadingAttachment.value, () => _leaveSummmaryCt.openAttachment(),
+                              (_leaveSummmaryCt.attachmentData.value.fileName ?? '') != '', _leaveSummmaryCt.loadingAttachment.value, () => CommonFunction().openAttachment(_leaveSummmaryCt.attachmentData.value.fileName, _leaveSummmaryCt.attachmentData.value.file),
                             )
                           ],
                         ),

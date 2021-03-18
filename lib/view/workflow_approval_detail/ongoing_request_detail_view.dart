@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import 'package:kukelola_flutter/core/helper/common_function.dart';
 import 'package:kukelola_flutter/core/theme/theme_color.dart';
 import 'package:kukelola_flutter/core/theme/theme_text_style.dart';
 import 'package:kukelola_flutter/core/widgets/button_back.dart';
@@ -173,7 +174,7 @@ class _OngoingRequestDetailViewState extends State<OngoingRequestDetailView> {
                             _content(
                               'ATTACHMENT',
                               (_workflowApprovalDetailCt.attachmentData.value.fileName ?? '') == '' ? 'No attachment' : _workflowApprovalDetailCt.attachmentData.value.fileName,
-                              (_workflowApprovalDetailCt.attachmentData.value.fileName ?? '') != '', _workflowApprovalDetailCt.loadingAttachment.value, () => _workflowApprovalDetailCt.openAttachment(),
+                              (_workflowApprovalDetailCt.attachmentData.value.fileName ?? '') != '', _workflowApprovalDetailCt.loadingAttachment.value, () => CommonFunction().openAttachment(_workflowApprovalDetailCt.attachmentData.value.fileName, _workflowApprovalDetailCt.attachmentData.value.file),
                             )
                           ],
                         ),

@@ -101,7 +101,7 @@ class _ProfileViewState extends State<ProfileView> with AutomaticKeepAliveClient
                               child: Column(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
-                                  Icon(Icons.camera_alt, size: 18.w, color: Colors.white,),
+                                  Icon(Icons.add_photo_alternate_rounded, size: 18.w, color: Colors.white,),
                                 ],
                               ),
                             ),

@@ -20,6 +20,7 @@ dependencies:
   get: ^3.24.0
   intl:
   dio:
+  archive:
   connectivity:
   shared_preferences:
   flutter_staggered_grid_view:
