@@ -180,7 +180,9 @@ class _ReimbursmentRequestViewState extends State<ReimbursmentRequestView> {
                           hintText: 'choose file...',
                           onTap: () => _pickFile(),
                           loading: _reimbursmentRequestCt.loadingAttachment.value,
-                          value: _reimbursmentRequestCt.form.value.attachment.path == '' ? '' : '${_reimbursmentRequestCt.form.value.attachment.path} (${(_reimbursmentRequestCt.form.value.attachment.lengthSync() / 1024).round()} KB)',
+                          value: _reimbursmentRequestCt.form.value.attachment.path == '' ? '' : '${_reimbursmentRequestCt.form.value.attachment.path.split('/').last} (${(_reimbursmentRequestCt.form.value.attachment.lengthSync() / 1024).round()} KB)',
+                          onDelete: () {},
+                          showDelete: false,
                         )
                       ],
                     ),

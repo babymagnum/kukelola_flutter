@@ -85,6 +85,18 @@ class AttendanceRequestViewState extends State<AttendanceRequestView> {
     );
   }
 
+  String _attachment() {
+    if (_attendanceRequestCt.form.value.listFile.length == 0) return '';
+
+    String content = '';
+
+    _attendanceRequestCt.form.value.listFile.forEach((element) {
+      content += '${element.path.split('/').last} (${(element.lengthSync() / 1024).round()} KB), ';
+    });
+
+    return content.substring(0, content.length - 2);
+  }
+
   bool _disable() {
     final form = _attendanceRequestCt.form.value;
 
@@ -94,12 +106,13 @@ class AttendanceRequestViewState extends State<AttendanceRequestView> {
   _pickFile() async {
     _attendanceRequestCt.setLoadingPickFile(true);
     FilePickerResult result = await FilePicker.platform.pickFiles(type: FileType.custom,
-      allowedExtensions: ['jpg', 'pdf', 'doc', 'png', 'jpeg', 'JPG'],);
+      allowedExtensions: ['jpg', 'pdf', 'doc', 'png', 'jpeg', 'JPG'], allowMultiple: true);
     _attendanceRequestCt.setLoadingPickFile(false);
 
     if(result != null) {
-      File file = File(result.files.single.path);
-      _attendanceRequestCt.form.value.attachment = file;
+      List<File> listFile = List();
+      result.files.forEach((element) => listFile.add(File(element.path)));
+      _attendanceRequestCt.form.value.listFile.addAll(listFile);
       _attendanceRequestCt.updateForm(_attendanceRequestCt.form.value);
       setState(() {});
     } else {
@@ -234,7 +247,13 @@ class AttendanceRequestViewState extends State<AttendanceRequestView> {
                           hintText: 'selected file...',
                           onTap: () => _pickFile(),
                           loading: _attendanceRequestCt.loadingPickFile.value,
-                          value: _attendanceRequestCt.form.value.attachment.path == '' ? '' : '${_attendanceRequestCt.form.value.attachment.path} (${(_attendanceRequestCt.form.value.attachment.lengthSync() / 1024).round()} KB)',
+                          value: _attachment(),
+                          onDelete: () {
+                            _attendanceRequestCt.form.value.listFile.clear();
+                            _attendanceRequestCt.updateForm(_attendanceRequestCt.form.value);
+                            setState(() {});
+                          },
+                          showDelete: _attendanceRequestCt.form.value.listFile.length > 0,
                         ),
                         SizedBox(height: 24.h,)
                       ],

@@ -232,7 +232,9 @@ class OvertimeRequestViewState extends State<OvertimeRequestView> {
                           hintText: 'selected file...',
                           onTap: () => _pickFile(),
                           loading: _overtimeRequestCt.loadingPickFile.value,
-                          value: _overtimeRequestCt.form.value.attachment.path == '' ? '' : '${_overtimeRequestCt.form.value.attachment.path} (${(_overtimeRequestCt.form.value.attachment.lengthSync() / 1024).round()} KB)',
+                          value: _overtimeRequestCt.form.value.attachment.path == '' ? '' : '${_overtimeRequestCt.form.value.attachment.path.split('/').last} (${(_overtimeRequestCt.form.value.attachment.lengthSync() / 1024).round()} KB)',
+                          onDelete: () {},
+                          showDelete: false,
                         ),
                         SizedBox(height: 24.h,)
                       ],

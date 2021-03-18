@@ -92,28 +92,28 @@ class _ProfileViewState extends State<ProfileView> with AutomaticKeepAliveClient
                             loading: homeController.loadingProfilePicture.value,
                             loadingSize: Size(16.w, 16.w),
                           ),
-                          Positioned(
-                            bottom: 2, left: 2, right: 2,
-                            child: Parent(
-                              gesture: Gestures()..onTap(() => _ubahFotoProfil()),
-                              style: ParentStyle()..borderRadius(bottomRight: 1000, bottomLeft: 1000)..width(64.w)..height(32.w)..background.color(Colors.black.withOpacity(0.35))
-                                ..ripple(true),
-                              child: Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Icon(Icons.add_photo_alternate_rounded, size: 18.w, color: Colors.white,),
-                                ],
-                              ),
-                            ),
-                          ),
-                          _profileCt.loadingProfileFoto.value ?
-                          Align(
-                            alignment: Alignment.center,
-                            child: SizedBox(height: 20.w, width: 20.w, child: CircularProgressIndicator(
-                              valueColor: AlwaysStoppedAnimation<Color>(ThemeColor.primary),
-                            )),
-                          ) :
-                          Container()
+                          // Positioned(
+                          //   bottom: 2, left: 2, right: 2,
+                          //   child: Parent(
+                          //     gesture: Gestures()..onTap(() => _ubahFotoProfil()),
+                          //     style: ParentStyle()..borderRadius(bottomRight: 1000, bottomLeft: 1000)..width(64.w)..height(32.w)..background.color(Colors.black.withOpacity(0.35))
+                          //       ..ripple(true),
+                          //     child: Column(
+                          //       mainAxisAlignment: MainAxisAlignment.center,
+                          //       children: [
+                          //         Icon(Icons.add_photo_alternate_rounded, size: 18.w, color: Colors.white,),
+                          //       ],
+                          //     ),
+                          //   ),
+                          // ),
+                          // _profileCt.loadingProfileFoto.value ?
+                          // Align(
+                          //   alignment: Alignment.center,
+                          //   child: SizedBox(height: 20.w, width: 20.w, child: CircularProgressIndicator(
+                          //     valueColor: AlwaysStoppedAnimation<Color>(ThemeColor.primary),
+                          //   )),
+                          // ) :
+                          // Container()
                         ],
                       ),
                       ),

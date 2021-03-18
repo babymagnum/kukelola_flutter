@@ -165,7 +165,7 @@ class AttendanceRequestForm {
   String startHour = TextUtil.getCurrentDate('HH:mm');
   String endHour = TextUtil.getCurrentDate('HH:mm');
   String reason = '';
-  File attachment = File('');
+  List<File> listFile = List();
   String status = '';
 }
 

@@ -4,7 +4,6 @@ import 'package:kukelola_flutter/core/model/static_model.dart';
 import 'package:kukelola_flutter/main.dart';
 import 'package:kukelola_flutter/networking/request/attendance_request.dart';
 import 'package:kukelola_flutter/networking/service/service.dart';
-import 'package:kukelola_flutter/view/home/home_controller.dart';
 
 class AttendanceRequestController extends GetxController {
   var loadingSubmit = false.obs;
@@ -16,7 +15,7 @@ class AttendanceRequestController extends GetxController {
 
   submitLeaveRequest() async {
     loadingSubmit.value = true;
-    final data = await Service().submitAttendanceRequest(AttendanceRequest(homeController.userData.value.userId, form.value.startDate, form.value.endDate, form.value.reason, form.value.startHour, form.value.endHour, form.value.attachment));
+    final data = await Service().submitAttendanceRequest(AttendanceRequest(homeController.userData.value.userId, form.value.startDate, form.value.endDate, form.value.reason, form.value.startHour, form.value.endHour, form.value.listFile));
     loadingSubmit.value = false;
 
     if (data?.isSuccess ?? false) {

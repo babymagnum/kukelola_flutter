@@ -8,9 +8,9 @@ class AttendanceRequest {
   String StartHour;
   String EndHour;
   String Description;
-  File FileSatu;
+  List<File> listFile;
 
-  AttendanceRequest(this.UserId, this.StartDate, this.EndDate, this.Description, this.StartHour, this.EndHour, this.FileSatu);
+  AttendanceRequest(this.UserId, this.StartDate, this.EndDate, this.Description, this.StartHour, this.EndHour, this.listFile);
 
   Future<FormData> body() async {
     final form = FormData();
@@ -23,8 +23,12 @@ class AttendanceRequest {
       ..add(MapEntry('EndHour', EndHour))
       ..add(MapEntry('Description', Description));
 
-    if (FileSatu.path != '') {
-      form.files..add(MapEntry('FileSatu', await MultipartFile.fromFile(FileSatu.path, filename: FileSatu.path.split('/').last)));
+    if (listFile.length > 0) {
+      // for (int i=0; i<listFile.length; i++) {
+      //   form.files..add(MapEntry('File$i', await MultipartFile.fromFile(listFile[i].path, filename: listFile[i].path.split('/').last)));
+      // }
+
+      form.files..add(MapEntry('FileSatu', await MultipartFile.fromFile(listFile[0].path, filename: listFile[0].path.split('/').last)));
     }
 
     return form;

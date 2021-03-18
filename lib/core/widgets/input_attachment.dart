@@ -11,13 +11,16 @@ import 'package:kukelola_flutter/core/widgets/button_loading.dart';
 class InputAttachment extends StatelessWidget {
 
   InputAttachment({Key key, @required this.labelText, @required this.hintText,
-    @required this.onTap, @required this.loading, @required this.value}): super(key: key);
+    @required this.onTap, @required this.loading, @required this.value, @required this.showDelete,
+    @required this.onDelete}): super(key: key);
 
   final String hintText;
   final String labelText;
   final String value;
   final Function onTap;
   final bool loading;
+  final bool showDelete;
+  final Function onDelete;
 
   @override
   Widget build(BuildContext context) {
@@ -35,7 +38,21 @@ class InputAttachment extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(value == '' ? hintText : value, style: value == '' ? ThemeTextStyle.biryaniRegular.apply(fontSizeDelta: 14.ssp, color: Color(0xFFC4C4C4)) : ThemeTextStyle.biryaniRegular.apply(fontSizeDelta: 14.ssp),),
+                    Row(
+                      crossAxisAlignment: CrossAxisAlignment.end,
+                      children: [
+                        Flexible(child: Text(value == '' ? hintText : value, style: value == '' ? ThemeTextStyle.biryaniRegular.apply(fontSizeDelta: 14.ssp, color: Color(0xFFC4C4C4)) : ThemeTextStyle.biryaniRegular.apply(fontSizeDelta: 14.ssp),)),
+                        showDelete ?
+                        Padding(
+                          padding: EdgeInsets.only(bottom: 5.h, left: 10.w),
+                          child: GestureDetector(
+                            onTap: onDelete,
+                            child: Icon(Icons.delete, size: 20.w, color: Color(0xFFC4C4C4),),
+                          ),
+                        ) :
+                        Container()
+                      ],
+                    ),
                     SizedBox(height: 0.h,),
                     Parent(style: ParentStyle()..width(Get.width)..height(1.h)..background.color(Color(0xFFC4C4C4)),),
                   ],
