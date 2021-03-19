@@ -33,9 +33,9 @@ class ChangePasswordController extends GetxController {
       loadingChangePassword.value = false;
 
       if (data?.isSuccess ?? false) {
-        CommonFunction.standartSnackbar(data?.message ?? 'Berhasil melakukan operasi.');
+        CommonFunction.standartSnackbar('Berhasil Mengubah Password');
       } else {
-        CommonFunction.standartSnackbar(data?.message ?? 'Gagal melakukan operasi.');
+        CommonFunction.standartSnackbar('Gagal Mengubah Password: ${data?.message ?? 'Server Error!'}');
       }
     }
   }

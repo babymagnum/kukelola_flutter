@@ -30,9 +30,12 @@ class LeaveRequestController extends GetxController {
     final data = await Service().specialLeaveList();
     loadingSpecialLeaveType.value = false;
 
-    errorSpecialLeaveType.value = data?.data == null;
-
-    if (data?.data != null) listSpecialLeave.addAll(data.data);
+    if (data?.data != null) {
+      errorSpecialLeaveType.value = false;
+      listSpecialLeave.addAll(data.data);
+    } else {
+      errorSpecialLeaveType.value = true;
+    }
   }
 
   submitLeaveRequest() async {
@@ -41,10 +44,10 @@ class LeaveRequestController extends GetxController {
     loadingSubmit.value = false;
 
     if (data?.isSuccess ?? false) {
-      CommonFunction.standartSnackbar('Berhasil melakukan submit overtime request');
+      CommonFunction.standartSnackbar('Berhasil Submit Leave Request');
       updateForm(LeaveRequestForm());
     } else {
-      CommonFunction.standartSnackbar('Gagal melakukan submit overtime request');
+      CommonFunction.standartSnackbar('Gagal Submit: ${data?.message ?? 'Server Error!'}');
     }
   }
 }

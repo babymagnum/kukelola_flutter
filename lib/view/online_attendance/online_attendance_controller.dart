@@ -38,9 +38,9 @@ class OnlineAttendanceController extends GetxController {
     loadingSubmit.value = false;
 
     if (data?.isSuccess ?? false) {
-      CommonFunction.standartSnackbar('Berhasil melakukan presensi ${isIn.value ? 'Masuk' : 'Keluar'}');
+      CommonFunction.standartSnackbar('Berhasil Presensi ${isIn.value ? 'Masuk' : 'Keluar'}');
     } else {
-      CommonFunction.standartSnackbar('Gagal melakukan presensi ${isIn.value ? 'Masuk' : 'Keluar'}');
+      CommonFunction.standartSnackbar('Gagal Presensi ${isIn.value ? 'Masuk' : 'Keluar'}: ${data?.message ?? 'Server Error!'}');
     }
   }
 }

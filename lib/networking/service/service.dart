@@ -57,10 +57,6 @@ class Service extends BaseService {
     return await postUrlEncoded('${MyApp.BASE_API}token', request.getBody());
   }
 
-  Future<User> account() async {
-    return await get('${MyApp.BASE_API}api/User');
-  }
-
   Future<Standart> changePassword(ChangePasswordRequest request) async {
     return await postJsonBody('${MyApp.BASE_API}api/User/ChangePassword', request.body());
   }

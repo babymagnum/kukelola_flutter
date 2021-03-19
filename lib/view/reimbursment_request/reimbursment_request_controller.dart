@@ -20,10 +20,10 @@ class ReimbursmentRequestController extends GetxController {
     loadingSubmit.value = false;
 
     if (data?.isSuccess ?? false) {
-      CommonFunction.standartSnackbar('Berhasil melakukan submit overtime request');
+      CommonFunction.standartSnackbar('Berhasil Submit Reimbursement Request');
       updateForm(ReimbursmentRequestForm());
     } else {
-      CommonFunction.standartSnackbar('Gagal melakukan submit overtime request');
+      CommonFunction.standartSnackbar('Gagal Submit: ${data?.message ?? 'Server Error!'}');
     }
   }
 

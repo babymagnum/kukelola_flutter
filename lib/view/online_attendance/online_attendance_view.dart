@@ -40,16 +40,16 @@ class _OnlineAttendanceViewState extends State<OnlineAttendanceView> {
     _onlineAttendanceCt.listenClock();
 
     Future.delayed(Duration.zero, () async {
-      await _determinePosition();
+      await _positionServiceEnable();
 
       _locationStream = Geolocator.getPositionStream().listen((Position position) {
-        _onlineAttendanceCt.googleMapController?.animateCamera(CameraUpdate.newCameraPosition(CameraPosition(target: _onlineAttendanceCt.latLng.value, zoom: 15)));
         _onlineAttendanceCt.setLatLng(LatLng(position.latitude, position.longitude));
+        setState(() {});
       });
     });
   }
 
-  _determinePosition() async {
+  _positionServiceEnable() async {
     bool serviceEnabled;
     LocationPermission permission;
 
@@ -72,6 +72,10 @@ class _OnlineAttendanceViewState extends State<OnlineAttendanceView> {
             'Location permissions are denied (actual value: $permission).');
       }
     }
+
+    final position = await Geolocator.getCurrentPosition();
+    _onlineAttendanceCt.setLatLng(LatLng(position.latitude, position.longitude));
+    _onlineAttendanceCt.googleMapController.animateCamera(CameraUpdate.newCameraPosition(CameraPosition(target: _onlineAttendanceCt.latLng.value, zoom: 15)));
   }
 
   @override
@@ -122,7 +126,7 @@ class _OnlineAttendanceViewState extends State<OnlineAttendanceView> {
                               },
                               mapToolbarEnabled: false,
                               myLocationEnabled: true,
-                              myLocationButtonEnabled: false,
+                              myLocationButtonEnabled: true,
                               zoomControlsEnabled: false,
                             ),
                           ),

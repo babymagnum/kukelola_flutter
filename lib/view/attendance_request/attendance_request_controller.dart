@@ -19,10 +19,10 @@ class AttendanceRequestController extends GetxController {
     loadingSubmit.value = false;
 
     if (data?.isSuccess ?? false) {
-      CommonFunction.standartSnackbar('Berhasil melakukan submit attendance request');
+      CommonFunction.standartSnackbar('Berhasil Submit Attendance Request');
       updateForm(AttendanceRequestForm());
     } else {
-      CommonFunction.standartSnackbar('Gagal melakukan submit attendance request');
+      CommonFunction.standartSnackbar('Gagal Submit: ${data?.message ?? 'Server Error!'}');
     }
   }
 }
