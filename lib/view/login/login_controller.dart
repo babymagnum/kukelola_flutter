@@ -46,7 +46,7 @@ class LoginController extends GetxController {
 
       commonController.setAutoLogin(false);
     } else {
-      CommonFunction.standartSnackbar(data.errorDescription ?? data.errorMessage);
+      CommonFunction.standartSnackbar('Gagal Login: ${data.errorDescription ?? data.errorMessage}');
     }
   }
 }

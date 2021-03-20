@@ -1,5 +1,4 @@
 import 'dart:io';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -14,7 +13,6 @@ import 'package:kukelola_flutter/core/widgets/custom_input.dart';
 import 'package:kukelola_flutter/main.dart';
 import 'package:kukelola_flutter/view/base_view.dart';
 import 'package:kukelola_flutter/view/login/login_controller.dart';
-import 'package:kukelola_flutter/view/verification_code/verification_code_view.dart';
 
 class LoginView extends StatefulWidget {
   @override
@@ -46,6 +44,14 @@ class _LoginViewState extends State<LoginView> {
   }
 
   @override
+  void dispose() {
+    _emailCt.dispose();
+    _passwordCt.dispose();
+
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return BaseView(
       body: Column(
@@ -71,6 +77,7 @@ class _LoginViewState extends State<LoginView> {
                           focusNode: _emailFocus,
                           hintText: 'type email...',
                           labelText: 'EMAIL',
+                          controller: _emailCt,
                           inputType: TextInputType.emailAddress,
                           onEditingComplete: () {
                             _passwordFocus.requestFocus();
@@ -89,6 +96,7 @@ class _LoginViewState extends State<LoginView> {
                           onObsecureClick: () => _loginCt.setObsecure(!_loginCt.obsecure.value),
                           textInputAction: TextInputAction.done,
                           focusNode: _passwordFocus,
+                          controller: _passwordCt,
                           hintText: 'type password...',
                           labelText: 'PASSWORD',
                           onChanged: (text) {

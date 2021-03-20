@@ -106,7 +106,7 @@ class AttendanceRequestViewState extends State<AttendanceRequestView> {
   _pickFile() async {
     _attendanceRequestCt.setLoadingPickFile(true);
     FilePickerResult result = await FilePicker.platform.pickFiles(type: FileType.custom,
-      allowedExtensions: ['jpg', 'pdf', 'doc', 'png', 'jpeg', 'JPG'], allowMultiple: true);
+      allowedExtensions: ['jpg', 'pdf', 'doc', 'png', 'jpeg', 'JPG']);
     _attendanceRequestCt.setLoadingPickFile(false);
 
     if(result != null) {

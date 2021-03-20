@@ -60,7 +60,15 @@ class BaseService {
 
   dynamic _errorResponse() {
     return {
-      'errorMessage': '500 Internal server error, Please try again!',
+      'errorMessage': 'Server Error!',
+      'Message': 'Server Error!'
+    };
+  }
+
+  dynamic _errorConnection() {
+    return {
+      'errorMessage': 'Connection Error!',
+      'Message': 'Connection Error!'
     };
   }
 
@@ -78,12 +86,16 @@ class BaseService {
       } else if (response.statusCode == 500) {
         resultResponse = fromJson<T>(_errorResponse());
       } else {
-        var responseMap = jsonDecode(response.toString());
-        resultResponse = fromJson<T>(responseMap);
+        resultResponse = fromJson<T>(jsonDecode(response.toString()));
       }
     } on DioError catch (e) {
-      var responseMap = jsonDecode(e.response.toString());
-      resultResponse = fromJson<T>(TextUtil.containsHtml(responseMap.toString()) ? _errorResponse() : responseMap);
+      if (e.type == DioErrorType.CONNECT_TIMEOUT || e.type == DioErrorType.RECEIVE_TIMEOUT || e.type == DioErrorType.SEND_TIMEOUT) {
+        resultResponse = fromJson<T>(_errorConnection());
+      } else if(e.type == DioErrorType.RESPONSE) {
+        resultResponse = fromJson<T>(jsonDecode(e.response.toString()));
+      } else {
+        resultResponse = fromJson<T>(_errorResponse());
+      }
     }
 
     return resultResponse;
@@ -105,12 +117,16 @@ class BaseService {
       } else if (response.statusCode == 500) {
         resultResponse = fromJson<T>(_errorResponse());
       } else {
-        var responseMap = jsonDecode(response.toString());
-        resultResponse = fromJson<T>(responseMap);
+        resultResponse = fromJson<T>(jsonDecode(response.toString()));
       }
     } on DioError catch (e) {
-      var responseMap = jsonDecode(e.response.toString());
-      resultResponse = fromJson<T>(TextUtil.containsHtml(responseMap.toString()) ? _errorResponse() : responseMap);
+      if (e.type == DioErrorType.CONNECT_TIMEOUT || e.type == DioErrorType.RECEIVE_TIMEOUT || e.type == DioErrorType.SEND_TIMEOUT) {
+        resultResponse = fromJson<T>(_errorConnection());
+      } else if(e.type == DioErrorType.RESPONSE) {
+        resultResponse = fromJson<T>(jsonDecode(e.response.toString()));
+      } else {
+        resultResponse = fromJson<T>(_errorResponse());
+      }
     }
 
     return resultResponse;
@@ -130,12 +146,16 @@ class BaseService {
       } else if (response.statusCode == 500) {
         resultResponse = fromJson<T>(_errorResponse());
       } else {
-        var responseMap = jsonDecode(response.toString());
-        resultResponse = fromJson<T>(responseMap);
+        resultResponse = fromJson<T>(jsonDecode(response.toString()));
       }
     } on DioError catch (e) {
-      var responseMap = jsonDecode(e.response.toString());
-      resultResponse = fromJson<T>(TextUtil.containsHtml(responseMap.toString()) ? _errorResponse() : responseMap);
+      if (e.type == DioErrorType.CONNECT_TIMEOUT || e.type == DioErrorType.RECEIVE_TIMEOUT || e.type == DioErrorType.SEND_TIMEOUT) {
+        resultResponse = fromJson<T>(_errorConnection());
+      } else if(e.type == DioErrorType.RESPONSE) {
+        resultResponse = fromJson<T>(jsonDecode(e.response.toString()));
+      } else {
+        resultResponse = fromJson<T>(_errorResponse());
+      }
     }
 
     return resultResponse;
@@ -155,12 +175,16 @@ class BaseService {
       } else if (response.statusCode == 500) {
         resultResponse = fromJson<T>(_errorResponse());
       } else {
-        var responseMap = jsonDecode(response.toString());
-        resultResponse = fromJson<T>(responseMap);
+        resultResponse = fromJson<T>(jsonDecode(response.toString()));
       }
     } on DioError catch (e) {
-      var responseMap = jsonDecode(e.response.toString());
-      resultResponse = fromJson<T>(TextUtil.containsHtml(responseMap.toString()) ? _errorResponse() : responseMap);
+      if (e.type == DioErrorType.CONNECT_TIMEOUT || e.type == DioErrorType.RECEIVE_TIMEOUT || e.type == DioErrorType.SEND_TIMEOUT) {
+        resultResponse = fromJson<T>(_errorConnection());
+      } else if(e.type == DioErrorType.RESPONSE) {
+        resultResponse = fromJson<T>(jsonDecode(e.response.toString()));
+      } else {
+        resultResponse = fromJson<T>(_errorResponse());
+      }
     }
 
     return resultResponse;
@@ -181,12 +205,16 @@ class BaseService {
       } else if (response.statusCode == 500) {
         resultResponse = fromJson<T>(_errorResponse());
       } else {
-        var responseMap = jsonDecode(response.toString());
-        resultResponse = fromJson<T>(responseMap);
+        resultResponse = fromJson<T>(jsonDecode(response.toString()));
       }
     } on DioError catch (e) {
-      var responseMap = jsonDecode(e.response.toString());
-      resultResponse = fromJson<T>(TextUtil.containsHtml(responseMap.toString()) ? _errorResponse() : responseMap);
+      if (e.type == DioErrorType.CONNECT_TIMEOUT || e.type == DioErrorType.RECEIVE_TIMEOUT || e.type == DioErrorType.SEND_TIMEOUT) {
+        resultResponse = fromJson<T>(_errorConnection());
+      } else if(e.type == DioErrorType.RESPONSE) {
+        resultResponse = fromJson<T>(jsonDecode(e.response.toString()));
+      } else {
+        resultResponse = fromJson<T>(_errorResponse());
+      }
     }
 
     return resultResponse;
@@ -206,12 +234,16 @@ class BaseService {
       } else if (response.statusCode == 500) {
         resultResponse = fromJson<T>(_errorResponse());
       } else {
-        var responseMap = jsonDecode(response.toString());
-        resultResponse = fromJson<T>(responseMap);
+        resultResponse = fromJson<T>(jsonDecode(response.toString()));
       }
     } on DioError catch (e) {
-      var responseMap = jsonDecode(e.response.toString());
-      resultResponse = fromJson<T>(TextUtil.containsHtml(responseMap.toString()) ? _errorResponse() : responseMap);
+      if (e.type == DioErrorType.CONNECT_TIMEOUT || e.type == DioErrorType.RECEIVE_TIMEOUT || e.type == DioErrorType.SEND_TIMEOUT) {
+        resultResponse = fromJson<T>(_errorConnection());
+      } else if(e.type == DioErrorType.RESPONSE) {
+        resultResponse = fromJson<T>(jsonDecode(e.response.toString()));
+      } else {
+        resultResponse = fromJson<T>(_errorResponse());
+      }
     }
 
     return resultResponse;
@@ -231,12 +263,16 @@ class BaseService {
       } else if (response.statusCode == 500) {
         resultResponse = fromJson<T>(_errorResponse());
       } else {
-        var responseMap = jsonDecode(response.toString());
-        resultResponse = fromJson<T>(responseMap);
+        resultResponse = fromJson<T>(jsonDecode(response.toString()));
       }
     } on DioError catch (e) {
-      var responseMap = jsonDecode(e.response.toString());
-      resultResponse = fromJson<T>(TextUtil.containsHtml(responseMap.toString()) ? _errorResponse() : responseMap);
+      if (e.type == DioErrorType.CONNECT_TIMEOUT || e.type == DioErrorType.RECEIVE_TIMEOUT || e.type == DioErrorType.SEND_TIMEOUT) {
+        resultResponse = fromJson<T>(_errorConnection());
+      } else if(e.type == DioErrorType.RESPONSE) {
+        resultResponse = fromJson<T>(jsonDecode(e.response.toString()));
+      } else {
+        resultResponse = fromJson<T>(_errorResponse());
+      }
     }
 
     return resultResponse;

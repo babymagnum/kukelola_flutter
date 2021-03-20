@@ -36,5 +36,6 @@ class Token with JsonConvert<Token> {
 	String profilePictureId;
 	@JSONField(name: "error_description")
 	String errorDescription;
+	String Message;
 	String errorMessage;
 }

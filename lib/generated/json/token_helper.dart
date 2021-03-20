@@ -54,6 +54,9 @@ tokenFromJson(Token data, Map<String, dynamic> json) {
 	if (json['error_description'] != null) {
 		data.errorDescription = json['error_description'].toString();
 	}
+	if (json['Message'] != null) {
+		data.Message = json['Message'].toString();
+	}
 	if (json['errorMessage'] != null) {
 		data.errorMessage = json['errorMessage'].toString();
 	}
@@ -79,6 +82,7 @@ Map<String, dynamic> tokenToJson(Token entity) {
 	data['JobTitle'] = entity.jobTitle;
 	data['ProfilePictureId'] = entity.profilePictureId;
 	data['error_description'] = entity.errorDescription;
+	data['Message'] = entity.Message;
 	data['errorMessage'] = entity.errorMessage;
 	return data;
 }
