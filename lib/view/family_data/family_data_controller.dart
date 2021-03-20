@@ -30,11 +30,11 @@ class FamilyDataController extends GetxController {
 
     if (data?.isSuccess ??false) {
       listFamily.removeAt(index);
-      CommonFunction.standartSnackbar('Berhasil menghapus data keluarga');
+      CommonFunction.standartSnackbar('Berhasil Menghapus Data Keluarga');
     } else {
       family.loading = false;
       listFamily[index] = family;
-      CommonFunction.standartSnackbar('Gagal menghapus data keluarga');
+      CommonFunction.standartSnackbar('Gagal Menghapus: ${data?.message ?? data.errors.length > 0 ? data.errors[0].toString() : 'Server Error!'}');
     }
   }
 

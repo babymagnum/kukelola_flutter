@@ -1,3 +1,5 @@
+import 'package:kukelola_flutter/main.dart';
+
 class ChangePasswordRequest {
   String OldPassword;
   String NewPassword;
@@ -7,7 +9,8 @@ class ChangePasswordRequest {
   dynamic body() {
     return {
       'OldPassword': OldPassword,
-      'NewPassword': NewPassword
+      'NewPassword': NewPassword,
+      'UserId': homeController.userData.value.userId
     };
   }
 }

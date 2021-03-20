@@ -31,11 +31,11 @@ class AddEducationController extends GetxController {
     loadingSubmit.value = false;
 
     if (data?.isSuccess ?? false) {
-      CommonFunction.standartSnackbar('Berhasil submit education');
+      CommonFunction.standartSnackbar('Berhasil Submit Data Pendidikan');
       updateForm(EducationDataItem());
       _educationDataCt.addData(data.data);
     } else {
-      CommonFunction.standartSnackbar('Gagal submit education');
+      CommonFunction.standartSnackbar('Gagal Submit: ${data?.message ?? data.errors.length > 0 ? data.errors[0].toString() : 'Server Error!'}');
     }
   }
 
@@ -45,10 +45,10 @@ class AddEducationController extends GetxController {
     loadingSubmit.value = false;
 
     if (data?.isSuccess ?? false) {
-      CommonFunction.standartSnackbar('Berhasil memperbarui education');
+      CommonFunction.standartSnackbar('Berhasil Memperbarui Data Pendidikan');
       _educationDataCt.updateData(data.data, index);
     } else {
-      CommonFunction.standartSnackbar('Gagal memperbarui education');
+      CommonFunction.standartSnackbar('Gagal Memperbarui: ${data?.message ?? data.errors.length > 0 ? data.errors[0].toString() : 'Server Error!'}');
     }
   }
 }

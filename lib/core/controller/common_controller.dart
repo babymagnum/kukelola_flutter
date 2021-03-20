@@ -55,7 +55,7 @@ class CommonController extends GetxController {
       commonController.preferences.setBool(Constant.IS_PASS_LOGIN, false);
       Get.offAll(LoginView());
     } else {
-      CommonFunction.standartSnackbar('Gagal Logout: ${data?.message ?? 'Server Error!'}');
+      CommonFunction.standartSnackbar('Gagal Logout: ${data?.message ?? data.errors.length > 0 ? data.errors[0].toString() : 'Server Error!'}');
     }
   }
 

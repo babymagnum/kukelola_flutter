@@ -23,9 +23,9 @@ class AddWorkingExperienceController extends GetxController {
     if (data?.isSuccess ?? false) {
       _workingExperienceCt.addData(data.data);
       updateForm(WorkingExperienceItem());
-      CommonFunction.standartSnackbar('Berhasil menambahkan pengalaman kerja');
+      CommonFunction.standartSnackbar('Berhasil Menambahkan Pengalaman Kerja');
     } else {
-      CommonFunction.standartSnackbar('Gagal menambahkan pengalaman kerja');
+      CommonFunction.standartSnackbar('Gagal Menambahkan: ${data?.message ?? data.errors.length > 0 ? data.errors[0].toString() : 'Server Error!'}');
     }
   }
 
@@ -36,9 +36,9 @@ class AddWorkingExperienceController extends GetxController {
 
     if (data?.isSuccess ?? false) {
       _workingExperienceCt.updateData(data.data, index);
-      CommonFunction.standartSnackbar('Berhasil memperbarui pengalaman kerja');
+      CommonFunction.standartSnackbar('Berhasil Memperbarui Pengalaman Kerja');
     } else {
-      CommonFunction.standartSnackbar('Gagal memperbarui pengalaman kerja');
+      CommonFunction.standartSnackbar('Gagal Memperbarui: ${data?.message ?? data.errors.length > 0 ? data.errors[0].toString() : 'Server Error!'}');
     }
   }
 }

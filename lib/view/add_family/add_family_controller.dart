@@ -22,9 +22,9 @@ class AddFamilyController extends GetxController {
     if (data?.isSuccess ?? false) {
       _familiesCt.addData(data.data);
       updateForm(FamiliesItem());
-      CommonFunction.standartSnackbar('Berhasil menambahkan keluarga');
+      CommonFunction.standartSnackbar('Berhasil Menambahkan Data Keluarga');
     } else {
-      CommonFunction.standartSnackbar('Gagal menambahkan keluarga');
+      CommonFunction.standartSnackbar('Gagal Menambahkan: ${data?.message ?? data.errors.length > 0 ? data.errors[0].toString() : 'Server Error!'}');
     }
   }
 
@@ -35,9 +35,9 @@ class AddFamilyController extends GetxController {
 
     if (data?.isSuccess ?? false) {
       _familiesCt.updateData(data.data, index);
-      CommonFunction.standartSnackbar('Berhasil memperbarui keluarga');
+      CommonFunction.standartSnackbar('Berhasil Memperbarui Data Keluarga');
     } else {
-      CommonFunction.standartSnackbar('Gagal memperbarui keluarga');
+      CommonFunction.standartSnackbar('Gagal Memperbarui: ${data?.message ?? data.errors.length > 0 ? data.errors[0].toString() : 'Server Error!'}');
     }
   }
 }

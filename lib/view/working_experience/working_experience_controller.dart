@@ -30,11 +30,11 @@ class WorkingExperienceController extends GetxController {
 
     if (data?.isSuccess ?? false) {
       listWorkingExperience.removeAt(index);
-      CommonFunction.standartSnackbar('Berhasil menghapus pengalaman kerja');
+      CommonFunction.standartSnackbar('Berhasil Menghapus Pengalaman Kerja');
     } else {
       experience.loading = false;
       listWorkingExperience[index] = experience;
-      CommonFunction.standartSnackbar('Gagal menghapus pengalaman kerja');
+      CommonFunction.standartSnackbar('Gagal Menghapus: ${data?.message ?? data.errors.length > 0 ? data.errors[0].toString() : 'Server Error!'}');
     }
   }
 

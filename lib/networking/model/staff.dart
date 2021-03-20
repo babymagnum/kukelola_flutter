@@ -8,9 +8,9 @@ class Staff with JsonConvert<Staff> {
 	@JSONField(name: "Total")
 	int total;
 	@JSONField(name: "Errors")
-	List<String> errors = List();
+	List<dynamic> errors;
 	@JSONField(name: "Message")
-	dynamic message;
+	String message;
 	@JSONField(name: "IsSuccess")
 	bool isSuccess;
 	@JSONField(name: "IsAdmin")

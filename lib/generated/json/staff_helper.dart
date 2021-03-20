@@ -11,10 +11,11 @@ staffFromJson(Staff data, Map<String, dynamic> json) {
 				: json['Total'].toInt();
 	}
 	if (json['Errors'] != null) {
-		data.errors = json['Errors']?.map((v) => v.toString())?.toList()?.cast<String>();
+		data.errors = new List<dynamic>();
+		data.errors.addAll(json['Errors']);
 	}
 	if (json['Message'] != null) {
-		data.message = json['Message'];
+		data.message = json['Message'].toString();
 	}
 	if (json['IsSuccess'] != null) {
 		data.isSuccess = json['IsSuccess'];
@@ -40,7 +41,9 @@ Map<String, dynamic> staffToJson(Staff entity) {
 		data['Data'] = entity.data.toJson();
 	}
 	data['Total'] = entity.total;
-	data['Errors'] = entity.errors;
+	if (entity.errors != null) {
+		data['Errors'] =  [];
+	}
 	data['Message'] = entity.message;
 	data['IsSuccess'] = entity.isSuccess;
 	data['IsAdmin'] = entity.isAdmin;

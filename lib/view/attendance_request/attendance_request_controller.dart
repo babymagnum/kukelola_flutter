@@ -22,7 +22,7 @@ class AttendanceRequestController extends GetxController {
       CommonFunction.standartSnackbar('Berhasil Submit Attendance Request');
       updateForm(AttendanceRequestForm());
     } else {
-      CommonFunction.standartSnackbar('Gagal Submit: ${data?.message ?? 'Server Error!'}');
+      CommonFunction.standartSnackbar('Gagal Submit: ${data?.message ?? data.errors.length > 0 ? data.errors[0].toString() : 'Server Error!'}');
     }
   }
 }

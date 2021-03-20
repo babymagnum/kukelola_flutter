@@ -30,7 +30,7 @@ class DialogPayslipController extends GetxController {
       downloadSuccess.value = true;
     } else {
       downloadSuccess.value = false;
-      CommonFunction.standartSnackbar('Gagal Request: ${data?.message ?? 'Server Error!'}');
+      CommonFunction.standartSnackbar('Gagal Request: ${data?.message ?? data.errors.length > 0 ? data.errors[0].toString() : 'Server Error!'}}');
     }
   }
 }

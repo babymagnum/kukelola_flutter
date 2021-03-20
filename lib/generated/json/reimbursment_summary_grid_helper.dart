@@ -17,7 +17,7 @@ reimbursmentSummaryGridFromJson(ReimbursmentSummaryGrid data, Map<String, dynami
 		data.errors.addAll(json['Errors']);
 	}
 	if (json['Message'] != null) {
-		data.message = json['Message'];
+		data.message = json['Message'].toString();
 	}
 	if (json['IsSuccess'] != null) {
 		data.isSuccess = json['IsSuccess'];

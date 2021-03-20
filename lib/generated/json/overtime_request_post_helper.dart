@@ -14,7 +14,7 @@ overtimeRequestPostFromJson(OvertimeRequestPost data, Map<String, dynamic> json)
 		data.errors.addAll(json['Errors']);
 	}
 	if (json['Message'] != null) {
-		data.message = json['Message'];
+		data.message = json['Message'].toString();
 	}
 	if (json['IsSuccess'] != null) {
 		data.isSuccess = json['IsSuccess'];
@@ -83,11 +83,10 @@ overtimeRequestPostDataRequestFromJson(OvertimeRequestPostDataRequest data, Map<
 				: json['Total'].toInt();
 	}
 	if (json['Errors'] != null) {
-		data.errors = new List<dynamic>();
-		data.errors.addAll(json['Errors']);
+		data.errors = json['Errors']?.map((v) => v.toString())?.toList()?.cast<String>();
 	}
 	if (json['Message'] != null) {
-		data.message = json['Message'];
+		data.message = json['Message'].toString();
 	}
 	if (json['IsSuccess'] != null) {
 		data.isSuccess = json['IsSuccess'];
@@ -110,9 +109,7 @@ Map<String, dynamic> overtimeRequestPostDataRequestToJson(OvertimeRequestPostDat
 		data['Data'] = entity.data.toJson();
 	}
 	data['Total'] = entity.total;
-	if (entity.errors != null) {
-		data['Errors'] =  [];
-	}
+	data['Errors'] = entity.errors;
 	data['Message'] = entity.message;
 	data['IsSuccess'] = entity.isSuccess;
 	data['IsAdmin'] = entity.isAdmin;

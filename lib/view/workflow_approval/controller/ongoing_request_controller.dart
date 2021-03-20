@@ -48,7 +48,7 @@ class OngoingRequestController extends GetxController {
       CommonFunction.standartSnackbar('Berhasil Cancel: ${item.name}');
     } else {
       listOngoingRequest[index] = item;
-      CommonFunction.standartSnackbar('Gagal Cancel: ${data?.message ?? 'Server Error!'}');
+      CommonFunction.standartSnackbar('Gagal Cancel: ${data?.message ?? data.errors.length > 0 ? data.errors[0].toString() : 'Server Error!'}');
     }
   }
 
@@ -67,7 +67,7 @@ class OngoingRequestController extends GetxController {
       CommonFunction.standartSnackbar('Berhasil Approve: ${item.name}');
     } else {
       listOngoingRequest[index] = item;
-      CommonFunction.standartSnackbar('Gagal Approve: ${data?.message ?? '${item.name}'}');
+      CommonFunction.standartSnackbar('Gagal Approve: ${data?.message ?? data.errors.length > 0 ? data.errors[0].toString() : item.name}');
     }
   }
 
@@ -86,7 +86,7 @@ class OngoingRequestController extends GetxController {
       CommonFunction.standartSnackbar('Berhasil Reject: ${item.name}');
     } else {
       listOngoingRequest[index] = item;
-      CommonFunction.standartSnackbar('Gagal Reject: ${data?.message ?? 'Server Error!'}');
+      CommonFunction.standartSnackbar('Gagal Reject: ${data?.message ?? data.errors.length > 0 ? data.errors[0].toString() : 'Server Error!'}');
     }
   }
 

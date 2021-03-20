@@ -31,11 +31,11 @@ class EducationDataController extends GetxController {
 
     if (data?.isSuccess ?? false) {
       listEducation.removeAt(index);
-      CommonFunction.standartSnackbar('Berhasil menghapus data pendidikan');
+      CommonFunction.standartSnackbar('Berhasil Menghapus Data Pendidikan');
     } else {
       education.loading = false;
       listEducation[index] = education;
-      CommonFunction.standartSnackbar('Gagal menghapus data pendidikan');
+      CommonFunction.standartSnackbar('Gagal Menghapus: ${data?.message ?? data.errors.length > 0 ? data.errors[0].toString() : 'Server Error!'}');
     }
   }
 

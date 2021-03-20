@@ -14,7 +14,7 @@ attendanceSummaryGridFromJson(AttendanceSummaryGrid data, Map<String, dynamic> j
 		data.errors.addAll(json['Errors']);
 	}
 	if (json['Message'] != null) {
-		data.message = json['Message'];
+		data.message = json['Message'].toString();
 	}
 	if (json['IsSuccess'] != null) {
 		data.isSuccess = json['IsSuccess'];

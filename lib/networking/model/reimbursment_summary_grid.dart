@@ -9,7 +9,7 @@ class ReimbursmentSummaryGrid with JsonConvert<ReimbursmentSummaryGrid> {
 	@JSONField(name: "Errors")
 	List<dynamic> errors;
 	@JSONField(name: "Message")
-	dynamic message;
+	String message;
 	@JSONField(name: "IsSuccess")
 	bool isSuccess;
 	@JSONField(name: "IsAdmin")

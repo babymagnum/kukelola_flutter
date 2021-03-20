@@ -37,9 +37,9 @@ class PersonalDataController extends GetxController {
     loadingSave.value = false;
 
     if (data?.isSuccess ?? false) {
-      CommonFunction.standartSnackbar('Berhasil memperbarui data profile');
+      CommonFunction.standartSnackbar('Berhasil Memperbarui Data Profile');
     } else {
-      CommonFunction.standartSnackbar('Gagal memperbarui data profile');
+      CommonFunction.standartSnackbar('Gagal Memperbarui: ${data?.message ?? data.errors.length > 0 ? data.errors[0].toString() : 'Server Error!'}');
     }
   }
 
