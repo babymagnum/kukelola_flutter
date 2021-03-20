@@ -19,5 +19,4 @@ class Constant {
   static const API_DEVELOPMENT = 'http://localhost:3211/';
   static const INDONESIAN = 'id';
   static const ENGLISH = 'en';
-
 }

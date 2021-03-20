@@ -20,10 +20,10 @@ class OvertimeRequestController extends GetxController {
     loadingSubmit.value = false;
 
     if (data?.isSuccess ?? false) {
-      CommonFunction.standartSnackbar('Berhasil melakukan submit overtime request');
+      CommonFunction.standartSnackbar('Berhasil Submit Leave Request');
       updateForm(OvertimeRequestFormObject());
     } else {
-      CommonFunction.standartSnackbar('Gagal melakukan submit overtime request');
+      CommonFunction.standartSnackbar('Gagal Submit: ${data?.message ?? 'Server Error!'}');
     }
   }
 }

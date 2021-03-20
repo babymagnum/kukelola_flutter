@@ -29,14 +29,12 @@ class BusinessTripDetailController extends GetxController {
     loadingSubmit.value = false;
 
     if (data?.isSuccess ?? false) {
-      CommonFunction.standartSnackbar('Berhasil melakukan submit business trip');
+      CommonFunction.standartSnackbar('Berhasil Submit: ${data?.message ?? 'Business Trip Request'}');
       _businessTripCt.setForm(BusinessTripForm());
 
-      Future.delayed(Duration(milliseconds: 2000), () {
-        Get.back();
-      });
+      Future.delayed(Duration(milliseconds: 2000), () => Get.back());
     } else {
-      CommonFunction.standartSnackbar('Gagal melakukan submit business trip');
+      CommonFunction.standartSnackbar('Gagal Submit: ${data?.message ?? 'Server Error!'}');
     }
   }
 

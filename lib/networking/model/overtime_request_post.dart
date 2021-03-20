@@ -7,9 +7,9 @@ class OvertimeRequestPost with JsonConvert<OvertimeRequestPost> {
 	@JSONField(name: "Total")
 	int total;
 	@JSONField(name: "Errors")
-	List<dynamic> errors;
+	List<String> errors;
 	@JSONField(name: "Message")
-	dynamic message;
+	String message;
 	@JSONField(name: "IsSuccess")
 	bool isSuccess;
 	@JSONField(name: "IsAdmin")
@@ -34,9 +34,9 @@ class OvertimeRequestPostDataRequest with JsonConvert<OvertimeRequestPostDataReq
 	@JSONField(name: "Total")
 	int total;
 	@JSONField(name: "Errors")
-	List<dynamic> errors;
+	List<String> errors;
 	@JSONField(name: "Message")
-	dynamic message;
+	String message;
 	@JSONField(name: "IsSuccess")
 	bool isSuccess;
 	@JSONField(name: "IsAdmin")

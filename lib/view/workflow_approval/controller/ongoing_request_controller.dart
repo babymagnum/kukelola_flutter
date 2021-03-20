@@ -45,10 +45,10 @@ class OngoingRequestController extends GetxController {
     if (data?.isSuccess ?? false) {
       listOngoingRequest.removeAt(index);
       _completedRequestCt.getCompletedRequest();
-      CommonFunction.standartSnackbar('Request cancelled succesfully');
+      CommonFunction.standartSnackbar('Berhasil Cancel: ${item.name}');
     } else {
       listOngoingRequest[index] = item;
-      CommonFunction.standartSnackbar('Request cancelled fail');
+      CommonFunction.standartSnackbar('Gagal Cancel: ${data?.message ?? 'Server Error!'}');
     }
   }
 
@@ -64,10 +64,10 @@ class OngoingRequestController extends GetxController {
     if (data?.isSuccess ?? false) {
       listOngoingRequest.removeAt(index);
       _completedRequestCt.getCompletedRequest();
-      CommonFunction.standartSnackbar('Request approved succesfully');
+      CommonFunction.standartSnackbar('Berhasil Approve: ${item.name}');
     } else {
       listOngoingRequest[index] = item;
-      CommonFunction.standartSnackbar('Request approved fail');
+      CommonFunction.standartSnackbar('Gagal Approve: ${data?.message ?? '${item.name}'}');
     }
   }
 
@@ -83,10 +83,10 @@ class OngoingRequestController extends GetxController {
     if (data?.isSuccess ?? false) {
       listOngoingRequest.removeAt(index);
       _completedRequestCt.getCompletedRequest();
-      CommonFunction.standartSnackbar('Request rejected succesfully');
+      CommonFunction.standartSnackbar('Berhasil Reject: ${item.name}');
     } else {
       listOngoingRequest[index] = item;
-      CommonFunction.standartSnackbar('Request rejected fail');
+      CommonFunction.standartSnackbar('Gagal Reject: ${data?.message ?? 'Server Error!'}');
     }
   }
 
