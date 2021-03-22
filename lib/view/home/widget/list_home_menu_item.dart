@@ -1,6 +1,7 @@
 import 'package:division/division.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
 import 'package:kukelola_flutter/core/helper/common_function.dart';
 import 'package:kukelola_flutter/core/model/static_model.dart';
@@ -22,9 +23,33 @@ class ListHomeMenuItem extends StatelessWidget {
   final HomeMenuItem item;
   final int index;
 
-  _onClick() {
-    if (index == 0) {
+  _checkLocationPermission() async {
+    bool serviceEnabled;
+    LocationPermission permission;
+    serviceEnabled = await Geolocator.isLocationServiceEnabled();
+    permission = await Geolocator.checkPermission();
+
+    if (!serviceEnabled) {
+      CommonFunction.standartSnackbar('Location services are disabled.');
+    } else if (permission == LocationPermission.deniedForever) {
+      CommonFunction.standartSnackbar('Location permissions are permantly denied, we cannot request permissions.');
+    } else if (permission == LocationPermission.denied) {
+      permission = await Geolocator.requestPermission();
+
+      if (permission != LocationPermission.whileInUse &&
+          permission != LocationPermission.always) {
+        CommonFunction.standartSnackbar('Location permissions are denied (actual value: $permission).');
+      } else {
+        Get.to(OnlineAttendanceView());
+      }
+    } else {
       Get.to(OnlineAttendanceView());
+    }
+  }
+
+  _onClick() async {
+    if (index == 0) {
+      _checkLocationPermission();
     } else if (index == 1) {
       Get.to(AttendanceRequestView());
     } else if (index == 2) {

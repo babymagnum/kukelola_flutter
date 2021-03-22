@@ -10,7 +10,7 @@ class ChangePasswordRequest {
     return {
       'OldPassword': OldPassword,
       'NewPassword': NewPassword,
-      'UserId': homeController.userData.value.userId
+      'Id': homeController.userData.value.userId
     };
   }
 }

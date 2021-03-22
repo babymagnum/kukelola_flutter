@@ -1,5 +1,4 @@
 import 'dart:async';
-
 import 'package:division/division.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -40,7 +39,7 @@ class _OnlineAttendanceViewState extends State<OnlineAttendanceView> {
     _onlineAttendanceCt.listenClock();
 
     Future.delayed(Duration.zero, () async {
-      await _positionServiceEnable();
+      await _getFirstCurrentPosition();
 
       _locationStream = Geolocator.getPositionStream().listen((Position position) {
         _onlineAttendanceCt.setLatLng(LatLng(position.latitude, position.longitude));
@@ -49,30 +48,7 @@ class _OnlineAttendanceViewState extends State<OnlineAttendanceView> {
     });
   }
 
-  _positionServiceEnable() async {
-    bool serviceEnabled;
-    LocationPermission permission;
-
-    serviceEnabled = await Geolocator.isLocationServiceEnabled();
-    if (!serviceEnabled) {
-      return Future.error('Location services are disabled.');
-    }
-
-    permission = await Geolocator.checkPermission();
-    if (permission == LocationPermission.deniedForever) {
-      return Future.error(
-          'Location permissions are permantly denied, we cannot request permissions.');
-    }
-
-    if (permission == LocationPermission.denied) {
-      permission = await Geolocator.requestPermission();
-      if (permission != LocationPermission.whileInUse &&
-          permission != LocationPermission.always) {
-        return Future.error(
-            'Location permissions are denied (actual value: $permission).');
-      }
-    }
-
+  _getFirstCurrentPosition() async {
     final position = await Geolocator.getCurrentPosition();
     _onlineAttendanceCt.setLatLng(LatLng(position.latitude, position.longitude));
     _onlineAttendanceCt.googleMapController.animateCamera(CameraUpdate.newCameraPosition(CameraPosition(target: _onlineAttendanceCt.latLng.value, zoom: 15)));
@@ -126,7 +102,7 @@ class _OnlineAttendanceViewState extends State<OnlineAttendanceView> {
                               },
                               mapToolbarEnabled: false,
                               myLocationEnabled: true,
-                              myLocationButtonEnabled: true,
+                              myLocationButtonEnabled: false,
                               zoomControlsEnabled: false,
                             ),
                           ),

@@ -34,7 +34,7 @@ class WorkingExperienceController extends GetxController {
     } else {
       experience.loading = false;
       listWorkingExperience[index] = experience;
-      CommonFunction.standartSnackbar('Gagal Menghapus: ${data?.message ?? data.errors.length > 0 ? data.errors[0].toString() : 'Server Error!'}');
+      CommonFunction.standartSnackbar('Gagal Menghapus: ${data?.message != null ? data.message : data.errors.length > 0 ? data.errors[0].toString() : 'Server Error'}');
     }
   }
 

@@ -35,7 +35,7 @@ class ChangePasswordController extends GetxController {
       if (data?.isSuccess ?? false) {
         CommonFunction.standartSnackbar('Berhasil Mengubah Password');
       } else {
-        CommonFunction.standartSnackbar('Gagal Mengubah Password: ${data?.message ?? data.errors.length > 0 ? data.errors[0].toString() : 'Server Error!'}');
+        CommonFunction.standartSnackbar('Gagal Mengubah Password: ${data?.message != null ? data.message : data.errors.length > 0 ? data.errors[0].toString() : 'Server Error'}');
       }
     }
   }

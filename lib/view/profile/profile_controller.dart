@@ -38,9 +38,9 @@ class ProfileController extends GetxController {
 
     if (data?.isSuccess ?? false) {
       homeController.getProfilePicture();
-      CommonFunction.standartSnackbar('Success update profile picture');
+      CommonFunction.standartSnackbar('Berhasil Memperbarui Profile Picture');
     } else {
-      CommonFunction.standartSnackbar('Failed update profile picture');
+      CommonFunction.standartSnackbar('Gagal Memperbarui: ${data?.message != null ? data.message : data.errors.length > 0 ? data.errors[0].toString() : 'Server Error'}');
     }
   }
 

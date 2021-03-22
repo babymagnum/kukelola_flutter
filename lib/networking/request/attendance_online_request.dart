@@ -1,3 +1,5 @@
+import 'package:kukelola_flutter/main.dart';
+
 class AttendanceOnlineRequest {
   String AttendanceDate;
   String AttendanceTime;
@@ -13,7 +15,8 @@ class AttendanceOnlineRequest {
       "AttendanceTime": AttendanceTime,
       "AttendanceType": AttendanceType,
       "Longitude": Longitude,
-      "Latitude": Latitude
+      "Latitude": Latitude,
+      "UserId": homeController.userData.value.userId
     };
   }
 }

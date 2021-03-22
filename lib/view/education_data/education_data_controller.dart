@@ -35,7 +35,7 @@ class EducationDataController extends GetxController {
     } else {
       education.loading = false;
       listEducation[index] = education;
-      CommonFunction.standartSnackbar('Gagal Menghapus: ${data?.message ?? data.errors.length > 0 ? data.errors[0].toString() : 'Server Error!'}');
+      CommonFunction.standartSnackbar('Gagal Menghapus: ${data?.message != null ? data.message : data.errors.length > 0 ? data.errors[0].toString() : 'Server Error'}');
     }
   }
 

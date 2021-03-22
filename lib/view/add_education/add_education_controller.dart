@@ -48,7 +48,7 @@ class AddEducationController extends GetxController {
       CommonFunction.standartSnackbar('Berhasil Memperbarui Data Pendidikan');
       _educationDataCt.updateData(data.data, index);
     } else {
-      CommonFunction.standartSnackbar('Gagal Memperbarui: ${data?.message ?? data.errors.length > 0 ? data.errors[0].toString() : 'Server Error!'}');
+      CommonFunction.standartSnackbar('Gagal Memperbarui: ${data?.message != null ? data.message : data.errors.length > 0 ? data.errors[0].toString() : 'Server Error'}');
     }
   }
 }

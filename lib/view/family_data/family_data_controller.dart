@@ -34,7 +34,7 @@ class FamilyDataController extends GetxController {
     } else {
       family.loading = false;
       listFamily[index] = family;
-      CommonFunction.standartSnackbar('Gagal Menghapus: ${data?.message ?? data.errors.length > 0 ? data.errors[0].toString() : 'Server Error!'}');
+      CommonFunction.standartSnackbar('Gagal Menghapus: ${data?.message != null ? data.message : data.errors.length > 0 ? data.errors[0].toString() : 'Server Error'}');
     }
   }
 

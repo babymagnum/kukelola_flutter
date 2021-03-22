@@ -23,7 +23,7 @@ class OvertimeRequestController extends GetxController {
       CommonFunction.standartSnackbar('Berhasil Submit Leave Request');
       updateForm(OvertimeRequestFormObject());
     } else {
-      CommonFunction.standartSnackbar('Gagal Submit: ${data?.message ?? data.errors.length > 0 ? data.errors[0].toString() : 'Server Error!'}');
+      CommonFunction.standartSnackbar('Gagal Submit: ${data?.message != null ? data.message : data.errors.length > 0 ? data.errors[0].toString() : 'Server Error'}');
     }
   }
 }

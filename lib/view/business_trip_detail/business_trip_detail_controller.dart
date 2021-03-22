@@ -34,7 +34,7 @@ class BusinessTripDetailController extends GetxController {
 
       Future.delayed(Duration(milliseconds: 2000), () => Get.back());
     } else {
-      CommonFunction.standartSnackbar('Gagal Submit: ${data?.message ?? data.errors.length > 0 ? data.errors[0].toString() : 'Server Error!'}');
+      CommonFunction.standartSnackbar('Gagal Submit: ${data?.message != null ? data.message : data.errors.length > 0 ? data.errors[0].toString() : 'Server Error'}');
     }
   }
 
