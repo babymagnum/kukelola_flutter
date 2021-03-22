@@ -69,7 +69,6 @@ class AttendanceRequestViewState extends State<AttendanceRequestView> {
         builder: (BuildContext context) {
           return DateTimePickerComponent(
             onPick: () {
-              print('tempo time $temporaryDate');
               onPick(temporaryDate);
               Navigator.pop(context);
             },

@@ -19,6 +19,7 @@ import 'package:kukelola_flutter/core/widgets/custom_input.dart';
 import 'package:kukelola_flutter/core/widgets/input_attachment.dart';
 import 'package:kukelola_flutter/core/widgets/input_tap.dart';
 import 'package:kukelola_flutter/main.dart';
+import 'package:kukelola_flutter/networking/model/file_attachment.dart';
 import 'package:kukelola_flutter/view/base_view.dart';
 import 'package:kukelola_flutter/view/overtime_request/overtime_request_controller.dart';
 
@@ -233,8 +234,12 @@ class OvertimeRequestViewState extends State<OvertimeRequestView> {
                           onTap: () => _pickFile(),
                           loading: _overtimeRequestCt.loadingPickFile.value,
                           value: _overtimeRequestCt.form.value.attachment.path == '' ? '' : '${_overtimeRequestCt.form.value.attachment.path.split('/').last} (${(_overtimeRequestCt.form.value.attachment.lengthSync() / 1024).round()} KB)',
-                          onDelete: () {},
-                          showDelete: false,
+                          onDelete: () {
+                            _overtimeRequestCt.form.value.attachment = File('');
+                            _overtimeRequestCt.updateForm(_overtimeRequestCt.form.value);
+                            setState(() {});
+                          },
+                          showDelete: _overtimeRequestCt.form.value.attachment.path != '',
                         ),
                         SizedBox(height: 24.h,)
                       ],

@@ -25,7 +25,7 @@ class CommonFunction {
             )
           ],
         ),
-        duration: Duration(milliseconds: 1500),
+        duration: Duration(seconds: 10),
         barBlur: 5, snackPosition: SnackPosition.BOTTOM,
         backgroundColor: Colors.black45, margin: EdgeInsets.symmetric(vertical: 0, horizontal: 0));
   }

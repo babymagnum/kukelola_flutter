@@ -215,8 +215,12 @@ class BusinessTripViewState extends State<BusinessTripView> {
                         onTap: () => _pickFile(),
                         loading: _businessTripCt.loadingPickFile.value,
                         value: _businessTripCt.form.value.attachment.path == '' ? '' : '${_businessTripCt.form.value.attachment.path.split('/').last} (${(_businessTripCt.form.value.attachment.lengthSync() / 1024).round()} KB)',
-                        onDelete: () {},
-                        showDelete: false,
+                        onDelete: () {
+                          _businessTripCt.form.value.attachment = File('');
+                          _businessTripCt.setForm(_businessTripCt.form.value);
+                          setState(() {});
+                        },
+                        showDelete: _businessTripCt.form.value.attachment.path != '',
                       ),
                     ],
                   ),

@@ -181,8 +181,12 @@ class _ReimbursmentRequestViewState extends State<ReimbursmentRequestView> {
                           onTap: () => _pickFile(),
                           loading: _reimbursmentRequestCt.loadingAttachment.value,
                           value: _reimbursmentRequestCt.form.value.attachment.path == '' ? '' : '${_reimbursmentRequestCt.form.value.attachment.path.split('/').last} (${(_reimbursmentRequestCt.form.value.attachment.lengthSync() / 1024).round()} KB)',
-                          onDelete: () {},
-                          showDelete: false,
+                          onDelete: () {
+                            _reimbursmentRequestCt.form.value.attachment = File('');
+                            _reimbursmentRequestCt.updateForm(_reimbursmentRequestCt.form.value);
+                            setState(() {});
+                          },
+                          showDelete: _reimbursmentRequestCt.form.value.attachment.path != '',
                         )
                       ],
                     ),
