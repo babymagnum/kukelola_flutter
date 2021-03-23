@@ -1,3 +1,4 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:division/division.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -74,7 +75,7 @@ class ListHomeMenuItem extends StatelessWidget {
     return Parent(
       gesture: Gestures()..onTap(_onClick),
       style: ParentStyle()..background.color(Color(0xFFDEDEDE))..borderRadius(all: 12)
-        ..padding(horizontal: 14.w)..ripple(true)..boxShadow(color: Colors.black.withOpacity(0.05), offset: Offset(0, 6), blur: 30, spread: 0),
+        ..ripple(true)..boxShadow(color: Colors.black.withOpacity(0.05), offset: Offset(0, 6), blur: 30, spread: 0),
       child: Column(
         children: [
           SizedBox(height: 12.h,),
@@ -107,7 +108,7 @@ class ListHomeMenuItem extends StatelessWidget {
             ],
           ),
           SizedBox(height: 8.h,),
-          Text('${item.label}\n\n', textAlign: TextAlign.center, overflow: TextOverflow.ellipsis, style: ThemeTextStyle.biryaniRegular.apply(color: Color(0xFF6D6D6D), fontSizeDelta: 10.ssp), maxLines: 3,),
+          Text('${item.label}\n\n', textAlign: TextAlign.center, overflow: TextOverflow.ellipsis, style: ThemeTextStyle.biryaniRegular.apply(color: Color(0xFF6D6D6D), fontSizeDelta: 9.ssp), maxLines: 3,),
           SizedBox(height: 12.h,)
         ],
       ),
