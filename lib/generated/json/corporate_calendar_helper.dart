@@ -2,10 +2,7 @@ import 'package:kukelola_flutter/networking/model/corporate_calendar.dart';
 
 corporateCalendarFromJson(CorporateCalendar data, Map<String, dynamic> json) {
 	if (json['Data'] != null) {
-		data.data = new List<CorporateCalendarData>();
-		(json['Data'] as List).forEach((v) {
-			data.data.add(new CorporateCalendarData().fromJson(v));
-		});
+		data.data = (json['Data'] as List).map((v) => CorporateCalendarData().fromJson(v)).toList();
 	}
 	if (json['Total'] != null) {
 		data.total = json['Total'] is String
@@ -20,9 +17,7 @@ corporateCalendarFromJson(CorporateCalendar data, Map<String, dynamic> json) {
 
 Map<String, dynamic> corporateCalendarToJson(CorporateCalendar entity) {
 	final Map<String, dynamic> data = new Map<String, dynamic>();
-	if (entity.data != null) {
-		data['Data'] =  entity.data.map((v) => v.toJson()).toList();
-	}
+	data['Data'] =  entity.data?.map((v) => v.toJson())?.toList();
 	data['Total'] = entity.total;
 	data['errorMessage'] = entity.errorMessage;
 	return data;

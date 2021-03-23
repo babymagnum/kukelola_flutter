@@ -26,4 +26,21 @@ class CompletedRequestController extends GetxController {
     }
   }
 
+  getAttachment(int index) async {
+    var item = listCompletedRequest[index];
+    item.loadingAttachment = true;
+    listCompletedRequest[index] = item;
+    final data = await Service().fileAttachment(item.attachmentId);
+    item.loadingAttachment = false;
+
+    if (data?.data != null) {
+      item.errorAttachment = false;
+      item.attachmentData = data.data;
+    } else {
+      item.errorAttachment = true;
+    }
+
+    listCompletedRequest[index] = item;
+  }
+
 }

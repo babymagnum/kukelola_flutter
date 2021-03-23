@@ -1,21 +1,22 @@
 import 'dart:io';
 import 'package:dio/dio.dart';
+import 'package:kukelola_flutter/main.dart';
 
 class OvertimeRequest {
-  String UserId;
   String OvertimeDate;
   String StartHour;
   String EndHour;
   String Description;
   File FileSatu;
 
-  OvertimeRequest(this.UserId, this.OvertimeDate, this.Description, this.StartHour, this.EndHour, this.FileSatu);
+  OvertimeRequest(this.OvertimeDate, this.Description, this.StartHour, this.EndHour, this.FileSatu);
 
   Future<FormData> body() async {
     final form = FormData();
 
     form.fields
-      ..add(MapEntry('UserId', UserId))
+      ..add(MapEntry('UserId', homeController.userData.value.userId))
+      ..add(MapEntry('ClientId', homeController.userData.value.clientId))
       ..add(MapEntry('OvertimeDate', OvertimeDate))
       ..add(MapEntry('StartHour', StartHour))
       ..add(MapEntry('EndHour', EndHour))

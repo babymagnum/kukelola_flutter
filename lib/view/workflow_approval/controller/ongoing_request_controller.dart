@@ -16,6 +16,23 @@ class OngoingRequestController extends GetxController {
 
   setRejectReason(String value) => rejectReason.value = value;
 
+  getAttachment(int index) async {
+    var item = listOngoingRequest[index];
+    item.loadingAttachment = true;
+    listOngoingRequest[index] = item;
+    final data = await Service().fileAttachment(item.attachmentId);
+    item.loadingAttachment = false;
+
+    if (data?.data != null) {
+      item.errorAttachment = false;
+      item.attachmentData = data.data;
+    } else {
+      item.errorAttachment = true;
+    }
+
+    listOngoingRequest[index] = item;
+  }
+
   getOngoingRequest() async {
     final _workflowApprovalFilterCt = Get.find<WorkflowApprovalFilterController>();
     final form = _workflowApprovalFilterCt.form.value;

@@ -1,8 +1,4 @@
-import 'dart:convert';
-import 'dart:io';
 import 'package:kukelola_flutter/networking/model/file_attachment.dart';
-import 'package:open_file/open_file.dart';
-import 'package:path_provider/path_provider.dart' as syspaths;
 import 'package:get/get.dart';
 import 'package:kukelola_flutter/networking/service/service.dart';
 

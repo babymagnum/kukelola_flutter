@@ -2,10 +2,7 @@ import 'package:kukelola_flutter/networking/model/special_leave_list.dart';
 
 specialLeaveListFromJson(SpecialLeaveList data, Map<String, dynamic> json) {
 	if (json['Data'] != null) {
-		data.data = new List<SpecialLeaveListData>();
-		(json['Data'] as List).forEach((v) {
-			data.data.add(new SpecialLeaveListData().fromJson(v));
-		});
+		data.data = (json['Data'] as List).map((v) => SpecialLeaveListData().fromJson(v)).toList();
 	}
 	if (json['Total'] != null) {
 		data.total = json['Total'] is String
@@ -20,9 +17,7 @@ specialLeaveListFromJson(SpecialLeaveList data, Map<String, dynamic> json) {
 
 Map<String, dynamic> specialLeaveListToJson(SpecialLeaveList entity) {
 	final Map<String, dynamic> data = new Map<String, dynamic>();
-	if (entity.data != null) {
-		data['Data'] =  entity.data.map((v) => v.toJson()).toList();
-	}
+	data['Data'] =  entity.data?.map((v) => v.toJson())?.toList();
 	data['Total'] = entity.total;
 	data['errorMessage'] = entity.errorMessage;
 	return data;

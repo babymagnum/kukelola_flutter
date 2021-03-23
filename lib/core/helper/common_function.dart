@@ -30,7 +30,7 @@ class CommonFunction {
         backgroundColor: Colors.black45, margin: EdgeInsets.symmetric(vertical: 0, horizontal: 0));
   }
 
-  openAttachment(String fileName, String file) async {
+  static openAttachment(String fileName, String file) async {
     if ((fileName ?? '') == '') return;
 
     final decoded = base64.decode(file);

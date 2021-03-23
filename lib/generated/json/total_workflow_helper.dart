@@ -12,8 +12,7 @@ totalWorkflowFromJson(TotalWorkflow data, Map<String, dynamic> json) {
 				: json['Total'].toInt();
 	}
 	if (json['Errors'] != null) {
-		data.errors = new List<dynamic>();
-		data.errors.addAll(json['Errors']);
+		data.errors = (json['Errors'] as List).map((v) => v).toList().cast<dynamic>();
 	}
 	if (json['Message'] != null) {
 		data.message = json['Message'].toString();
@@ -40,9 +39,7 @@ Map<String, dynamic> totalWorkflowToJson(TotalWorkflow entity) {
 	final Map<String, dynamic> data = new Map<String, dynamic>();
 	data['Data'] = entity.data;
 	data['Total'] = entity.total;
-	if (entity.errors != null) {
-		data['Errors'] =  [];
-	}
+	data['Errors'] = entity.errors;
 	data['Message'] = entity.message;
 	data['IsSuccess'] = entity.isSuccess;
 	data['IsAdmin'] = entity.isAdmin;

@@ -16,7 +16,7 @@ class OvertimeRequestController extends GetxController {
 
   submitLeaveRequest() async {
     loadingSubmit.value = true;
-    final data = await Service().submitOvertimeRequest(OvertimeRequest(homeController.userData.value.userId, form.value.overtimeDate, form.value.reason, form.value.startHour, form.value.endHour, form.value.attachment));
+    final data = await Service().submitOvertimeRequest(OvertimeRequest(form.value.overtimeDate, form.value.reason, form.value.startHour, form.value.endHour, form.value.attachment));
     loadingSubmit.value = false;
 
     if (data?.isSuccess ?? false) {

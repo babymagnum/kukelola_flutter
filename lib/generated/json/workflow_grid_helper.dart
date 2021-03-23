@@ -1,11 +1,9 @@
 import 'package:kukelola_flutter/networking/model/workflow_grid.dart';
+import 'package:kukelola_flutter/networking/model/file_attachment.dart';
 
 workflowGridFromJson(WorkflowGrid data, Map<String, dynamic> json) {
 	if (json['Data'] != null) {
-		data.data = new List<WorkflowGridData>();
-		(json['Data'] as List).forEach((v) {
-			data.data.add(new WorkflowGridData().fromJson(v));
-		});
+		data.data = (json['Data'] as List).map((v) => WorkflowGridData().fromJson(v)).toList();
 	}
 	if (json['Total'] != null) {
 		data.total = json['Total'] is String
@@ -13,8 +11,7 @@ workflowGridFromJson(WorkflowGrid data, Map<String, dynamic> json) {
 				: json['Total'].toInt();
 	}
 	if (json['Errors'] != null) {
-		data.errors = new List<dynamic>();
-		data.errors.addAll(json['Errors']);
+		data.errors = (json['Errors'] as List).map((v) => v).toList().cast<dynamic>();
 	}
 	if (json['Message'] != null) {
 		data.message = json['Message'].toString();
@@ -39,13 +36,9 @@ workflowGridFromJson(WorkflowGrid data, Map<String, dynamic> json) {
 
 Map<String, dynamic> workflowGridToJson(WorkflowGrid entity) {
 	final Map<String, dynamic> data = new Map<String, dynamic>();
-	if (entity.data != null) {
-		data['Data'] =  entity.data.map((v) => v.toJson()).toList();
-	}
+	data['Data'] =  entity.data?.map((v) => v.toJson())?.toList();
 	data['Total'] = entity.total;
-	if (entity.errors != null) {
-		data['Errors'] =  [];
-	}
+	data['Errors'] = entity.errors;
 	data['Message'] = entity.message;
 	data['IsSuccess'] = entity.isSuccess;
 	data['IsAdmin'] = entity.isAdmin;
@@ -139,6 +132,15 @@ workflowGridDataFromJson(WorkflowGridData data, Map<String, dynamic> json) {
 	if (json['loadingReject'] != null) {
 		data.loadingReject = json['loadingReject'];
 	}
+	if (json['loadingAttachment'] != null) {
+		data.loadingAttachment = json['loadingAttachment'];
+	}
+	if (json['errorAttachment'] != null) {
+		data.errorAttachment = json['errorAttachment'];
+	}
+	if (json['attachmentData'] != null) {
+		data.attachmentData = FileAttachmentData().fromJson(json['attachmentData']);
+	}
 	return data;
 }
 
@@ -169,5 +171,8 @@ Map<String, dynamic> workflowGridDataToJson(WorkflowGridData entity) {
 	data['loadingCancel'] = entity.loadingCancel;
 	data['loadingApprove'] = entity.loadingApprove;
 	data['loadingReject'] = entity.loadingReject;
+	data['loadingAttachment'] = entity.loadingAttachment;
+	data['errorAttachment'] = entity.errorAttachment;
+	data['attachmentData'] = entity.attachmentData?.toJson();
 	return data;
 }

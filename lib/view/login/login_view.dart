@@ -39,7 +39,7 @@ class _LoginViewState extends State<LoginView> {
       _emailCt.text = _loginCt.form.value.username;
       _passwordCt.text = _loginCt.form.value.password;
       setState(() {});
-      _loginCt.login();
+      _loginCt.login(false);
     }
   }
 
@@ -114,7 +114,7 @@ class _LoginViewState extends State<LoginView> {
                           disable: _loginCt.loadingLogin.value || _loginCt.form.value.username == '' || _loginCt.form.value.password == '',
                           title: 'Sign In',
                           loading: _loginCt.loadingLogin.value,
-                          onTap: () => _loginCt.login(),
+                          onTap: () => _loginCt.login(false),
                           verticalPadding: 10.h,
                           textStyle: ThemeTextStyle.biryaniBold.apply(color: Colors.white, fontSizeDelta: 14.ssp),
                         )

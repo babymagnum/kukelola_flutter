@@ -155,7 +155,7 @@ class _ReimbursmentSummaryDetailViewState extends State<ReimbursmentSummaryDetai
                             _content(
                               'ATTACHMENT',
                               (_reimbursmentSummaryCt.attachmentData.value.fileName ?? '') == '' ? 'No attachment' : _reimbursmentSummaryCt.attachmentData.value.fileName,
-                              (_reimbursmentSummaryCt.attachmentData.value.fileName ?? '') != '', _reimbursmentSummaryCt.loadingAttachment.value, () => CommonFunction().openAttachment(_reimbursmentSummaryCt.attachmentData.value.fileName, _reimbursmentSummaryCt.attachmentData.value.file),
+                              (_reimbursmentSummaryCt.attachmentData.value.fileName ?? '') != '', _reimbursmentSummaryCt.loadingAttachment.value, () => CommonFunction.openAttachment(_reimbursmentSummaryCt.attachmentData.value.fileName, _reimbursmentSummaryCt.attachmentData.value.file),
                             )
                           ],
                         ),

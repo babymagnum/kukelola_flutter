@@ -143,7 +143,7 @@ class _LeaveSummaryDetailViewState extends State<LeaveSummaryDetailView> {
                             _content(
                               'ATTACHMENT',
                               (_leaveSummmaryCt.attachmentData.value.fileName ?? '') == '' ? 'No attachment' : _leaveSummmaryCt.attachmentData.value.fileName,
-                              (_leaveSummmaryCt.attachmentData.value.fileName ?? '') != '', _leaveSummmaryCt.loadingAttachment.value, () => CommonFunction().openAttachment(_leaveSummmaryCt.attachmentData.value.fileName, _leaveSummmaryCt.attachmentData.value.file),
+                              (_leaveSummmaryCt.attachmentData.value.fileName ?? '') != '', _leaveSummmaryCt.loadingAttachment.value, () => CommonFunction.openAttachment(_leaveSummmaryCt.attachmentData.value.fileName, _leaveSummmaryCt.attachmentData.value.file),
                             )
                           ],
                         ),

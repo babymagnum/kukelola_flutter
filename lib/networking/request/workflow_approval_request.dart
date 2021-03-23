@@ -1,3 +1,5 @@
+import 'package:kukelola_flutter/main.dart';
+
 class WorkflowApprovalRequest {
 
   String Text;
@@ -16,7 +18,9 @@ class WorkflowApprovalRequest {
       "RequestType": RequestType,
       "IsOngoing": IsOngoing,
       "Month": Month,
-      "Year": Year
+      "Year": Year,
+      // "UserId": homeController.userData.value.userId,
+      // "ClientId": homeController.userData.value.clientId
     };
   }
 }

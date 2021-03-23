@@ -2,10 +2,7 @@ import 'package:kukelola_flutter/networking/model/leave_summary_grid.dart';
 
 leaveSummaryGridFromJson(LeaveSummaryGrid data, Map<String, dynamic> json) {
 	if (json['Data'] != null) {
-		data.data = new List<LeaveSummaryGridData>();
-		(json['Data'] as List).forEach((v) {
-			data.data.add(new LeaveSummaryGridData().fromJson(v));
-		});
+		data.data = (json['Data'] as List).map((v) => LeaveSummaryGridData().fromJson(v)).toList();
 	}
 	if (json['Total'] != null) {
 		data.total = json['Total'] is String
@@ -13,8 +10,7 @@ leaveSummaryGridFromJson(LeaveSummaryGrid data, Map<String, dynamic> json) {
 				: json['Total'].toInt();
 	}
 	if (json['Errors'] != null) {
-		data.errors = new List<dynamic>();
-		data.errors.addAll(json['Errors']);
+		data.errors = (json['Errors'] as List).map((v) => v).toList().cast<dynamic>();
 	}
 	if (json['Message'] != null) {
 		data.message = json['Message'].toString();
@@ -39,13 +35,9 @@ leaveSummaryGridFromJson(LeaveSummaryGrid data, Map<String, dynamic> json) {
 
 Map<String, dynamic> leaveSummaryGridToJson(LeaveSummaryGrid entity) {
 	final Map<String, dynamic> data = new Map<String, dynamic>();
-	if (entity.data != null) {
-		data['Data'] =  entity.data.map((v) => v.toJson()).toList();
-	}
+	data['Data'] =  entity.data?.map((v) => v.toJson())?.toList();
 	data['Total'] = entity.total;
-	if (entity.errors != null) {
-		data['Errors'] =  [];
-	}
+	data['Errors'] = entity.errors;
 	data['Message'] = entity.message;
 	data['IsSuccess'] = entity.isSuccess;
 	data['IsAdmin'] = entity.isAdmin;

@@ -3,7 +3,7 @@ import 'package:kukelola_flutter/core/helper/text_util.dart';
 
 staffFromJson(Staff data, Map<String, dynamic> json) {
 	if (json['Data'] != null) {
-		data.data = new StaffData().fromJson(json['Data']);
+		data.data = StaffData().fromJson(json['Data']);
 	}
 	if (json['Total'] != null) {
 		data.total = json['Total'] is String
@@ -11,8 +11,7 @@ staffFromJson(Staff data, Map<String, dynamic> json) {
 				: json['Total'].toInt();
 	}
 	if (json['Errors'] != null) {
-		data.errors = new List<dynamic>();
-		data.errors.addAll(json['Errors']);
+		data.errors = (json['Errors'] as List).map((v) => v).toList().cast<dynamic>();
 	}
 	if (json['Message'] != null) {
 		data.message = json['Message'].toString();
@@ -37,13 +36,9 @@ staffFromJson(Staff data, Map<String, dynamic> json) {
 
 Map<String, dynamic> staffToJson(Staff entity) {
 	final Map<String, dynamic> data = new Map<String, dynamic>();
-	if (entity.data != null) {
-		data['Data'] = entity.data.toJson();
-	}
+	data['Data'] = entity.data?.toJson();
 	data['Total'] = entity.total;
-	if (entity.errors != null) {
-		data['Errors'] =  [];
-	}
+	data['Errors'] = entity.errors;
 	data['Message'] = entity.message;
 	data['IsSuccess'] = entity.isSuccess;
 	data['IsAdmin'] = entity.isAdmin;

@@ -16,6 +16,7 @@ import 'package:kukelola_flutter/view/verification_code/verification_code_view.d
 class LoginController extends GetxController {
   var obsecure = true.obs;
   var loadingLogin = false.obs;
+  var successLogin = false.obs;
   var form = LoginForm().obs;
 
   setObsecure(bool value) => obsecure.value = value;
@@ -25,13 +26,17 @@ class LoginController extends GetxController {
     return '${TextUtil.randomInt(0, 9)}${TextUtil.randomInt(0, 9)}${TextUtil.randomInt(0, 9)}${TextUtil.randomInt(0, 9)}';
   }
 
-  login() async {
+  login(bool resendOtp) async {
     var otp = _random4Digit();
     loadingLogin.value = true;
-    final data = await Service().token(LoginRequest(form.value.username, form.value.password, otp, commonController.autoLogin.value ? 'true' : 'false'));
+    final data = await Service().token(LoginRequest(
+        resendOtp ? commonController.preferences.getString(Constant.EMAIL) : form.value.username,
+        resendOtp ? commonController.preferences.getString(Constant.PASSWORD) : form.value.password,
+        otp, commonController.autoLogin.value ? 'true' : 'false'));
     loadingLogin.value = false;
 
     if (data?.accessToken != null) {
+      successLogin.value = true;
       await commonController.preferences.setString(Constant.EMAIL, form.value.username);
       await commonController.preferences.setString(Constant.PASSWORD, form.value.password);
       await commonController.preferences.setBool(Constant.IS_PASS_LOGIN, true);
@@ -46,6 +51,7 @@ class LoginController extends GetxController {
 
       commonController.setAutoLogin(false);
     } else {
+      successLogin.value = false;
       CommonFunction.standartSnackbar('Gagal Login: ${data.errorDescription ?? data.errorMessage}');
     }
   }

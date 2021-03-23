@@ -2,17 +2,22 @@ import 'package:division/division.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:kukelola_flutter/core/model/static_model.dart';
+import 'package:kukelola_flutter/core/helper/common_function.dart';
+import 'package:kukelola_flutter/core/theme/theme_color.dart';
 import 'package:kukelola_flutter/core/theme/theme_text_style.dart';
+import 'package:kukelola_flutter/core/widgets/button_reload.dart';
 import 'package:kukelola_flutter/networking/model/workflow_grid.dart';
+import 'package:kukelola_flutter/view/workflow_approval/controller/completed_request_controller.dart';
 import 'package:kukelola_flutter/view/workflow_approval_detail/completed_request_detail_view.dart';
 
 class ListCompletedRequestItem extends StatelessWidget {
 
-  ListCompletedRequestItem({@required this.item, @required this.index});
-
   final WorkflowGridData item;
   final int index;
+
+  ListCompletedRequestItem({@required this.item, @required this.index});
+
+  var _completedRequestCt = Get.find<CompletedRequestController>();
 
   Color _statusColor() {
     if (item.workflowStatus == 99) return Color(0xFFC3C3C3);
@@ -33,7 +38,7 @@ class ListCompletedRequestItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Parent(
-      gesture: Gestures()..onTap(() => Get.to(CompletedRequestDetailView(item: item))),
+      // gesture: Gestures()..onTap(() => Get.to(CompletedRequestDetailView(item: item))),
       style: ParentStyle()..background.color(Color(0xFFE9EAEA))..borderRadius(all: 8)..padding(horizontal: 16.w, vertical: 16.h),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -64,6 +69,38 @@ class ListCompletedRequestItem extends StatelessWidget {
           ),
           SizedBox(height: 24.h,),
           Text(item.requestorName, style: ThemeTextStyle.biryaniRegular.apply(color: Color(0xFF6D6D6D), fontSizeDelta: 10.ssp),),
+          item.attachmentId != null ?
+          Padding(
+            padding: EdgeInsets.only(top: 5.h),
+            child: item.loadingAttachment ?
+            SizedBox(
+              width: 12.w, height: 12.w,
+              child: CircularProgressIndicator(valueColor: AlwaysStoppedAnimation<Color>(ThemeColor.primary),),
+            ) :
+            item.errorAttachment ?
+            ButtonReload(onTap: () => _completedRequestCt.getAttachment(index)) :
+            GestureDetector(
+              onTap: () {
+                if (item.attachmentData == null) {
+                  _completedRequestCt.getAttachment(index);
+                } else {
+                  CommonFunction.openAttachment(item.attachmentData.fileName, item.attachmentData.file);
+                }
+              },
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Padding(
+                    padding: EdgeInsets.only(bottom: 3.h),
+                    child: Icon(Icons.attachment, size: 14.w, color: item.isAttachment() ? Color(0xFF158AC9) : Color(0xFF6D6D6D),),
+                  ),
+                  SizedBox(width: 4.w,),
+                  Expanded(child: Text(item.attachmentData != null ? item.attachmentData.fileName : 'load attachment', style: ThemeTextStyle.biryaniRegular.apply(fontSizeDelta: 10.ssp, color: item.isAttachment() ? Color(0xFF158AC9) : Color(0xFF6D6D6D), decoration: TextDecoration.underline),))
+                ],
+              ),
+            ),
+          ) :
+          Container(),
         ],
       ),
     );

@@ -2,10 +2,7 @@ import 'package:kukelola_flutter/networking/model/notification.dart';
 
 notificationFromJson(Notification data, Map<String, dynamic> json) {
 	if (json['Data'] != null) {
-		data.data = new List<NotificationData>();
-		(json['Data'] as List).forEach((v) {
-			data.data.add(new NotificationData().fromJson(v));
-		});
+		data.data = (json['Data'] as List).map((v) => NotificationData().fromJson(v)).toList();
 	}
 	if (json['Total'] != null) {
 		data.total = json['Total'] is String
@@ -13,8 +10,7 @@ notificationFromJson(Notification data, Map<String, dynamic> json) {
 				: json['Total'].toInt();
 	}
 	if (json['Errors'] != null) {
-		data.errors = new List<dynamic>();
-		data.errors.addAll(json['Errors']);
+		data.errors = (json['Errors'] as List).map((v) => v).toList().cast<dynamic>();
 	}
 	if (json['Message'] != null) {
 		data.message = json['Message'].toString();
@@ -39,13 +35,9 @@ notificationFromJson(Notification data, Map<String, dynamic> json) {
 
 Map<String, dynamic> notificationToJson(Notification entity) {
 	final Map<String, dynamic> data = new Map<String, dynamic>();
-	if (entity.data != null) {
-		data['Data'] =  entity.data.map((v) => v.toJson()).toList();
-	}
+	data['Data'] =  entity.data?.map((v) => v.toJson())?.toList();
 	data['Total'] = entity.total;
-	if (entity.errors != null) {
-		data['Errors'] =  [];
-	}
+	data['Errors'] = entity.errors;
 	data['Message'] = entity.message;
 	data['IsSuccess'] = entity.isSuccess;
 	data['IsAdmin'] = entity.isAdmin;

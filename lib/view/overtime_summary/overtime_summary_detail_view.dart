@@ -141,7 +141,7 @@ class _OvertimeSummaryDetailViewState extends State<OvertimeSummaryDetailView> {
                           _content(
                             'ATTACHMENT',
                             (_overtimeSummaryCt.attachmentData.value.fileName ?? '') == '' ? 'No attachment' : _overtimeSummaryCt.attachmentData.value.fileName,
-                            (_overtimeSummaryCt.attachmentData.value.fileName ?? '') != '', _overtimeSummaryCt.loadingAttachment.value, () => CommonFunction().openAttachment(_overtimeSummaryCt.attachmentData.value.fileName, _overtimeSummaryCt.attachmentData.value.file),
+                            (_overtimeSummaryCt.attachmentData.value.fileName ?? '') != '', _overtimeSummaryCt.loadingAttachment.value, () => CommonFunction.openAttachment(_overtimeSummaryCt.attachmentData.value.fileName, _overtimeSummaryCt.attachmentData.value.file),
                           )
                         ],
                       ),

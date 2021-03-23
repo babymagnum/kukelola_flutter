@@ -2,7 +2,7 @@ import 'package:kukelola_flutter/networking/model/user.dart';
 
 userFromJson(User data, Map<String, dynamic> json) {
 	if (json['Data'] != null) {
-		data.data = new UserData().fromJson(json['Data']);
+		data.data = UserData().fromJson(json['Data']);
 	}
 	if (json['Total'] != null) {
 		data.total = json['Total'] is String
@@ -10,8 +10,7 @@ userFromJson(User data, Map<String, dynamic> json) {
 				: json['Total'].toInt();
 	}
 	if (json['Errors'] != null) {
-		data.errors = new List<dynamic>();
-		data.errors.addAll(json['Errors']);
+		data.errors = (json['Errors'] as List).map((v) => v).toList().cast<dynamic>();
 	}
 	if (json['Message'] != null) {
 		data.message = json['Message'].toString();
@@ -36,13 +35,9 @@ userFromJson(User data, Map<String, dynamic> json) {
 
 Map<String, dynamic> userToJson(User entity) {
 	final Map<String, dynamic> data = new Map<String, dynamic>();
-	if (entity.data != null) {
-		data['Data'] = entity.data.toJson();
-	}
+	data['Data'] = entity.data?.toJson();
 	data['Total'] = entity.total;
-	if (entity.errors != null) {
-		data['Errors'] =  [];
-	}
+	data['Errors'] = entity.errors;
 	data['Message'] = entity.message;
 	data['IsSuccess'] = entity.isSuccess;
 	data['IsAdmin'] = entity.isAdmin;
@@ -90,7 +85,7 @@ userDataFromJson(UserData data, Map<String, dynamic> json) {
 		data.profilePictureId = json['ProfilePictureId'];
 	}
 	if (json['ProfilePicture'] != null) {
-		data.profilePicture = new UserDataProfilePicture().fromJson(json['ProfilePicture']);
+		data.profilePicture = UserDataProfilePicture().fromJson(json['ProfilePicture']);
 	}
 	if (json['Attachment'] != null) {
 		data.attachment = json['Attachment'];
@@ -129,9 +124,7 @@ Map<String, dynamic> userDataToJson(UserData entity) {
 	data['NewPassword'] = entity.newPassword;
 	data['IsMailNotification'] = entity.isMailNotification;
 	data['ProfilePictureId'] = entity.profilePictureId;
-	if (entity.profilePicture != null) {
-		data['ProfilePicture'] = entity.profilePicture.toJson();
-	}
+	data['ProfilePicture'] = entity.profilePicture?.toJson();
 	data['Attachment'] = entity.attachment;
 	data['Id'] = entity.id;
 	data['ClientId'] = entity.clientId;

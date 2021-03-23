@@ -7,9 +7,11 @@ import 'package:kukelola_flutter/core/theme/theme_color.dart';
 import 'package:kukelola_flutter/core/theme/theme_text_style.dart';
 import 'package:kukelola_flutter/core/widgets/button_back.dart';
 import 'package:kukelola_flutter/core/widgets/button_loading.dart';
+import 'package:kukelola_flutter/core/widgets/button_reload.dart';
 import 'package:kukelola_flutter/view/base_view.dart';
 import 'package:kukelola_flutter/view/container_home/container_home_view.dart';
 import 'package:kukelola_flutter/view/home/home_view.dart';
+import 'package:kukelola_flutter/view/login/login_controller.dart';
 import 'package:kukelola_flutter/view/verification_code/verification_code_controller.dart';
 import 'package:kukelola_flutter/view/verification_code/widget/input_verification_code.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -28,6 +30,7 @@ class _VerificationCodeViewState extends State<VerificationCodeView> {
   var _input1Controller = TextEditingController(), _input2Controller = TextEditingController(),
       _input3Controller = TextEditingController(), _input4Controller = TextEditingController();
   var _verificationCodeCt = Get.put(VerificationCodeController());
+  var _loginCt = Get.find<LoginController>();
 
   bool _hasEmpty() {
     return _input1Controller.text.trim() == '' || _input2Controller.text.trim() == '' ||
@@ -135,7 +138,7 @@ class _VerificationCodeViewState extends State<VerificationCodeView> {
                       SizedBox(height: 24.h,),
                       Text('You have three chances to input verification code',
                         textAlign: TextAlign.center, style: ThemeTextStyle.biryaniRegular.apply(fontSizeDelta: 12.ssp),),
-                      SizedBox(height: 16.h,),
+                      SizedBox(height: 12.h,),
                       _verificationCodeCt.timesUp.value ?
                       GestureDetector(
                         onTap: _verificationCodeCt.chances.value == 0 ? null : () => _verificationCodeCt.resendOtp(),
@@ -144,15 +147,20 @@ class _VerificationCodeViewState extends State<VerificationCodeView> {
                           child: Text('Retry sending verification code', style: ThemeTextStyle.biryaniRegular.apply(fontSizeDelta: 12.ssp, decoration: TextDecoration.underline, color: _verificationCodeCt.chances.value == 0 ? ThemeColor.disabled : Color(0xFF018CCA)),),
                         ),
                       ) :
-                      _verificationCodeCt.loadingResendOtp.value ?
+                      _loginCt.loadingLogin.value ?
                       Padding(
                         padding: EdgeInsets.only(bottom: 16.h),
                         child: SizedBox(
-                          width: 20.w, height: 20.w,
+                          width: 16.w, height: 16.w,
                           child: CircularProgressIndicator(
                             valueColor: AlwaysStoppedAnimation<Color>(ThemeColor.primary),
                           ),
                         ),
+                      ) :
+                      !_loginCt.successLogin.value ?
+                      Padding(
+                        padding: EdgeInsets.only(bottom: 16.h),
+                        child: ButtonReload(onTap: () => _loginCt.login(true),),
                       ) :
                       Container(),
                       ButtonLoading(

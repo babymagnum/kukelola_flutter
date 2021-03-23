@@ -5,6 +5,7 @@ import 'package:kukelola_flutter/core/helper/common_function.dart';
 import 'package:kukelola_flutter/core/helper/constant.dart';
 import 'package:kukelola_flutter/main.dart';
 import 'package:kukelola_flutter/view/container_home/container_home_view.dart';
+import 'package:kukelola_flutter/view/login/login_controller.dart';
 
 class VerificationCodeController extends GetxController {
 
@@ -16,6 +17,7 @@ class VerificationCodeController extends GetxController {
   var loadingVerify = false.obs;
 
   var _timer;
+  var _loginCt = Get.find<LoginController>();
 
   startTimer() {
     seconds.value = 60;
@@ -53,10 +55,9 @@ class VerificationCodeController extends GetxController {
 
   resendOtp() async {
     timesUp.value = false;
-    loadingResendOtp.value = true;
-    await Future.delayed(Duration(seconds: 1), () {});
-    loadingResendOtp.value = false;
-    chances.value -= 1;
-    startTimer();
+    await _loginCt.login(true);
+
+    if (_loginCt.successLogin.value) startTimer();
+    else timesUp.value = true;
   }
 }

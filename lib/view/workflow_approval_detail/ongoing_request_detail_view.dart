@@ -174,7 +174,7 @@ class _OngoingRequestDetailViewState extends State<OngoingRequestDetailView> {
                             _content(
                               'ATTACHMENT',
                               (_workflowApprovalDetailCt.attachmentData.value.fileName ?? '') == '' ? 'No attachment' : _workflowApprovalDetailCt.attachmentData.value.fileName,
-                              (_workflowApprovalDetailCt.attachmentData.value.fileName ?? '') != '', _workflowApprovalDetailCt.loadingAttachment.value, () => CommonFunction().openAttachment(_workflowApprovalDetailCt.attachmentData.value.fileName, _workflowApprovalDetailCt.attachmentData.value.file),
+                              (_workflowApprovalDetailCt.attachmentData.value.fileName ?? '') != '', _workflowApprovalDetailCt.loadingAttachment.value, () => CommonFunction.openAttachment(_workflowApprovalDetailCt.attachmentData.value.fileName, _workflowApprovalDetailCt.attachmentData.value.file),
                             )
                           ],
                         ),

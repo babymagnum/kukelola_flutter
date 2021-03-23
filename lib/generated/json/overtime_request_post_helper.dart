@@ -2,7 +2,7 @@ import 'package:kukelola_flutter/networking/model/overtime_request_post.dart';
 
 overtimeRequestPostFromJson(OvertimeRequestPost data, Map<String, dynamic> json) {
 	if (json['Data'] != null) {
-		data.data = new OvertimeRequestPostData().fromJson(json['Data']);
+		data.data = OvertimeRequestPostData().fromJson(json['Data']);
 	}
 	if (json['Total'] != null) {
 		data.total = json['Total'] is String
@@ -10,8 +10,7 @@ overtimeRequestPostFromJson(OvertimeRequestPost data, Map<String, dynamic> json)
 				: json['Total'].toInt();
 	}
 	if (json['Errors'] != null) {
-		data.errors = new List<dynamic>();
-		data.errors.addAll(json['Errors']);
+		data.errors = (json['Errors'] as List).map((v) => v).toList().cast<dynamic>();
 	}
 	if (json['Message'] != null) {
 		data.message = json['Message'].toString();
@@ -36,13 +35,9 @@ overtimeRequestPostFromJson(OvertimeRequestPost data, Map<String, dynamic> json)
 
 Map<String, dynamic> overtimeRequestPostToJson(OvertimeRequestPost entity) {
 	final Map<String, dynamic> data = new Map<String, dynamic>();
-	if (entity.data != null) {
-		data['Data'] = entity.data.toJson();
-	}
+	data['Data'] = entity.data?.toJson();
 	data['Total'] = entity.total;
-	if (entity.errors != null) {
-		data['Errors'] =  [];
-	}
+	data['Errors'] = entity.errors;
 	data['Message'] = entity.message;
 	data['IsSuccess'] = entity.isSuccess;
 	data['IsAdmin'] = entity.isAdmin;
@@ -54,28 +49,24 @@ Map<String, dynamic> overtimeRequestPostToJson(OvertimeRequestPost entity) {
 
 overtimeRequestPostDataFromJson(OvertimeRequestPostData data, Map<String, dynamic> json) {
 	if (json['Request'] != null) {
-		data.request = new OvertimeRequestPostDataRequest().fromJson(json['Request']);
+		data.request = OvertimeRequestPostDataRequest().fromJson(json['Request']);
 	}
 	if (json['Workflow'] != null) {
-		data.workflow = new OvertimeRequestPostDataWorkflow().fromJson(json['Workflow']);
+		data.workflow = OvertimeRequestPostDataWorkflow().fromJson(json['Workflow']);
 	}
 	return data;
 }
 
 Map<String, dynamic> overtimeRequestPostDataToJson(OvertimeRequestPostData entity) {
 	final Map<String, dynamic> data = new Map<String, dynamic>();
-	if (entity.request != null) {
-		data['Request'] = entity.request.toJson();
-	}
-	if (entity.workflow != null) {
-		data['Workflow'] = entity.workflow.toJson();
-	}
+	data['Request'] = entity.request?.toJson();
+	data['Workflow'] = entity.workflow?.toJson();
 	return data;
 }
 
 overtimeRequestPostDataRequestFromJson(OvertimeRequestPostDataRequest data, Map<String, dynamic> json) {
 	if (json['Data'] != null) {
-		data.data = new OvertimeRequestPostDataRequestData().fromJson(json['Data']);
+		data.data = OvertimeRequestPostDataRequestData().fromJson(json['Data']);
 	}
 	if (json['Total'] != null) {
 		data.total = json['Total'] is String
@@ -83,7 +74,7 @@ overtimeRequestPostDataRequestFromJson(OvertimeRequestPostDataRequest data, Map<
 				: json['Total'].toInt();
 	}
 	if (json['Errors'] != null) {
-		data.errors = json['Errors']?.map((v) => v.toString())?.toList()?.cast<String>();
+		data.errors = (json['Errors'] as List).map((v) => v.toString()).toList().cast<String>();
 	}
 	if (json['Message'] != null) {
 		data.message = json['Message'].toString();
@@ -105,9 +96,7 @@ overtimeRequestPostDataRequestFromJson(OvertimeRequestPostDataRequest data, Map<
 
 Map<String, dynamic> overtimeRequestPostDataRequestToJson(OvertimeRequestPostDataRequest entity) {
 	final Map<String, dynamic> data = new Map<String, dynamic>();
-	if (entity.data != null) {
-		data['Data'] = entity.data.toJson();
-	}
+	data['Data'] = entity.data?.toJson();
 	data['Total'] = entity.total;
 	data['Errors'] = entity.errors;
 	data['Message'] = entity.message;
@@ -199,7 +188,7 @@ Map<String, dynamic> overtimeRequestPostDataRequestDataToJson(OvertimeRequestPos
 
 overtimeRequestPostDataWorkflowFromJson(OvertimeRequestPostDataWorkflow data, Map<String, dynamic> json) {
 	if (json['Data'] != null) {
-		data.data = new OvertimeRequestPostDataWorkflowData().fromJson(json['Data']);
+		data.data = OvertimeRequestPostDataWorkflowData().fromJson(json['Data']);
 	}
 	if (json['Total'] != null) {
 		data.total = json['Total'] is String
@@ -207,8 +196,7 @@ overtimeRequestPostDataWorkflowFromJson(OvertimeRequestPostDataWorkflow data, Ma
 				: json['Total'].toInt();
 	}
 	if (json['Errors'] != null) {
-		data.errors = new List<dynamic>();
-		data.errors.addAll(json['Errors']);
+		data.errors = (json['Errors'] as List).map((v) => v).toList().cast<dynamic>();
 	}
 	if (json['Message'] != null) {
 		data.message = json['Message'];
@@ -230,13 +218,9 @@ overtimeRequestPostDataWorkflowFromJson(OvertimeRequestPostDataWorkflow data, Ma
 
 Map<String, dynamic> overtimeRequestPostDataWorkflowToJson(OvertimeRequestPostDataWorkflow entity) {
 	final Map<String, dynamic> data = new Map<String, dynamic>();
-	if (entity.data != null) {
-		data['Data'] = entity.data.toJson();
-	}
+	data['Data'] = entity.data?.toJson();
 	data['Total'] = entity.total;
-	if (entity.errors != null) {
-		data['Errors'] =  [];
-	}
+	data['Errors'] = entity.errors;
 	data['Message'] = entity.message;
 	data['IsSuccess'] = entity.isSuccess;
 	data['IsAdmin'] = entity.isAdmin;
