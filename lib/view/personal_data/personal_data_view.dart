@@ -32,8 +32,8 @@ class _PersonalDataViewState extends State<PersonalDataView> {
   var _firstNameCt = TextEditingController(), _middleNameCt = TextEditingController(), _lastNameCt = TextEditingController(),
       _cityOfBirthCt = TextEditingController(), _emailCt = TextEditingController(), _phoneCt = TextEditingController(),
       _identificationNumberCt = TextEditingController(), _addressCt = TextEditingController();
-  var _firstNameFocus = FocusNode(), _middleNameFocus = FocusNode(), _lastNameFocus = FocusNode(),
-      _cityOfBirthFocus = FocusNode(), _emailFocus = FocusNode(), _phoneFocus = FocusNode(),
+  var _firstNameFocus = FocusNode(), _emailFocus = FocusNode(), _middleNameFocus = FocusNode(), _lastNameFocus = FocusNode(),
+      _cityOfBirthFocus = FocusNode(), _phoneFocus = FocusNode(),
       _identificationNumberFocus = FocusNode(), _addressFocus = FocusNode();
 
   _showDropdownType(BuildContext context, GlobalKey key, List<CommonType> list, Function(int item) onSelect) {
@@ -260,6 +260,17 @@ class _PersonalDataViewState extends State<PersonalDataView> {
                           leftSize: Size(14.w, 16.h),
                           value: _personalDataCt.staff.value.dateOfBirth,
                           leftIcon: 'assets/images/fa-solid_calendar-day.svg',
+                        ),
+                        SizedBox(height: 24.h,),
+                        CustomInput(
+                          textInputAction: TextInputAction.next,
+                          focusNode: _emailFocus,
+                          hintText: 'e.g ariefz@gmail.com',
+                          controller: _emailCt,
+                          inputType: TextInputType.emailAddress,
+                          onEditingComplete: () => setState(() => FocusScope.of(context).requestFocus(_phoneFocus)),
+                          onTap: () => setState(() => _emailFocus.requestFocus()),
+                          labelText: 'EMAIL',
                         ),
                         SizedBox(height: 24.h,),
                         CustomInput(

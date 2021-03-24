@@ -1,6 +1,7 @@
 import 'package:kukelola_flutter/core/helper/text_util.dart';
 import 'package:kukelola_flutter/generated/json/base/json_convert_content.dart';
 import 'package:kukelola_flutter/generated/json/base/json_field.dart';
+import 'package:kukelola_flutter/main.dart';
 
 class Staff with JsonConvert<Staff> {
 	@JSONField(name: "Data")
@@ -102,7 +103,7 @@ class StaffData with JsonConvert<StaffData> {
 
 	dynamic getJsonBody() {
 		return {
-			"Id": id,
+			"Id": homeController.userData.value.staffId,
 			"FirstName": firstName,
 			"MiddleName": middleName,
 			"LastName": lastName,
