@@ -1,4 +1,3 @@
-import 'package:auto_size_text/auto_size_text.dart';
 import 'package:division/division.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -11,7 +10,6 @@ import 'package:kukelola_flutter/view/attendance_request/attendance_request_view
 import 'package:kukelola_flutter/view/business_trip/business_trip_view.dart';
 import 'package:kukelola_flutter/view/calendar/calendar_view.dart';
 import 'package:kukelola_flutter/view/dialog_payslip/dialog_payslip.dart';
-import 'package:kukelola_flutter/view/dialog_payslip/dialog_payslip_controller.dart';
 import 'package:kukelola_flutter/view/leave_request/leave_request_view.dart';
 import 'package:kukelola_flutter/view/online_attendance/online_attendance_view.dart';
 import 'package:kukelola_flutter/view/overtime_request/overtime_request_view.dart';
