@@ -1,5 +1,6 @@
 import 'package:kukelola_flutter/networking/model/staff.dart';
 import 'package:kukelola_flutter/core/helper/text_util.dart';
+import 'package:kukelola_flutter/main.dart';
 
 staffFromJson(Staff data, Map<String, dynamic> json) {
 	if (json['Data'] != null) {

@@ -14,7 +14,7 @@ class CustomInput extends StatelessWidget {
     @required this.focusNode, @required this.hintText, @required this.inputType,
     this.isObsecure = null, @required this.onEditingComplete,
     this.onChanged, this.onObsecureClick, @required this.onTap,
-    this.maxLines = 1, @required this.labelText, this.listFormatter, this.prefix}): super(key: key);
+    this.maxLines = 1, @required this.labelText, this.listFormatter, this.prefix, this.enable = true}): super(key: key);
 
   final TextEditingController controller;
   final FocusNode focusNode;
@@ -30,6 +30,7 @@ class CustomInput extends StatelessWidget {
   final int maxLines;
   final List<TextInputFormatter> listFormatter;
   final String prefix;
+  final bool enable;
 
   @override
   Widget build(BuildContext context) {
@@ -48,6 +49,7 @@ class CustomInput extends StatelessWidget {
               enableSuggestions: false,
               controller: controller,
               focusNode: focusNode,
+              enabled: enable,
               onEditingComplete: onEditingComplete,
               keyboardType: inputType,
               maxLines: maxLines,

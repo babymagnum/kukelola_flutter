@@ -210,6 +210,10 @@ class _PersonalDataViewState extends State<PersonalDataView> {
                           focusNode: _firstNameFocus,
                           hintText: 'e.g Arief',
                           controller: _firstNameCt,
+                          onChanged: (text) {
+                            _personalDataCt.staff.value.firstName = text.trim();
+                            _personalDataCt.updateStaff(_personalDataCt.staff.value);
+                          },
                           inputType: TextInputType.name,
                           onEditingComplete: () => setState(() => _middleNameFocus.requestFocus()),
                           onTap: () => setState(() => _firstNameFocus.requestFocus()),
@@ -221,6 +225,10 @@ class _PersonalDataViewState extends State<PersonalDataView> {
                           focusNode: _middleNameFocus,
                           hintText: 'e.g Zulfikar',
                           controller: _middleNameCt,
+                          onChanged: (text) {
+                            _personalDataCt.staff.value.middleName = text.trim();
+                            _personalDataCt.updateStaff(_personalDataCt.staff.value);
+                          },
                           inputType: TextInputType.name,
                           onEditingComplete: () => setState(() => _lastNameFocus.requestFocus()),
                           onTap: () => setState(() => _middleNameFocus.requestFocus()),
@@ -232,6 +240,10 @@ class _PersonalDataViewState extends State<PersonalDataView> {
                           focusNode: _lastNameFocus,
                           hintText: 'e.g Naik',
                           controller: _lastNameCt,
+                          onChanged: (text) {
+                            _personalDataCt.staff.value.lastName = text.trim();
+                            _personalDataCt.updateStaff(_personalDataCt.staff.value);
+                          },
                           inputType: TextInputType.name,
                           onEditingComplete: () => setState(() => _cityOfBirthFocus.requestFocus()),
                           onTap: () => setState(() => _lastNameFocus.requestFocus()),
@@ -243,6 +255,10 @@ class _PersonalDataViewState extends State<PersonalDataView> {
                           focusNode: _cityOfBirthFocus,
                           hintText: 'e.g Yogyakarta',
                           controller: _cityOfBirthCt,
+                          onChanged: (text) {
+                            _personalDataCt.staff.value.cityOfBirth = text.trim();
+                            _personalDataCt.updateStaff(_personalDataCt.staff.value);
+                          },
                           inputType: TextInputType.name,
                           onEditingComplete: () => setState(() => FocusScope.of(context).requestFocus(FocusNode())),
                           onTap: () => setState(() => _cityOfBirthFocus.requestFocus()),
@@ -265,6 +281,7 @@ class _PersonalDataViewState extends State<PersonalDataView> {
                         CustomInput(
                           textInputAction: TextInputAction.next,
                           focusNode: _emailFocus,
+                          enable: false,
                           hintText: 'e.g ariefz@gmail.com',
                           controller: _emailCt,
                           inputType: TextInputType.emailAddress,
@@ -278,6 +295,10 @@ class _PersonalDataViewState extends State<PersonalDataView> {
                           focusNode: _phoneFocus,
                           hintText: 'e.g 085792810602',
                           inputType: TextInputType.name,
+                          onChanged: (text) {
+                            _personalDataCt.staff.value.phone = text.trim();
+                            _personalDataCt.updateStaff(_personalDataCt.staff.value);
+                          },
                           controller: _phoneCt,
                           onEditingComplete: () => setState(() => _identificationNumberFocus.requestFocus()),
                           onTap: () => setState(() => _phoneFocus.requestFocus()),
@@ -289,6 +310,10 @@ class _PersonalDataViewState extends State<PersonalDataView> {
                           focusNode: _identificationNumberFocus,
                           hintText: 'e.g 347112080819872727',
                           controller: _identificationNumberCt,
+                          onChanged: (text) {
+                            _personalDataCt.staff.value.identificationNumber = text.trim();
+                            _personalDataCt.updateStaff(_personalDataCt.staff.value);
+                          },
                           inputType: TextInputType.name,
                           onEditingComplete: () => FocusScope.of(context).requestFocus(FocusNode()),
                           onTap: () => setState(() => _identificationNumberFocus.requestFocus()),
@@ -345,6 +370,10 @@ class _PersonalDataViewState extends State<PersonalDataView> {
                           focusNode: _addressFocus,
                           hintText: 'e.g Jl. Kolonel Sugiono Yogyakarta',
                           maxLines: null,
+                          onChanged: (text) {
+                            _personalDataCt.staff.value.mainAddress = text.trim();
+                            _personalDataCt.updateStaff(_personalDataCt.staff.value);
+                          },
                           inputType: TextInputType.multiline,
                           onEditingComplete: () {},
                           controller: _addressCt,

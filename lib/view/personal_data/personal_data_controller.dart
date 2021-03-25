@@ -55,7 +55,7 @@ class PersonalDataController extends GetxController {
       errorStaff.value = true;
 
       if (data.errors.length > 0) errorMessage.value = data.errors[0];
-      else errorMessage.value = data.errorMessage;
+      else errorMessage.value = data.message;
     }
   }
 }
