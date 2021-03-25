@@ -1,8 +1,14 @@
+import 'dart:convert';
+
 import 'package:get/get.dart';
 import 'package:kukelola_flutter/core/helper/common_function.dart';
+import 'package:kukelola_flutter/core/helper/constant.dart';
 import 'package:kukelola_flutter/core/helper/text_util.dart';
 import 'package:kukelola_flutter/core/model/static_model.dart';
+import 'package:kukelola_flutter/generated/json/token_helper.dart';
+import 'package:kukelola_flutter/main.dart';
 import 'package:kukelola_flutter/networking/model/staff.dart';
+import 'package:kukelola_flutter/networking/model/token.dart';
 import 'package:kukelola_flutter/networking/service/service.dart';
 
 class PersonalDataController extends GetxController {
@@ -38,6 +44,14 @@ class PersonalDataController extends GetxController {
 
     if (data?.isSuccess ?? false) {
       CommonFunction.standartSnackbar('Berhasil Memperbarui Data Profile');
+      homeController.userData.value.lastName = staff.value.lastName;
+      homeController.userData.value.firstName = staff.value.firstName;
+      homeController.userData.value.middleName = staff.value.middleName;
+      homeController.userData.value.lastName = staff.value.lastName;
+      homeController.userData.value.fullName = '${staff.value.firstName}${staff.value.middleName == '' ? '' : ' ${staff.value.middleName}'}${staff.value.lastName == '' ? '' : ' ${staff.value.lastName}'}';
+      String token = jsonEncode(tokenFromJson(Token(), homeController.userData.value.toJson()));
+      await commonController.preferences.setString(Constant.OBJECT_TOKEN, token);
+      homeController.getUser();
     } else {
       CommonFunction.standartSnackbar('Gagal Memperbarui: ${data?.message != null ? data.message : data.errors.length > 0 ? data.errors[0].toString() : 'Server Error'}');
     }

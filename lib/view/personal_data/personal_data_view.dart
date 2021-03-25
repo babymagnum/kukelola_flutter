@@ -211,7 +211,7 @@ class _PersonalDataViewState extends State<PersonalDataView> {
                             _personalDataCt.updateStaff(_personalDataCt.staff.value);
                           },
                           inputType: TextInputType.name,
-                          onEditingComplete: () => setState(() => _middleNameFocus.requestFocus()),
+                          onEditingComplete: () => FocusScope.of(context).requestFocus(FocusNode()),
                           onTap: () => setState(() => _firstNameFocus.requestFocus()),
                           labelText: 'FIRST NAME',
                         ),
@@ -226,7 +226,7 @@ class _PersonalDataViewState extends State<PersonalDataView> {
                             _personalDataCt.updateStaff(_personalDataCt.staff.value);
                           },
                           inputType: TextInputType.name,
-                          onEditingComplete: () => setState(() => _lastNameFocus.requestFocus()),
+                          onEditingComplete: () => FocusScope.of(context).requestFocus(FocusNode()),
                           onTap: () => setState(() => _middleNameFocus.requestFocus()),
                           labelText: 'MIDDLE NAME',
                         ),
@@ -241,7 +241,7 @@ class _PersonalDataViewState extends State<PersonalDataView> {
                             _personalDataCt.updateStaff(_personalDataCt.staff.value);
                           },
                           inputType: TextInputType.name,
-                          onEditingComplete: () => setState(() => _cityOfBirthFocus.requestFocus()),
+                          onEditingComplete: () => FocusScope.of(context).requestFocus(FocusNode()),
                           onTap: () => setState(() => _lastNameFocus.requestFocus()),
                           labelText: 'LAST NAME',
                         ),
@@ -256,7 +256,7 @@ class _PersonalDataViewState extends State<PersonalDataView> {
                             _personalDataCt.updateStaff(_personalDataCt.staff.value);
                           },
                           inputType: TextInputType.name,
-                          onEditingComplete: () => setState(() => FocusScope.of(context).requestFocus(FocusNode())),
+                          onEditingComplete: () => FocusScope.of(context).requestFocus(FocusNode()),
                           onTap: () => setState(() => _cityOfBirthFocus.requestFocus()),
                           labelText: 'CITY OF BIRTH',
                         ),
@@ -281,7 +281,7 @@ class _PersonalDataViewState extends State<PersonalDataView> {
                           hintText: 'e.g ariefz@gmail.com',
                           controller: _emailCt,
                           inputType: TextInputType.emailAddress,
-                          onEditingComplete: () => setState(() => FocusScope.of(context).requestFocus(_phoneFocus)),
+                          onEditingComplete: () => FocusScope.of(context).requestFocus(FocusNode()),
                           onTap: () => setState(() => _emailFocus.requestFocus()),
                           labelText: 'EMAIL',
                         ),
@@ -296,7 +296,7 @@ class _PersonalDataViewState extends State<PersonalDataView> {
                             _personalDataCt.updateStaff(_personalDataCt.staff.value);
                           },
                           controller: _phoneCt,
-                          onEditingComplete: () => setState(() => _identificationNumberFocus.requestFocus()),
+                          onEditingComplete: () => FocusScope.of(context).requestFocus(FocusNode()),
                           onTap: () => setState(() => _phoneFocus.requestFocus()),
                           labelText: 'PHONE',
                         ),
