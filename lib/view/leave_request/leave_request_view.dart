@@ -73,39 +73,35 @@ class _LeaveRequestViewState extends State<LeaveRequestView> {
     final RenderBox renderBoxRed = key.currentContext.findRenderObject();
     final position = renderBoxRed.localToGlobal(Offset.zero);
 
-    showDialog(
-      context: context,
-      barrierColor: Colors.transparent,
-      child: Stack(
-        children: [
-          Container(width: Get.width, height: Get.height,),
-          Positioned(
-            left: 24.w, right: 24.w,
-            top: position.dy > Get.height - 150.h ? Get.height / 2 : position.dy + context.mediaQueryPadding.top,
-            child: Column(
-              children: [
-                Parent(
-                  style: ParentStyle()..width(Get.width)..maxHeight(150.h)..borderRadius(bottomLeft: 6, bottomRight: 6)
-                    ..background.color(Colors.white)..boxShadow(color: Colors.black.withOpacity(0.05), blur: 6, spread: 0, offset: Offset(0, 2)),
-                  child: ListView.separated(
-                    shrinkWrap: true,
-                    itemCount: list.length,
-                    itemBuilder: (_, index) => ListStandartDropdownItem(
-                      content: list[index].label,
-                      onClick: () {
-                        onSelect(list[index]);
-                        Navigator.pop(context);
-                      },
-                    ),
-                    separatorBuilder: (_, __) => Divider(color: Colors.transparent, height: 5.h,),
+    Get.dialog(Stack(
+      children: [
+        Container(width: Get.width, height: Get.height,),
+        Positioned(
+          left: 24.w, right: 24.w,
+          top: position.dy > Get.height - 150.h ? Get.height / 2 : position.dy + context.mediaQueryPadding.top,
+          child: Column(
+            children: [
+              Parent(
+                style: ParentStyle()..width(Get.width)..maxHeight(150.h)..borderRadius(bottomLeft: 6, bottomRight: 6)
+                  ..background.color(Colors.white)..boxShadow(color: Colors.black.withOpacity(0.05), blur: 6, spread: 0, offset: Offset(0, 2)),
+                child: ListView.separated(
+                  shrinkWrap: true,
+                  itemCount: list.length,
+                  itemBuilder: (_, index) => ListStandartDropdownItem(
+                    content: list[index].label,
+                    onClick: () {
+                      onSelect(list[index]);
+                      Navigator.pop(context);
+                    },
                   ),
+                  separatorBuilder: (_, __) => Divider(color: Colors.transparent, height: 5.h,),
                 ),
-              ],
-            ),
-          )
-        ],
-      ),
-    );
+              ),
+            ],
+          ),
+        )
+      ],
+    ), barrierColor: Colors.transparent);
   }
 
   _showDropdownSpecialLeaveType(BuildContext context, GlobalKey key, List<SpecialLeaveListData> list, Function(SpecialLeaveListData item) onSelect) {
@@ -115,39 +111,35 @@ class _LeaveRequestViewState extends State<LeaveRequestView> {
     final RenderBox renderBoxRed = key.currentContext.findRenderObject();
     final position = renderBoxRed.localToGlobal(Offset.zero);
 
-    showDialog(
-      context: context,
-      barrierColor: Colors.transparent,
-      child: Stack(
-        children: [
-          Container(width: Get.width, height: Get.height,),
-          Positioned(
-            left: 24.w, right: 24.w,
-            top: position.dy > Get.height - 150.h ? Get.height / 2 : position.dy + context.mediaQueryPadding.top,
-            child: Column(
-              children: [
-                Parent(
-                  style: ParentStyle()..width(Get.width)..maxHeight(150.h)..borderRadius(bottomLeft: 6, bottomRight: 6)
-                    ..background.color(Colors.white)..boxShadow(color: Colors.black.withOpacity(0.05), blur: 6, spread: 0, offset: Offset(0, 2)),
-                  child: ListView.separated(
-                    shrinkWrap: true,
-                    itemCount: list.length,
-                    itemBuilder: (_, index) => ListStandartDropdownItem(
-                      content: list[index].text,
-                      onClick: () {
-                        onSelect(list[index]);
-                        Navigator.pop(context);
-                      },
-                    ),
-                    separatorBuilder: (_, __) => Divider(color: Colors.transparent, height: 5.h,),
+    Get.dialog(Stack(
+      children: [
+        Container(width: Get.width, height: Get.height,),
+        Positioned(
+          left: 24.w, right: 24.w,
+          top: position.dy > Get.height - 150.h ? Get.height / 2 : position.dy + context.mediaQueryPadding.top,
+          child: Column(
+            children: [
+              Parent(
+                style: ParentStyle()..width(Get.width)..maxHeight(150.h)..borderRadius(bottomLeft: 6, bottomRight: 6)
+                  ..background.color(Colors.white)..boxShadow(color: Colors.black.withOpacity(0.05), blur: 6, spread: 0, offset: Offset(0, 2)),
+                child: ListView.separated(
+                  shrinkWrap: true,
+                  itemCount: list.length,
+                  itemBuilder: (_, index) => ListStandartDropdownItem(
+                    content: list[index].text,
+                    onClick: () {
+                      onSelect(list[index]);
+                      Navigator.pop(context);
+                    },
                   ),
+                  separatorBuilder: (_, __) => Divider(color: Colors.transparent, height: 5.h,),
                 ),
-              ],
-            ),
-          )
-        ],
-      ),
-    );
+              ),
+            ],
+          ),
+        )
+      ],
+    ), barrierColor: Colors.transparent);
   }
 
   _pickFile() async {

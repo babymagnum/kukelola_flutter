@@ -23,7 +23,6 @@ class _BaseViewState extends State<BaseView> {
     final size = MediaQuery.of(context).size;
 
     return Scaffold(
-      resizeToAvoidBottomPadding: widget.resizeAvoidBottomPadding,
       body: Stack(
         children: [
           Container(width: size.width, height: size.height,),

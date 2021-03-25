@@ -71,42 +71,38 @@ class _AddEducationViewState extends State<AddEducationView> {
     final RenderBox renderBoxRed = key.currentContext.findRenderObject();
     final position = renderBoxRed.localToGlobal(Offset.zero);
 
-    showDialog(
-      context: context,
-      barrierColor: Colors.transparent,
-      child: Stack(
-        children: [
-          Container(width: Get.width, height: Get.height,),
-          Positioned(
-            left: 24.w, right: 24.w,
-            top: position.dy > Get.height - 150.h ? Get.height / 2 : position.dy + context.mediaQueryPadding.top,
-            child: Column(
-              children: [
-                Parent(
-                  style: ParentStyle()..width(Get.width)..maxHeight(150.h)..borderRadius(bottomLeft: 6, bottomRight: 6)
-                    ..background.color(Colors.white)..boxShadow(color: Colors.black.withOpacity(0.05), blur: 6, spread: 0, offset: Offset(0, 2)),
-                  child: CupertinoScrollbar(
-                    child: ListView.separated(
-                      shrinkWrap: true,
-                      padding: EdgeInsets.symmetric(vertical: 10.h),
-                      itemCount: list.length,
-                      itemBuilder: (_, index) => ListStandartDropdownItem(
-                        content: list[index].label,
-                        onClick: () {
-                          onSelect(list[index].id);
-                          Navigator.pop(context);
-                        },
-                      ),
-                      separatorBuilder: (_, __) => Divider(color: Colors.transparent, height: 10.h,),
+    Get.dialog(Stack(
+      children: [
+        Container(width: Get.width, height: Get.height,),
+        Positioned(
+          left: 24.w, right: 24.w,
+          top: position.dy > Get.height - 150.h ? Get.height / 2 : position.dy + context.mediaQueryPadding.top,
+          child: Column(
+            children: [
+              Parent(
+                style: ParentStyle()..width(Get.width)..maxHeight(150.h)..borderRadius(bottomLeft: 6, bottomRight: 6)
+                  ..background.color(Colors.white)..boxShadow(color: Colors.black.withOpacity(0.05), blur: 6, spread: 0, offset: Offset(0, 2)),
+                child: CupertinoScrollbar(
+                  child: ListView.separated(
+                    shrinkWrap: true,
+                    padding: EdgeInsets.symmetric(vertical: 10.h),
+                    itemCount: list.length,
+                    itemBuilder: (_, index) => ListStandartDropdownItem(
+                      content: list[index].label,
+                      onClick: () {
+                        onSelect(list[index].id);
+                        Navigator.pop(context);
+                      },
                     ),
+                    separatorBuilder: (_, __) => Divider(color: Colors.transparent, height: 10.h,),
                   ),
                 ),
-              ],
-            ),
-          )
-        ],
-      ),
-    );
+              ),
+            ],
+          ),
+        )
+      ],
+    ), barrierColor: Colors.transparent);
   }
 
   bool _disable() {
