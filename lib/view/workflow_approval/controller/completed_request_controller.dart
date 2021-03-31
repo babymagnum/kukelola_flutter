@@ -7,7 +7,7 @@ import 'package:kukelola_flutter/view/workflow_approval/controller/workflow_appr
 class CompletedRequestController extends GetxController {
   var loadingRequest = false.obs;
   var errorRequest = false.obs;
-  var listCompletedRequest = List<WorkflowGridData>().obs;
+  var listCompletedRequest = <WorkflowGridData>[].obs;
 
   getCompletedRequest() async {
     final _workflowApprovalFilterCt = Get.find<WorkflowApprovalFilterController>();

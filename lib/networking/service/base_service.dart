@@ -1,7 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:kukelola_flutter/core/helper/common_function.dart';
 import 'package:kukelola_flutter/core/helper/constant.dart';
-import 'package:kukelola_flutter/core/helper/text_util.dart';
 import 'package:kukelola_flutter/generated/json/attendance_summary_grid_helper.dart';
 import 'package:kukelola_flutter/generated/json/corporate_calendar_helper.dart';
 import 'package:kukelola_flutter/generated/json/file_attachment_helper.dart';
@@ -89,9 +88,9 @@ class BaseService {
         resultResponse = fromJson<T>(jsonDecode(response.toString()));
       }
     } on DioError catch (e) {
-      if (e.type == DioErrorType.CONNECT_TIMEOUT || e.type == DioErrorType.RECEIVE_TIMEOUT || e.type == DioErrorType.SEND_TIMEOUT) {
+      if (e.type == DioErrorType.connectTimeout || e.type == DioErrorType.receiveTimeout || e.type == DioErrorType.sendTimeout) {
         resultResponse = fromJson<T>(_errorConnection());
-      } else if(e.type == DioErrorType.RESPONSE) {
+      } else if(e.type == DioErrorType.response) {
         resultResponse = fromJson<T>(jsonDecode(e.response.toString()));
       } else {
         resultResponse = fromJson<T>(_errorResponse());
@@ -120,9 +119,9 @@ class BaseService {
         resultResponse = fromJson<T>(jsonDecode(response.toString()));
       }
     } on DioError catch (e) {
-      if (e.type == DioErrorType.CONNECT_TIMEOUT || e.type == DioErrorType.RECEIVE_TIMEOUT || e.type == DioErrorType.SEND_TIMEOUT) {
+      if (e.type == DioErrorType.connectTimeout || e.type == DioErrorType.receiveTimeout || e.type == DioErrorType.sendTimeout) {
         resultResponse = fromJson<T>(_errorConnection());
-      } else if(e.type == DioErrorType.RESPONSE) {
+      } else if(e.type == DioErrorType.response) {
         resultResponse = fromJson<T>(jsonDecode(e.response.toString()));
       } else {
         resultResponse = fromJson<T>(_errorResponse());
@@ -149,9 +148,9 @@ class BaseService {
         resultResponse = fromJson<T>(jsonDecode(response.toString()));
       }
     } on DioError catch (e) {
-      if (e.type == DioErrorType.CONNECT_TIMEOUT || e.type == DioErrorType.RECEIVE_TIMEOUT || e.type == DioErrorType.SEND_TIMEOUT) {
+      if (e.type == DioErrorType.connectTimeout || e.type == DioErrorType.receiveTimeout || e.type == DioErrorType.sendTimeout) {
         resultResponse = fromJson<T>(_errorConnection());
-      } else if(e.type == DioErrorType.RESPONSE) {
+      } else if(e.type == DioErrorType.response) {
         resultResponse = fromJson<T>(jsonDecode(e.response.toString()));
       } else {
         resultResponse = fromJson<T>(_errorResponse());
@@ -178,9 +177,9 @@ class BaseService {
         resultResponse = fromJson<T>(jsonDecode(response.toString()));
       }
     } on DioError catch (e) {
-      if (e.type == DioErrorType.CONNECT_TIMEOUT || e.type == DioErrorType.RECEIVE_TIMEOUT || e.type == DioErrorType.SEND_TIMEOUT) {
+      if (e.type == DioErrorType.connectTimeout || e.type == DioErrorType.receiveTimeout || e.type == DioErrorType.sendTimeout) {
         resultResponse = fromJson<T>(_errorConnection());
-      } else if(e.type == DioErrorType.RESPONSE) {
+      } else if(e.type == DioErrorType.response) {
         resultResponse = fromJson<T>(jsonDecode(e.response.toString()));
       } else {
         resultResponse = fromJson<T>(_errorResponse());
@@ -208,9 +207,9 @@ class BaseService {
         resultResponse = fromJson<T>(jsonDecode(response.toString()));
       }
     } on DioError catch (e) {
-      if (e.type == DioErrorType.CONNECT_TIMEOUT || e.type == DioErrorType.RECEIVE_TIMEOUT || e.type == DioErrorType.SEND_TIMEOUT) {
+      if (e.type == DioErrorType.connectTimeout || e.type == DioErrorType.receiveTimeout || e.type == DioErrorType.sendTimeout) {
         resultResponse = fromJson<T>(_errorConnection());
-      } else if(e.type == DioErrorType.RESPONSE) {
+      } else if(e.type == DioErrorType.response) {
         resultResponse = fromJson<T>(jsonDecode(e.response.toString()));
       } else {
         resultResponse = fromJson<T>(_errorResponse());
@@ -237,9 +236,9 @@ class BaseService {
         resultResponse = fromJson<T>(jsonDecode(response.toString()));
       }
     } on DioError catch (e) {
-      if (e.type == DioErrorType.CONNECT_TIMEOUT || e.type == DioErrorType.RECEIVE_TIMEOUT || e.type == DioErrorType.SEND_TIMEOUT) {
+      if (e.type == DioErrorType.connectTimeout || e.type == DioErrorType.receiveTimeout || e.type == DioErrorType.sendTimeout) {
         resultResponse = fromJson<T>(_errorConnection());
-      } else if(e.type == DioErrorType.RESPONSE) {
+      } else if(e.type == DioErrorType.response) {
         resultResponse = fromJson<T>(jsonDecode(e.response.toString()));
       } else {
         resultResponse = fromJson<T>(_errorResponse());
@@ -266,9 +265,9 @@ class BaseService {
         resultResponse = fromJson<T>(jsonDecode(response.toString()));
       }
     } on DioError catch (e) {
-      if (e.type == DioErrorType.CONNECT_TIMEOUT || e.type == DioErrorType.RECEIVE_TIMEOUT || e.type == DioErrorType.SEND_TIMEOUT) {
+      if (e.type == DioErrorType.connectTimeout || e.type == DioErrorType.receiveTimeout || e.type == DioErrorType.sendTimeout) {
         resultResponse = fromJson<T>(_errorConnection());
-      } else if(e.type == DioErrorType.RESPONSE) {
+      } else if(e.type == DioErrorType.response) {
         resultResponse = fromJson<T>(jsonDecode(e.response.toString()));
       } else {
         resultResponse = fromJson<T>(_errorResponse());
