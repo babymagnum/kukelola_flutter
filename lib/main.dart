@@ -16,8 +16,8 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:kukelola_flutter/view/verification_code/verification_code_view.dart';
+import 'package:kukelola_flutter/view/workflow_approval/workflow_approval_view.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
 import 'core/helper/text_util.dart';
 
 final globalNavigatorKey = GlobalKey<NavigatorState>();
@@ -57,9 +57,10 @@ class _MyAppState extends State<MyApp> {
   }
 
   _navigateTo(String redirect) {
-    if (redirect == 'main') {
-      Get.to(LeaveSummaryView());
-    }
+    Get.to(WorkflowApprovalView());
+    // if (redirect == 'main') {
+    //   Get.to(LeaveSummaryView());
+    // }
   }
 
   _redirectTo(Map<String, dynamic> message) async {

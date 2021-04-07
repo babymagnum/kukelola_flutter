@@ -85,6 +85,7 @@ class _LeaveRequestViewState extends State<LeaveRequestView> {
                 style: ParentStyle()..width(Get.width)..maxHeight(150.h)..borderRadius(bottomLeft: 6, bottomRight: 6)
                   ..background.color(Colors.white)..boxShadow(color: Colors.black.withOpacity(0.05), blur: 6, spread: 0, offset: Offset(0, 2)),
                 child: ListView.separated(
+                  padding: EdgeInsets.symmetric(vertical: 5.h),
                   shrinkWrap: true,
                   itemCount: list.length,
                   itemBuilder: (_, index) => ListStandartDropdownItem(
@@ -171,6 +172,9 @@ class _LeaveRequestViewState extends State<LeaveRequestView> {
     _keyboardStream = KeyboardVisibilityController().onChange.listen((bool visible) {
       if (!visible) FocusScope.of(context).requestFocus(FocusNode());
     });
+
+    _leaveRequestCt.loadPreviousForm();
+    _reasonCt.text = _leaveRequestCt.form.value.reason;
   }
 
   @override
@@ -310,6 +314,7 @@ class _LeaveRequestViewState extends State<LeaveRequestView> {
                           focusNode: _reasonFocus,
                           labelText: 'REASON',
                           hintText: 'type reason...',
+                          controller: _reasonCt,
                           inputType: TextInputType.multiline,
                           onEditingComplete: () {},
                           maxLines: null,

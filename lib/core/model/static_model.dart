@@ -165,7 +165,7 @@ class AttendanceRequestForm {
   String startHour = TextUtil.getCurrentDate('HH:mm');
   String endHour = TextUtil.getCurrentDate('HH:mm');
   String reason = '';
-  List<File> listFile = List();
+  List<File> listFile = [];
   String status = '';
 }
 
@@ -198,6 +198,31 @@ class LeaveRequestForm {
   bool loading = false;
 
   bool showSpecialType() => leaveType.label == 'Special Leave';
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['type'] = type;
+    data['startDate'] = startDate;
+    data['endDate'] = endDate;
+    data['reason'] = reason;
+    data['attachment'] = attachment.path;
+    data['status'] = status;
+    data['leaveType'] = leaveType.toJson();
+    data['specialLeaveType'] = specialLeaveType.toJson();
+    return data;
+  }
+
+  fromJson(Map<String, dynamic> json) {
+    attachment = File('${json['attachment'].toString()}');
+    type = json['type'].toString();
+    startDate = json['startDate'].toString();
+    endDate = json['endDate'].toString();
+    reason = json['reason'].toString();
+    status = json['status'].toString();
+    leaveType = leaveType.fromJson(json['leaveType']);
+    specialLeaveType = specialLeaveType.fromJson(json['specialLeaveType']);
+    return this;
+  }
 }
 
 class ReimbursmentDetailItem {
@@ -212,6 +237,19 @@ class LeaveTypeItem {
 
   String label = '';
   String id = '';
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['label'] = label;
+    data['id'] = id;
+    return data;
+  }
+
+  fromJson(Map<String, dynamic> json) {
+    label = json['label'].toString();
+    id = json['id'].toString();
+    return this;
+  }
 }
 
 class ProfileMenuItem {

@@ -105,7 +105,7 @@ class _ChangePasswordViewState extends State<ChangePasswordView> {
                           _changePasswordCt.setForm(_changePasswordCt.form.value);
                           setState(() {});
                         },
-                        hintText: 'type password...',
+                        hintText: 'e.g Kukelola@2021',
                         labelText: 'NEW PASSWORD',
                         inputType: TextInputType.emailAddress,
                         onEditingComplete: () => setState(() => FocusScope.of(context).requestFocus(_confirmPasswordFocus)),
@@ -122,7 +122,7 @@ class _ChangePasswordViewState extends State<ChangePasswordView> {
                           _changePasswordCt.setForm(_changePasswordCt.form.value);
                           setState(() {});
                         },
-                        hintText: 'type password...',
+                        hintText: 'e.g Kukelola@2021',
                         labelText: 'CONFIRM PASSWORD',
                         inputType: TextInputType.emailAddress,
                         onEditingComplete: () => setState(() => FocusScope.of(context).requestFocus(FocusNode())),

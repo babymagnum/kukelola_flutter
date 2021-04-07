@@ -12,6 +12,11 @@ class Constant {
   static const OTP = 'OTP';
   static const LANGUANGE_CODE = 'LANGUANGE_CODE';
   static const SHOW_FOREGROUND_NOTIFICATION = 'SHOW_FOREGROUND_NOTIFICATION';
+  static const LEAVE_REQUEST = 'LEAVE_REQUEST';
+  static const ATTENDANCE_REQUEST = 'ATTENDANCE_REQUEST';
+  static const OVERTIME_REQUEST = 'OVERTIME_REQUEST';
+  static const BUSINESS_TRIP_REQUEST = 'BUSINESS_TRIP_REQUEST';
+  static const REIMBURSEMENT_REQUEST = 'REIMBURSEMENT_REQUEST';
 
   // VARIABLE //
   static const API_PRODUCTION = 'https://app.kukelola.id/';

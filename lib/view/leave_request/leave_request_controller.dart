@@ -1,11 +1,13 @@
+import 'dart:convert';
+import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:kukelola_flutter/core/helper/common_function.dart';
+import 'package:kukelola_flutter/core/helper/constant.dart';
 import 'package:kukelola_flutter/core/model/static_model.dart';
 import 'package:kukelola_flutter/main.dart';
 import 'package:kukelola_flutter/networking/model/special_leave_list.dart';
 import 'package:kukelola_flutter/networking/request/leave_request.dart';
 import 'package:kukelola_flutter/networking/service/service.dart';
-import 'package:kukelola_flutter/view/home/home_controller.dart';
 
 class LeaveRequestController extends GetxController {
   var listLeaveType = [
@@ -13,7 +15,7 @@ class LeaveRequestController extends GetxController {
     LeaveTypeItem('Special Leave', '2'),
     LeaveTypeItem('Unpaid Leave', '3'),
   ];
-  var listSpecialLeave = List<SpecialLeaveListData>();
+  var listSpecialLeave = <SpecialLeaveListData>[];
   var loadingSubmit = false.obs;
   var loadingPickFile = false.obs;
   var loadingSpecialLeaveType = false.obs;
@@ -22,6 +24,15 @@ class LeaveRequestController extends GetxController {
 
   updateForm(LeaveRequestForm value) => form.value = value;
   setLoadingPickFile(bool value) => loadingPickFile.value = value;
+
+  loadPreviousForm() {
+    if ((commonController.preferences.getString(Constant.LEAVE_REQUEST) ?? '') == '') return;
+
+    Map json = jsonDecode(commonController.preferences.getString(Constant.LEAVE_REQUEST));
+    var data = LeaveRequestForm().fromJson(json) as LeaveRequestForm;
+    print('data leave request ${data.reason}');
+    form.value = data;
+  }
 
   populateSpecialLeaveType() async {
     if (listSpecialLeave.length > 0) return;
@@ -44,9 +55,12 @@ class LeaveRequestController extends GetxController {
     loadingSubmit.value = false;
 
     if (data?.isSuccess ?? false) {
+      commonController.preferences.setString(Constant.LEAVE_REQUEST, '');
       CommonFunction.standartSnackbar('Berhasil Submit Leave Request');
       updateForm(LeaveRequestForm());
     } else {
+      String jsonForm = jsonEncode(LeaveRequestForm().fromJson(form.value.toJson()));
+      await commonController.preferences.setString(Constant.LEAVE_REQUEST, jsonForm);
       CommonFunction.standartSnackbar('Gagal Submit: ${data?.message != null ? data.message : data.errors.length > 0 ? data.errors[0].toString() : 'Server Error'}');
     }
   }

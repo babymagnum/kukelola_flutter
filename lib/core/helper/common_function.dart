@@ -40,7 +40,7 @@ class CommonFunction {
       // Decode the Zip file
       final archive = ZipDecoder().decodeBytes(decoded);
 
-      var listFile = List<File>();
+      var listFile = <File>[];
 
       // Extract the contents of the Zip archive to disk.
       for (final file in archive) {
