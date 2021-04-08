@@ -20,6 +20,14 @@ class _BusinessTripDetailViewState extends State<BusinessTripDetailView> {
   var _businessTripDetailCt = Get.put(BusinessTripDetailController());
 
   @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+
+    _businessTripDetailCt.loadPreviousForm();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return BaseView(
       body: Column(
@@ -69,6 +77,8 @@ class _BusinessTripDetailViewState extends State<BusinessTripDetailView> {
                           _businessTripDetailCt.form.value.airplaneBusTicket.description = text.trim();
                           _businessTripDetailCt.setForm(_businessTripDetailCt.form.value);
                         },
+                        amount: _businessTripDetailCt.form.value.airplaneBusTicket.amount,
+                        description: _businessTripDetailCt.form.value.airplaneBusTicket.description,
                       ),
                       SizedBox(height: 24.h,),
                       BusinessTripDetailInput(
@@ -81,6 +91,8 @@ class _BusinessTripDetailViewState extends State<BusinessTripDetailView> {
                           _businessTripDetailCt.form.value.localTransportation.description = text.trim();
                           _businessTripDetailCt.setForm(_businessTripDetailCt.form.value);
                         },
+                        amount: _businessTripDetailCt.form.value.localTransportation.amount,
+                        description: _businessTripDetailCt.form.value.localTransportation.description,
                       ),
                       SizedBox(height: 24.h,),
                       BusinessTripDetailInput(
@@ -93,6 +105,8 @@ class _BusinessTripDetailViewState extends State<BusinessTripDetailView> {
                           _businessTripDetailCt.form.value.airportParkingFuel.description = text.trim();
                           _businessTripDetailCt.setForm(_businessTripDetailCt.form.value);
                         },
+                        amount: _businessTripDetailCt.form.value.airportParkingFuel.amount,
+                        description: _businessTripDetailCt.form.value.airportParkingFuel.description,
                       ),
                       SizedBox(height: 24.h,),
                       BusinessTripDetailInput(
@@ -105,6 +119,8 @@ class _BusinessTripDetailViewState extends State<BusinessTripDetailView> {
                           _businessTripDetailCt.form.value.housing.description = text.trim();
                           _businessTripDetailCt.setForm(_businessTripDetailCt.form.value);
                         },
+                        amount: _businessTripDetailCt.form.value.housing.amount,
+                        description: _businessTripDetailCt.form.value.housing.description,
                       ),
                       SizedBox(height: 24.h,),
                       BusinessTripDetailInput(
@@ -117,6 +133,8 @@ class _BusinessTripDetailViewState extends State<BusinessTripDetailView> {
                           _businessTripDetailCt.form.value.meal.description = text.trim();
                           _businessTripDetailCt.setForm(_businessTripDetailCt.form.value);
                         },
+                        amount: _businessTripDetailCt.form.value.meal.amount,
+                        description: _businessTripDetailCt.form.value.meal.description,
                       ),
                       SizedBox(height: 24.h,),
                       BusinessTripDetailInput(
@@ -129,6 +147,8 @@ class _BusinessTripDetailViewState extends State<BusinessTripDetailView> {
                           _businessTripDetailCt.form.value.laundry.description = text.trim();
                           _businessTripDetailCt.setForm(_businessTripDetailCt.form.value);
                         },
+                        amount: _businessTripDetailCt.form.value.laundry.amount,
+                        description: _businessTripDetailCt.form.value.laundry.description,
                       ),
                       SizedBox(height: 24.h,),
                       BusinessTripDetailInput(
@@ -141,6 +161,8 @@ class _BusinessTripDetailViewState extends State<BusinessTripDetailView> {
                           _businessTripDetailCt.form.value.pocketMoney.description = text.trim();
                           _businessTripDetailCt.setForm(_businessTripDetailCt.form.value);
                         },
+                        amount: _businessTripDetailCt.form.value.pocketMoney.amount,
+                        description: _businessTripDetailCt.form.value.pocketMoney.description,
                       ),
                       SizedBox(height: 24.h,),
                       BusinessTripDetailInput(
@@ -153,6 +175,8 @@ class _BusinessTripDetailViewState extends State<BusinessTripDetailView> {
                           _businessTripDetailCt.form.value.other.description = text.trim();
                           _businessTripDetailCt.setForm(_businessTripDetailCt.form.value);
                         },
+                        amount: _businessTripDetailCt.form.value.other.amount,
+                        description: _businessTripDetailCt.form.value.other.description,
                       ),
                       SizedBox(height: 32.h,)
                     ],

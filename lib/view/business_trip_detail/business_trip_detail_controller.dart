@@ -1,5 +1,8 @@
+import 'dart:convert';
+
 import 'package:get/get.dart';
 import 'package:kukelola_flutter/core/helper/common_function.dart';
+import 'package:kukelola_flutter/core/helper/constant.dart';
 import 'package:kukelola_flutter/core/model/static_model.dart';
 import 'package:kukelola_flutter/main.dart';
 import 'package:kukelola_flutter/networking/request/business_trip_request.dart';
@@ -12,6 +15,14 @@ class BusinessTripDetailController extends GetxController {
   var form = BusinessTripDetailForm().obs;
 
   setForm(BusinessTripDetailForm value) => form.value = value;
+
+  loadPreviousForm() {
+    if ((commonController.preferences.getString(Constant.BUSINESS_TRIP_DETAIL_REQUEST) ?? '') == '') return;
+
+    Map json = jsonDecode(commonController.preferences.getString(Constant.BUSINESS_TRIP_DETAIL_REQUEST));
+    var data = BusinessTripDetailForm().fromJson(json) as BusinessTripDetailForm;
+    form.value = data;
+  }
 
   submitBusinessTrip() async {
     final tripData = _businessTripCt.form.value;
@@ -29,11 +40,13 @@ class BusinessTripDetailController extends GetxController {
     loadingSubmit.value = false;
 
     if (data?.isSuccess ?? false) {
+      await commonController.preferences.setString(Constant.BUSINESS_TRIP_DETAIL_REQUEST, '');
       CommonFunction.standartSnackbar('Berhasil Submit: ${data?.message ?? 'Business Trip Request'}');
       _businessTripCt.setForm(BusinessTripForm());
-
-      Future.delayed(Duration(milliseconds: 2000), () => Get.back());
+      setForm(BusinessTripDetailForm());
     } else {
+      String jsonForm = jsonEncode(BusinessTripDetailForm().fromJson(form.value.toJson()));
+      await commonController.preferences.setString(Constant.BUSINESS_TRIP_DETAIL_REQUEST, jsonForm);
       CommonFunction.standartSnackbar('Gagal Submit: ${data?.message != null ? data.message : data.errors.length > 0 ? data.errors[0].toString() : 'Server Error'}');
     }
   }

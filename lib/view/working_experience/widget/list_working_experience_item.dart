@@ -48,7 +48,7 @@ class ListWorkingExperienceItem extends StatelessWidget {
                   disable: false,
                   title: 'Edit',
                   loading: false,
-                  onTap: () => Get.to(AddWorkingExperienceView(index: index, item: item,)),
+                  onTap: () => Get.to(() => AddWorkingExperienceView(index: index, item: item,)),
                   textStyle: ThemeTextStyle.biryaniSemiBold.apply(color: Colors.white, fontSizeDelta: 10.ssp),
                   verticalPadding: 5.h,
                   horizontalPadding: 8.w,

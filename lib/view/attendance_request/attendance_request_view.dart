@@ -8,6 +8,7 @@ import 'package:get/get.dart';
 import 'package:kukelola_flutter/core/helper/common_function.dart';
 import 'package:kukelola_flutter/core/helper/constant.dart';
 import 'package:kukelola_flutter/core/helper/text_util.dart';
+import 'package:kukelola_flutter/core/model/static_model.dart';
 import 'package:kukelola_flutter/core/theme/theme_color.dart';
 import 'package:kukelola_flutter/core/theme/theme_text_style.dart';
 import 'package:kukelola_flutter/core/widgets/button_back.dart';
@@ -90,10 +91,14 @@ class AttendanceRequestViewState extends State<AttendanceRequestView> {
     String content = '';
 
     _attendanceRequestCt.form.value.listFile.forEach((element) {
-      content += '${element.path.split('/').last} (${(element.lengthSync() / 1024).round()} KB), ';
+      try {
+        content += '${element.path.split('/').last} (${(File(element.path).lengthSync() / 1024).round()} KB), ';
+      } catch (_) {
+        content += '';
+      }
     });
 
-    return content.substring(0, content.length - 2);
+    return content.length >= 3 ? content.substring(0, content.length - 2) : content;
   }
 
   bool _disable() {
@@ -109,14 +114,23 @@ class AttendanceRequestViewState extends State<AttendanceRequestView> {
     _attendanceRequestCt.setLoadingPickFile(false);
 
     if(result != null) {
-      List<File> listFile = List();
-      result.files.forEach((element) => listFile.add(File(element.path)));
+      List<StringFile> listFile = [];
+      result.files.forEach((element) => listFile.add(StringFile.standartConstructor(element.path)));
       _attendanceRequestCt.form.value.listFile.addAll(listFile);
       _attendanceRequestCt.updateForm(_attendanceRequestCt.form.value);
       setState(() {});
     } else {
       CommonFunction.standartSnackbar('Canceled the picker.');
     }
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+
+    _attendanceRequestCt.loadPreviousForm();
+    _reasonCt.text = _attendanceRequestCt.form.value.reason;
   }
 
   @override

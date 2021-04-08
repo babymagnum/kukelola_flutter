@@ -96,7 +96,7 @@ class _EducationDataViewState extends State<EducationDataView> {
           Positioned(
             bottom: 24.w, right: 24.w,
             child: Parent(
-              gesture: Gestures()..onTap(() => Get.to(AddEducationView(index: null, item: null,))),
+              gesture: Gestures()..onTap(() => Get.to(() => AddEducationView(index: null, item: null,))),
               style: ParentStyle()..borderRadius(all: 1000)..background.color(ThemeColor.primary)
                 ..height(56.w)..width(56.w)..ripple(true),
               child: Center(

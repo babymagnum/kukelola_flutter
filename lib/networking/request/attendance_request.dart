@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'package:dio/dio.dart';
+import 'package:kukelola_flutter/core/model/static_model.dart';
 
 class AttendanceRequest {
   String UserId;
@@ -8,7 +9,7 @@ class AttendanceRequest {
   String StartHour;
   String EndHour;
   String Description;
-  List<File> listFile;
+  List<StringFile> listFile;
 
   AttendanceRequest(this.UserId, this.StartDate, this.EndDate, this.Description, this.StartHour, this.EndHour, this.listFile);
 

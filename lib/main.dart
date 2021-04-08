@@ -57,7 +57,7 @@ class _MyAppState extends State<MyApp> {
   }
 
   _navigateTo(String redirect) {
-    Get.to(WorkflowApprovalView());
+    Get.to(() => WorkflowApprovalView());
     // if (redirect == 'main') {
     //   Get.to(LeaveSummaryView());
     // }

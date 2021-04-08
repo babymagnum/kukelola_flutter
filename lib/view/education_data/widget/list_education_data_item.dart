@@ -58,7 +58,7 @@ class ListEducationDataItem extends StatelessWidget {
                   disable: false,
                   title: 'Edit',
                   loading: false,
-                  onTap: () => Get.to(AddEducationView(index: index, item: item,)),
+                  onTap: () => Get.to(() => AddEducationView(index: index, item: item,)),
                   textStyle: ThemeTextStyle.biryaniSemiBold.apply(color: Colors.white, fontSizeDelta: 10.ssp),
                   verticalPadding: 5.h,
                   horizontalPadding: 8.w,

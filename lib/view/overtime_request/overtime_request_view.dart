@@ -116,6 +116,9 @@ class OvertimeRequestViewState extends State<OvertimeRequestView> {
     _keyboardStream = KeyboardVisibilityController().onChange.listen((bool visible) {
       if (!visible) FocusScope.of(context).requestFocus(FocusNode());
     });
+
+    _overtimeRequestCt.loadPreviousForm();
+    _reasonCt.text = _overtimeRequestCt.form.value.reason;
   }
 
   @override
@@ -233,7 +236,7 @@ class OvertimeRequestViewState extends State<OvertimeRequestView> {
                           hintText: 'selected file...',
                           onTap: () => _pickFile(),
                           loading: _overtimeRequestCt.loadingPickFile.value,
-                          value: _overtimeRequestCt.form.value.attachment.path == '' ? '' : '${_overtimeRequestCt.form.value.attachment.path.split('/').last} (${(_overtimeRequestCt.form.value.attachment.lengthSync() / 1024).round()} KB)',
+                          value: _overtimeRequestCt.form.value.attachment.path == '' ? '' : '${_overtimeRequestCt.form.value.attachment.path.split('/').last} ${_overtimeRequestCt.fileSize.value}',
                           onDelete: () {
                             _overtimeRequestCt.form.value.attachment = File('');
                             _overtimeRequestCt.updateForm(_overtimeRequestCt.form.value);

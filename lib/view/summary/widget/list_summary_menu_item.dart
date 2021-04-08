@@ -18,13 +18,13 @@ class ListSummaryMenuItem extends StatelessWidget {
 
   getTo() {
     if (index == 0) {
-      Get.to(AttendanceSummaryView());
+      Get.to(() => AttendanceSummaryView());
     } else if (index == 1) {
-      Get.to(LeaveSummaryView());
+      Get.to(() => LeaveSummaryView());
     } else if (index == 2) {
-      Get.to(OvertimeSummaryView());
+      Get.to(() => OvertimeSummaryView());
     } else {
-      Get.to(ReimbursmentSummaryView());
+      Get.to(() => ReimbursmentSummaryView());
     }
   }
 

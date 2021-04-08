@@ -13,8 +13,6 @@ import 'package:kukelola_flutter/core/widgets/button_loading.dart';
 import 'package:kukelola_flutter/core/widgets/custom_input.dart';
 import 'package:kukelola_flutter/view/reimbursment_request/reimbursment_request_controller.dart';
 
-import '../../../main.dart';
-
 class DialogAddReimbursmentDetails extends StatefulWidget {
 
   DialogAddReimbursmentDetails({@required this.item, @required this.index});
@@ -132,9 +130,9 @@ class _DialogAddReimbursmentDetailsState extends State<DialogAddReimbursmentDeta
                 loading: false,
                 onTap: () {
                   if (widget.item == null) {
-                    _reimbursmentRequestCt.addReimbursmentDetail(ReimbursmentDetailItem(_descriptionCt.text.trim(), _costCt.text.trim().replaceAll(',', '')));
+                    _reimbursmentRequestCt.addReimbursmentDetail(ReimbursmentDetailItem.standartConstructor(_descriptionCt.text.trim(), _costCt.text.trim().replaceAll(',', '')));
                   } else {
-                    _reimbursmentRequestCt.updateReimbursmentDetail(widget.index, ReimbursmentDetailItem(_descriptionCt.text.trim(), _costCt.text.trim().replaceAll(',', '')));
+                    _reimbursmentRequestCt.updateReimbursmentDetail(widget.index, ReimbursmentDetailItem.standartConstructor(_descriptionCt.text.trim(), _costCt.text.trim().replaceAll(',', '')));
                   }
 
                   Get.back();

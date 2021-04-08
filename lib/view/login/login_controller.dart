@@ -45,7 +45,7 @@ class LoginController extends GetxController {
       String token = jsonEncode(tokenFromJson(Token(), data.toJson()));
       await commonController.preferences.setString(Constant.OBJECT_TOKEN, token);
 
-      Get.to(commonController.autoLogin.value ? ContainerHomeView() : VerificationCodeView());
+      Get.to(() => commonController.autoLogin.value ? ContainerHomeView() : VerificationCodeView());
 
       if (commonController.autoLogin.value) await commonController.preferences.setBool(Constant.IS_LOGIN, true);
 

@@ -86,6 +86,10 @@ class BusinessTripViewState extends State<BusinessTripView> {
   void initState() {
     super.initState();
 
+    _businessTripCt.loadPreviousForm();
+    _purporseCt.text = _businessTripCt.form.value.purpose;
+    _destinationCt.text = _businessTripCt.form.value.destination;
+
     _keyboardStream = KeyboardVisibilityController().onChange.listen((bool visible) {
       if (!visible) FocusScope.of(context).requestFocus(FocusNode());
     });
@@ -123,9 +127,12 @@ class BusinessTripViewState extends State<BusinessTripView> {
                   title: 'Next',
                   loading: _businessTripCt.loadingSubmit.value,
                   onTap: () async {
-                    await Get.to(BusinessTripDetailView());
+                    _businessTripCt.saveOrDeleteLocalForm(true);
+
+                    await Get.to(() => BusinessTripDetailView());
 
                     if (_businessTripCt.form.value.destination == '') {
+                      _businessTripCt.saveOrDeleteLocalForm(false);
                       setState(() {
                         _destinationCt.text = '';
                         _purporseCt.text = '';
@@ -214,7 +221,7 @@ class BusinessTripViewState extends State<BusinessTripView> {
                         hintText: 'selected file...',
                         onTap: () => _pickFile(),
                         loading: _businessTripCt.loadingPickFile.value,
-                        value: _businessTripCt.form.value.attachment.path == '' ? '' : '${_businessTripCt.form.value.attachment.path.split('/').last} (${(_businessTripCt.form.value.attachment.lengthSync() / 1024).round()} KB)',
+                        value: _businessTripCt.form.value.attachment.path == '' ? '' : '${_businessTripCt.form.value.attachment.path.split('/').last} ${_businessTripCt.fileSize.value}',
                         onDelete: () {
                           _businessTripCt.form.value.attachment = File('');
                           _businessTripCt.setForm(_businessTripCt.form.value);

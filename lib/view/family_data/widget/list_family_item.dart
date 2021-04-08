@@ -48,7 +48,7 @@ class ListFamilyItem extends StatelessWidget {
                   disable: false,
                   title: 'Edit',
                   loading: false,
-                  onTap: () => Get.to(AddFamilyView(item: item, index: index)),
+                  onTap: () => Get.to(() => AddFamilyView(item: item, index: index)),
                   textStyle: ThemeTextStyle.biryaniSemiBold.apply(color: Colors.white, fontSizeDelta: 10.ssp),
                   verticalPadding: 5.h,
                   horizontalPadding: 8.w,

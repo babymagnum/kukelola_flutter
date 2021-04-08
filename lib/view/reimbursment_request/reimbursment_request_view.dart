@@ -64,6 +64,9 @@ class _ReimbursmentRequestViewState extends State<ReimbursmentRequestView> {
     _keyboardStream = KeyboardVisibilityController().onChange.listen((bool visible) {
       if (!visible) FocusScope.of(context).requestFocus(FocusNode());
     });
+
+    _reimbursmentRequestCt.loadPreviousForm();
+    _descriptionCt.text = _reimbursmentRequestCt.form.value.reason;
   }
 
   @override

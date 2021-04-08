@@ -16,7 +16,7 @@ class ListReimbursmentSummaryItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Parent(
-      gesture: Gestures()..onTap(() => Get.to(ReimbursmentSummaryDetailView(item: item))),
+      gesture: Gestures()..onTap(() => Get.to(() => ReimbursmentSummaryDetailView(item: item))),
       style: ParentStyle()..background.color(Color(0xFFE9EAEA))..borderRadius(all: 8)..padding(horizontal: 16, vertical: 18),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,

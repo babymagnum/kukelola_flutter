@@ -11,7 +11,7 @@ import 'package:kukelola_flutter/core/theme/theme_text_style.dart';
 class CommonFunction {
 
   static standartSnackbar(String content) {
-    Get.snackbar(null, null, titleText: null, borderRadius: 0, maxWidth: Get.width,
+    Get.snackbar('', '', titleText: Container(), borderRadius: 0, maxWidth: Get.width,
         messageText: Row(
           children: [
             Expanded(

@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:kukelola_flutter/core/helper/common_function.dart';
@@ -21,8 +22,17 @@ class LeaveRequestController extends GetxController {
   var loadingSpecialLeaveType = false.obs;
   var errorSpecialLeaveType = false.obs;
   var form = LeaveRequestForm().obs;
+  var fileSize = ''.obs;
 
-  updateForm(LeaveRequestForm value) => form.value = value;
+  updateForm(LeaveRequestForm value) {
+    try {
+      fileSize.value = '(${(form.value.attachment.lengthSync() / 1024).round()} KB)';
+    } catch (e) {
+      form.value.attachment = File('');
+    }
+
+    form.value = value;
+  }
   setLoadingPickFile(bool value) => loadingPickFile.value = value;
 
   loadPreviousForm() {
@@ -30,7 +40,11 @@ class LeaveRequestController extends GetxController {
 
     Map json = jsonDecode(commonController.preferences.getString(Constant.LEAVE_REQUEST));
     var data = LeaveRequestForm().fromJson(json) as LeaveRequestForm;
-    print('data leave request ${data.reason}');
+    try {
+      fileSize.value = '(${(data.attachment.lengthSync() / 1024).round()} KB)';
+    } catch (e) {
+      data.attachment = File('');
+    }
     form.value = data;
   }
 
@@ -55,7 +69,7 @@ class LeaveRequestController extends GetxController {
     loadingSubmit.value = false;
 
     if (data?.isSuccess ?? false) {
-      commonController.preferences.setString(Constant.LEAVE_REQUEST, '');
+      await commonController.preferences.setString(Constant.LEAVE_REQUEST, '');
       CommonFunction.standartSnackbar('Berhasil Submit Leave Request');
       updateForm(LeaveRequestForm());
     } else {

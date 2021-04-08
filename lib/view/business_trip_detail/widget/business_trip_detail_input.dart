@@ -4,14 +4,15 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:intl/intl.dart';
 import 'package:kukelola_flutter/core/theme/theme_text_style.dart';
 import 'package:kukelola_flutter/core/widgets/custom_input.dart';
-import 'package:kukelola_flutter/main.dart';
 
 class BusinessTripDetailInput extends StatefulWidget {
   final String title;
   final Function(String text) onAmountChange;
   final Function(String text) onDescriptionChange;
+  final String amount;
+  final String description;
 
-  BusinessTripDetailInput({@required this.title, @required this.onAmountChange, @required this.onDescriptionChange});
+  BusinessTripDetailInput({@required this.title, @required this.onAmountChange, @required this.onDescriptionChange, @required this.amount, @required this.description});
 
   @override
   _BusinessTripDetailInputState createState() => _BusinessTripDetailInputState();
@@ -19,7 +20,7 @@ class BusinessTripDetailInput extends StatefulWidget {
 
 class _BusinessTripDetailInputState extends State<BusinessTripDetailInput> {
   String _formatNumber(String s) => NumberFormat.decimalPattern('en').format(int.parse(s));
-  var _amountCt = TextEditingController();
+  var _amountCt = TextEditingController(), _descriptionCt = TextEditingController();
   var _amountFocus = FocusNode(), _descriptionFocus = FocusNode();
 
   @override
@@ -32,6 +33,9 @@ class _BusinessTripDetailInputState extends State<BusinessTripDetailInput> {
   @override
   void initState() {
     super.initState();
+
+    _amountCt.text = widget.amount;
+    _descriptionCt.text = widget.description;
   }
 
   @override
@@ -73,6 +77,7 @@ class _BusinessTripDetailInputState extends State<BusinessTripDetailInput> {
         CustomInput(
           textInputAction: null,
           focusNode: _descriptionFocus,
+          controller: _descriptionCt,
           labelText: 'DESCRIPTION',
           hintText: 'type description...',
           inputType: TextInputType.multiline,

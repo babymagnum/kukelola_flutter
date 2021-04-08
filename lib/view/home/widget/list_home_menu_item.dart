@@ -39,10 +39,10 @@ class ListHomeMenuItem extends StatelessWidget {
           permission != LocationPermission.always) {
         CommonFunction.standartSnackbar('Location permissions are denied (actual value: $permission).');
       } else {
-        Get.to(OnlineAttendanceView());
+        Get.to(() => OnlineAttendanceView());
       }
     } else {
-      Get.to(OnlineAttendanceView());
+      Get.to(() => OnlineAttendanceView());
     }
   }
 
@@ -50,21 +50,21 @@ class ListHomeMenuItem extends StatelessWidget {
     if (index == 0) {
       _checkLocationPermission();
     } else if (index == 1) {
-      Get.to(AttendanceRequestView());
+      Get.to(() => AttendanceRequestView());
     } else if (index == 2) {
-      Get.to(OvertimeRequestView());
+      Get.to(() => OvertimeRequestView());
     } else if (index == 3) {
-      Get.to(LeaveRequestView());
+      Get.to(() => LeaveRequestView());
     } else if (index == 4) {
-      Get.to(BusinessTripView());
+      Get.to(() => BusinessTripView());
     } else if (index == 5) {
-      Get.to(ReimbursmentRequestView());
+      Get.to(() => ReimbursmentRequestView());
     } else if (index == 6) {
       Get.dialog(DialogPayslip());
     } else if (index == 7) {
-      Get.to(WorkflowApprovalView());
+      Get.to(() => WorkflowApprovalView());
     } else {
-      Get.to(CalendarView());
+      Get.to(() => CalendarView());
     }
   }
 

@@ -28,15 +28,15 @@ class ListProfileMenuItem extends StatelessWidget {
   _onClick() {
     if (index == 0) {
       // commonController.setLanguage(context, commonController.language.value == Constant.INDONESIAN ? Constant.ENGLISH : Constant.INDONESIAN);
-      Get.to(PersonalDataView());
+      Get.to(() => PersonalDataView());
     } else if (index == 1) {
-      Get.to(EducationDataView());
+      Get.to(() => EducationDataView());
     } else if (index == 2) {
-      Get.to(FamilyDataView());
+      Get.to(() => FamilyDataView());
     } else if (index == 3) {
-      Get.to(WorkingExperienceView());
+      Get.to(() => WorkingExperienceView());
     } else if (index == 4) {
-      Get.to(ChangePasswordView());
+      Get.to(() => ChangePasswordView());
     } else {
       Get.dialog(
         DialogError(

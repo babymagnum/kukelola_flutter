@@ -96,7 +96,7 @@ class _FamilyDataViewState extends State<FamilyDataView> {
           Positioned(
             bottom: 24.w, right: 24.w,
             child: Parent(
-              gesture: Gestures()..onTap(() => Get.to(AddFamilyView(item: null, index: null,))),
+              gesture: Gestures()..onTap(() => Get.to(() => AddFamilyView(item: null, index: null,))),
               style: ParentStyle()..borderRadius(all: 1000)..background.color(ThemeColor.primary)
                 ..height(56.w)..width(56.w)..ripple(true),
               child: Center(

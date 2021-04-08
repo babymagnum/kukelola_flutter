@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:io';
 import 'package:kukelola_flutter/core/helper/text_util.dart';
 
@@ -99,11 +100,49 @@ class BusinessTripDetailForm {
   BusinessTripDetailInput laundry = BusinessTripDetailInput();
   BusinessTripDetailInput pocketMoney = BusinessTripDetailInput();
   BusinessTripDetailInput other = BusinessTripDetailInput();
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = Map<String, dynamic>();
+    data['airplaneBusTicket'] = airplaneBusTicket.toJson();
+    data['localTransportation'] = localTransportation.toJson();
+    data['airportParkingFuel'] = airportParkingFuel.toJson();
+    data['housing'] = housing.toJson();
+    data['meal'] = meal.toJson();
+    data['laundry'] = laundry.toJson();
+    data['pocketMoney'] = pocketMoney.toJson();
+    data['other'] = other.toJson();
+    return data;
+  }
+
+  fromJson(Map<String, dynamic> json) {
+    airplaneBusTicket = airplaneBusTicket.fromJson(json['airplaneBusTicket']);
+    localTransportation = localTransportation.fromJson(json['localTransportation']);
+    airportParkingFuel = airportParkingFuel.fromJson(json['airportParkingFuel']);
+    housing = housing.fromJson(json['housing']);
+    meal = meal.fromJson(json['meal']);
+    laundry = laundry.fromJson(json['laundry']);
+    pocketMoney = pocketMoney.fromJson(json['pocketMoney']);
+    other = other.fromJson(json['other']);
+    return this;
+  }
 }
 
 class BusinessTripDetailInput {
   String amount = '';
   String description = '';
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = Map<String, dynamic>();
+    data['amount'] = amount;
+    data['description'] = description;
+    return data;
+  }
+
+  fromJson(Map<String, dynamic> json) {
+    amount = json['amount'].toString();
+    description = json['description'].toString();
+    return this;
+  }
 }
 
 class BusinessTripForm {
@@ -113,6 +152,25 @@ class BusinessTripForm {
   String purpose = '';
   File attachment = File('');
   bool loading = false;
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = Map<String, dynamic>();
+    data['startDate'] = startDate;
+    data['endDate'] = endDate;
+    data['destination'] = destination;
+    data['purpose'] = purpose;
+    data['attachment'] = attachment.path;
+    return data;
+  }
+
+  fromJson(Map<String, dynamic> json) {
+    attachment = File('${json['attachment'].toString()}');
+    startDate = json['startDate'].toString();
+    endDate = json['endDate'].toString();
+    destination = json['destination'].toString();
+    purpose = json['purpose'].toString();
+    return this;
+  }
 }
 
 class EducationDataItem {
@@ -159,21 +217,83 @@ class CalendarItem {
   String description;
 }
 
+class StringFile {
+  String path = '';
+
+  StringFile();
+
+  StringFile.standartConstructor(String path) {
+    this.path = path;
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = Map<String, dynamic>();
+    data['path'] = path;
+    return data;
+  }
+
+  fromJson(Map<String, dynamic> json) {
+    path = json['path'];
+    return this;
+  }
+}
+
 class AttendanceRequestForm {
   String startDate = TextUtil.getCurrentDate('dd/MM/yyyy');
   String endDate = TextUtil.getCurrentDate('dd/MM/yyyy');
   String startHour = TextUtil.getCurrentDate('HH:mm');
   String endHour = TextUtil.getCurrentDate('HH:mm');
   String reason = '';
-  List<File> listFile = [];
+  List<StringFile> listFile = [];
   String status = '';
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = Map<String, dynamic>();
+    data['startDate'] = startDate;
+    data['endDate'] = endDate;
+    data['startHour'] = startHour;
+    data['endHour'] = endHour;
+    data['reason'] = reason;
+    data['status'] = status;
+    data['listFile'] = jsonEncode(listFile.map((e) => e.toJson()).toList());
+    return data;
+  }
+
+  fromJson(Map<String, dynamic> json) {
+    listFile = (jsonDecode(json['listFile'].toString()) as List).map((i) => StringFile().fromJson(i) as StringFile).toList();
+    startDate = json['startDate'].toString();
+    endDate = json['endDate'].toString();
+    startHour = json['startHour'].toString();
+    endHour = json['endHour'].toString();
+    reason = json['reason'].toString();
+    status = json['status'].toString();
+    return this;
+  }
 }
 
 class ReimbursmentRequestForm {
   String reason = '';
   File attachment = File('');
   String status = '';
+  List<ReimbursmentDetailItem> listDetail = [];
   bool loading = false;
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = Map<String, dynamic>();
+    data['reason'] = reason;
+    data['attachment'] = attachment.path;
+    data['status'] = status;
+    data['listDetail'] = jsonEncode(listDetail.map((e) => e.toJson()).toList());
+    return data;
+  }
+
+  fromJson(Map<String, dynamic> json) {
+    attachment = File('${json['attachment'].toString()}');
+    listDetail = (jsonDecode(json['listDetail'].toString()) as List).map((i) => ReimbursmentDetailItem().fromJson(i) as ReimbursmentDetailItem).toList();
+    reason = json['reason'].toString();
+    status = json['status'].toString();
+    return this;
+  }
 }
 
 class OvertimeRequestFormObject {
@@ -184,6 +304,27 @@ class OvertimeRequestFormObject {
   String status = '';
   File attachment = File('');
   bool loading = false;
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = Map<String, dynamic>();
+    data['overtimeDate'] = overtimeDate;
+    data['startHour'] = startHour;
+    data['endHour'] = endHour;
+    data['reason'] = reason;
+    data['status'] = status;
+    data['attachment'] = attachment.path;
+    return data;
+  }
+
+  fromJson(Map<String, dynamic> json) {
+    attachment = File('${json['attachment'].toString()}');
+    overtimeDate = json['overtimeDate'].toString();
+    startHour = json['startHour'].toString();
+    endHour = json['endHour'].toString();
+    reason = json['reason'].toString();
+    status = json['status'].toString();
+    return this;
+  }
 }
 
 class LeaveRequestForm {
@@ -200,7 +341,7 @@ class LeaveRequestForm {
   bool showSpecialType() => leaveType.label == 'Special Leave';
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
+    final Map<String, dynamic> data = Map<String, dynamic>();
     data['type'] = type;
     data['startDate'] = startDate;
     data['endDate'] = endDate;
@@ -226,10 +367,28 @@ class LeaveRequestForm {
 }
 
 class ReimbursmentDetailItem {
-  ReimbursmentDetailItem(this.description, this.cost);
-
   String description;
   String cost;
+
+  ReimbursmentDetailItem();
+
+  ReimbursmentDetailItem.standartConstructor(this.description, this.cost) {
+    this.description = description;
+    this.cost = cost;
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = Map<String, dynamic>();
+    data['description'] = description;
+    data['cost'] = cost;
+    return data;
+  }
+
+  fromJson(Map<String, dynamic> json) {
+    description = json['description'].toString();
+    cost = json['cost'].toString();
+    return this;
+  }
 }
 
 class LeaveTypeItem {
@@ -239,7 +398,7 @@ class LeaveTypeItem {
   String id = '';
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
+    final Map<String, dynamic> data = Map<String, dynamic>();
     data['label'] = label;
     data['id'] = id;
     return data;

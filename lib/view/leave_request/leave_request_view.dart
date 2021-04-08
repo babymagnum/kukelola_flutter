@@ -331,7 +331,7 @@ class _LeaveRequestViewState extends State<LeaveRequestView> {
                           hintText: 'selected file...',
                           onTap: () => _pickFile(),
                           loading: _leaveRequestCt.loadingPickFile.value,
-                          value: _leaveRequestCt.form.value.attachment.path == '' ? '' : '${_leaveRequestCt.form.value.attachment.path.split('/').last} (${(_leaveRequestCt.form.value.attachment.lengthSync() / 1024).round()} KB)',
+                          value: _leaveRequestCt.form.value.attachment.path == '' ? '' : '${_leaveRequestCt.form.value.attachment.path.split('/').last} ${_leaveRequestCt.fileSize.value}',
                           onDelete: () {
                             _leaveRequestCt.form.value.attachment = File('');
                             _leaveRequestCt.updateForm(_leaveRequestCt.form.value);
