@@ -56,7 +56,7 @@ class _WorkflowApprovalViewState extends State<WorkflowApprovalView> with Single
               children: [
                 Expanded(
                   child: ButtonBack(
-                    label: 'Workflow Approval',
+                    label: 'Approval',
                     onBack: () => Get.back(),
                   ),
                 ),

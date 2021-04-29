@@ -1,5 +1,4 @@
 import 'dart:convert';
-
 import 'package:get/get.dart';
 import 'package:kukelola_flutter/core/helper/common_function.dart';
 import 'package:kukelola_flutter/core/helper/constant.dart';
@@ -33,22 +32,23 @@ class LoginController extends GetxController {
         resendOtp ? commonController.preferences.getString(Constant.EMAIL) : form.value.username,
         resendOtp ? commonController.preferences.getString(Constant.PASSWORD) : form.value.password,
         otp, commonController.autoLogin.value ? 'true' : 'false'));
+
     loadingLogin.value = false;
 
     if (data?.accessToken != null) {
       successLogin.value = true;
-      await commonController.preferences.setString(Constant.EMAIL, form.value.username);
-      await commonController.preferences.setString(Constant.PASSWORD, form.value.password);
       await commonController.preferences.setBool(Constant.IS_PASS_LOGIN, true);
       await commonController.preferences.setString(Constant.OTP, otp);
       await commonController.preferences.setString(Constant.TOKEN, data.accessToken);
       String token = jsonEncode(tokenFromJson(Token(), data.toJson()));
       await commonController.preferences.setString(Constant.OBJECT_TOKEN, token);
 
-      Get.to(() => commonController.autoLogin.value ? ContainerHomeView() : VerificationCodeView());
+      if (resendOtp) return;
 
+      await commonController.preferences.setString(Constant.EMAIL, form.value.username);
+      await commonController.preferences.setString(Constant.PASSWORD, form.value.password);
+      await Get.offAll(() => commonController.autoLogin.value ? ContainerHomeView() : VerificationCodeView());
       if (commonController.autoLogin.value) await commonController.preferences.setBool(Constant.IS_LOGIN, true);
-
       commonController.setAutoLogin(false);
     } else {
       successLogin.value = false;

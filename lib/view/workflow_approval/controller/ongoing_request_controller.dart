@@ -12,7 +12,7 @@ class OngoingRequestController extends GetxController {
   var loadingRequest = false.obs;
   var errorRequest = false.obs;
   var loadingReject = false.obs;
-  var listOngoingRequest = List<WorkflowGridData>().obs;
+  var listOngoingRequest = <WorkflowGridData>[].obs;
 
   setRejectReason(String value) => rejectReason.value = value;
 

@@ -160,7 +160,7 @@ class _VerificationCodeViewState extends State<VerificationCodeView> {
                       !_loginCt.successLogin.value ?
                       Padding(
                         padding: EdgeInsets.only(bottom: 16.h),
-                        child: ButtonReload(onTap: () => _loginCt.login(true),),
+                        child: ButtonReload(onTap: () => _loginCt.login(false),),
                       ) :
                       Container(),
                       ButtonLoading(
