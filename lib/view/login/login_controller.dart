@@ -32,7 +32,6 @@ class LoginController extends GetxController {
         resendOtp ? commonController.preferences.getString(Constant.EMAIL) : form.value.username,
         resendOtp ? commonController.preferences.getString(Constant.PASSWORD) : form.value.password,
         otp, commonController.autoLogin.value ? 'true' : 'false'));
-
     loadingLogin.value = false;
 
     if (data?.accessToken != null) {
@@ -42,14 +41,14 @@ class LoginController extends GetxController {
       await commonController.preferences.setString(Constant.TOKEN, data.accessToken);
       String token = jsonEncode(tokenFromJson(Token(), data.toJson()));
       await commonController.preferences.setString(Constant.OBJECT_TOKEN, token);
+      if (commonController.autoLogin.value) await commonController.preferences.setBool(Constant.IS_LOGIN, true);
+      commonController.setAutoLogin(false);
 
       if (resendOtp) return;
 
       await commonController.preferences.setString(Constant.EMAIL, form.value.username);
       await commonController.preferences.setString(Constant.PASSWORD, form.value.password);
       await Get.offAll(() => commonController.autoLogin.value ? ContainerHomeView() : VerificationCodeView());
-      if (commonController.autoLogin.value) await commonController.preferences.setBool(Constant.IS_LOGIN, true);
-      commonController.setAutoLogin(false);
     } else {
       successLogin.value = false;
       CommonFunction.standartSnackbar('Gagal Login: ${data.errorDescription ?? data.errorMessage}');

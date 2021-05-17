@@ -2,19 +2,15 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:kukelola_flutter/core/helper/constant.dart';
 import 'package:kukelola_flutter/core/theme/theme_color.dart';
 import 'package:kukelola_flutter/core/theme/theme_text_style.dart';
 import 'package:kukelola_flutter/core/widgets/button_back.dart';
 import 'package:kukelola_flutter/core/widgets/button_loading.dart';
 import 'package:kukelola_flutter/core/widgets/button_reload.dart';
 import 'package:kukelola_flutter/view/base_view.dart';
-import 'package:kukelola_flutter/view/container_home/container_home_view.dart';
-import 'package:kukelola_flutter/view/home/home_view.dart';
 import 'package:kukelola_flutter/view/login/login_controller.dart';
 import 'package:kukelola_flutter/view/verification_code/verification_code_controller.dart';
 import 'package:kukelola_flutter/view/verification_code/widget/input_verification_code.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class VerificationCodeView extends StatefulWidget {
 

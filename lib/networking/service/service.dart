@@ -18,7 +18,6 @@ import 'package:kukelola_flutter/networking/model/staff_family_insert.dart';
 import 'package:kukelola_flutter/networking/model/standart.dart';
 import 'package:kukelola_flutter/networking/model/token.dart';
 import 'package:kukelola_flutter/networking/model/total_workflow.dart';
-import 'package:kukelola_flutter/networking/model/user.dart';
 import 'package:kukelola_flutter/networking/model/workflow_grid.dart';
 import 'package:kukelola_flutter/networking/request/attendance_online_request.dart';
 import 'package:kukelola_flutter/networking/request/attendance_request.dart';

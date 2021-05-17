@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import 'package:kukelola_flutter/core/helper/constant.dart';
 import 'package:kukelola_flutter/core/theme/theme_color.dart';
 import 'package:kukelola_flutter/core/theme/theme_text_style.dart';
+import 'package:kukelola_flutter/main.dart';
 import 'package:kukelola_flutter/view/base_view.dart';
 import 'package:kukelola_flutter/view/login/login_view.dart';
 import 'package:kukelola_flutter/view/onboarding/onboarding_controller.dart';
@@ -25,7 +26,7 @@ class _OnboardingViewState extends State<OnboardingView> {
   var _pageCt = PageController(initialPage: 0);
 
   List<Widget> pageIndicators() {
-    List<Widget> listWidget = List();
+    List<Widget> listWidget = <Widget>[];
 
     for(int i=0; i<_onboardingCt.listOnboarding.length; i++) {
       listWidget.add(
@@ -90,8 +91,7 @@ class _OnboardingViewState extends State<OnboardingView> {
                     onTap: () async {
                       if (_onboardingCt.onboardingSelectedPage.value == 2) return;
 
-                      final preference = await SharedPreferences.getInstance();
-                      await preference.setBool(Constant.IS_ONBOARDING, true);
+                      await commonController.preferences.setBool(Constant.IS_ONBOARDING, true);
 
                       Get.off(LoginView());
                     },
