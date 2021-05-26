@@ -6,8 +6,8 @@ class RejectRequest {
 
   dynamic getBody() {
     return {
-      'Id': Id,
-      'RejectReason': RejectReason
+      "Id": Id,
+      "RejectReason": RejectReason
     };
   }
 }

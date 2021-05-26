@@ -53,16 +53,16 @@ class CommonController extends GetxController {
     if (data?.isSuccess ?? false) {
       commonController.preferences.setBool(Constant.IS_LOGIN, false);
       commonController.preferences.setBool(Constant.IS_PASS_LOGIN, false);
-      Get.offAll(LoginView());
+      Get.offAll(() => LoginView());
     } else {
       CommonFunction.standartSnackbar('Gagal Logout: ${data?.message != null ? data.message : data.errors.length > 0 ? data.errors[0].toString() : 'Server Error'}');
     }
   }
 
-  standartLogout() {
+  standartLogout() async {
     autoLogin.value = true;
-    commonController.preferences.setBool(Constant.IS_LOGIN, false);
-    commonController.preferences.setBool(Constant.IS_PASS_LOGIN, false);
-    Get.offAll(LoginView());
+    await commonController.preferences.setBool(Constant.IS_LOGIN, false);
+    await commonController.preferences.setBool(Constant.IS_PASS_LOGIN, false);
+    Get.offAll(() => LoginView());
   }
 }

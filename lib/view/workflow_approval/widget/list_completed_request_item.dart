@@ -53,6 +53,22 @@ class ListCompletedRequestItem extends StatelessWidget {
                     Text(item.name, style: ThemeTextStyle.biryaniBold.apply(color: Color(0xFF158AC9), fontSizeDelta: 14.ssp),),
                     Text(item.description, style: ThemeTextStyle.biryaniRegular.apply(color: Color(0xFF6D6D6D), fontSizeDelta: 10.ssp),),
                     SizedBox(height: 3.h,),
+                    item.workflowStatus == 2 ?
+                    // Text('Reason: ${item.rejectReason}', style: ThemeTextStyle.biryaniRegular.apply(color: Color(0xFF6D6D6D), fontSizeDelta: 10.ssp),) :
+                    RichText(
+                      text: TextSpan(
+                        text: 'Reason: ',
+                        style: ThemeTextStyle.biryaniSemiBold.apply(color: Colors.black.withOpacity(0.9), fontSizeDelta: 10.ssp),
+                        children: [
+                          TextSpan(
+                            text: (item.rejectReason ?? '') == '' ? 'Tidak ditemukan alasan' : item.rejectReason,
+                            style: ThemeTextStyle.biryaniRegular.apply(color: Color(0xFF6D6D6D), fontSizeDelta: 10.ssp),
+                          )
+                        ]
+                      ),
+                    ) :
+                    Container(),
+                    SizedBox(height: 3.h,),
                     Row(
                       children: [
                         Text(item.createDate, style: ThemeTextStyle.biryaniRegular.apply(color: Color(0xFF6D6D6D), fontSizeDelta: 10.ssp),),

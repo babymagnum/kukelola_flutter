@@ -29,7 +29,7 @@ class HomeController extends GetxController {
       HomeMenuItem('Business\nTrip', 'assets/images/business_trip 2.png', 0),
       HomeMenuItem('Reimbursement Request', 'assets/images/reimbursement 1.png', 0),
       HomeMenuItem('Pay Slip', 'assets/images/pay_slip 1.png', 0),
-      HomeMenuItem('Workflow\nApproval', 'assets/images/workflow 1.png', 0),
+      HomeMenuItem('Approval', 'assets/images/workflow 1.png', 0),
       HomeMenuItem('Calendar', 'assets/images/calendar 1.png', 0),
     ]);
   }
