@@ -8,9 +8,7 @@ import 'package:kukelola_flutter/networking/model/token.dart';
 import 'package:kukelola_flutter/networking/service/service.dart';
 
 class HomeController extends GetxController {
-  var listMenuHome = List<HomeMenuItem>().obs;
-  // var userData = UserData().obs;
-  // var user = User().obs;
+  var listMenuHome = <HomeMenuItem>[].obs;
   var userData = Token().obs;
   var loadingUser = false.obs;
   var errorUser = false.obs;
@@ -53,19 +51,6 @@ class HomeController extends GetxController {
       errorProfilePicture.value = true;
     }
   }
-
-  // getUser() async {
-  //   loadingUser.value = true;
-  //   final data = await Service().account();
-  //   loadingUser.value = false;
-  //
-  //   if (data?.data != null) {
-  //     user.value = data;
-  //     userData.value = data.data;
-  //   } else {
-  //     errorUser.value = data?.data == null;
-  //   }
-  // }
 
   getTotalWorkflow() async {
     final data = await Service().totalWorkflow();
