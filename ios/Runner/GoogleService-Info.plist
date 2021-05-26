@@ -3,19 +3,19 @@
 <plist version="1.0">
 <dict>
 	<key>CLIENT_ID</key>
-	<string>103484181816-clrdu5l7oevnpefbev4jo0d1f7o3dvnh.apps.googleusercontent.com</string>
+	<string>103484181816-ov74kuho4un50bvj9r43c4guf2rg0gd1.apps.googleusercontent.com</string>
 	<key>REVERSED_CLIENT_ID</key>
-	<string>com.googleusercontent.apps.103484181816-clrdu5l7oevnpefbev4jo0d1f7o3dvnh</string>
+	<string>com.googleusercontent.apps.103484181816-ov74kuho4un50bvj9r43c4guf2rg0gd1</string>
 	<key>ANDROID_CLIENT_ID</key>
 	<string>103484181816-81i7supchgari9nvi3oemgsd5ve98trn.apps.googleusercontent.com</string>
 	<key>API_KEY</key>
-	<string>AIzaSyDg8jdwtdbQQPjbwOk_C0EI2vhQqZe-BzA</string>
+	<string>AIzaSyAtS6QYYXJ5cAnoSer9AIXCjiYogzd2kJc</string>
 	<key>GCM_SENDER_ID</key>
 	<string>103484181816</string>
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
-	<string>com.netika.kukelola</string>
+	<string>netika.kukelola.ios</string>
 	<key>PROJECT_ID</key>
 	<string>kukelola-f6a61</string>
 	<key>STORAGE_BUCKET</key>
@@ -31,6 +31,6 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:103484181816:ios:79039897da4a4011dc05cd</string>
+	<string>1:103484181816:ios:541dd6221634bee7dc05cd</string>
 </dict>
 </plist>
