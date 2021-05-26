@@ -24,7 +24,7 @@ class Onboarding3 extends StatelessWidget {
           child: Stack(
             children: [
               Align(
-                child: Image.asset('assets/images/kukelola_logo.png', width: Get.width * 0.45, height: Get.height * 0.4, fit: BoxFit.contain,),
+                child: Image.asset('assets/images/kukelola_logo_android.png', width: Get.width * 0.45, height: Get.height * 0.4, fit: BoxFit.contain,),
                 alignment: Alignment.topCenter,
               ),
               Positioned(
