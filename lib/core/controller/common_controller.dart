@@ -53,8 +53,8 @@ class CommonController extends GetxController {
     loadingLogout.value = false;
 
     if (data?.isSuccess ?? false) {
-      setAutoLogin(true);
-      commonController.preferences.setBool(Constant.IS_AUTO_LOGIN, true);
+      setAutoLogin(false);
+      commonController.preferences.setBool(Constant.IS_AUTO_LOGIN, false);
       commonController.preferences.setBool(Constant.IS_LOGIN, false);
       commonController.preferences.setBool(Constant.IS_PASS_LOGIN, false);
       Get.offAll(() => LoginView());

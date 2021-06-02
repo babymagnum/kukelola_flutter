@@ -168,14 +168,14 @@ class _MyAppState extends State<MyApp> {
     final isOnboarding = commonController?.preferences?.getBool(Constant.IS_ONBOARDING) ?? false;
     final isPassLogin = commonController?.preferences?.getBool(Constant.IS_PASS_LOGIN) ?? false;
 
-    if (!isOnboarding) {
-      return OnboardingView();
-    } else if (!isLogin) {
-      return LoginView();
+    if (isLogin) {
+      return ContainerHomeView();
     } else if (isPassLogin) {
       return VerificationCodeView();
+    } else if (!isOnboarding) {
+      return OnboardingView();
     } else {
-      return ContainerHomeView();
+      return LoginView();
     }
   }
 
