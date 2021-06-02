@@ -43,6 +43,8 @@ class CommonController extends GetxController {
 
   initValue() async {
     preferences = await SharedPreferences.getInstance();
+
+    autoLogin.value = preferences.getBool(Constant.IS_AUTO_LOGIN) ?? false;
   }
 
   logout() async {
@@ -51,6 +53,8 @@ class CommonController extends GetxController {
     loadingLogout.value = false;
 
     if (data?.isSuccess ?? false) {
+      setAutoLogin(true);
+      commonController.preferences.setBool(Constant.IS_AUTO_LOGIN, true);
       commonController.preferences.setBool(Constant.IS_LOGIN, false);
       commonController.preferences.setBool(Constant.IS_PASS_LOGIN, false);
       Get.offAll(() => LoginView());
@@ -60,7 +64,8 @@ class CommonController extends GetxController {
   }
 
   standartLogout() async {
-    autoLogin.value = true;
+    setAutoLogin(true);
+    commonController.preferences.setBool(Constant.IS_AUTO_LOGIN, true);
     await commonController.preferences.setBool(Constant.IS_LOGIN, false);
     await commonController.preferences.setBool(Constant.IS_PASS_LOGIN, false);
     Get.offAll(() => LoginView());

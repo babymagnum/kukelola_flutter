@@ -47,6 +47,7 @@ class VerificationCodeController extends GetxController {
 
     if (otp == commonController.preferences?.getString(Constant.OTP) ?? '') {
       commonController.preferences.setBool(Constant.IS_LOGIN, true);
+      commonController.preferences.setBool(Constant.IS_PASS_LOGIN, false);
       Get.offAll(() => ContainerHomeView());
     } else {
       CommonFunction.standartSnackbar('OTP yang dimasukan salah');

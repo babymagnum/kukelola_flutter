@@ -35,14 +35,19 @@ class LoginController extends GetxController {
     loadingLogin.value = false;
 
     if (data?.accessToken != null) {
+      if (form.value.username.split('@')[1] == 'kukelola.com') {
+        commonController.setAutoLogin(true);
+        await commonController.preferences.setBool(Constant.IS_PASS_LOGIN, false);
+      } else {
+        await commonController.preferences.setBool(Constant.IS_PASS_LOGIN, true);
+      }
+
       successLogin.value = true;
-      await commonController.preferences.setBool(Constant.IS_PASS_LOGIN, true);
       await commonController.preferences.setString(Constant.OTP, otp);
       await commonController.preferences.setString(Constant.TOKEN, data.accessToken);
       String token = jsonEncode(tokenFromJson(Token(), data.toJson()));
       await commonController.preferences.setString(Constant.OBJECT_TOKEN, token);
       if (commonController.autoLogin.value) await commonController.preferences.setBool(Constant.IS_LOGIN, true);
-      commonController.setAutoLogin(false);
 
       if (resendOtp) return;
 

@@ -7,7 +7,6 @@ import 'package:get/get.dart';
 import 'package:kukelola_flutter/core/controller/common_controller.dart';
 import 'package:kukelola_flutter/core/helper/LocalesString.dart';
 import 'package:kukelola_flutter/core/helper/constant.dart';
-import 'package:kukelola_flutter/core/widgets/dialog_error.dart';
 import 'package:kukelola_flutter/view/container_home/container_home_view.dart';
 import 'package:kukelola_flutter/view/home/home_controller.dart';
 import 'package:kukelola_flutter/view/login/login_controller.dart';
@@ -169,14 +168,14 @@ class _MyAppState extends State<MyApp> {
     final isOnboarding = commonController?.preferences?.getBool(Constant.IS_ONBOARDING) ?? false;
     final isPassLogin = commonController?.preferences?.getBool(Constant.IS_PASS_LOGIN) ?? false;
 
-    if (isLogin) {
-      return ContainerHomeView();
+    if (!isOnboarding) {
+      return OnboardingView();
+    } else if (!isLogin) {
+      return LoginView();
     } else if (isPassLogin) {
       return VerificationCodeView();
-    } else if (isOnboarding) {
-      return LoginView();
     } else {
-      return OnboardingView();
+      return ContainerHomeView();
     }
   }
 

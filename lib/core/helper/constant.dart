@@ -8,6 +8,7 @@ class Constant {
   static const EMAIL = 'EMAIL';
   static const PASSWORD = 'PASSWORD';
   static const IS_PASS_LOGIN = 'IS_PASS_LOGIN';
+  static const IS_AUTO_LOGIN = 'IS_AUTO_LOGIN';
   static const IS_ONBOARDING = 'IS_ONBOARDING';
   static const OTP = 'OTP';
   static const LANGUANGE_CODE = 'LANGUANGE_CODE';
