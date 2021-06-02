@@ -14,8 +14,6 @@
 	<string>KuKelola</string>
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
-	<key>NSPhotoLibraryUsageDescription</key>
-    <string>This app need access to photo library to access your saved photo</string>
 	<key>CFBundleShortVersionString</key>
 	<string>$(MARKETING_VERSION)</string>
 	<key>CFBundleSignature</key>
@@ -30,6 +28,8 @@
 	<string>This app needs access to location when in the background.</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string>This app needs access to location when open.</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>This app need access to photo library to access your saved photo</string>
 	<key>UIBackgroundModes</key>
 	<array>
 		<string>fetch</string>
