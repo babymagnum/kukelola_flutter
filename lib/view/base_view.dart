@@ -26,17 +26,17 @@ class _BaseViewState extends State<BaseView> {
     // TODO: implement initState
     super.initState();
 
-    SchedulerBinding.instance.addPostFrameCallback((_) {
-      if (TextUtil.getCurrentDate('dd-MM-yyyy') == '21-05-2021') {
-        Get.dialog(DialogError(
-          error: 'Aplikasi tidak bisa di akses!!',
-          button: 'Mengerti',
-          buttonClick: () => Get.back(),
-        )).then((value) {
-          SystemChannels.platform.invokeMethod('SystemNavigator.pop');
-        });
-      }
-    });
+    // SchedulerBinding.instance.addPostFrameCallback((_) {
+    //   if (TextUtil.getCurrentDate('dd-MM-yyyy') == '21-05-2021') {
+    //     Get.dialog(DialogError(
+    //       error: 'Aplikasi tidak bisa di akses!!',
+    //       button: 'Mengerti',
+    //       buttonClick: () => Get.back(),
+    //     )).then((value) {
+    //       SystemChannels.platform.invokeMethod('SystemNavigator.pop');
+    //     });
+    //   }
+    // });
 
   }
 
