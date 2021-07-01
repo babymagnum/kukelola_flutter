@@ -18,6 +18,7 @@ import 'package:flutter/services.dart';
 import 'package:kukelola_flutter/view/verification_code/verification_code_view.dart';
 import 'package:kukelola_flutter/view/workflow_approval/workflow_approval_view.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:trust_location/trust_location.dart';
 import 'core/helper/text_util.dart';
 
 final globalNavigatorKey = GlobalKey<NavigatorState>();
@@ -179,6 +180,26 @@ class _MyAppState extends State<MyApp> {
     }
   }
 
+  _showMockLocationDetectedDialog() {
+    Get.dialog(
+      AlertDialog(
+        shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.all(Radius.circular(16))),
+        elevation: 0,
+        content: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text("You're detected using mock location/fake gps... please turn it off")
+          ],
+        ),
+      ),
+      barrierDismissible: false,
+    ).then((_) {
+      if (commonController.isFakeGPS.value) _showMockLocationDetectedDialog();
+    });
+  }
+
   @override
   void dispose() {
     _connection?.cancel();
@@ -197,6 +218,16 @@ class _MyAppState extends State<MyApp> {
 
     _connection = Connectivity().onConnectivityChanged
         .listen((ConnectivityResult result) => _connectivityResult(result));
+
+    if (GetPlatform.isAndroid) {
+      TrustLocation.onChange.listen((values) {
+        commonController.setIsFakeGPS(values.isMockLocation);
+
+        if (values.isMockLocation) {
+          _showMockLocationDetectedDialog();
+        }
+      });
+    }
   }
 
   @override

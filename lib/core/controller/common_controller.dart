@@ -18,8 +18,10 @@ class CommonController extends GetxController {
   var loadingLogout = false.obs;
   var autoLogin = false.obs;
   var standartDropdownItemSize = Size(0, 0).obs;
+  var isFakeGPS = false.obs;
   SharedPreferences preferences;
 
+  setIsFakeGPS(value) => isFakeGPS.value = value;
   setStandartDropdownItemSize(value) => standartDropdownItemSize.value = value;
   setAutoLogin(bool value) => autoLogin.value = value;
   setCloseapps(value) => closeApps.value = value;

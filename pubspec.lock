@@ -637,6 +637,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.5.9"
+  trust_location:
+    dependency: "direct main"
+    description:
+      name: trust_location
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "2.0.11"
   typed_data:
     dependency: transitive
     description:
