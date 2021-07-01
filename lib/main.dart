@@ -7,6 +7,7 @@ import 'package:get/get.dart';
 import 'package:kukelola_flutter/core/controller/common_controller.dart';
 import 'package:kukelola_flutter/core/helper/LocalesString.dart';
 import 'package:kukelola_flutter/core/helper/constant.dart';
+import 'package:kukelola_flutter/core/theme/theme_text_style.dart';
 import 'package:kukelola_flutter/view/container_home/container_home_view.dart';
 import 'package:kukelola_flutter/view/home/home_controller.dart';
 import 'package:kukelola_flutter/view/login/login_controller.dart';
@@ -190,7 +191,7 @@ class _MyAppState extends State<MyApp> {
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text("You're detected using mock location/fake gps... please turn it off")
+            Text("You're detected using mock location/fake gps... please turn it off", textAlign: TextAlign.center, style: ThemeTextStyle.biryaniRegular.apply(color: Colors.black, fontSizeDelta: 12.sp),)
           ],
         ),
       ),
@@ -225,6 +226,8 @@ class _MyAppState extends State<MyApp> {
 
         if (values.isMockLocation) {
           _showMockLocationDetectedDialog();
+        } else {
+          if (Get.isDialogOpen) Get.back();
         }
       });
     }
