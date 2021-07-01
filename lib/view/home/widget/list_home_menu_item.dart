@@ -43,6 +43,40 @@ class ListHomeMenuItem extends StatelessWidget {
       }
     } else {
       Get.to(() => OnlineAttendanceView());
+      // if (GetPlatform.isAndroid) {
+      //   Get.to(() => OnlineAttendanceView());
+      // } else {
+      //   Get.showSnackbar(GetBar(title: '', message: '', titleText: Container(), borderRadius: 0, maxWidth: Get.width,
+      //       messageText: Row(
+      //         children: [
+      //           Expanded(
+      //             child: Text('Checking location...', style: ThemeTextStyle.biryaniBold.apply(fontSizeDelta: 12.ssp, color: Colors.white),),
+      //           ),
+      //         ],
+      //       ),
+      //       duration: Duration(hours: 1),
+      //       barBlur: 5, snackPosition: SnackPosition.BOTTOM,
+      //       backgroundColor: Colors.black45, margin: EdgeInsets.symmetric(vertical: 0, horizontal: 0)
+      //   )).then((value) => Get.to(() => OnlineAttendanceView()));
+      //
+      //   var listPosition = <double>[];
+      //
+      //   Geolocator.getPositionStream().listen((Position position) {
+      //     listPosition.add(position.latitude);
+      //
+      //     if (listPosition.length == 5) {
+      //       for (int i=0; i<listPosition.length; i++) {
+      //         if (i > 0) {
+      //           if (listPosition[i - 1] == listPosition[i]) {
+      //
+      //           }
+      //         }
+      //       }
+      //
+      //       if (Get.isSnackbarOpen) Get.back();
+      //     }
+      //   });
+      // }
     }
   }
 

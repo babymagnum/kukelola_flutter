@@ -239,7 +239,7 @@ class _MyAppState extends State<MyApp> {
     SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
 
     return ScreenUtilInit(
-      designSize: Size(360, 640),
+      designSize: Size(375, 812),
       allowFontScaling: true,
       builder: () => GetMaterialApp(
         title: 'KuKelola',
