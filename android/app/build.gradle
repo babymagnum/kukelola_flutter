@@ -32,8 +32,8 @@ android {
         applicationId "com.netika.kukelola"
         minSdkVersion 21
         targetSdkVersion 29
-        versionCode 15
-        versionName '1.0.15'
+        versionCode 16
+        versionName '1.0.16'
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
@@ -41,7 +41,7 @@ android {
         release {
             keyAlias 'kukelola_key'
             keyPassword 'password'
-            storeFile file('/Users/ariefzainuri/Documents/Flutter Project/kukelola_flutter/android/app/keystore/kukelola_key.jks')
+            storeFile file('/Users/arief/Documents/Flutter Project/kukelola_flutter/android/app/keystore/kukelola_key.jks')
             storePassword 'password'
         }
     }
