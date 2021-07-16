@@ -26,7 +26,7 @@ class PersonalDataController extends GetxController {
     CommonType('Other', 99),
   ];
   var listMarital = [
-    CommonType('Maried', 1),
+    CommonType('Married', 1),
     CommonType('Single', 2)
   ];
   var errorMessage = ''.obs;
