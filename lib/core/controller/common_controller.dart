@@ -23,10 +23,10 @@ class CommonController extends GetxController {
   var loadingLogout = false.obs;
   var autoLogin = false.obs;
   var standartDropdownItemSize = Size(0, 0).obs;
-  var isFakeGPS = false.obs;
+  var isMocked = false.obs;
   SharedPreferences preferences;
 
-  setIsFakeGPS(value) => isFakeGPS.value = value;
+  setIsMocked(value) => isMocked.value = value;
   setStandartDropdownItemSize(value) => standartDropdownItemSize.value = value;
   setAutoLogin(bool value) => autoLogin.value = value;
   setCloseapps(value) => closeApps.value = value;
@@ -90,8 +90,10 @@ class CommonController extends GetxController {
       if (position.isMocked) {
         if (!Get.isDialogOpen) _showMockLocationDetectedDialog();
       } else {
-        if (Get.isDialogOpen) Get.back();
+        if (Get.isDialogOpen && isMocked.value) Get.back();
       }
+
+      setIsMocked(position.isMocked);
     });
   }
 
@@ -111,7 +113,7 @@ class CommonController extends GetxController {
       ),
       barrierDismissible: false,
     ).then((_) {
-      if (commonController.isFakeGPS.value) _showMockLocationDetectedDialog();
+      if (commonController.isMocked.value) _showMockLocationDetectedDialog();
     });
   }
 }
