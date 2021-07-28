@@ -25,9 +25,9 @@
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>NSLocationAlwaysUsageDescription</key>
-	<string>This app needs access to location when in the background.</string>
+	<string>KuKelola app needs access to location permission to detect the position of the device, this access is for online pressence purpose.</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string>This app needs access to location when open.</string>
+	<string>KuKelola app needs access to location permission to detect the position of the device, this access is for online pressence purpose.</string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>This app need access to photo library to access your saved photo</string>
 	<key>UIBackgroundModes</key>

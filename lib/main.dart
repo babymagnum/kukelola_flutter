@@ -72,9 +72,6 @@ _onSelectNotification(Map<String, dynamic> message) async {
 
 _navigateTo(String redirect) {
   Get.to(() => WorkflowApprovalView());
-  // if (redirect == 'main') {
-  //   Get.to(LeaveSummaryView());
-  // }
 }
 
 _redirectTo(Map<String, dynamic> message) async {

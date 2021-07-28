@@ -45,7 +45,7 @@ class OvertimeRequestController extends GetxController {
 
     if (data?.isSuccess ?? false) {
       await commonController.preferences.setString(Constant.OVERTIME_REQUEST, '');
-      CommonFunction.standartSnackbar('Berhasil Submit Leave Request');
+      CommonFunction.standartSnackbar('Berhasil Submit Overtime Request');
       updateForm(OvertimeRequestFormObject());
     } else {
       String jsonForm = jsonEncode(OvertimeRequestFormObject().fromJson(form.value.toJson()));
